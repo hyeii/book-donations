@@ -20,8 +20,8 @@ public class AuthResponse {
         return AuthResponse
                 .builder()
                 .member(member)
-                .accessToken(JwtTokenUtil.getAccessToken(member.getOauthId()))
-                .refreshToken(JwtTokenUtil.getRefreshToken(member.getOauthId()))
+                .accessToken(JwtTokenUtil.getAccessToken(String.valueOf(member.getId())))
+                .refreshToken(JwtTokenUtil.getRefreshToken(String.valueOf(member.getId())))
                 .newUser(newUser)
                 .build();
     }

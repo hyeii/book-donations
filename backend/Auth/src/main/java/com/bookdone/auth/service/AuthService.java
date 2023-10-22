@@ -39,7 +39,7 @@ public class AuthService {
 
         AuthResponse authResponse = AuthResponse.create(member,newUser);
         template.opsForValue()
-                .set("refresh " + member.getOauthId(), authResponse.getRefreshToken(), Duration.ofDays(20));
+                .set("refresh " + member.getId(), authResponse.getRefreshToken(), Duration.ofDays(20));
 
         return authResponse;
     }

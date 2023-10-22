@@ -1,5 +1,6 @@
 package com.bookdone.auth.controller;
 
+import com.bookdone.auth.dto.response.AuthResponse;
 import com.bookdone.auth.service.AuthService;
 import com.bookdone.global.jwt.JwtPayloadDto;
 import com.bookdone.global.util.OidcUtil;
@@ -31,11 +32,12 @@ public class AuthController {
 		JwtPayloadDto memberData;
 		try {
 			memberData = oidcUtil.decodeIdToken(idToken);
-			authService.login(memberData);
+			AuthResponse token = authService.login(memberData);
+			return ResponseEntity.ok().body(token);
 		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+			log.error("{}",e.getMessage());
+			return ResponseEntity.badRequest().body("잘못된 id 토큰입니다.");
 		}
-		return ResponseEntity.ok().body("");
 	}
 
 }

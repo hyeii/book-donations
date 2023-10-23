@@ -1,6 +1,7 @@
 package com.bookdone.book.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,8 @@ public class BookController {
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
 	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) {
-		List<RedisBook> bookTitles = redisSearchService.searchBooksByTitleSubstring(title);
+		//List<RedisBook> bookTitles = redisSearchService.getAutocompleteSuggestions(title);
+		Set<String> bookTitles = redisSearchService.getAutocompleteSuggestions(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookTitles);
 	}
 

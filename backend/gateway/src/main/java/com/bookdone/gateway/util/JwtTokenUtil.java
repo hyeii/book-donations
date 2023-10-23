@@ -1,24 +1,18 @@
-package com.bookdone.global.util;
+package com.bookdone.gateway.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.AlgorithmMismatchException;
-import com.auth0.jwt.exceptions.InvalidClaimException;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.exceptions.SignatureGenerationException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.exceptions.*;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * jwt 토큰 유틸 정의.
@@ -50,14 +44,6 @@ public class JwtTokenUtil {
                 .withIssuer(ISSUER)
                 .build();
     }
-
-    public static JWTVerifier getVerifier(String token) {
-        return JWT
-                .require(Algorithm.HMAC512(secretKey.getBytes()))
-                .withIssuer(ISSUER)
-                .build();
-    }
-
     public static String getAccessToken(String userId) {
         Date expires = JwtTokenUtil.getTokenExpiration(accessExpirationTime);
         return JWT.create()
@@ -67,22 +53,6 @@ public class JwtTokenUtil {
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
                 .sign(Algorithm.HMAC512(secretKey.getBytes()));
     }
-
-    public static boolean validateToken(String token) {
-        try {
-            JWTVerifier verifier = getVerifier(token);
-            verifier.verify(token);
-            return true;
-        } catch (JWTVerificationException ex) {
-            return false;
-        }
-    }
-
-    public static String getUsernameFromToken(String token) {
-        DecodedJWT jwt = JWT.decode(token);
-        return jwt.getSubject();
-    }
-
 
     public static String getRefreshToken(String userId) {
         Date expires = JwtTokenUtil.getTokenExpiration(refreshExpirationTime);
@@ -104,7 +74,6 @@ public class JwtTokenUtil {
                 .require(Algorithm.HMAC512(secretKey.getBytes()))
                 .withIssuer(ISSUER)
                 .build();
-
         try {
             return verifier.verify(token.replace(TOKEN_PREFIX, ""));
         } catch (AlgorithmMismatchException ex) {

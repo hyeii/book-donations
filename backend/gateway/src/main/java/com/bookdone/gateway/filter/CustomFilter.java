@@ -1,5 +1,10 @@
 package com.bookdone.gateway.filter;
 
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.bookdone.gateway.util.JwtTokenUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -37,10 +42,23 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
             if (token == null) {
                 return onError(exchange, "토큰이 존재하지 않습니다.", HttpStatus.UNAUTHORIZED);
             }
-            //TODO
-            // 1. token이 만료될 경우 refreshToken 검증을 해야함
-            // 2. refreshToken도 존재하지않을 경우 재 로그인 필요
-            // 3. 토큰에 이상 없으면 memberId 헤더에 넣어서 전달
+
+            JWTVerifier verifier = JwtTokenUtil.getVerifier();
+            /**
+             * AccessToken 검증
+             * 실패시 401 반환
+             * 성공시 header에 "memberId" : ??? 로 200 반환
+             */
+            try {
+                DecodedJWT jwt = verifier.verify(token);
+                String memberId = jwt.getClaim("sub").asString();
+                response.getHeaders().add("memberId", memberId);
+            } catch (TokenExpiredException ex) {
+                return onError(exchange, "토큰이 만료 되었습니다.", HttpStatus.UNAUTHORIZED);
+            } catch (JWTVerificationException ex) {
+                return onError(exchange, ex.getMessage(), HttpStatus.UNAUTHORIZED);
+            }
+
 
             log.info("request path - {}", request.getPath());
             log.info("request uri - {}", request.getURI());

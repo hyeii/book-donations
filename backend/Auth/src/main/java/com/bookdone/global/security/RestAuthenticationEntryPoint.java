@@ -18,9 +18,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
+    //TODO Refresh 관련 코드 삭제 해야함
     @Value("${spring.backend.host}")
     private String backendHost;
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws

@@ -21,7 +21,7 @@ public class AuthService {
     private final RedisTemplate<String, String> template;
 
     public AuthResponse login(JwtPayloadDto memberData) {
-        boolean newUser = false;
+        boolean newMember = false;
         MemberResponse member;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -33,11 +33,11 @@ public class AuthService {
         } catch (Exception e) {
             log.error("login error : {}", e.getMessage());
             member = memberServiceClient.join(JoinMemberRequest.createJoinMemberRequest(memberData));
-            newUser = true;
+            newMember = true;
             log.info("join - {}", member);
         }
 
-        AuthResponse authResponse = AuthResponse.create(member,newUser);
+        AuthResponse authResponse = AuthResponse.create(member,newMember);
         template.opsForValue()
                 .set("refresh " + member.getId(), authResponse.getRefreshToken(), Duration.ofDays(20));
 

@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class JoinMemberRequest {
 
     private String oauthId;
-
     private String nickname;
     private String email;
 

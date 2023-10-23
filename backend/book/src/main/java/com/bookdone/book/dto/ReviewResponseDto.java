@@ -15,6 +15,6 @@ import lombok.Setter;
 @Builder
 public class ReviewResponseDto {
 	String writer;
-	String reviews;
+	String review;
 	LocalDateTime createdAt;
 }

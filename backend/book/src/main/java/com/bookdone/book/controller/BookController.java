@@ -20,7 +20,7 @@ import com.bookdone.book.entity.RedisBook;
 import com.bookdone.book.service.BookService;
 import com.bookdone.book.service.RedisSearchService;
 import com.bookdone.book.service.ReviewService;
-import com.bookdone.global.response.BaseResponse;
+import com.bookdone.book.global.response.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,9 +34,9 @@ public class BookController {
 	private final RedisSearchService redisSearchService;
 
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
-	@GetMapping("/auto-completion/{bookName}")
-	public ResponseEntity<?> autoCompletionBookList(@RequestParam String query) {
-		List<RedisBook> bookTitles = redisSearchService.searchAndSortByTitle(query);
+	@GetMapping("/auto-completion/{title}")
+	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) {
+		List<RedisBook> bookTitles = redisSearchService.searchAndSortByTitle(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookTitles);
 	}
 

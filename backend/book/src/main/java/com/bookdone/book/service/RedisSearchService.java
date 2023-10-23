@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.bookdone.book.entity.RedisBook;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class RedisSearchService {
 
-	private final RedisTemplate<String, RedisBook> redisTemplate;
+	private RedisTemplate<String, RedisBook> redisTemplate;
 
 	public RedisSearchService(RedisTemplate<String, RedisBook> redisTemplate) {
 		this.redisTemplate = redisTemplate;

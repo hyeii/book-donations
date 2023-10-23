@@ -1,4 +1,4 @@
-package com.bookdone.user.entity;
+package com.bookdone.member.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,13 +1,12 @@
-package com.bookdone.user.service;
+package com.bookdone.member.service;
 
-import com.bookdone.user.dto.request.JoinMemberRequest;
-import com.bookdone.user.dto.response.MemberResponse;
-import com.bookdone.user.entity.Member;
-import java.util.Optional;
+import com.bookdone.member.dto.request.JoinMemberRequest;
+import com.bookdone.member.dto.response.MemberResponse;
+import com.bookdone.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import com.bookdone.user.repository.MemberRepository;
+import com.bookdone.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
-package com.bookdone.user.controller;
+package com.bookdone.member.controller;
 
-import com.bookdone.user.dto.request.JoinMemberRequest;
-import com.bookdone.user.service.MemberService;
+import com.bookdone.member.dto.request.JoinMemberRequest;
+import com.bookdone.member.service.MemberService;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.env.Environment;
@@ -26,11 +26,11 @@ public class MemberController {
 
 	@GetMapping("/health_check")
 	public String status() {
-		return "It`s Working in User Service";
+		return "It`s Working in Member Service";
 	}
 
 	@GetMapping("/message")
-	public String message(@RequestHeader("user-request") String header) {
+	public String message(@RequestHeader("member-request") String header) {
 		return header;
 	}
 
@@ -38,7 +38,7 @@ public class MemberController {
 	public String check(HttpServletRequest request) {
 		System.out.println(request.getServerPort());
 
-		return "user check:" + env.getProperty("local.server.port");
+		return "member check:" + env.getProperty("local.server.port");
 	}
 
 	@GetMapping("/oauth-id/{oauthId}")

@@ -1,6 +1,6 @@
-package com.bookdone.user.dto.request;
+package com.bookdone.member.dto.request;
 
-import com.bookdone.user.entity.Member;
+import com.bookdone.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

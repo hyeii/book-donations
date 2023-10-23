@@ -10,5 +10,5 @@ import com.bookdone.book.entity.Book;
 public interface BookRepository extends JpaRepository<Book, Long> {
 	Optional<Book> findByIsbn(String isbn);
 
-	List<Book> findByTitle(String title);
+	List<Book> findByTitleContaining(String title);
 }

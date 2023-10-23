@@ -33,10 +33,15 @@ public class BookController {
 	private final BookService bookService;
 	private final RedisSearchService redisSearchService;
 
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
+
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
 	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) {
-		List<RedisBook> bookTitles = redisSearchService.searchAndSortByTitle(title);
+		List<RedisBook> bookTitles = redisSearchService.searchBooksByTitleSubstring(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookTitles);
 	}
 

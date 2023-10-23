@@ -17,7 +17,7 @@ public class BookService {
 	private final BookRepository bookRepository;
 
 	public List<Book> searchBookList(String title) {
-		return bookRepository.findByTitle(title);
+		return bookRepository.findByTitleContaining(title);
 	}
 
 	public BookDto getBookDetail(String isbn) {

@@ -1,4 +1,4 @@
-package com.bookdone.user.entity;
+package com.bookdone.member.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,4 +57,12 @@ public class Member {
         return new ArrayList<>();
     }
 
+    public void updateNicknameAndAddress(String nickname, String address) {
+        this.nickname = nickname;
+        this.address = address;
+    }
+
+    public void updateImage(String image) {
+        this.image = image;
+    }
 }

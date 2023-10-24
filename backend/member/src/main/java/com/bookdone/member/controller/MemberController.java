@@ -1,6 +1,7 @@
 package com.bookdone.member.controller;
 
 import com.bookdone.global.response.BaseResponse;
+import com.bookdone.global.response.MemberResponse;
 import com.bookdone.member.dto.request.AdditionalInfo;
 import com.bookdone.member.dto.request.JoinMemberRequest;
 import com.bookdone.member.service.MemberService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/members")
@@ -38,17 +40,30 @@ public class MemberController {
 
     @GetMapping("/oauth-id/{oauthId}")
     public ResponseEntity<?> getMember(@PathVariable String oauthId) {
-        return ResponseEntity.ok(memberService.findByOauthId(oauthId));
+        return BaseResponse.okWithData(HttpStatus.OK, "멤버 조회 완료", memberService.findByOauthId(oauthId));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentMember(@RequestHeader("member-id") Long memberId) {
+        MemberResponse member = memberService.findById(memberId);
+        return BaseResponse.okWithData(HttpStatus.OK, "멤버 조회 완료", member);
     }
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody JoinMemberRequest joinMemberRequest) {
-        return ResponseEntity.ok(memberService.join(joinMemberRequest));
+        return BaseResponse.okWithData(
+                HttpStatus.OK, "임시 회원 가입 완료", memberService.join(joinMemberRequest));
     }
 
     @PatchMapping("additional-info")
-    public ResponseEntity<?> additionalInfo(@RequestHeader("member-id") String memberId, @RequestBody AdditionalInfo additionalInfo) {
+    public ResponseEntity<?> additionalInfo(@RequestHeader("member-id") Long memberId, @RequestBody AdditionalInfo additionalInfo) {
         memberService.updateJoinMember(memberId, additionalInfo);
         return BaseResponse.ok(HttpStatus.OK, "추가 정보 삽입 완료");
+    }
+
+    @PatchMapping("/me/image")
+    public ResponseEntity<?> updateImage(@RequestHeader("member-id") Long memberId, String image) {
+        memberService.updateImage(memberId, image);
+        return BaseResponse.ok(HttpStatus.OK, "프로필 사진 업데이트 완료");
     }
 }

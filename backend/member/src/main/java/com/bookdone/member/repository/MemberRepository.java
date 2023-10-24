@@ -8,5 +8,5 @@ import com.bookdone.member.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByOauthId(String oauthId);
 
-    Optional<Member> findById(String id);
+    Optional<Member> findById(Long id);
 }

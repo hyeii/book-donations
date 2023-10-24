@@ -61,4 +61,8 @@ public class Member {
         this.nickname = nickname;
         this.address = address;
     }
+
+    public void updateImage(String image) {
+        this.image = image;
+    }
 }

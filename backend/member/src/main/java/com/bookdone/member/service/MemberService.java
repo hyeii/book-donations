@@ -21,7 +21,13 @@ public class MemberService {
 
 	public MemberResponse findByOauthId(String oauthId) {
 		Member member = memberRepository.findByOauthId(oauthId)
-				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다"));
+		return MemberResponse.toResponse(member);
+	}
+
+	public MemberResponse findById(Long id) {
+		Member member = memberRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));
 		return MemberResponse.toResponse(member);
 	}
 
@@ -34,11 +40,18 @@ public class MemberService {
 	}
 
 	@Transactional
-	public void updateJoinMember(String memberId, AdditionalInfo additionalInfo) {
-		Member member = memberRepository.findById(memberId)
-				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+	public void updateJoinMember(Long id, AdditionalInfo additionalInfo) {
+		Member member = memberRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));
 		member.updateNicknameAndAddress(
 				additionalInfo.getNickname(), additionalInfo.getAddress()
 		);
+	}
+
+	@Transactional
+	public void updateImage(Long id, String image) {
+		Member member = memberRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다."));
+		member.updateImage(image);
 	}
 }

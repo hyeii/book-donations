@@ -30,8 +30,11 @@ public class ReviewService {
 			.collect(Collectors.toList());
 	}
 
-	public void postReview(ReviewRequestDto reviewDto) {
+	public void postReview(ReviewRequestDto reviewDto, String memberNickname) {
 		Book book = bookRepository.findByIsbn(reviewDto.getIsbn()).orElseThrow(IllegalArgumentException::new);
+		if(!reviewDto.getWriter().equals(memberNickname)) {
+			throw new IllegalArgumentException("댓글 작성자와 로그인 유저의 닉네임이 다릅니다.");
+		}
 		Review review = Review.builder()
 			.review(reviewDto.getReview())
 			.writer(reviewDto.getWriter())
@@ -40,8 +43,11 @@ public class ReviewService {
 		reviewRepository.save(review);
 	}
 
-	public void deleteReview(long id) {
-		Review review = reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-		reviewRepository.deleteById(id);
+	public void deleteReview(long reviewId, String memberNickname) {
+		Review review = reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new);
+		if(!review.getWriter().equals(memberNickname)) {
+			throw new IllegalArgumentException("작성자가 아닙니다");
+		}
+		reviewRepository.deleteById(reviewId);
 	}
 }

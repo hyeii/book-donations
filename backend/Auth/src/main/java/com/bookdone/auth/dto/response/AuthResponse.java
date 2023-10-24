@@ -15,14 +15,14 @@ public class AuthResponse {
     private MemberResponse member;
     private String accessToken;
     private String refreshToken;
-    private boolean newUser;
-    public static AuthResponse create(MemberResponse member,boolean newUser) {
+    private boolean newMember;
+    public static AuthResponse create(MemberResponse member,boolean newMember) {
         return AuthResponse
                 .builder()
                 .member(member)
                 .accessToken(JwtTokenUtil.getAccessToken(String.valueOf(member.getId())))
                 .refreshToken(JwtTokenUtil.getRefreshToken(String.valueOf(member.getId())))
-                .newUser(newUser)
+                .newMember(newMember)
                 .build();
     }
 }

@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
         fontFamily: "SCDream4",
       ),
-      home: MyPageAddHistory(),
+      home: ArticleMain(),
     );
   }
 }

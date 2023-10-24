@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ArticleMain extends StatefulWidget {
@@ -16,17 +17,27 @@ class _ArticleMainState extends State<ArticleMain> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            // TODO: 뒤로가기 처리
+          },
         ),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
-              Image(
-                image: AssetImage("assets/images/samplebookcover.jpg"),
+              CachedNetworkImage(
                 width: 200,
+                imageUrl:
+                    "https://image.aladin.co.kr/product/32129/40/cover500/8954695051_1.jpg",
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
+
+              // Image(
+              //   image: AssetImage("assets/images/samplebookcover.jpg"),
+              //   width: 200,
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: Text(
@@ -133,19 +144,24 @@ class _ArticleMainState extends State<ArticleMain> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          margin: EdgeInsets.only(left: 200),
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    //모서리를 둥글게
-                    borderRadius: BorderRadius.circular(15)),
-                fixedSize: Size(20, 100),
-                textStyle: const TextStyle(fontSize: 18),
-                backgroundColor: Colors.black12,
-                foregroundColor: Colors.white),
-            child: Text("나눔 요청하기"),
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: SizedBox(
+            width: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                // TODO: alert 확인창
+              },
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      //모서리를 둥글게
+                      borderRadius: BorderRadius.circular(15)),
+                  fixedSize: Size(20, 100),
+                  textStyle: const TextStyle(fontSize: 18),
+                  backgroundColor: Colors.black12,
+                  foregroundColor: Colors.white),
+              child: Text("나눔 요청하기"),
+            ),
           ),
         ),
       ),

@@ -52,7 +52,8 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
             try {
                 DecodedJWT jwt = verifier.verify(token);
                 String memberId = jwt.getClaim("sub").asString();
-                request.getHeaders().add("member-id", memberId);
+
+                exchange.getRequest().mutate().header("member-id",memberId).build();
             } catch (TokenExpiredException ex) {
                 return onError(exchange, "토큰이 만료 되었습니다.", HttpStatus.UNAUTHORIZED);
             } catch (JWTVerificationException ex) {

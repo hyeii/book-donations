@@ -16,5 +16,5 @@ public interface MemberServiceClient {
     ResponseEntity<Object> getMember(@PathVariable String oauthId);
 
     @PostMapping("/api/members/join")
-    MemberResponse join(@RequestBody JoinMemberRequest joinMemberRequest);
+    ResponseEntity<Object> join(@RequestBody JoinMemberRequest joinMemberRequest);
 }

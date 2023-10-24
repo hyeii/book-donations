@@ -36,9 +36,12 @@ public class AuthService {
             log.info("{}", member);
         } catch (Exception e) {
             log.error("login error : {}", e.getMessage());
-            member = memberServiceClient.join(JoinMemberRequest.createJoinMemberRequest(memberData));
-            newMember = true;
-            log.info("join - {}", member);
+            Map<String, Object> map = (Map<String, Object>) memberServiceClient.join(JoinMemberRequest.createJoinMemberRequest(memberData));
+            Object data = map.get("data");
+            ObjectMapper objectMapper = new ObjectMapper();
+            member = objectMapper.convertValue(
+                    data,
+                    MemberResponse.class);
         }
 
         AuthResponse authResponse = AuthResponse.create(member, newMember);

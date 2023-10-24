@@ -22,124 +22,82 @@ class _ArticleMainState extends State<ArticleMain> {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              CachedNetworkImage(
-                width: 200,
-                imageUrl:
-                    "https://image.aladin.co.kr/product/32129/40/cover500/8954695051_1.jpg",
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 50, right: 50),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                CachedNetworkImage(
+                  width: 200,
+                  imageUrl:
+                      "https://image.aladin.co.kr/product/32129/40/cover500/8954695051_1.jpg",
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
 
-              // Image(
-              //   image: AssetImage("assets/images/samplebookcover.jpg"),
-              //   width: 200,
-              // ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: Text(
+                // Image(
+                //   image: AssetImage("assets/images/samplebookcover.jpg"),
+                //   width: 200,
+                // ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
                   "바다가 들리는 편의점",
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
-              ),
-              SizedBox(
-                width: 350,
-                child: Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(thickness: 1, height: 1),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: SizedBox(
-                          width: 350,
-                          child: Text(
-                            "히스토리 개수",
-                            style: TextStyle(),
-                            textAlign: TextAlign.start,
-                          ),
+                        child: Text(
+                          "히스토리 개수",
                         ),
                       ),
                       Divider(thickness: 1, height: 1),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              width: 350,
-                              child: Text(
-                                "기부자의 글",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 350,
-                              child: Text(
-                                "책 깨끗깨끗 완전 재밌음",
-                                style: TextStyle(),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ],
-                        ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "기부자의 글",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "책 깨끗깨끗 완전 재밌음",
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       Divider(thickness: 1, height: 1),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              width: 350,
-                              child: Text(
-                                "책 정보",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 350,
-                              child: Text(
-                                "저자정보",
-                                style: TextStyle(),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 350,
-                              child: Text(
-                                "출판사정보",
-                                style: TextStyle(),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 350,
-                              child: Text(
-                                "발행일",
-                                style: TextStyle(),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 350,
-                              child: Text(
-                                "기타 설명",
-                                style: TextStyle(),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ],
-                        ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "책 정보",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "저자정보",
+                      ),
+                      Text(
+                        "출판사정보",
+                      ),
+                      Text(
+                        "발행일",
+                      ),
+                      Text(
+                        "기타 설명",
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

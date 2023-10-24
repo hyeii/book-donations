@@ -1,7 +1,6 @@
 package com.bookdone.book.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookdone.book.dto.BookAutoCompDto;
 import com.bookdone.book.dto.BookDto;
 import com.bookdone.book.dto.ReviewRequestDto;
 import com.bookdone.book.dto.ReviewResponseDto;
 import com.bookdone.book.entity.Book;
-import com.bookdone.book.entity.RedisBook;
 import com.bookdone.book.service.BookService;
 import com.bookdone.book.service.RedisSearchService;
 import com.bookdone.book.service.ReviewService;
@@ -42,9 +40,8 @@ public class BookController {
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
 	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) {
-		//List<RedisBook> bookTitles = redisSearchService.getAutocompleteSuggestions(title);
-		Set<String> bookTitles = redisSearchService.getAutocompleteSuggestions(title);
-		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookTitles);
+		List<BookAutoCompDto> bookAutoCompDto = redisSearchService.getAutocompleteSuggestionsWithISBN(title);
+		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookAutoCompDto);
 	}
 
 	// TODO : 엔터 쳤을 때 이동하는 곳

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,5 +73,11 @@ public class BookController {
 	public ResponseEntity<?> postReview(@RequestBody ReviewRequestDto reviewDto){
 		reviewService.postReview(reviewDto);
 		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 작성");
+	}
+
+	@DeleteMapping("/reviews/{id}")
+	public ResponseEntity<?> postReview(@PathVariable long id) {
+		reviewService.deleteReview(id);
+		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 삭제");
 	}
 }

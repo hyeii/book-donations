@@ -39,4 +39,9 @@ public class ReviewService {
 			.build();
 		reviewRepository.save(review);
 	}
+
+	public void deleteReview(long id) {
+		Review review = reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+		reviewRepository.deleteById(id);
+	}
 }

@@ -38,11 +38,6 @@ public class BookController {
 	private final RedisSearchService redisSearchService;
 	private final MemberClient memberClient;
 
-	@GetMapping("/test")
-	public String test() {
-		return "test";
-	}
-
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
 	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) {
@@ -90,7 +85,8 @@ public class BookController {
 		}
 		return BaseResponse.fail("회원 정보를 가져오는데 실패", 500);
 	}
-
+	
+	// TODO : 책에 대한 리뷰 삭제
 	@DeleteMapping("/reviews/{reviewId}")
 	public ResponseEntity<?> postReview(@PathVariable long reviewId,
 		@RequestHeader("member-id") long memberId) {
@@ -102,9 +98,9 @@ public class BookController {
 			if (data instanceof MemberResponse) {
 				MemberResponse memberInfo = (MemberResponse)data;
 				reviewService.deleteReview(reviewId, memberInfo.getNickname());
-				return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 작성");
+				return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 삭제");
 			}
 		}
-		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 삭제");
+		return BaseResponse.fail("책 리뷰 삭제 실패", 500);
 	}
 }

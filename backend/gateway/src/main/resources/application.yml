@@ -13,8 +13,8 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
           predicates:
             - Path=/api/members/**
           filters:

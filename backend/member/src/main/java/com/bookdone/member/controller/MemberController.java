@@ -23,8 +23,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/health_check")
-    public String status() {
-        return "It`s Working in Member Service";
+    public String status(@RequestHeader("member-id") String memberId) {
+        return "It`s Working in Member Service , memberId : " + memberId;
     }
 
     @GetMapping("/message")

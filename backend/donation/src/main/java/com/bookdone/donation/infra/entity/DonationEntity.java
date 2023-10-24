@@ -1,7 +1,9 @@
 package com.bookdone.donation.infra.entity;
 
+import com.bookdone.donation.domain.Donation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,14 +18,34 @@ public class DonationEntity {
     @Column
     private Long id;
 
-    @Column(name = "book_id")
+    @Column(name = "book_id", nullable = false)
     private Long bookId;
 
-    private String address;
+    @Column(name = "member_id", nullable = false)
+    private Long memberId;
+
+    @Column(nullable = false)
+    private Integer address;
+
+    @Column(nullable = false)
     private String content;
+
+    @Column(nullable = false)
+    private Integer status;
+
+    @Column(name = "delivery", nullable = false)
     private boolean canDelivery;
 
-    @Column(name = "created_time")
-    private LocalDateTime createdTime;
+    @CreatedDate
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    public static DonationEntity fromDomain(Donation donation) {
+        return Donation.createEntity(donation);
+    }
+
+    public static Donation toDomain(DonationEntity donationEntity) {
+        return Donation.createDonation(donationEntity);
+    }
 
 }

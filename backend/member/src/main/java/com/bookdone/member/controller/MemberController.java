@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/members")
@@ -23,8 +22,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/health_check")
-    public String status() {
-        return "It`s Working in Member Service";
+    public String status(@RequestHeader("member-id") String memberId) {
+        return "It`s Working in Member Service , memberId : " + memberId;
     }
 
     @GetMapping("/message")

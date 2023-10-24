@@ -1,4 +1,4 @@
-package com.bookdone.book.global.config;
+package com.bookdone.global.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

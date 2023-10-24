@@ -1,4 +1,4 @@
-package com.bookdone.book.externalAPI;
+package com.bookdone.client.api;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

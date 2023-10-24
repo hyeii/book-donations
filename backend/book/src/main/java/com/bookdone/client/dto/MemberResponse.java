@@ -1,4 +1,4 @@
-package com.bookdone.book.dto;
+package com.bookdone.client.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

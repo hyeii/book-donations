@@ -1,4 +1,4 @@
-package com.bookdone.book.global.response;
+package com.bookdone.global.response;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
 server:
   port: 0
 spring:
-  profiles:
-    active: secret # secret yml
+#  profiles:
+#    active: secret # secret yml
   application:
     name: book-service
   datasource:
@@ -10,6 +10,11 @@ spring:
     url: jdbc:mysql://localhost:3306/bookdone_book?serverTimezone=UTC&characterEncoding=UTF-8&collation=utf8mb4_bin
     username: root
     password: root
+
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    password: null
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

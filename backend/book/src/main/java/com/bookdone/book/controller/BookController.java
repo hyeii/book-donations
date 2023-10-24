@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookdone.book.dto.BookAutoCompDto;
 import com.bookdone.book.dto.BookDto;
-import com.bookdone.book.dto.MemberResponse;
+import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.book.dto.ReviewRequestDto;
 import com.bookdone.book.dto.ReviewResponseDto;
 import com.bookdone.book.entity.Book;
 import com.bookdone.book.service.BookService;
 import com.bookdone.book.service.RedisSearchService;
 import com.bookdone.book.service.ReviewService;
-import com.bookdone.book.global.response.BaseResponse;
-import com.bookdone.book.externalAPI.MemberClient;
+import com.bookdone.global.response.BaseResponse;
+import com.bookdone.client.api.MemberClient;
 
 import lombok.RequiredArgsConstructor;
 

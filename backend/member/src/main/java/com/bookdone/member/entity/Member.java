@@ -57,4 +57,8 @@ public class Member {
         return new ArrayList<>();
     }
 
+    public void updateNicknameAndAddress(String nickname, String address) {
+        this.nickname = nickname;
+        this.address = address;
+    }
 }

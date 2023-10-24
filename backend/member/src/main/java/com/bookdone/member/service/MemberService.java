@@ -1,7 +1,8 @@
 package com.bookdone.member.service;
 
+import com.bookdone.member.dto.request.AdditionalInfo;
 import com.bookdone.member.dto.request.JoinMemberRequest;
-import com.bookdone.member.dto.response.MemberResponse;
+import com.bookdone.global.response.MemberResponse;
 import com.bookdone.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,12 @@ public class MemberService {
 		return MemberResponse.toResponse(member);
 	}
 
+	@Transactional
+	public void updateJoinMember(String memberId, AdditionalInfo additionalInfo) {
+		Member member = memberRepository.findById(memberId)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+		member.updateNicknameAndAddress(
+				additionalInfo.getNickname(), additionalInfo.getAddress()
+		);
+	}
 }

@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JoinMemberRequest {
     private String oauthId;
-
     private String nickname;
     private String email;
 

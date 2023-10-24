@@ -1,4 +1,4 @@
-package com.bookdone.member.dto.response;
+package com.bookdone.global.response;
 
 import com.bookdone.member.entity.Member;
 import lombok.AllArgsConstructor;

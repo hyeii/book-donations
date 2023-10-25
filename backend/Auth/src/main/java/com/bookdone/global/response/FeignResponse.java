@@ -1,4 +1,4 @@
-package com.bookdone.global.util;
+package com.bookdone.global.response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

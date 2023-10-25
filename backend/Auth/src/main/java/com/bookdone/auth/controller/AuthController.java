@@ -3,10 +3,12 @@ package com.bookdone.auth.controller;
 import com.bookdone.auth.dto.response.AuthResponse;
 import com.bookdone.auth.service.AuthService;
 import com.bookdone.global.jwt.JwtPayloadDto;
+import com.bookdone.global.response.BaseResponse;
 import com.bookdone.global.util.OidcUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -29,6 +31,6 @@ public class AuthController {
 
         memberData = oidcUtil.decodeIdToken(idToken);
         AuthResponse token = authService.login(memberData);
-        return ResponseEntity.ok().body(token);
+        return BaseResponse.okWithData(HttpStatus.OK, "로그인 완료", token);
     }
 }

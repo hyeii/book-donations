@@ -5,7 +5,7 @@ import com.bookdone.auth.dto.response.AuthResponse;
 import com.bookdone.auth.dto.response.MemberResponse;
 import com.bookdone.global.client.MemberServiceClient;
 import com.bookdone.global.jwt.JwtPayloadDto;
-import com.bookdone.global.util.FeignResponse;
+import com.bookdone.global.response.FeignResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

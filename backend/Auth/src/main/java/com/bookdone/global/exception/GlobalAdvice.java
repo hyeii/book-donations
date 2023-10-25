@@ -20,7 +20,6 @@ public class GlobalAdvice {
 
     @ExceptionHandler(JsonProcessingException.class)
     public ResponseEntity<?> jsonProcessingResponse(JsonProcessingException ex) {
-
         return BaseResponse.fail(ex.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
     }
 

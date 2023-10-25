@@ -41,7 +41,7 @@ class _ArticleMainState extends State<ArticleMain> {
                 //   width: 200,
                 // ),
                 SizedBox(
-                  height: 12,
+                  height: 15,
                 ),
                 Text(
                   "바다가 들리는 편의점",
@@ -53,15 +53,18 @@ class _ArticleMainState extends State<ArticleMain> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(thickness: 1, height: 1),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: Text(
-                          "히스토리 개수",
-                        ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "히스토리 개수",
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                       Divider(thickness: 1, height: 1),
                       SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
                       Text(
                         "기부자의 글",
@@ -71,11 +74,11 @@ class _ArticleMainState extends State<ArticleMain> {
                         "책 깨끗깨끗 완전 재밌음",
                       ),
                       SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
                       Divider(thickness: 1, height: 1),
                       SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
                       Text(
                         "책 정보",
@@ -93,6 +96,9 @@ class _ArticleMainState extends State<ArticleMain> {
                       Text(
                         "기타 설명",
                       ),
+                      SizedBox(
+                        height: 20,
+                      )
                     ],
                   ),
                 ),
@@ -102,13 +108,14 @@ class _ArticleMainState extends State<ArticleMain> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
         child: Align(
           alignment: Alignment.centerRight,
           child: SizedBox(
             width: 200,
             child: ElevatedButton(
               onPressed: () {
-                // TODO: alert 확인창
+                // TODO: alert 확인창x
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -116,9 +123,12 @@ class _ArticleMainState extends State<ArticleMain> {
                       borderRadius: BorderRadius.circular(15)),
                   fixedSize: Size(20, 100),
                   textStyle: const TextStyle(fontSize: 18),
-                  backgroundColor: Colors.black12,
+                  backgroundColor: Colors.brown[300],
                   foregroundColor: Colors.white),
-              child: Text("나눔 요청하기"),
+              child: Text(
+                "나눔 요청하기",
+                style: TextStyle(fontFamily: "SCDream4"),
+              ),
             ),
           ),
         ),

@@ -128,7 +128,6 @@ class _MyPageMainState extends State<MyPageMain>
           SizedBox(
             height: 20,
           ),
-          // TODO: 해당 위치에 tapbar 삽입
           TabBar(
             tabs: tabs,
             controller: _tabController,
@@ -147,7 +146,7 @@ class _MyPageMainState extends State<MyPageMain>
               children: tabs.map((tab) {
                 return Center(
                   child: Text(
-                    "냠",
+                    "${tab.text}",
                   ),
                 );
               }).toList(),

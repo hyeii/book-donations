@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class MyPageNotifications extends StatefulWidget {
@@ -31,6 +32,9 @@ class _MyPageNotificationsState extends State<MyPageNotifications> {
         child: Padding(
           padding: const EdgeInsets.only(left: 50, right: 50),
           child: Column(children: [
+            SizedBox(
+              height: 10,
+            ),
             Notifications(),
             Notifications(),
             Notifications(),
@@ -69,12 +73,15 @@ class _NotificationsState extends State<Notifications> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
-                child: Image(
-                  image: AssetImage("assets/images/samplebookcover.jpg"),
+                child: CachedNetworkImage(
                   width: 70,
                   height: 70,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
+                  imageUrl:
+                      "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg",
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),
               SizedBox(

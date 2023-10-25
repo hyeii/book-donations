@@ -33,7 +33,7 @@ public class OidcUtil {
         this.publicKeyService = publicKeyService;
     }
 
-    public JwtPayloadDto decodeIdToken(String idToken) throws JsonProcessingException {
+    public JwtPayloadDto decodeIdToken(String idToken) throws IllegalArgumentException, JsonProcessingException {
         idToken = idToken.replace(JwtTokenUtil.TOKEN_PREFIX, "");
         String jwtToken = idToken;
 

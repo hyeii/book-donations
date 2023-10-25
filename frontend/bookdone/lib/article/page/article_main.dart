@@ -45,7 +45,7 @@ class _ArticleMainState extends State<ArticleMain> {
                 ),
                 Text(
                   "바다가 들리는 편의점",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15.0),

@@ -1,7 +1,5 @@
 package com.bookdone.global.util;
 
-import com.bookdone.global.response.FailResponse;
-import com.bookdone.global.response.SuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +13,7 @@ import java.util.Map;
 public class FeignResponse {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static <T> T extractDataFromResponse(ResponseEntity<?> responseEntity, Class<T> clazz) throws RuntimeException, JsonProcessingException {
+    public static <T> T extractDataFromResponse(ResponseEntity<?> responseEntity, Class<T> clazz) throws IllegalArgumentException, JsonProcessingException {
         HttpStatus status = responseEntity.getStatusCode();
         log.info("body : {}", responseEntity.getBody());
         Map<String, Object> objectMap = (HashMap<String, Object>) responseEntity.getBody();
@@ -29,12 +27,6 @@ public class FeignResponse {
         }
 
         Object data = objectMap.get("data");
-
-        if (data instanceof String) {
-            return objectMapper.convertValue(data, clazz);
-        } else if (clazz.isInstance(data)) {
-            return clazz.cast(data);
-        }
-        return null;
+        return objectMapper.convertValue(data, clazz);
     }
 }

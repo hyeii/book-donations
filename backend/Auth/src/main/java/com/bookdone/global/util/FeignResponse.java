@@ -14,13 +14,13 @@ public class FeignResponse {
 
     public static <T> T extractDataFromResponse(ResponseEntity<?> responseEntity, Class<T> clazz) throws RuntimeException, JsonProcessingException {
         HttpStatus status = responseEntity.getStatusCode();
-        Map<String, Object> objectMap = (Map<String, Object>) responseEntity;
+        Map<String, Object> objectMap = (Map<String, Object>) responseEntity.getBody();
         boolean success = (boolean) objectMap.get("success");
 
         // 응답 코드가 2xx가 아니면 오류 던지기
         if (!success) {
-            FailResponse failResponse = (FailResponse) responseEntity.getBody();
-            throw new IllegalArgumentException("API 호출 실패: " + failResponse.getMsg());
+            String msg = (String) objectMap.get("msg");
+            throw new IllegalArgumentException("API 호출 실패: " + msg);
         }
 
         Object data = objectMap.get("data");

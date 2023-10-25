@@ -24,6 +24,9 @@ public class DonationController {
         return null;
     }
 
+    @PutMapping("/{donationId}")
+    public ResponseEntity<?> donationReAdd(){ return null;}
+
     @PatchMapping
     public ResponseEntity<?> donationModify() {
         return null;

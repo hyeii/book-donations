@@ -18,8 +18,8 @@ public class DonationEntity {
     @Column
     private Long id;
 
-    @Column(name = "book_id", nullable = false)
-    private Long bookId;
+    @Column(name = "isbn", nullable = false)
+    private Long isbn;
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;

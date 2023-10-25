@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public class Donation {
-    private Long bookId;
+    private Long isbn;
     private Long memberId;
     private Integer address;
     private String content;
@@ -17,7 +17,7 @@ public class Donation {
         return Donation
                 .builder()
                 .address(donationAddRequest.getAddress())
-                .bookId(donationAddRequest.getBookId())
+                .isbn(donationAddRequest.getIsbn())
                 .memberId(donationAddRequest.getMemberId())
                 .content(donationAddRequest.getContent())
                 .build();

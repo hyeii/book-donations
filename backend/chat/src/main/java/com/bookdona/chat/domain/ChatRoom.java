@@ -6,6 +6,7 @@ public class ChatRoom {
 
 	Integer donationId;
 
-	String status;
+	// 채팅이 가능한 상태
+	Boolean isLive;
 
 }

@@ -221,6 +221,5 @@ class _CompleteHistoryCardState extends State<CompleteHistoryCard> {
         ),
       ),
     );
-    ;
   }
 }

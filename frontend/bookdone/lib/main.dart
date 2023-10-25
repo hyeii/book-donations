@@ -1,4 +1,5 @@
 import 'package:bookdone/article/page/article_main.dart';
+import 'package:bookdone/bookinfo/page/bookinfo_detail.dart';
 import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      home: BookinfoMain(),
+      home: BookinfoDetail(),
     );
   }
 }

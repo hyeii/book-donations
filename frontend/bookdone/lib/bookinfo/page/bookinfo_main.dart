@@ -9,6 +9,13 @@ class BookinfoMain extends StatefulWidget {
 }
 
 class _BookinfoMainState extends State<BookinfoMain> {
+  late bool validationResult;
+  @override
+  void initState() {
+    validationResult = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,6 +196,7 @@ class _CommentInputState extends State<CommentInput> {
         Form(
           key: _formKey,
           child: TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(
@@ -199,8 +207,10 @@ class _CommentInputState extends State<CommentInput> {
             ),
             maxLength: 100,
             maxLines: 2,
-            validator: (String? value) {
-              return (value != null) ? "댓글을 입력해주세요" : null;
+            onSaved: (value) {},
+            validator: (value) {
+              if (value != null) return "댓글을 입력해주세요.";
+              return null;
             },
           ),
         ),

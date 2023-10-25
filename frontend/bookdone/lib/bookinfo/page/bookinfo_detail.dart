@@ -58,24 +58,25 @@ class _BookinfoDetailState extends State<BookinfoDetail>
                   Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // TODO: 지역 설정 팝업 열기
+                      },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15)),
-                          fixedSize: Size(120, double.minPositive),
                           padding: EdgeInsets.symmetric(horizontal: 5.0),
                           textStyle: const TextStyle(
                               fontSize: 13, fontFamily: "SCDream4"),
                           backgroundColor: Colors.brown.shade100,
                           foregroundColor: Colors.black87),
                       // TODO: 버튼 사이즈 child 맞춤으로 적용하기
-                      child: Row(
+                      child: Wrap(
                         children: [
                           Icon(Icons.location_on, size: 17),
                           SizedBox(
                             width: 5.0,
                           ),
-                          Text("서울시 구로구"),
+                          Text("인천광역시 연수구"),
                         ],
                       ),
                     ),

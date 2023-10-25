@@ -25,6 +25,8 @@ import com.bookdone.book.service.RedisSearchService;
 import com.bookdone.book.service.ReviewService;
 import com.bookdone.global.response.BaseResponse;
 import com.bookdone.client.api.MemberClient;
+import com.bookdone.util.ResponseUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +39,7 @@ public class BookController {
 	private final BookService bookService;
 	private final RedisSearchService redisSearchService;
 	private final MemberClient memberClient;
+	private final ResponseUtil responseUtil;
 
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
@@ -71,36 +74,18 @@ public class BookController {
 	// TODO : 책에 대한 리뷰 작성
 	@PostMapping("/reviews")
 	public ResponseEntity<?> postReview(@RequestBody ReviewRequestDto reviewDto,
-		@RequestHeader("member-id") long memberId) {
+		@RequestHeader("member-id") long memberId) throws JsonProcessingException {
 		ResponseEntity<?> response = memberClient.getMemberInfo(memberId);
-		if (response.getStatusCode() == HttpStatus.OK) {
-			Object responseBody = response.getBody();
-			Map<String, Object> responseMap = (Map<String, Object>)responseBody;
-			Object data = responseMap.get("data");
-			if (data instanceof MemberResponse) {
-				MemberResponse memberInfo = (MemberResponse)data;
-				reviewService.postReview(reviewDto, memberInfo.getNickname());
-				return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 작성");
-			}
-		}
-		return BaseResponse.fail("회원 정보를 가져오는데 실패", 500);
+		reviewService.postReview(reviewDto, responseUtil.extractDataFromResponse(response, MemberResponse.class).getNickname());
+		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 작성");
 	}
-	
+
 	// TODO : 책에 대한 리뷰 삭제
 	@DeleteMapping("/reviews/{reviewId}")
 	public ResponseEntity<?> postReview(@PathVariable long reviewId,
-		@RequestHeader("member-id") long memberId) {
+		@RequestHeader("member-id") long memberId) throws JsonProcessingException {
 		ResponseEntity<?> response = memberClient.getMemberInfo(memberId);
-		if (response.getStatusCode() == HttpStatus.OK) {
-			Object responseBody = response.getBody();
-			Map<String, Object> responseMap = (Map<String, Object>)responseBody;
-			Object data = responseMap.get("data");
-			if (data instanceof MemberResponse) {
-				MemberResponse memberInfo = (MemberResponse)data;
-				reviewService.deleteReview(reviewId, memberInfo.getNickname());
-				return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 삭제");
-			}
-		}
-		return BaseResponse.fail("책 리뷰 삭제 실패", 500);
+		reviewService.deleteReview(reviewId, responseUtil.extractDataFromResponse(response, MemberResponse.class).getNickname());
+		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 삭제");
 	}
 }

@@ -4,6 +4,7 @@ import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
+import 'package:bookdone/regist/page/regist_data.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,12 +27,12 @@ class MyApp extends StatelessWidget {
           fontFamily: "SCDream4",
           textTheme: TextTheme(
             // bodyLarge: TextStyle(fontSize: 20),
-            bodyMedium: TextStyle(fontSize: 18),
+            bodyMedium: TextStyle(fontSize: 15),
           ),
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      home: BookinfoMain(),
+      home: RegistData(),
     );
   }
 }

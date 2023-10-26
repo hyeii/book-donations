@@ -135,9 +135,6 @@ class _MyPageMainState extends State<MyPageMain>
             indicatorColor: Colors.brown,
             indicatorSize: TabBarIndicatorSize.tab,
             overlayColor: MaterialStateProperty.all(Colors.transparent),
-            // indicatorWeight: 2,
-            // indicatorPadding:
-            //     EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
             labelColor: Colors.black,
           ),
           Expanded(

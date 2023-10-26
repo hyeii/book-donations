@@ -1,4 +1,6 @@
 import 'package:bookdone/article/page/article_main.dart';
+import 'package:bookdone/bookinfo/page/bookinfo_detail.dart';
+import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
@@ -22,10 +24,14 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
           useMaterial3: true,
           fontFamily: "SCDream4",
+          textTheme: TextTheme(
+            // bodyLarge: TextStyle(fontSize: 20),
+            bodyMedium: TextStyle(fontSize: 18),
+          ),
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      home: MyPageMain(),
+      home: BookinfoMain(),
     );
   }
 }

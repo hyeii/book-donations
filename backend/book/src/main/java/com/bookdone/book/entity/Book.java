@@ -95,7 +95,7 @@ public class Book {
 		bookDto.setSeriesTitle(this.seriesTitle);
 		bookDto.setSeriesNo(this.seriesNo);
 		bookDto.setAuthor(this.author);
-		bookDto.setEaIsbn(this.isbn);
+		bookDto.setIsbn(this.isbn);
 		bookDto.setEaAddCode(this.eaAddCode);
 		bookDto.setSetIsbn(this.setIsbn);
 		bookDto.setSetAddCode(this.setAddCode);

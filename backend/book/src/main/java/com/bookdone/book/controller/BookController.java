@@ -101,27 +101,24 @@ public class BookController {
 		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 삭제");
 	}
 
-	// TODO: 특정 지역 특정 책에 대한 나의 관심도서 조회
+	/*
+	 TODO: 특정 지역 특정 책에 대한 나의 관심도서 여부 조회
+	 		개수는 여기서 작업할 내용이 아님, 
+	 		article 에 요청해서 조회해야 정확한 데이터 count
+	*/
 	@GetMapping("/likes")
 	public ResponseEntity<?> getLikesBooks(@RequestHeader("member-id") long memberId) {
 		List<LikesResponseDto> likesBooks = likesService.getLikesBooks(memberId);
 		return BaseResponse.okWithData(HttpStatus.OK, "관심도서 책 조회 완료", likesBooks);
 	}
 
-	// TODO: 특정 지역 특정 책에 대한 관심도서 등록
+	// TODO: 특정 지역 특정 책에 대한 등록, 취소 토글
 	@PostMapping("/likes")
-	public ResponseEntity<?> addLikesBook(@RequestHeader("member-id") long memberId,
+	public ResponseEntity<?> toggleLikesBook(@RequestHeader("member-id") long memberId,
 		@RequestBody LikesRequestDto likesRequestDto) {
-		likesService.addLikesBook(memberId, likesRequestDto);
-		return BaseResponse.ok(HttpStatus.OK, "관심도서 등록 완료");
-	}
-
-	// TODO: 특정 지역 특정 책에 대한 관심도서 취소
-	@DeleteMapping("/likes")
-	public ResponseEntity<?> deleteLikesBooks(@RequestHeader("member-id") long memberId,
-		@RequestBody LikesRequestDto likesRequestDto) {
-		likesService.deleteLikesBook(memberId, likesRequestDto);
-		return BaseResponse.ok(HttpStatus.OK, "관심도서 등록 취소");
+		boolean isToggled = likesService.toggleLikesBook(memberId, likesRequestDto);
+		String message = isToggled ? "관심도서 등록 완료" : "관심도서 등록 취소";
+		return BaseResponse.ok(HttpStatus.OK, message);
 	}
 
 }

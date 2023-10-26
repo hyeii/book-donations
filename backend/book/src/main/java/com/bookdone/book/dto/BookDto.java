@@ -22,7 +22,7 @@ public class BookDto {
 	private String seriesTitle;
 	private String seriesNo;
 	private String author;
-	private String eaIsbn;
+	private String isbn;
 	private String eaAddCode;
 	private String setIsbn;
 	private String setAddCode;

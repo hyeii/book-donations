@@ -15,4 +15,5 @@ public class LikesResponseDto {
 	private BookDto book;
 	private int localCode;
 	private int count;
+	private boolean isLikes;
 }

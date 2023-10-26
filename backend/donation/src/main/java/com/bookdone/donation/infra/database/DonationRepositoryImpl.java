@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,13 +17,24 @@ public class DonationRepositoryImpl implements DonationRepository {
 
     @Override
     public Long save(Donation donation) {
-        DonationEntity donationEntity = DonationEntity.fromDomain(donation);
-        donationEntity = jpaDonationRepository.save(donationEntity);
-        return donationEntity.getId();
+        DonationEntity donationEntity = donation.createEntity();
+        return jpaDonationRepository.save(donationEntity).getId();
     }
 
     @Override
-    public List<DonationEntity> findDonationListBybookIdAndMemberIdAndStatus(Long bookId, Long memberId, DonationStatus donationStatus) {
-        return jpaDonationRepository.findDonationEntitiesByBookIdAndMemberIdAndStatus(bookId, memberId, donationStatus.getStatusCode());
+    public Optional<DonationEntity> findById(Long id) {
+        return jpaDonationRepository.findById(id);
     }
+
+    @Override
+    public List<DonationEntity> findAllByIsbnAndAddress(Long isbn, Integer address) {
+        return jpaDonationRepository.findAllByIsbnAndAddress(isbn, address);
+    }
+
+    @Override
+    public List<DonationEntity> findAllBybookIdAndMemberIdAndStatus(Long bookId, Long memberId, DonationStatus donationStatus) {
+        return jpaDonationRepository.findDonationEntitiesByBookIdAndMemberIdAndStatus(bookId, memberId, donationStatus);
+    }
+
+
 }

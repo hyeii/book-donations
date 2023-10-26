@@ -1,6 +1,9 @@
 package com.bookdone.donation.infra.entity;
 
+import com.bookdone.donation.application.DonationStatus;
 import com.bookdone.donation.domain.Donation;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,6 +15,8 @@ import java.time.LocalDateTime;
 @Table(name = "donation")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DonationEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +36,8 @@ public class DonationEntity {
     private String content;
 
     @Column(nullable = false)
-    private Integer status;
+    @Enumerated(EnumType.STRING)
+    private DonationStatus status;
 
     @Column(name = "delivery", nullable = false)
     private boolean canDelivery;
@@ -40,12 +46,21 @@ public class DonationEntity {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    public static DonationEntity fromDomain(Donation donation) {
-        return Donation.createEntity(donation);
-    }
-
     public static Donation toDomain(DonationEntity donationEntity) {
         return Donation.createDonation(donationEntity);
+    }
+
+    public static DonationEntity fromDomain(Donation donation) {
+        return DonationEntity
+                .builder()
+                .id(donation.getId())
+                .isbn(donation.getIsbn())
+                .memberId(donation.getMemberId())
+                .address(donation.getAddress())
+                .content(donation.getContent())
+                .status(donation.getStatus())
+                .canDelivery(donation.isCanDelivery())
+                .build();
     }
 
 }

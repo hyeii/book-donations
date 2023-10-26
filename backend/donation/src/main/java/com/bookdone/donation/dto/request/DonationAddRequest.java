@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DonationAddRequest {
 
+    private Long id;
     private Long isbn;
     private Long memberId;
     private Integer address;

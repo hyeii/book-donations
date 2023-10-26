@@ -5,10 +5,15 @@ import com.bookdone.donation.domain.Donation;
 import com.bookdone.donation.infra.entity.DonationEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DonationRepository {
 
     public Long save(Donation donation);
 
-    public List<DonationEntity> findDonationListBybookIdAndMemberIdAndStatus(Long bookId, Long memberId, DonationStatus donationStatus);
+    public Optional<DonationEntity> findById(Long id);
+
+    public List<DonationEntity> findAllByIsbnAndAddress(Long isbn, Integer address);
+
+    public List<DonationEntity> findAllBybookIdAndMemberIdAndStatus(Long bookId, Long memberId, DonationStatus donationStatus);
 }

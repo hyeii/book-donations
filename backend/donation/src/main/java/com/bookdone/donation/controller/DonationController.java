@@ -1,6 +1,11 @@
 package com.bookdone.donation.controller;
 
+import com.bookdone.donation.application.AddDonationUseCase;
+import com.bookdone.donation.application.FindDonationUseCase;
+import com.bookdone.donation.dto.request.DonationAddRequest;
+import com.bookdone.global.dto.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,23 +14,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/donations")
 public class DonationController {
 
+    private final AddDonationUseCase addDonationUseCase;
+    private final FindDonationUseCase findDonationUseCase;
+
     @GetMapping
-    public ResponseEntity<?> donationList() {
-        return null;
+    public ResponseEntity<?> donationList(@PathVariable Long isbn, @PathVariable Integer address) {
+        return BaseResponse.okWithData(HttpStatus.OK, "게시글 목록이 조회되었습니다.", findDonationUseCase.findDonationList(isbn, address));
     }
 
     @GetMapping("/{donationId}")
-    public ResponseEntity<?> donationDetails(@PathVariable long donationId) {
-        return null;
+    public ResponseEntity<?> donationDetails(@PathVariable Long donationId) {
+        return BaseResponse.okWithData(HttpStatus.OK, "게시글이 조회되었습니다.", findDonationUseCase.findDonation(donationId));
     }
 
     @PostMapping
-    public ResponseEntity<?> donationAdd() {
-        return null;
+    public ResponseEntity<?> donationAdd(DonationAddRequest donationAddRequest) {
+        return BaseResponse.okWithData(HttpStatus.CREATED,"게시글이 등록되었습니다.", addDonationUseCase.addDonation(donationAddRequest));
     }
 
     @PutMapping("/{donationId}")
-    public ResponseEntity<?> donationReAdd(){ return null;}
+    public ResponseEntity<?> donationReadd(@PathVariable Long donationId, DonationAddRequest donationAddRequest){
+        donationAddRequest.setId(donationId);
+        return BaseResponse.okWithData(HttpStatus.CREATED, "게시글이 등록되었습니다.", addDonationUseCase.readdDonation(donationAddRequest));
+    }
 
     @PatchMapping
     public ResponseEntity<?> donationModify() {

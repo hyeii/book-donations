@@ -25,4 +25,11 @@ public class BookService {
 			.map(Book::toDto)
 			.orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다"));
 	}
+
+	public void temp(String isbn) {
+		bookRepository.save(Book.builder()
+			.isbn(isbn)
+			.title("hi")
+			.build());
+	}
 }

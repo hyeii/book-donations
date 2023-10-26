@@ -1,5 +1,7 @@
 package com.bookdone.book.dto;
 
+import com.bookdone.book.entity.Book;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,4 +39,5 @@ public class BookDto {
 	private String publisherUrl;
 	private String inputDate;
 	private String updateDate;
+
 }

@@ -1,7 +1,6 @@
 package com.bookdone.book.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookdone.book.dto.BookAutoCompDto;
 import com.bookdone.book.dto.BookDto;
+import com.bookdone.book.dto.LikesRequestDto;
+import com.bookdone.book.dto.LikesResponseDto;
+import com.bookdone.book.service.LikesService;
 import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.book.dto.ReviewRequestDto;
 import com.bookdone.book.dto.ReviewResponseDto;
@@ -38,8 +40,16 @@ public class BookController {
 	private final ReviewService reviewService;
 	private final BookService bookService;
 	private final RedisSearchService redisSearchService;
+	private final LikesService likesService;
 	private final MemberClient memberClient;
 	private final ResponseUtil responseUtil;
+
+	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
+	@PostMapping("/temp/{isbn}")
+	public ResponseEntity<?> temp(@PathVariable String isbn) {
+		bookService.temp(isbn);
+		return BaseResponse.ok(HttpStatus.OK, "책 임시 등록");
+	}
 
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
@@ -76,7 +86,8 @@ public class BookController {
 	public ResponseEntity<?> postReview(@RequestBody ReviewRequestDto reviewDto,
 		@RequestHeader("member-id") long memberId) throws JsonProcessingException {
 		ResponseEntity<?> response = memberClient.getMemberInfo(memberId);
-		reviewService.postReview(reviewDto, responseUtil.extractDataFromResponse(response, MemberResponse.class).getNickname());
+		reviewService.postReview(reviewDto,
+			responseUtil.extractDataFromResponse(response, MemberResponse.class).getNickname());
 		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 작성");
 	}
 
@@ -85,7 +96,32 @@ public class BookController {
 	public ResponseEntity<?> postReview(@PathVariable long reviewId,
 		@RequestHeader("member-id") long memberId) throws JsonProcessingException {
 		ResponseEntity<?> response = memberClient.getMemberInfo(memberId);
-		reviewService.deleteReview(reviewId, responseUtil.extractDataFromResponse(response, MemberResponse.class).getNickname());
+		reviewService.deleteReview(reviewId,
+			responseUtil.extractDataFromResponse(response, MemberResponse.class).getNickname());
 		return BaseResponse.ok(HttpStatus.OK, "책에 대한 리뷰 삭제");
 	}
+
+	// TODO: 특정 지역 특정 책에 대한 나의 관심도서 조회
+	@GetMapping("/likes")
+	public ResponseEntity<?> getLikesBooks(@RequestHeader("member-id") long memberId) {
+		List<LikesResponseDto> likesBooks = likesService.getLikesBooks(memberId);
+		return BaseResponse.okWithData(HttpStatus.OK, "관심도서 책 조회 완료", likesBooks);
+	}
+
+	// TODO: 특정 지역 특정 책에 대한 관심도서 등록
+	@PostMapping("/likes")
+	public ResponseEntity<?> addLikesBook(@RequestHeader("member-id") long memberId,
+		@RequestBody LikesRequestDto likesRequestDto) {
+		likesService.addLikesBook(memberId, likesRequestDto);
+		return BaseResponse.ok(HttpStatus.OK, "관심도서 등록 완료");
+	}
+
+	// TODO: 특정 지역 특정 책에 대한 관심도서 취소
+	@DeleteMapping("/likes")
+	public ResponseEntity<?> deleteLikesBooks(@RequestHeader("member-id") long memberId,
+		@RequestBody LikesRequestDto likesRequestDto) {
+		likesService.deleteLikesBook(memberId, likesRequestDto);
+		return BaseResponse.ok(HttpStatus.OK, "관심도서 등록 취소");
+	}
+
 }

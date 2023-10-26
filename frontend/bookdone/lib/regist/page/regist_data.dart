@@ -40,7 +40,7 @@ class _RegistDataState extends State<RegistData> {
         },
         icon: Container(
           alignment: Alignment.center,
-          child: Icon(Icons.camera),
+          child: Icon(Icons.camera_alt_rounded),
         ),
       ),
       Container(),
@@ -53,9 +53,6 @@ class _RegistDataState extends State<RegistData> {
         centerTitle: false,
         title: Text(
           "등록하기",
-          style: TextStyle(
-            fontSize: 20,
-          ),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -216,28 +213,32 @@ class _RegistDataState extends State<RegistData> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: SizedBox(
-            width: 200,
-            child: ElevatedButton(
-              onPressed: () {
-                // TODO: alert 확인창x
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      //모서리를 둥글게
-                      borderRadius: BorderRadius.circular(15)),
-                  fixedSize: Size(20, 100),
-                  textStyle: const TextStyle(fontSize: 18),
-                  backgroundColor: Colors.brown[300],
-                  foregroundColor: Colors.white),
-              child: Text(
-                "등록하기",
-                style: TextStyle(fontFamily: "SCDream4"),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 170,
+            ),
+            SizedBox(
+              width: 170,
+              child: ElevatedButton(
+                onPressed: () {
+                  // TODO: alert 확인창x
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    fixedSize: Size(20, 100),
+                    textStyle: const TextStyle(fontSize: 15),
+                    backgroundColor: Colors.brown[300],
+                    foregroundColor: Colors.white),
+                child: Text(
+                  "등록하기",
+                  style: TextStyle(fontFamily: "SCDream4"),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -15,14 +15,7 @@ class _MyPageNotificationsState extends State<MyPageNotifications> {
       appBar: AppBar(
         // backgroundColor: Colors.transparent,
         centerTitle: false,
-        title: Text(
-          "알림",
-          style: TextStyle(
-            fontSize: 20,
-            // fontWeight: FontWeight.bold,
-            // color: Colors.black,
-          ),
-        ),
+        title: Text("알림"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {},
@@ -30,7 +23,7 @@ class _MyPageNotificationsState extends State<MyPageNotifications> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 50, right: 50),
+          padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(children: [
             SizedBox(
               height: 10,
@@ -97,9 +90,6 @@ class _NotificationsState extends State<Notifications> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           "바다가 들리는 편의점의 기부를 기다리는 이용자가 있습니다.",
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
                         ),
                       ),
                       Container(
@@ -113,9 +103,6 @@ class _NotificationsState extends State<Notifications> {
                           ),
                           child: Text(
                             "닫기",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
                           ),
                         ),
                       ),

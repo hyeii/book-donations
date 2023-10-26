@@ -101,7 +101,7 @@ class _ExistCardState extends State<ExistCard> {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: double.infinity,
-        height: 120,
+        height: 110,
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.black12,
@@ -110,7 +110,7 @@ class _ExistCardState extends State<ExistCard> {
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
           child: Row(
             children: [
               ClipRRect(
@@ -127,47 +127,53 @@ class _ExistCardState extends State<ExistCard> {
                 ),
               ),
               SizedBox(
-                width: 10,
+                width: 15,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "바다가 들리는 편의점",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("마치다 소노코 지음"),
-                              Text("2개의 히스토리"),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Container(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            foregroundColor: Colors.brown.shade600,
-                          ),
-                          child: Text(
-                            "히스토리 보기",
-                          ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "바다가 들리는 편의점",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text("마치다 소노코 지음"),
+                          ],
                         ),
-                      ),
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("2개의 히스토리"),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              alignment: Alignment.bottomRight,
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  minimumSize: Size.zero,
+                                  padding: EdgeInsets.zero,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  foregroundColor: Colors.brown.shade600,
+                                ),
+                                child: Text(
+                                  "히스토리 보기",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Entity;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -16,12 +17,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "notifications")
+@Table(name = "notification")
 public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -71,18 +71,8 @@ class _MyPageMainState extends State<MyPageMain>
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "000님의 서재",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                "책갈피 3개",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
+                              Text("000님의 서재"),
+                              Text("책갈피 3개"),
                             ],
                           ),
                         ],
@@ -111,7 +101,7 @@ class _MyPageMainState extends State<MyPageMain>
                           shape: RoundedRectangleBorder(
                               //모서리를 둥글게
                               borderRadius: BorderRadius.circular(8)),
-                          textStyle: const TextStyle(fontSize: 15),
+                          textStyle: const TextStyle(fontSize: 12),
                           backgroundColor: Colors.brown,
                           foregroundColor: Colors.white),
                       child: Text(

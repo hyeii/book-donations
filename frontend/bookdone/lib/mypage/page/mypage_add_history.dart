@@ -14,12 +14,7 @@ class _MyPageAddHistoryState extends State<MyPageAddHistory> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
-          "히스토리 작성",
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
+        title: Text("히스토리 작성"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {},
@@ -27,7 +22,7 @@ class _MyPageAddHistoryState extends State<MyPageAddHistory> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 50, right: 50),
+          padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -111,8 +106,7 @@ class _AddHitoryCardState extends State<AddHitoryCard> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           "바다가 들리는 편의점",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
@@ -124,12 +118,7 @@ class _AddHitoryCardState extends State<AddHitoryCard> {
                             padding: EdgeInsets.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: Text(
-                            "작성하기",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
+                          child: Text("작성하기"),
                         ),
                       ),
                     ],
@@ -191,8 +180,7 @@ class _CompleteHistoryCardState extends State<CompleteHistoryCard> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           "바다가 들리는 편의점",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
@@ -204,12 +192,7 @@ class _CompleteHistoryCardState extends State<CompleteHistoryCard> {
                             padding: EdgeInsets.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: Text(
-                            "작성완료",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
+                          child: Text("작성완료"),
                         ),
                       ),
                     ],

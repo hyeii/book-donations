@@ -4,6 +4,10 @@ import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
+import 'package:bookdone/regist/page/regist_data.dart';
+import 'package:bookdone/regist/page/regist_exist_list.dart';
+import 'package:bookdone/regist/page/regist_new_check.dart';
+import 'package:bookdone/search/page/search_main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,13 +29,18 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "SCDream4",
           textTheme: TextTheme(
-            // bodyLarge: TextStyle(fontSize: 20),
-            bodyMedium: TextStyle(fontSize: 18),
+            bodyLarge: TextStyle(fontSize: 12),
+            bodyMedium: TextStyle(fontSize: 15), // 기본 text fontsize
+            bodySmall: TextStyle(fontSize: 12),
+            labelLarge: TextStyle(fontSize: 15), // 기본 button fontsize
+            displayMedium: TextStyle(fontSize: 12),
+            titleMedium: TextStyle(fontSize: 13),
+            titleLarge: TextStyle(fontSize: 15), // AppBar title
           ),
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      home: BookinfoMain(),
+      home: SearchMain(),
     );
   }
 }

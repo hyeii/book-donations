@@ -9,7 +9,7 @@ class SearchService extends ChangeNotifier {
     searchedList.clear();
 
     Response res = await Dio().get(
-      "https://www.googleapis.com/books/v1/volumes?q=$q&startIndex=0&maxResults=40",
+      "https://www.googleapis.com/books/v1/volumes?q=$q&startIndex=0&maxResults=10",
     );
     List items = res.data["items"];
     for (Map<String, dynamic> item in items) {

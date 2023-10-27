@@ -6,6 +6,8 @@ import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
 import 'package:bookdone/regist/page/regist_data.dart';
 import 'package:bookdone/regist/page/regist_exist_list.dart';
+import 'package:bookdone/regist/page/regist_new_check.dart';
+import 'package:bookdone/search/page/search_main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,9 +30,9 @@ class MyApp extends StatelessWidget {
           fontFamily: "SCDream4",
           textTheme: TextTheme(
             bodyLarge: TextStyle(fontSize: 12),
-            bodyMedium: TextStyle(fontSize: 12), // 기본 text fontsize
+            bodyMedium: TextStyle(fontSize: 15), // 기본 text fontsize
             bodySmall: TextStyle(fontSize: 12),
-            labelLarge: TextStyle(fontSize: 12), // 기본 button fontsize
+            labelLarge: TextStyle(fontSize: 15), // 기본 button fontsize
             displayMedium: TextStyle(fontSize: 12),
             titleMedium: TextStyle(fontSize: 13),
             titleLarge: TextStyle(fontSize: 15), // AppBar title
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      home: RegistExistList(),
+      home: SearchMain(),
     );
   }
 }

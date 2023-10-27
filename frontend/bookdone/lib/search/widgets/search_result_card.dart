@@ -1,100 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class RegistExistList extends StatefulWidget {
-  const RegistExistList({super.key});
+class SearchResultCard extends StatefulWidget {
+  const SearchResultCard({super.key});
 
   @override
-  State<RegistExistList> createState() => _RegistExistListState();
+  State<SearchResultCard> createState() => _SearchResultCardState();
 }
 
-class _RegistExistListState extends State<RegistExistList> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text("보유 리스트"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("책을 선택해 등록을 진행해주세요"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ExistCard(),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 170,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: alert 확인창x
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    fixedSize: Size(20, 100),
-                    textStyle: const TextStyle(fontSize: 15),
-                    backgroundColor: Colors.grey.shade300,
-                    foregroundColor: Colors.grey.shade600),
-                child: Text(
-                  "돌아가기",
-                  style: TextStyle(fontFamily: "SCDream4"),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 170,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: alert 확인창x
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    fixedSize: Size(20, 100),
-                    textStyle: const TextStyle(fontSize: 15),
-                    backgroundColor: Colors.brown[300],
-                    foregroundColor: Colors.white),
-                child: Text(
-                  "등록하기",
-                  style: TextStyle(fontFamily: "SCDream4"),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ExistCard extends StatefulWidget {
-  const ExistCard({super.key});
-
-  @override
-  State<ExistCard> createState() => _ExistCardState();
-}
-
-class _ExistCardState extends State<ExistCard> {
+class _SearchResultCardState extends State<SearchResultCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -149,7 +63,7 @@ class _ExistCardState extends State<ExistCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("2개의 히스토리"),
+                          Text("현재 3권 기부중"),
                           SizedBox(
                             width: 10,
                           ),
@@ -164,7 +78,7 @@ class _ExistCardState extends State<ExistCard> {
                                 foregroundColor: Colors.brown.shade600,
                               ),
                               child: Text(
-                                "히스토리 보기",
+                                "자세히 보기",
                               ),
                             ),
                           ),

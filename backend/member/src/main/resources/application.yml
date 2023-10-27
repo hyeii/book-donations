@@ -17,6 +17,18 @@ spring:
       show_sql: true
       format_sql: true
       use_sql_comments: true
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: ranking
+      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      acks: all # (0, 1, -1(all) )
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 eureka:
   instance:

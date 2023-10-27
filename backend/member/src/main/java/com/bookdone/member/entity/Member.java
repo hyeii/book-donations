@@ -41,6 +41,7 @@ public class Member {
 
     private String address;
 
+    @Column(columnDefinition = "integer default 0")
     private Integer point;
 
     @Column(length = 25)

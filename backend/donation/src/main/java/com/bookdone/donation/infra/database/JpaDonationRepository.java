@@ -7,7 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface JpaDonationRepository extends JpaRepository<DonationEntity, Long> {
-    List<DonationEntity> findDonationEntitiesByBookIdAndMemberIdAndStatus(Long bookId, Long memberId, DonationStatus status);
-
     List<DonationEntity> findAllByIsbnAndAddress(Long isbn, Integer address);
 }

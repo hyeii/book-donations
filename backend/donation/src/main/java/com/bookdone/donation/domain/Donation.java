@@ -51,4 +51,8 @@ public class Donation {
         return DonationEntity.fromDomain(this);
     }
 
+    public void changeStatusToKeeping() {
+        this.status = DonationStatus.KEEPING;
+    }
+
 }

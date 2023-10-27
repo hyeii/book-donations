@@ -11,9 +11,7 @@ public interface DonationRepository {
 
     public Long save(Donation donation);
 
-    public Optional<DonationEntity> findById(Long id);
+    public Donation findById(Long id);
 
-    public List<DonationEntity> findAllByIsbnAndAddress(Long isbn, Integer address);
-
-    public List<DonationEntity> findAllBybookIdAndMemberIdAndStatus(Long bookId, Long memberId, DonationStatus donationStatus);
+    public List<Donation> findAllByIsbnAndAddress(Long isbn, Integer address);
 }

@@ -1,6 +1,5 @@
 package com.bookdone.donation.infra.database;
 
-import com.bookdone.donation.application.DonationStatus;
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
 import com.bookdone.donation.infra.entity.DonationEntity;
@@ -8,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,19 +21,16 @@ public class DonationRepositoryImpl implements DonationRepository {
     }
 
     @Override
-    public Optional<DonationEntity> findById(Long id) {
-        return jpaDonationRepository.findById(id);
+    public Donation findById(Long id) {
+        DonationEntity donationEntity = jpaDonationRepository.findById(id)
+                .orElseThrow();
+        return Donation.createDonation(donationEntity);
     }
 
     @Override
-    public List<DonationEntity> findAllByIsbnAndAddress(Long isbn, Integer address) {
-        return jpaDonationRepository.findAllByIsbnAndAddress(isbn, address);
+    public List<Donation> findAllByIsbnAndAddress(Long isbn, Integer address) {
+        List<DonationEntity> donationEntityList = jpaDonationRepository.findAllByIsbnAndAddress(isbn, address);
+        return donationEntityList.stream().map(Donation::createDonation).collect(Collectors.toList());
     }
-
-    @Override
-    public List<DonationEntity> findAllBybookIdAndMemberIdAndStatus(Long bookId, Long memberId, DonationStatus donationStatus) {
-        return jpaDonationRepository.findDonationEntitiesByBookIdAndMemberIdAndStatus(bookId, memberId, donationStatus);
-    }
-
 
 }

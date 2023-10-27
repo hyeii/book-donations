@@ -8,10 +8,19 @@ import 'package:bookdone/regist/page/regist_data.dart';
 import 'package:bookdone/regist/page/regist_exist_list.dart';
 import 'package:bookdone/regist/page/regist_new_check.dart';
 import 'package:bookdone/search/page/search_main.dart';
+import 'package:bookdone/search/service/search_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => SearchService()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

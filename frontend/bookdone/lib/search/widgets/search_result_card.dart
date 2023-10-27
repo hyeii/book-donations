@@ -1,3 +1,4 @@
+import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +71,10 @@ class _SearchResultCardState extends State<SearchResultCard> {
                           Container(
                             alignment: Alignment.bottomRight,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => BookinfoMain()));
+                              },
                               style: TextButton.styleFrom(
                                 minimumSize: Size.zero,
                                 padding: EdgeInsets.zero,

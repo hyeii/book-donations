@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BookinfoDetail extends StatefulWidget {
   const BookinfoDetail({super.key});
@@ -36,8 +40,141 @@ class _BookinfoDetailState extends State<BookinfoDetail>
     super.dispose();
   }
 
+  List _regionList = [];
+  List _secondRegionList = [];
+  int _selectedRegionCode = 0;
+
+  Future<void> readJson() async {
+    // final regionData =
+    //     await rootBundle.loadString('assets/json/localcode.json');
+    // _regionList = RegionList.fromJson(regionData).regions ?? <Region>[];
+    // notifyListeners();
+    final String res =
+        await rootBundle.loadString("assets/json/localcode.json");
+    final data = await json.decode(res);
+    setState(() {
+      _regionList = data["region"];
+    });
+  }
+
+  void selectAddress(context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        // readJson();
+        return StatefulBuilder(builder: (context, setState) {
+          return Dialog(
+            child: Container(
+              width: double.infinity,
+              height: 350,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      "주소를 선택해주세요",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: _regionList.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _secondRegionList =
+                                          _regionList[index]["secondList"];
+                                      // _secondRegionListIndex = index;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Container(
+                                      // decoration: BoxDecoration(
+                                      //     color: Colors.brown.shade100),
+                                      child: Center(
+                                        child:
+                                            Text(_regionList[index]["first"]),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          // if (_secondRegionList.isNotEmpty)
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: _secondRegionList.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedRegionCode =
+                                          _secondRegionList[index]["code"];
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Container(
+                                      // decoration: BoxDecoration(
+                                      //     color: Colors.brown.shade100),
+                                      child: Center(
+                                        child: Text(
+                                            _secondRegionList[index]["second"]),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          // if (_secondRegionList.isEmpty) Text("선택 ㄱㄱ")
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // TODO: 지역코드 서버로 보내기
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        backgroundColor: Colors.brown.shade300,
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        foregroundColor: Colors.white,
+                      ),
+                      child: Text(
+                        "$_selectedRegionCode 선택완료",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // readJson();
     return Scaffold(
         appBar: AppBar(
           // backgroundColor: Colors.transparent,
@@ -59,7 +196,8 @@ class _BookinfoDetailState extends State<BookinfoDetail>
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: 지역 설정 팝업 열기
+                        readJson();
+                        selectAddress(context);
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -69,7 +207,6 @@ class _BookinfoDetailState extends State<BookinfoDetail>
                               fontSize: 13, fontFamily: "SCDream4"),
                           backgroundColor: Colors.brown.shade100,
                           foregroundColor: Colors.black87),
-                      // TODO: 버튼 사이즈 child 맞춤으로 적용하기
                       child: Wrap(
                         children: [
                           Icon(Icons.location_on, size: 17),
@@ -183,6 +320,19 @@ class _BookinfoDetailState extends State<BookinfoDetail>
         ));
   }
 }
+
+// class RegionList {
+//   final List<Region>? regions;
+//   RegionList({this.regions});
+
+//   factory RegionList.fromJson(String jsonString) {
+//     List<dynamic> listFromJson = json.decode(jsonString);
+//     List<Region> regions = <Region>[];
+
+//     regions = listFromJson.map((region) => Region.fromJson(region)).toList();
+//     return RegionList(regions: regions);
+//   }
+// }
 
 class SelectedAddress extends StatefulWidget {
   const SelectedAddress({super.key});

@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      home: SearchMain(),
+      home: BookinfoDetail(),
     );
   }
 }

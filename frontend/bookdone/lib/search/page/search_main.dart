@@ -81,6 +81,7 @@ class _SearchMainState extends State<SearchMain> {
                             icon: Icon(Icons.search)),
                         suffixIconColor: Colors.black,
                       ),
+                      onChanged: (value) {},
                       onSubmitted: (value) {
                         search(searchService);
                       },
@@ -115,11 +116,6 @@ class _SearchMainState extends State<SearchMain> {
                                 Book book = searchService.searchedList[index];
                                 return SearchResultCard(book: book);
                               },
-                              // itemCount: searchService.searchedList.length,
-                              // itemBuilder: (context, index) {
-                              //   Book book = searchService.searchedList[index];
-                              //   return ListTile(title: Text(book.title));
-                              // }),
                             ),
                           ),
                   ),

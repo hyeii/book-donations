@@ -17,6 +17,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SearchService()),
+        ChangeNotifierProvider(create: (context) => SetNewRegion()),
       ],
       child: const MyApp(),
     ),

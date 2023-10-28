@@ -23,12 +23,10 @@ class _RegistDataState extends State<RegistData> {
   List<XFile> _pickedImgs = [];
 
   Future<void> _pickImg() async {
-    final List<XFile>? images = await _picker.pickMultiImage();
-    if (images != null) {
-      setState(() {
-        _pickedImgs = images;
-      });
-    }
+    final List<XFile> images = await _picker.pickMultiImage();
+    setState(() {
+      _pickedImgs = images;
+    });
   }
 
   @override
@@ -82,15 +80,17 @@ class _RegistDataState extends State<RegistData> {
                     SizedBox(
                       width: 20,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("책 제목 냠냠"),
-                        Text("출판사 정보 냠냠"),
-                        Text("2099-99-99"),
-                        Text("ISBN")
-                        // TODO: 길이 조정
-                      ],
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("책 제목 냠냠"),
+                          Text("출판사 정보 냠냠"),
+                          Text("2099-99-99"),
+                          Text("ISBN")
+                          // TODO: 길이 조정
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -106,7 +106,7 @@ class _RegistDataState extends State<RegistData> {
                           width: 100,
                           child: Text("기부자"),
                         ),
-                        Text("냠냠냠"),
+                        Flexible(child: Text("냠냠")),
                       ],
                     ),
                     SizedBox(
@@ -118,7 +118,7 @@ class _RegistDataState extends State<RegistData> {
                           width: 100,
                           child: Text("지역"),
                         ),
-                        Text("서울시 구로구"),
+                        Flexible(child: Text("서울시 구로구")),
                         SizedBox(
                           width: 15,
                         ),
@@ -213,32 +213,24 @@ class _RegistDataState extends State<RegistData> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 170,
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: SizedBox(
+            width: 170,
+            child: ElevatedButton(
+              onPressed: () {
+                // TODO: alert 확인창x
+              },
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  fixedSize: Size(20, 100),
+                  textStyle: const TextStyle(fontSize: 15),
+                  backgroundColor: Colors.brown.shade300,
+                  foregroundColor: Colors.white),
+              child: Text("등록하기"),
             ),
-            SizedBox(
-              width: 170,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: alert 확인창x
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    fixedSize: Size(20, 100),
-                    textStyle: const TextStyle(fontSize: 15),
-                    backgroundColor: Colors.brown[300],
-                    foregroundColor: Colors.white),
-                child: Text(
-                  "등록하기",
-                  style: TextStyle(fontFamily: "SCDream4"),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

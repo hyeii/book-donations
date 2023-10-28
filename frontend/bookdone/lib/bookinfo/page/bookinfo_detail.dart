@@ -45,7 +45,7 @@ class _BookinfoDetailState extends State<BookinfoDetail>
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              // TODO: 뒤로가기 처리
+              Navigator.pop(context);
             },
           ),
         ),

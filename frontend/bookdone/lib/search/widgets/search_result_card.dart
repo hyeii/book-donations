@@ -1,14 +1,13 @@
+import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
+import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class SearchResultCard extends StatefulWidget {
-  const SearchResultCard({super.key});
+class SearchResultCard extends StatelessWidget {
+  const SearchResultCard({super.key, required this.book});
 
-  @override
-  State<SearchResultCard> createState() => _SearchResultCardState();
-}
+  final Book book;
 
-class _SearchResultCardState extends State<SearchResultCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,8 +53,12 @@ class _SearchResultCardState extends State<SearchResultCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "바다가 들리는 편의점",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            book.title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
                           ),
                           Text("마치다 소노코 지음"),
                         ],
@@ -70,7 +73,10 @@ class _SearchResultCardState extends State<SearchResultCard> {
                           Container(
                             alignment: Alignment.bottomRight,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => BookinfoMain()));
+                              },
                               style: TextButton.styleFrom(
                                 minimumSize: Size.zero,
                                 padding: EdgeInsets.zero,

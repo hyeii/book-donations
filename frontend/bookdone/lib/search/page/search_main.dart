@@ -1,5 +1,8 @@
+import 'package:bookdone/search/model/book.dart';
+import 'package:bookdone/search/service/search_service.dart';
 import 'package:bookdone/search/widgets/search_result_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchMain extends StatefulWidget {
   const SearchMain({super.key});
@@ -9,7 +12,7 @@ class SearchMain extends StatefulWidget {
 }
 
 class _SearchMainState extends State<SearchMain> {
-  final _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   String searchText = "";
 
@@ -17,85 +20,115 @@ class _SearchMainState extends State<SearchMain> {
   void initState() {
     super.initState();
     // myController에 리스너 추가
-    _searchController.addListener(_printLatestValue);
+    // _searchController.addListener(_searchValue);
   }
 
   @override
   void dispose() {
-    // 텍스트에디팅컨트롤러를 제거하고, 등록된 리스너도 제거된다.
     _searchController.dispose();
     super.dispose();
   }
 
-  void _printLatestValue() {
-    // TODO: 검색ㄱ
+  void search(SearchService searchService) {
+    String keyword = _searchController.text;
+    if (keyword.isNotEmpty) {
+      searchService.getBookList(keyword);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        // title: Text("검색"),
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back),
-        //   onPressed: () {},
-        // ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  // height: dou,
-                  width: double.infinity,
-                  child: TextField(
-                    controller: _searchController,
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontSize: 15,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide.none,
+    return Consumer<SearchService>(
+      builder: (context, searchService, child) {
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: false,
+            // title: Text("검색"),
+            // leading: IconButton(
+            //   icon: Icon(Icons.arrow_back),
+            //   onPressed: () {},
+            // ),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextField(
+                      controller: _searchController,
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontSize: 15,
                       ),
-                      hintText: "책 제목 검색",
-                      hintStyle:
-                          TextStyle(fontSize: 15, decorationThickness: 6),
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              searchText = _searchController.text;
-                            });
-                          },
-                          icon: Icon(Icons.search)),
-                      suffixIconColor: Colors.black,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: "책 제목 검색",
+                        hintStyle:
+                            TextStyle(fontSize: 15, decorationThickness: 6),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              search(searchService);
+                            },
+                            icon: Icon(Icons.search)),
+                        suffixIconColor: Colors.black,
+                      ),
+                      onSubmitted: (value) {
+                        search(searchService);
+                      },
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("$searchText 검색 결과"),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                SearchResultCard()
-              ],
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                      child: searchText != ""
+                          ? Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("$searchText 검색 결과"),
+                            )
+                          : null),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    child: searchService.searchedList.isEmpty
+                        // bookList가 비어있는 경우
+                        ? Center(
+                            child: Text(
+                              "검색ㄱㄱ",
+                            ),
+                          )
+                        // bookList 보여주기
+                        : Expanded(
+                            child: ListView.builder(
+                              itemCount: searchService.searchedList.length,
+                              itemBuilder: (context, index) {
+                                Book book = searchService.searchedList[index];
+                                return SearchResultCard(book: book);
+                              },
+                              // itemCount: searchService.searchedList.length,
+                              // itemBuilder: (context, index) {
+                              //   Book book = searchService.searchedList[index];
+                              //   return ListTile(title: Text(book.title));
+                              // }),
+                            ),
+                          ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

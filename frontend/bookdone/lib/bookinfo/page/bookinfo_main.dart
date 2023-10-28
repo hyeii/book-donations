@@ -1,3 +1,4 @@
+import 'package:bookdone/bookinfo/page/bookinfo_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class _BookinfoMainState extends State<BookinfoMain> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // TODO: 뒤로가기 처리
+            Navigator.pop(context);
           },
         ),
       ),
@@ -91,7 +92,8 @@ class _BookinfoMainState extends State<BookinfoMain> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: bookinfo_detail로 이동
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BookinfoDetail()));
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

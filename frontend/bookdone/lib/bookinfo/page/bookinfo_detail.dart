@@ -394,31 +394,6 @@ class _BookinfoDetailState extends State<BookinfoDetail>
 //   }
 // }
 
-class SelectedAddress extends StatefulWidget {
-  const SelectedAddress({super.key});
-
-  @override
-  State<SelectedAddress> createState() => _SelectedAddressState();
-}
-
-class _SelectedAddressState extends State<SelectedAddress> {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      child: Row(
-        children: [
-          const Icon(Icons.location_on),
-          Text(
-            "서울시 구로구",
-            style: TextStyle(fontSize: 12),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class DonatingCard extends StatefulWidget {
   const DonatingCard({super.key});
 

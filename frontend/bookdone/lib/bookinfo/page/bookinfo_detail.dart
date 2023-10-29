@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:bookdone/bookinfo/model/region.dart';
+import 'package:bookdone/bookinfo/widgets/donating_list.dart';
+import 'package:bookdone/bookinfo/widgets/keeping_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -393,143 +395,6 @@ class _BookinfoDetailState extends State<BookinfoDetail>
 //     return RegionList(regions: regions);
 //   }
 // }
-
-class DonatingCard extends StatefulWidget {
-  const DonatingCard({super.key});
-
-  @override
-  State<DonatingCard> createState() => _DonatingCardState();
-}
-
-class _DonatingCardState extends State<DonatingCard> {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style:
-          TextStyle(fontSize: 16, color: Colors.black, fontFamily: "SCDream4"),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 7.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("000님의 책"),
-              Text("2099-99-99"),
-            ],
-          ),
-          SizedBox(
-            height: 7.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("히스토리 개수"),
-              Text("서울시 영등포구"),
-            ],
-          ),
-          SizedBox(
-            height: 7.0,
-          ),
-          Divider(),
-        ],
-      ),
-    );
-  }
-}
-
-class DonatingList extends StatefulWidget {
-  const DonatingList({super.key});
-
-  @override
-  State<DonatingList> createState() => _DonatingListState();
-}
-
-class _DonatingListState extends State<DonatingList> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        DonatingCard(),
-        DonatingCard(),
-        DonatingCard(),
-        DonatingCard(),
-        DonatingCard(),
-        DonatingCard(),
-        DonatingCard(),
-        DonatingCard(),
-      ],
-    );
-  }
-}
-
-class KeepingCard extends StatefulWidget {
-  const KeepingCard({super.key});
-
-  @override
-  State<KeepingCard> createState() => _KeepingCardState();
-}
-
-class _KeepingCardState extends State<KeepingCard> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 13.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "서울시 양천구에 3권의 책이 있어요",
-              style: TextStyle(fontSize: 17),
-            ),
-            IconButton(
-              onPressed: () {
-                // TODO: 책 알림 구현하기
-              },
-              icon: Icon(Icons.notifications, size: 20),
-            ),
-          ],
-        ),
-        SizedBox(height: 13.0),
-        Divider(),
-      ],
-    );
-  }
-}
-
-class KeepingList extends StatefulWidget {
-  const KeepingList({super.key});
-
-  @override
-  State<KeepingList> createState() => _KeepingListState();
-}
-
-class _KeepingListState extends State<KeepingList> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        KeepingCard(),
-        KeepingCard(),
-        KeepingCard(),
-        KeepingCard(),
-        KeepingCard(),
-        KeepingCard(),
-        KeepingCard(),
-      ],
-    );
-  }
-}
 
 class SetNewRegion with ChangeNotifier {
   String selectedRegion = "서울특별시 구로구";

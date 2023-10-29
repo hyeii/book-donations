@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      home: BookinfoDetail(),
+      home: SearchMain(),
     );
   }
 }

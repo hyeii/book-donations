@@ -46,7 +46,7 @@ class _BookinfoDetailState extends State<BookinfoDetail>
   int _firstRegionIndex = 0;
   int _selectedRegionCode = 0;
   int _selectedRegionIndex = 0;
-  String _selectedRegion = "서울특별시 구로구";
+  // String _selectedRegion = "서울특별시 구로구";
 
   Future<void> readJson() async {
     // final regionData =
@@ -147,8 +147,8 @@ class _BookinfoDetailState extends State<BookinfoDetail>
                                       _selectedRegionCode =
                                           _secondRegionList[index]["code"];
                                       _selectedRegionIndex = index;
-                                      _selectedRegion = _secondRegionList[
-                                          _selectedRegionIndex]["name"];
+                                      // _selectedRegion = _secondRegionList[
+                                      //     _selectedRegionIndex]["name"];
                                     });
                                   },
                                   child: Padding(
@@ -197,13 +197,13 @@ class _BookinfoDetailState extends State<BookinfoDetail>
                       child: ElevatedButton(
                         onPressed: () {
                           // TODO: 지역코드 서버로 보내기
-                          setState(
-                            () {
-                              _selectedRegion =
-                                  _secondRegionList[_selectedRegionIndex]
-                                      ["name"];
-                            },
-                          );
+                          // setState(
+                          //   () {
+                          //     _selectedRegion =
+                          //         _secondRegionList[_selectedRegionIndex]
+                          //             ["name"];
+                          //   },
+                          // );
                           context.read<SetNewRegion>().updateSelectedRegion(
                               _secondRegionList[_selectedRegionIndex]["name"]);
                           Navigator.of(context).pop();

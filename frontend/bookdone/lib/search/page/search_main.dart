@@ -3,6 +3,7 @@ import 'package:bookdone/search/service/search_service.dart';
 import 'package:bookdone/search/widgets/search_result_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // env 사용
 
 class SearchMain extends StatefulWidget {
   const SearchMain({super.key});
@@ -13,7 +14,7 @@ class SearchMain extends StatefulWidget {
 
 class _SearchMainState extends State<SearchMain> {
   final TextEditingController _searchController = TextEditingController();
-
+  String? apiUrl = DotEnv().env['API_URL'];
   String searchText = "";
 
   @override

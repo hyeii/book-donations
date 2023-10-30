@@ -44,6 +44,8 @@ dependencies:
   json_annotation: ^4.8.1
   flutter_hooks: ^0.20.3
   go_router: ^12.0.1
+  flutter_dotenv: ^5.0.2
+  stomp_dart_client: ^0.4.4
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +82,8 @@ flutter:
   assets:
     - assets/images/
     - assets/json/localcode.json
+    - .env
+    - .env.dev
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

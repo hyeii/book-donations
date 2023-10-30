@@ -14,7 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+void main() async {
+  await dotenv.load(fileName: ".env.dev");
   CustomNavigationHelper.instance;
   runApp(
     MultiProvider(
@@ -43,9 +46,11 @@ class MyApp extends StatelessWidget {
           fontFamily: "SCDream4",
           textTheme: TextTheme(
             bodyLarge: TextStyle(fontSize: 12),
-            bodyMedium: TextStyle(fontSize: 15), // 기본 text fontsize
+            bodyMedium: TextStyle(fontSize: 15),
+            // 기본 text fontsize
             bodySmall: TextStyle(fontSize: 12),
-            labelLarge: TextStyle(fontSize: 15), // 기본 button fontsize
+            labelLarge: TextStyle(fontSize: 15),
+            // 기본 button fontsize
             displayMedium: TextStyle(fontSize: 12),
             titleMedium: TextStyle(fontSize: 13),
             titleLarge: TextStyle(fontSize: 15), // AppBar title

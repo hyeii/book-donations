@@ -12,6 +12,7 @@ import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/search/service/search_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -256,11 +257,33 @@ class CustomNavigationHelper {
           ),
         ],
       ),
+      GoRoute(
+        parentNavigatorKey: parentNavigatorKey,
+        name: 'onboarding',
+        path: '/onboarding',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const OnboardingPage(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: parentNavigatorKey,
+        name: 'firstpage',
+        path: '/firstpage',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const FirstPage(),
+            state: state,
+          );
+        },
+      ),
     ];
 
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: homePath,
+      initialLocation: '/firstpage',
       routes: routes,
     );
   }
@@ -349,6 +372,114 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
             label: 'settings',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget {
+  const FirstPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Text('책도네 첫페이지'),
+            ElevatedButton(
+              onPressed: () {
+                context.goNamed('onboarding');
+              },
+              child: Text('알아보기'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class OnboardingPage extends StatelessWidget {
+  const OnboardingPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IntroductionScreen(
+        pages: [
+          // 첫 번째 페이지
+          PageViewModel(
+            title: "책도네 11",
+            body: "첫번째 페이지 멘트 어쩌구",
+            decoration: PageDecoration(
+              titleTextStyle: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              bodyTextStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+            ),
+          ),
+          // 두 번째 페이지
+          PageViewModel(
+            title: "책도네 22",
+            body: "두번째 페이지 멘트 어쩌구",
+            decoration: PageDecoration(
+              titleTextStyle: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              bodyTextStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+            ),
+          ),
+          PageViewModel(
+            title: "책도네 33",
+            // body: '세번째 페이지 멘트 어쩌구',
+            decoration: PageDecoration(
+              titleTextStyle: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              bodyTextStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+            ),
+            bodyWidget: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text("Click on "),
+                Icon(Icons.edit),
+                Text(" to edit a post"),
+              ],
+            ),
+            footer: ElevatedButton(
+              onPressed: () {
+                // TODO: 로그인 구현
+                context.goNamed('home');
+              },
+              child: const Text("카카오로 시작하기"),
+            ),
+          ),
+        ],
+        next: Text("Next", style: TextStyle(fontWeight: FontWeight.w600)),
+        done: Text(''),
+        showDoneButton: false,
+        showNextButton: false,
+        onDone: () {},
+        dotsDecorator: DotsDecorator(
+          activeColor: Colors.brown,
+          // activeShapes: List.filled(10, Border.all(), growable: true)
+        ),
       ),
     );
   }

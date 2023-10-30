@@ -15,10 +15,10 @@ class _MyPageAddHistoryState extends State<MyPageAddHistory> {
       appBar: AppBar(
         centerTitle: false,
         title: Text("히스토리 작성"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () {},
+        // ),
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyPageMain extends StatefulWidget {
   const MyPageMain({Key? key}) : super(key: key);
@@ -80,7 +81,7 @@ class _MyPageMainState extends State<MyPageMain>
                       IconButton(
                         icon: Icon(Icons.notifications),
                         onPressed: () {
-                          // TODO: MyPageNotification으로 이동
+                          context.pushNamed('notification');
                         },
                       ),
                     ],
@@ -92,7 +93,9 @@ class _MyPageMainState extends State<MyPageMain>
                 Container(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.pushNamed('addhistory');
+                      },
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.symmetric(

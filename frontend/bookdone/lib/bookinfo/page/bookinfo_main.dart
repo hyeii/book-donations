@@ -1,6 +1,7 @@
 import 'package:bookdone/bookinfo/page/bookinfo_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class BookinfoMain extends StatefulWidget {
   const BookinfoMain({super.key});
@@ -92,8 +93,7 @@ class _BookinfoMainState extends State<BookinfoMain> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => BookinfoDetail()));
+                    context.pushNamed('bookinfodetail');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -191,6 +191,15 @@ class CommentInput extends StatefulWidget {
 
 class _CommentInputState extends State<CommentInput> {
   final _formKey = GlobalKey<FormState>();
+  String comment = "";
+
+  void _tryValidation() {
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      _formKey.currentState!.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -209,19 +218,18 @@ class _CommentInputState extends State<CommentInput> {
             ),
             maxLength: 100,
             maxLines: 2,
-            onSaved: (value) {},
+            onSaved: (value) {
+              comment = value!;
+            },
             validator: (value) {
-              if (value != null) return "댓글을 입력해주세요.";
+              if (value!.isEmpty) return "댓글을 입력해주세요.";
               return null;
             },
           ),
         ),
         ElevatedButton(
           onPressed: () {
-            final formKeyState = _formKey.currentState!;
-            if (formKeyState.validate()) {
-              formKeyState.save();
-            }
+            _tryValidation();
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(

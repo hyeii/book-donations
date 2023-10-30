@@ -72,9 +72,11 @@ class CustomNavigationHelper {
       GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> searchTabNavigatorKey =
       GlobalKey<NavigatorState>();
-  static final GlobalKey<NavigatorState> settingsTabNavigatorKey =
+  static final GlobalKey<NavigatorState> myPageTabNavigatorKey =
       GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> chatTabNavigatorKey =
+      GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> registNavigatorKey =
       GlobalKey<NavigatorState>();
 
   BuildContext get context =>
@@ -90,6 +92,9 @@ class CustomNavigationHelper {
   static const String searchPath = '/search';
   static const String addHistoryPath = '/addhistory';
   static const String chatPath = '/chat';
+  static const String notificationPath = '/notification';
+  static const String registPath = '/regist';
+  static const String bookinfoDetailPath = '/bookinfodetail';
 
   factory CustomNavigationHelper() {
     return _instance;
@@ -104,7 +109,8 @@ class CustomNavigationHelper {
             navigatorKey: homeTabNavigatorKey,
             routes: [
               GoRoute(
-                path: homePath,
+                name: 'home',
+                path: '/home',
                 pageBuilder: (context, GoRouterState state) {
                   return getPage(
                     child: const MyHomePage(),
@@ -118,7 +124,8 @@ class CustomNavigationHelper {
             navigatorKey: searchTabNavigatorKey,
             routes: [
               GoRoute(
-                path: searchPath,
+                name: 'search',
+                path: '/search',
                 pageBuilder: (context, state) {
                   return getPage(
                     child: const SearchMain(),
@@ -129,13 +136,14 @@ class CustomNavigationHelper {
             ],
           ),
           StatefulShellBranch(
-            navigatorKey: settingsTabNavigatorKey,
+            navigatorKey: registNavigatorKey,
             routes: [
               GoRoute(
-                path: mypagePath,
+                name: 'registPath',
+                path: '/regist',
                 pageBuilder: (context, state) {
                   return getPage(
-                    child: const MyPageMain(),
+                    child: const RegistData(),
                     state: state,
                   );
                 },
@@ -146,7 +154,8 @@ class CustomNavigationHelper {
             navigatorKey: chatTabNavigatorKey,
             routes: [
               GoRoute(
-                path: chatPath,
+                name: 'chat',
+                path: '/chat',
                 pageBuilder: (context, state) {
                   return getPage(
                     child: const ChatMain(),
@@ -154,6 +163,42 @@ class CustomNavigationHelper {
                   );
                 },
               ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: myPageTabNavigatorKey,
+            routes: [
+              GoRoute(
+                  name: 'mypage',
+                  path: '/mypage',
+                  pageBuilder: (context, state) {
+                    return getPage(
+                      child: const MyPageMain(),
+                      state: state,
+                    );
+                  },
+                  routes: [
+                    GoRoute(
+                      name: 'addhistory',
+                      path: 'addhistory',
+                      pageBuilder: (context, state) {
+                        return getPage(
+                          child: const MyPageAddHistory(),
+                          state: state,
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: 'notification',
+                      path: 'notification',
+                      pageBuilder: (context, state) {
+                        return getPage(
+                          child: const MyPageNotifications(),
+                          state: state,
+                        );
+                      },
+                    )
+                  ]),
             ],
           ),
         ],
@@ -171,15 +216,27 @@ class CustomNavigationHelper {
         },
       ),
       GoRoute(
-        parentNavigatorKey: parentNavigatorKey,
-        path: addHistoryPath,
-        pageBuilder: (context, state) {
-          return getPage(
-            child: const MyPageAddHistory(),
-            state: state,
-          );
-        },
-      ),
+          parentNavigatorKey: parentNavigatorKey,
+          name: 'bookinfoMain',
+          path: '/bookinfomain',
+          pageBuilder: (context, state) {
+            return getPage(
+              child: const BookinfoMain(),
+              state: state,
+            );
+          },
+          routes: [
+            GoRoute(
+              name: 'bookinfodetail',
+              path: 'bookinfodetail',
+              pageBuilder: (context, state) {
+                return getPage(
+                  child: const BookinfoDetail(),
+                  state: state,
+                );
+              },
+            ),
+          ]),
     ];
 
     router = GoRouter(
@@ -208,42 +265,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text('책도네'),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: Center(),
     );
   }
 }
@@ -290,12 +318,16 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
             label: 'search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'settings',
+            icon: Icon(Icons.add),
+            label: 'regist',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             label: 'chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'settings',
           ),
         ],
       ),

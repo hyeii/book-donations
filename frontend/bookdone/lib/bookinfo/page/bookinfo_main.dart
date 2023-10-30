@@ -1,6 +1,7 @@
 import 'package:bookdone/bookinfo/page/bookinfo_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class BookinfoMain extends StatefulWidget {
   const BookinfoMain({super.key});
@@ -92,8 +93,7 @@ class _BookinfoMainState extends State<BookinfoMain> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => BookinfoDetail()));
+                    context.pushNamed('bookinfodetail');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

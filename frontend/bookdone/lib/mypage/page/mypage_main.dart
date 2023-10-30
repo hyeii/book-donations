@@ -81,7 +81,7 @@ class _MyPageMainState extends State<MyPageMain>
                       IconButton(
                         icon: Icon(Icons.notifications),
                         onPressed: () {
-                          // TODO: MyPageNotification으로 이동
+                          context.pushNamed('notification');
                         },
                       ),
                     ],
@@ -94,7 +94,7 @@ class _MyPageMainState extends State<MyPageMain>
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                       onPressed: () {
-                        context.push('/addhistory');
+                        context.pushNamed('addhistory');
                       },
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size.zero,

@@ -16,10 +16,10 @@ class _MyPageNotificationsState extends State<MyPageNotifications> {
         // backgroundColor: Colors.transparent,
         centerTitle: false,
         title: Text("알림"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () {},
+        // ),
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -1,4 +1,4 @@
-package com.bookdone.donation.application;
+package com.bookdone.history.application;
 
 import lombok.Getter;
 

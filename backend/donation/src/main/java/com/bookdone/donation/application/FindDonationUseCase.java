@@ -8,8 +8,8 @@ import com.bookdone.donation.dto.response.DonationDetailsResponse;
 import com.bookdone.donation.dto.response.DonationListResponse;
 import com.bookdone.util.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +28,20 @@ public class FindDonationUseCase {
     private final ResponseUtil responseUtil;
 
     public List<DonationListResponse> findDonationList(Long isbn, Integer address) throws JsonProcessingException {
-        //todo isbn 유효성 검사
-
         List<Donation> donationList = donationRepository.findAllByIsbnAndAddress(isbn, address);
+
+        if(donationList.isEmpty()) return null;
+
         List<Long> memberIdList = donationList.stream()
                 .map(donation -> donation.getMemberId())
                 .collect(Collectors.toList());
-        Map<Long, MemberResponse> memberResponseMap = responseUtil.extractDataFromResponse(memberClient.getMemberInfoList(memberIdList), Map.class);
+
+        Map<Long, MemberResponse> memberResponseMap = null;
+        try {
+            memberResponseMap = responseUtil.extractDataFromResponse(memberClient.getMemberInfoList(memberIdList), Map.class);
+        } catch (FeignException.NotFound e) {
+            throw e;
+        }
 
         List<DonationListResponse> donationListResponseList = createDonationListResponse(donationList, memberResponseMap);
 
@@ -42,16 +49,21 @@ public class FindDonationUseCase {
     }
 
     public DonationDetailsResponse findDonation(Long id) throws JsonProcessingException {
-        //todo 예외처리
         Donation donation = donationRepository.findById(id);
 
-        //todo nickname
-        MemberResponse memberResponse = responseUtil.extractDataFromResponse(memberClient.getMemberInfo(donation.getMemberId()), MemberResponse.class);
+        MemberResponse memberResponse = null;
 
-        //todo immageUrlList
+        //todo nickname
+        try {
+            memberResponse = responseUtil.extractDataFromResponse(memberClient.getMemberInfo(donation.getMemberId()), MemberResponse.class);
+        } catch (FeignException.NotFound e) {
+            throw e;
+        }
+
+        //todo imageUrlList
         List<String> imageUrlList = null;
 
-        DonationDetailsResponse donationDetailsResponse = DonationDetailsResponse
+        return DonationDetailsResponse
                 .builder()
                 .id(donation.getId())
                 .isbn(donation.getIsbn())
@@ -61,22 +73,20 @@ public class FindDonationUseCase {
                 .canDelivery(donation.isCanDelivery())
                 .imageUrlList(imageUrlList)
                 .build();
-
-        return donationDetailsResponse;
     }
 
     public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, MemberResponse> memberResponseMap) {
         List<DonationListResponse> donationListResponseList = new ArrayList<>();
 
         //todo historyCount
-        Map<Long, Integer> hisoryCountMap = null;
+        Map<Long, Integer> historyCountMap = null;
 
         for(Donation donation : donationList) {
             DonationListResponse donationListResponse = DonationListResponse
                     .builder()
                     .id(donation.getId())
                     .nickname(memberResponseMap.get(donation.getId()).getNickname())
-                    .historyCount(hisoryCountMap.get(donation.getId()))
+                    .historyCount(historyCountMap.get(donation.getId()))
                     .address(donation.getAddress())
                     .createdAt(donation.getCreatedAt())
                     .build();

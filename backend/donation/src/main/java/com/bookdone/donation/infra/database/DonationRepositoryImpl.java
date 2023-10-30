@@ -21,9 +21,17 @@ public class DonationRepositoryImpl implements DonationRepository {
     }
 
     @Override
+    public Long update(Donation donation) {
+        DonationEntity donationEntity = donation.createEntity();
+        jpaDonationRepository.findById(donationEntity.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 도네이션이 없습니다."));
+        return jpaDonationRepository.save(donationEntity).getId();
+    }
+
+    @Override
     public Donation findById(Long id) {
         DonationEntity donationEntity = jpaDonationRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 도네이션이 없습니다."));
         return Donation.createDonation(donationEntity);
     }
 

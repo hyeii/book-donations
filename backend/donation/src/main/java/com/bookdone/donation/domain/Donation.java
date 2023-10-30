@@ -21,8 +21,7 @@ public class Donation {
     private LocalDateTime createdAt;
 
     public static Donation createDonation(DonationAddRequest donationAddRequest) {
-        return Donation
-                .builder()
+        return Donation.builder()
                 .id(donationAddRequest.getId())
                 .isbn(donationAddRequest.getIsbn())
                 .memberId(donationAddRequest.getMemberId())
@@ -34,8 +33,7 @@ public class Donation {
     }
 
     public static Donation createDonation(DonationEntity donationEntity) {
-        return Donation
-                .builder()
+        return Donation.builder()
                 .id(donationEntity.getId())
                 .isbn(donationEntity.getIsbn())
                 .memberId(donationEntity.getMemberId())

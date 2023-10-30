@@ -28,7 +28,7 @@ public class AddDonationUseCase {
 
         Donation donation = donationAddRequest.toDomain();
 
-        Long id = donationRepository.save(donation);
+        Long id = donationRepository.update(donation);
         return id;
     }
 

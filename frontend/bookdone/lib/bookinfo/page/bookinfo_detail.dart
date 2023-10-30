@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/bookinfo/widgets/donating_list.dart';
 import 'package:bookdone/bookinfo/widgets/keeping_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';

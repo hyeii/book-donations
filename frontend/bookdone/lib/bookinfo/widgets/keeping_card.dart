@@ -6,6 +6,8 @@ class KeepingCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final area = useState('서울시 마포구');
+    final bookCnt = useState(0);
     return Column(
       children: [
         SizedBox(
@@ -15,7 +17,7 @@ class KeepingCard extends HookWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "서울시 양천구에 3권의 책이 있어요",
+              '${area.value}에 ${bookCnt.value}권의 책이 있어요',
               style: TextStyle(fontSize: 17),
             ),
             IconButton(

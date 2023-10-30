@@ -1,27 +1,31 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ArticleMain extends StatefulWidget {
+class ArticleMain extends HookWidget {
   const ArticleMain({super.key});
 
   @override
-  State<ArticleMain> createState() => _ArticleMainState();
-}
-
-class _ArticleMainState extends State<ArticleMain> {
-  @override
   Widget build(BuildContext context) {
+    final title = useState('바다가 들리는 편의점');
+    final historyCount = useState(0);
+    final donatorComment = useState('책 깨끗해용 재미써용');
+    final author = useState('저자이름');
+    final publisher = useState('출판사');
+    final pubDate = useState('2028년 13월 32일');
+    final discription = useState('기타 책 관련 설명');
+
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // TODO: 뒤로가기 처리
-          },
-        ),
-      ),
+          // backgroundColor: Colors.transparent,
+          // elevation: 0,
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back),
+          //   onPressed: () {
+          //     // TODO: 뒤로가기 처리
+          //   },
+          // ),
+          ),
       body: Padding(
         padding: const EdgeInsets.only(left: 50, right: 50),
         child: SingleChildScrollView(
@@ -44,7 +48,7 @@ class _ArticleMainState extends State<ArticleMain> {
                   height: 15,
                 ),
                 Text(
-                  "바다가 들리는 편의점",
+                  title.value,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Padding(
@@ -57,7 +61,7 @@ class _ArticleMainState extends State<ArticleMain> {
                         height: 20,
                       ),
                       Text(
-                        "히스토리 개수",
+                        '${historyCount.value}개의 히스토리',
                       ),
                       SizedBox(
                         height: 20,
@@ -71,7 +75,7 @@ class _ArticleMainState extends State<ArticleMain> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "책 깨끗깨끗 완전 재밌음",
+                        donatorComment.value,
                       ),
                       SizedBox(
                         height: 20,
@@ -85,16 +89,16 @@ class _ArticleMainState extends State<ArticleMain> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "저자정보",
+                        '${author.value} 지음',
                       ),
                       Text(
-                        "출판사정보",
+                        publisher.value,
                       ),
                       Text(
-                        "발행일",
+                        pubDate.value,
                       ),
                       Text(
-                        "기타 설명",
+                        discription.value,
                       ),
                       SizedBox(
                         height: 20,

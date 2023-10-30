@@ -221,27 +221,41 @@ class CustomNavigationHelper {
         },
       ),
       GoRoute(
-          parentNavigatorKey: parentNavigatorKey,
-          name: 'bookinfoMain',
-          path: '/bookinfomain',
-          pageBuilder: (context, state) {
-            return getPage(
-              child: const BookinfoMain(),
-              state: state,
-            );
-          },
-          routes: [
-            GoRoute(
-              name: 'bookinfodetail',
-              path: 'bookinfodetail',
-              pageBuilder: (context, state) {
-                return getPage(
-                  child: const BookinfoDetail(),
-                  state: state,
-                );
-              },
-            ),
-          ]),
+        parentNavigatorKey: parentNavigatorKey,
+        name: 'bookinfoMain',
+        path: '/bookinfomain',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const BookinfoMain(),
+            state: state,
+          );
+        },
+        routes: [
+          GoRoute(
+            name: 'bookinfodetail',
+            path: 'bookinfodetail',
+            pageBuilder: (context, state) {
+              return getPage(
+                child: const BookinfoDetail(),
+                state: state,
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: parentNavigatorKey,
+                name: 'articlemain',
+                path: 'articlemain',
+                pageBuilder: (context, state) {
+                  return getPage(
+                    child: const ArticleMain(),
+                    state: state,
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     ];
 
     router = GoRouter(

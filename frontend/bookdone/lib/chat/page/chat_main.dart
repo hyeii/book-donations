@@ -25,7 +25,7 @@ class ChatMain extends HookWidget {
 
       stompClient.value = StompClient(
           config: StompConfig(
-              url: 'ws://$wsUrl',
+              url: '$wsUrl',
               onConnect: onConnect,
               onWebSocketError: (dynamic error) => print(error),
               stompConnectHeaders: {}));

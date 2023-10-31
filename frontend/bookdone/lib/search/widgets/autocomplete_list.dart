@@ -28,6 +28,7 @@ class _AutocompleteListState extends State<AutocompleteList> {
             return GestureDetector(
               onTap: () {
                 // TODO: 검색으로 isbn 넘기기
+                print('잘 눌려용');
               },
               child: Container(
                 decoration: BoxDecoration(color: Colors.white),

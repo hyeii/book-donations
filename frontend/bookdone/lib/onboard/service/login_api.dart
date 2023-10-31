@@ -1,3 +1,4 @@
+import 'package:bookdone/onboard/page/add_additional_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -6,7 +7,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 class LoginApi {
   String baseURL = dotenv.get('API_URL');
 
-  static Future<void> kakaoLogin() async {
+  static Future<void> kakaoLogin(context) async {
     if (await isKakaoTalkInstalled()) {
       debugPrint('카톡으루로그잉');
       try {
@@ -30,6 +31,7 @@ class LoginApi {
       }
     } else {
       debugPrint('계정로긍이');
+      debugPrint(await KakaoSdk.origin);
       // debugPrint(await KakaoSdk.origin);
       try {
         await UserApi.instance.loginWithKakaoAccount();
@@ -37,6 +39,9 @@ class LoginApi {
         if (await checkHasToken()) {
           var token = await TokenManagerProvider.instance.manager.getToken();
           debugPrint('토큰냠냠 ${token!.accessToken}');
+          debugPrint('${token.toJson()}');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
         }
       } catch (error) {
         debugPrint('카카오계정으로 로그인 실패 $error');

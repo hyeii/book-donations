@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,7 +20,7 @@ public class DonationAddRequest {
     private Integer address;
     private String content;
     private boolean canDelivery;
-    private List<MultipartFile> images;
+    private List<MultipartFile> images = new ArrayList<>();
 
     public Donation toDomain() {
         return Donation.createDonation(this);

@@ -18,7 +18,7 @@ public class ModifyDonationUseCase {
 
         //todo 예외처리
         if(donation.getStatus() == DonationStatus.KEEPING)
-            ;
+            throw new IllegalArgumentException("이미 보유중인 책입니다.");
 
         donation.changeStatusToKeeping();
         id = donationRepository.save(donation);

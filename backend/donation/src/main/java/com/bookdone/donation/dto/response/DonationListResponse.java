@@ -13,7 +13,7 @@ public class DonationListResponse {
 
     private Long id;
     private String nickname;
-    private Integer historyCount;
+    private Long historyCount;
     private Integer address;
     private LocalDateTime createdAt;
 }

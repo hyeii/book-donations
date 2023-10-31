@@ -1,14 +1,18 @@
 package com.bookdone.donation.infra.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "board_image")
+@Table(name = "donation_image")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DonationImageEntity {
 
     @Id
@@ -16,9 +20,10 @@ public class DonationImageEntity {
     @Column
     private Long id;
 
-    @Column(name = "book_id", nullable = false)
-    private Long bookId;
+    @Column(name = "donation_id", nullable = false)
+    private Long donationId;
 
     @Column(nullable = false)
     private String url;
+
 }

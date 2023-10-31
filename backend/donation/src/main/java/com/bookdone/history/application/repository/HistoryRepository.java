@@ -10,6 +10,6 @@ public interface HistoryRepository {
     public Long updateHistory(History History);
     public History findById(Long id);
     public History findByDonationIdAndMemberId(Long donationId, Long memberId);
-
     public List<History> findAll(Long donationId);
+    public Long countAllByDonationId(Long donationId);
 }

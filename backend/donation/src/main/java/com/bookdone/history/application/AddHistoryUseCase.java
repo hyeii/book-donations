@@ -14,6 +14,7 @@ public class AddHistoryUseCase {
     private final HistoryRepository historyRepository;
 
     public Long updateHistory(HistoryAddRequest historyAddRequest) {
+        System.out.println(historyAddRequest.getContent());
         History history = History.createHistory(historyAddRequest);
         return historyRepository.updateHistory(history);
     }

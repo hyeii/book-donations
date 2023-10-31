@@ -1,3 +1,5 @@
+import 'package:bookdone/mypage/widgets/my_donating_list.dart';
+import 'package:bookdone/mypage/widgets/my_keeping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -134,13 +136,20 @@ class _MyPageMainState extends State<MyPageMain>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: tabs.map((tab) {
-                return Center(
-                  child: Text(
-                    "${tab.text}",
-                  ),
-                );
-              }).toList(),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  child: MyDonatingList(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  child: MyKeepingList(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  child: MyKeepingList(),
+                ),
+              ],
             ),
           )
         ],

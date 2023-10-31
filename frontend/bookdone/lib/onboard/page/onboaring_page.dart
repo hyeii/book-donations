@@ -1,3 +1,5 @@
+import 'package:bookdone/onboard/page/add_additional_info.dart';
+import 'package:bookdone/onboard/service/login_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -56,31 +58,31 @@ class OnboardingPage extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
-            bodyWidget: Row(
+            bodyWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Text("Click on "),
-                Icon(Icons.edit),
-                Text(" to edit a post"),
+                Text('책도네 세번쨰 페이지'),
+                Text('책도네 세번쨰 페이징'),
               ],
             ),
             footer: ElevatedButton(
               onPressed: () {
                 // TODO: 로그인 구현
-                context.goNamed('home');
+                // LoginApi.kakaoLogin();
+                // context.goNamed('home');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddAdditionalInfo()));
               },
               child: const Text("카카오로 시작하기"),
             ),
           ),
         ],
-        next: Text("Next", style: TextStyle(fontWeight: FontWeight.w600)),
-        done: Text(''),
         showDoneButton: false,
         showNextButton: false,
-        onDone: () {},
         dotsDecorator: DotsDecorator(
           activeColor: Colors.brown,
-          // activeShapes: List.filled(10, Border.all(), growable: true)
         ),
       ),
     );

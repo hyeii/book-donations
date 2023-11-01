@@ -1,15 +1,15 @@
-package com.bookdone.member.dto.request;
+package com.bookdone.rank.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdditionalInfo {
-    String nickname;
-    Integer address;
+@Data
+@Builder
+public class UpdateRankingDto {
+    private String nickname1;
+    private String nickname2;
 }

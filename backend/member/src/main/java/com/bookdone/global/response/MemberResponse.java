@@ -18,7 +18,7 @@ public class MemberResponse {
 
     private String nickname;
 
-    private String address;
+    private Integer address;
 
     private Integer point;
 
@@ -37,5 +37,4 @@ public class MemberResponse {
                 .image(member.getImage())
                 .build();
     }
-
 }

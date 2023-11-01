@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/members")
@@ -37,13 +39,25 @@ public class MemberController {
         return "member check:" + env.getProperty("local.server.port");
     }
 
+    @GetMapping
+    public ResponseEntity<?> getMembers(@RequestBody List<Long> memberIds) {
+        Map<Long, MemberResponse> members = memberService.findByMemberIds(memberIds);
+        return BaseResponse.okWithData(HttpStatus.OK, "멤버 리스트 조회 완료", members);
+    }
+
+    @GetMapping("/{member-id}")
+    public ResponseEntity<?> getMemberByMemberId(@PathVariable("member-id") Long memberId) {
+        MemberResponse member = memberService.findById(memberId);
+        return BaseResponse.okWithData(HttpStatus.OK, "멤버 조회 완료", member);
+    }
+
     @GetMapping("/oauth-id/{oauthId}")
-    public ResponseEntity<?> getMember(@PathVariable String oauthId) {
+    public ResponseEntity<?> getMemberByOAuthId(@PathVariable String oauthId) {
         return BaseResponse.okWithData(HttpStatus.OK, "멤버 조회 완료", memberService.findByOauthId(oauthId));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentMember(@RequestHeader("member-id") Long memberId) {
+    public ResponseEntity<?> getMyInfo(@RequestHeader("member-id") Long memberId) {
         MemberResponse member = memberService.findById(memberId);
         return BaseResponse.okWithData(HttpStatus.OK, "멤버 조회 완료", member);
     }
@@ -65,4 +79,7 @@ public class MemberController {
         memberService.updateImage(memberId, image);
         return BaseResponse.ok(HttpStatus.OK, "프로필 사진 업데이트 완료");
     }
+
+    //TODO: REQ (MemberID) -> (MemberInfo)
+    //TODO: REQ (List MemherID) -> (List MemberInfo)
 }

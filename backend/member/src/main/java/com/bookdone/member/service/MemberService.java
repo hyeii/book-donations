@@ -1,16 +1,18 @@
 package com.bookdone.member.service;
 
+import com.bookdone.global.response.MemberResponse;
 import com.bookdone.member.dto.request.AdditionalInfo;
 import com.bookdone.member.dto.request.JoinMemberRequest;
-import com.bookdone.global.response.MemberResponse;
 import com.bookdone.member.entity.Member;
+import com.bookdone.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import com.bookdone.member.repository.MemberRepository;
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,12 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));
         return MemberResponse.toResponse(member);
+    }
+
+    public Map<Long, MemberResponse> findByMemberIds(List<Long> memberIds) {
+        List<Member> members = memberRepository.findByIdIn(memberIds);
+        return members.stream()
+                .collect(Collectors.toMap(Member::getId, member -> MemberResponse.toResponse(member)));
     }
 
     @Transactional

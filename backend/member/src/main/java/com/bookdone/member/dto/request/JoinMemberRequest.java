@@ -23,7 +23,7 @@ public class JoinMemberRequest {
                 .email(email)
                 .point(3)
                 .roles("USER_ROLE")
-                .address("")
+                .address(9999)
                 .image("")
                 .build();
     }

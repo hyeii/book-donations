@@ -5,7 +5,7 @@ spring:
     name: member-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bookdone_member?serverTimezone=UTC&characterEncoding=UTF-8&collation=utf8mb4_bin
+    url: jdbc:mysql://k9a308.p.ssafy.io:3306/bookdone_member?serverTimezone=UTC&characterEncoding=UTF-8&collation=utf8mb4_bin
     username: root
     password: root
 
@@ -13,22 +13,21 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       show_sql: true
       format_sql: true
       use_sql_comments: true
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: ranking
-      auto-offset-reset: earliest
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      bootstrap-servers: localhost:9092
-      acks: all # (0, 1, -1(all) )
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#  kafka:
+#    admin:
+#      operations-timeout: 30s
+#    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+#    consumer:
+#      group-id: ranking
+#      auto-offset-reset: earliest
+#
+#    producer:
+#      acks: all # (0, 1, -1(all) )
+
 
 eureka:
   instance:

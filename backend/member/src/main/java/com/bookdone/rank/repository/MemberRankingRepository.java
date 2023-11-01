@@ -6,5 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface MemberRankingRepository extends CrudRepository<MemberRanking, String> {
-    Optional<MemberRanking> findByNickname(String nickname);
+    @Override
+    Optional<MemberRanking> findById(String nickname);
 }

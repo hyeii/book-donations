@@ -57,10 +57,10 @@ public class Book {
 	@Column(name = "PUBLISHER_URL", length = 5000)
 	private String publisherUrl;
 
-	@Column(name = "INPUT_DATE", length = 1000)
+	@Column(name = "INPUT_DATE", length = 500)
 	private String inputDate;
 
-	@Column(name = "UPDATE_DATE", length = 1000)
+	@Column(name = "UPDATE_DATE", length = 500)
 	private String updateDate;
 
 	@Column(name = "BOOK_SIZE", length = 1000)

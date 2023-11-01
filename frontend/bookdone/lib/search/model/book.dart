@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-// ignore: unused_import
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
 
 part 'book.freezed.dart';
 part 'book.g.dart';
@@ -8,8 +7,61 @@ part 'book.g.dart';
 @freezed
 class Book with _$Book {
   const factory Book({
-    required String title,
+    required bool success,
+    required String msg,
+    required List<BookData> data,
   }) = _Book;
 
-  factory Book.fromJson(Map<String, Object?> json) => _$BookFromJson(json);
+  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
+}
+
+@freezed
+class BookData with _$BookData {
+  const factory BookData({
+    required int id,
+    required String title,
+    required String seriesTitle,
+    required String seriesNo,
+    required String author,
+    required String isbn,
+    required String publisher,
+  }) = _BookData;
+
+  factory BookData.fromJson(Map<String, dynamic> json) =>
+      _$BookDataFromJson(json);
+}
+
+@freezed
+class BookDetail with _$BookDetail {
+  const factory BookDetail({
+    required bool success,
+    required String msg,
+    required BookData data,
+  }) = _BookDetail;
+
+  factory BookDetail.fromJson(Map<String, dynamic> json) =>
+      _$BookDetailFromJson(json);
+}
+
+@freezed
+class AutoList with _$AutoList {
+  const factory AutoList({
+    required bool success,
+    required String msg,
+    required List<AutoListData> data,
+  }) = _AutoList;
+
+  factory AutoList.fromJson(Map<String, dynamic> json) =>
+      _$AutoListFromJson(json);
+}
+
+@freezed
+class AutoListData with _$AutoListData {
+  const factory AutoListData({
+    required String title,
+    required String isbn,
+  }) = _AutoListData;
+
+  factory AutoListData.fromJson(Map<String, dynamic> json) =>
+      _$AutoListDataFromJson(json);
 }

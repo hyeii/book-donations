@@ -11,7 +11,8 @@ class ChatMain extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? wsUrl = DotEnv().env['WS_URL'];
+    // String? wsUrl = DotEnv().env['WS_URL'];
+    String wsUrl = dotenv.get('WS_URL');
     final stompClient = useState<StompClient?>(null);
 
     useEffect(() {

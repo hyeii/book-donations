@@ -1,3 +1,5 @@
+import 'package:bookdone/onboard/page/add_additional_info.dart';
+import 'package:bookdone/onboard/service/login_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -12,8 +14,8 @@ class OnboardingPage extends StatelessWidget {
         pages: [
           // 첫 번째 페이지
           PageViewModel(
-            title: "책도네 11",
-            body: "첫번째 페이지 멘트 어쩌구",
+            title: "",
+            body: "첫번째 페이지 어쩌구",
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
                 color: Colors.blueAccent,
@@ -28,8 +30,8 @@ class OnboardingPage extends StatelessWidget {
           ),
           // 두 번째 페이지
           PageViewModel(
-            title: "책도네 22",
-            body: "두번째 페이지 멘트 어쩌구",
+            title: "",
+            body: "두번째 페이지 어쩌구",
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
                 color: Colors.blueAccent,
@@ -43,7 +45,7 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
           PageViewModel(
-            title: "책도네 33",
+            title: "",
             // body: '세번째 페이지 멘트 어쩌구',
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
@@ -56,31 +58,43 @@ class OnboardingPage extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
-            bodyWidget: Row(
+            bodyWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Click on "),
-                Icon(Icons.edit),
-                Text(" to edit a post"),
+              children: [
+                Text('책도네 세번째 페이지'),
+                Text('책도네 세번째 페이징'),
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: 로그인 구현
+                    // LoginApi.kakaoLogin(context);
+                    // context.goNamed('home');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddAdditionalInfo()));
+                  },
+                  child: const Text("카카오로그인"),
+                ),
               ],
             ),
-            footer: ElevatedButton(
-              onPressed: () {
-                // TODO: 로그인 구현
-                context.goNamed('home');
-              },
-              child: const Text("카카오로 시작하기"),
-            ),
+            // footer: ElevatedButton(
+            //   onPressed: () {
+            //     // TODO: 로그인 구현
+            //     // LoginApi.kakaoLogin(context);
+            //     // context.goNamed('home');
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => AddAdditionalInfo()));
+            //   },
+            //   child: const Text("카카오로 시작하기"),
+            // ),
           ),
         ],
-        next: Text("Next", style: TextStyle(fontWeight: FontWeight.w600)),
-        done: Text(''),
         showDoneButton: false,
         showNextButton: false,
-        onDone: () {},
         dotsDecorator: DotsDecorator(
           activeColor: Colors.brown,
-          // activeShapes: List.filled(10, Border.all(), growable: true)
         ),
       ),
     );

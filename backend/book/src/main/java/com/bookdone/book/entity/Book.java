@@ -48,35 +48,11 @@ public class Book {
 	@Column(name = "SET_ADD_CODE")
 	private String setAddCode;
 
-	@Column(name = "SET_EXPRESSION")
-	private String setExpression;
-
-	@Column(name = "PUBLISHER")
-	private String publisher;
-
-	@Column(name = "EDITION_STMT")
-	private String editionStmt;
-
-	@Column(name = "PAGE")
-	private String page;
-
-	@Column(name = "BOOK_SIZE")
-	private String bookSize;
-
 	@Column(name = "SUBJECT")
 	private String subject;
 
 	@Column(name = "TITLE_URL")
 	private String titleUrl;
-
-	@Column(name = "BOOK_TB_CNT_URL")
-	private String bookTbCntUrl;
-
-	@Column(name = "BOOK_INTRODUCTION_URL")
-	private String bookIntroductionUrl;
-
-	@Column(name = "BOOK_SUMMARY_URL")
-	private String bookSummaryUrl;
 
 	@Column(name = "PUBLISHER_URL")
 	private String publisherUrl;
@@ -86,6 +62,15 @@ public class Book {
 
 	@Column(name = "UPDATE_DATE")
 	private String updateDate;
+
+	@Column(name = "BOOK_SIZE")
+	private String bookSize;
+
+	@Column(name = "PAGE")
+	private String page;
+
+	@Column(name = "PUBLISHER")
+	private String publisher;
 
 	public BookDto toDto() {
 		BookDto bookDto = new BookDto();
@@ -99,19 +84,14 @@ public class Book {
 		bookDto.setEaAddCode(this.eaAddCode);
 		bookDto.setSetIsbn(this.setIsbn);
 		bookDto.setSetAddCode(this.setAddCode);
-		bookDto.setSetExpression(this.setExpression);
-		bookDto.setPublisher(this.publisher);
-		bookDto.setEditionStmt(this.editionStmt);
-		bookDto.setPage(this.page);
-		bookDto.setBookSize(this.bookSize);
 		bookDto.setSubject(this.subject);
 		bookDto.setTitleUrl(this.titleUrl);
-		bookDto.setBookTbCntUrl(this.bookTbCntUrl);
-		bookDto.setBookIntroductionUrl(this.bookIntroductionUrl);
-		bookDto.setBookSummaryUrl(this.bookSummaryUrl);
 		bookDto.setPublisherUrl(this.publisherUrl);
 		bookDto.setInputDate(this.inputDate);
 		bookDto.setUpdateDate(this.updateDate);
+		bookDto.setBookSize(this.bookSize);
+		bookDto.setPage(this.page);
+		bookDto.setPublisher(this.publisher);
 		return bookDto;
 	}
 }

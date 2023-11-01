@@ -1,5 +1,6 @@
 import 'package:bookdone/onboard/page/add_additional_info.dart';
 import 'package:bookdone/onboard/service/login_api.dart';
+import 'package:bookdone/service/test.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -66,12 +67,10 @@ class OnboardingPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // TODO: 로그인 구현
-                    // LoginApi.kakaoLogin(context);
-                    // context.goNamed('home');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddAdditionalInfo()));
+                    LoginApi.kakaoLogin(context);
+                    // context.goNamed('bookinfoMain');
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => TestPage()));
                   },
                   child: const Text("카카오로그인"),
                 ),

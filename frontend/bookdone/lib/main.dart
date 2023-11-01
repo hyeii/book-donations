@@ -13,6 +13,7 @@ import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/search/service/search_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
@@ -24,13 +25,14 @@ void main() async {
   KakaoSdk.init(nativeAppKey: 'kakaoKey');
   CustomNavigationHelper.instance;
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => SearchService()),
-        ChangeNotifierProvider(create: (context) => SetNewRegion()),
-      ],
-      child: const MyApp(),
-    ),
+    // MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider(create: (context) => SearchService()),
+    //     ChangeNotifierProvider(create: (context) => SetNewRegion()),
+    //   ],
+    //   ProviderScope(child: MyApp()),
+    // ),
+    const ProviderScope(child: MyApp()),
   );
 }
 
@@ -245,7 +247,7 @@ class CustomNavigationHelper {
             path: 'bookinfodetail',
             pageBuilder: (context, state) {
               return getPage(
-                child: const BookinfoDetail(),
+                child: BookinfoDetail(),
                 state: state,
               );
             },

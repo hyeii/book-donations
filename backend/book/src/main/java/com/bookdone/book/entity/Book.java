@@ -21,55 +21,55 @@ public class Book {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "TITLE")
+	@Column(name = "TITLE", length = 5000)
 	private String title;
 
-	@Column(name = "VOL")
+	@Column(name = "VOL", length = 1000)
 	private String vol;
 
-	@Column(name = "SERIES_TITLE")
+	@Column(name = "SERIES_TITLE", length = 5000)
 	private String seriesTitle;
 
-	@Column(name = "SERIES_NO")
+	@Column(name = "SERIES_NO", length = 1000)
 	private String seriesNo;
 
-	@Column(name = "AUTHOR")
+	@Column(name = "AUTHOR", length = 5000)
 	private String author;
 
-	@Column(name = "EA_ISBN")
+	@Column(name = "EA_ISBN", length = 1000)
 	private String isbn;
 
-	@Column(name = "EA_ADD_CODE")
+	@Column(name = "EA_ADD_CODE", length = 1000)
 	private String eaAddCode;
 
-	@Column(name = "SET_ISBN")
+	@Column(name = "SET_ISBN", length = 1000)
 	private String setIsbn;
 
-	@Column(name = "SET_ADD_CODE")
+	@Column(name = "SET_ADD_CODE", length = 1000)
 	private String setAddCode;
 
-	@Column(name = "SUBJECT")
+	@Column(name = "SUBJECT", length = 5000)
 	private String subject;
 
-	@Column(name = "TITLE_URL")
+	@Column(name = "TITLE_URL", length = 5000)
 	private String titleUrl;
 
-	@Column(name = "PUBLISHER_URL")
+	@Column(name = "PUBLISHER_URL", length = 5000)
 	private String publisherUrl;
 
-	@Column(name = "INPUT_DATE")
+	@Column(name = "INPUT_DATE", length = 1000)
 	private String inputDate;
 
-	@Column(name = "UPDATE_DATE")
+	@Column(name = "UPDATE_DATE", length = 1000)
 	private String updateDate;
 
-	@Column(name = "BOOK_SIZE")
+	@Column(name = "BOOK_SIZE", length = 1000)
 	private String bookSize;
 
-	@Column(name = "PAGE")
+	@Column(name = "PAGE", length = 1000)
 	private String page;
 
-	@Column(name = "PUBLISHER")
+	@Column(name = "PUBLISHER", length = 5000)
 	private String publisher;
 
 	public BookDto toDto() {

@@ -5,18 +5,24 @@ import 'package:bookdone/bookinfo/widgets/keeping_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 
-class BookinfoDetail extends StatefulWidget {
-  const BookinfoDetail({super.key});
+class RegionNotifier extends StateNotifier<String> {
+  RegionNotifier(this.ref) : super('유저정보주소');
 
-  @override
-  State<BookinfoDetail> createState() => _BookinfoDetailState();
+  final Ref ref;
+  Future<void> setRegion(String region) async {
+    state = region;
+  }
 }
 
-class _BookinfoDetailState extends State<BookinfoDetail>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+final regionStateProvider =
+    StateNotifierProvider<RegionNotifier, String>((ref) => RegionNotifier(ref));
+
+class BookinfoDetail extends HookConsumerWidget {
+  // const BookinfoDetail({super.key});
   final List<Tab> tabs = <Tab>[
     Tab(
       text: '기부 중',
@@ -27,212 +33,11 @@ class _BookinfoDetailState extends State<BookinfoDetail>
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      length: tabs.length,
-      vsync: this,
-      initialIndex: 0,
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final regionNow = ref.watch(regionStateProvider);
+    final _tabController =
+        useTabController(initialLength: tabs.length, initialIndex: 0);
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  List _regionList = [];
-  List _secondRegionList = [];
-  int _firstRegionIndex = 0;
-  int _selectedRegionCode = 0;
-  int _selectedRegionIndex = 0;
-  // String _selectedRegion = "서울특별시 구로구";
-
-  Future<void> readJson() async {
-    // final regionData =
-    //     await rootBundle.loadString('assets/json/localcode.json');
-    // _regionList = RegionList.fromJson(regionData).regions ?? <Region>[];
-    // notifyListeners();
-    final String res =
-        await rootBundle.loadString("assets/json/localcode.json");
-    final data = await json.decode(res);
-    setState(() {
-      _regionList = data["region"];
-    });
-  }
-
-  void selectAddress(context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        // readJson();
-        return StatefulBuilder(builder: (context, setState) {
-          return Dialog(
-            child: Container(
-              width: double.infinity,
-              height: 350,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    Text(
-                      "주소를 선택해주세요",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: _regionList.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _secondRegionList =
-                                          _regionList[index]["secondList"];
-                                      // _secondRegionListIndex = index;
-                                      _selectedRegionIndex = 0;
-                                      _firstRegionIndex = index;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                      decoration: _firstRegionIndex == index
-                                          ? BoxDecoration(
-                                              color: Colors.brown.shade300,
-                                              borderRadius:
-                                                  BorderRadius.circular(10))
-                                          : BoxDecoration(color: Colors.white),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 4.0, bottom: 4.0),
-                                        child: Center(
-                                          child: Text(
-                                            _regionList[index]["first"],
-                                            style: TextStyle(
-                                                color:
-                                                    _firstRegionIndex == index
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                fontWeight:
-                                                    _firstRegionIndex == index
-                                                        ? FontWeight.bold
-                                                        : FontWeight.normal),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          // if (_secondRegionList.isNotEmpty)
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: _secondRegionList.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _selectedRegionCode =
-                                          _secondRegionList[index]["code"];
-                                      _selectedRegionIndex = index;
-                                      // _selectedRegion = _secondRegionList[
-                                      //     _selectedRegionIndex]["name"];
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                      decoration: _selectedRegionIndex == index
-                                          ? BoxDecoration(
-                                              color: Colors.brown.shade300,
-                                              borderRadius:
-                                                  BorderRadius.circular(10))
-                                          : BoxDecoration(color: Colors.white),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 4.0, bottom: 4.0),
-                                        child: Center(
-                                          child: Text(
-                                            _secondRegionList[index]["second"],
-                                            style: TextStyle(
-                                                color: _selectedRegionIndex ==
-                                                        index
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                                fontWeight:
-                                                    _selectedRegionIndex ==
-                                                            index
-                                                        ? FontWeight.bold
-                                                        : FontWeight.normal),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          // if (_secondRegionList.isEmpty) Text("선택 ㄱㄱ")
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // TODO: 지역코드 서버로 보내기
-                          // setState(
-                          //   () {
-                          //     _selectedRegion =
-                          //         _secondRegionList[_selectedRegionIndex]
-                          //             ["name"];
-                          //   },
-                          // );
-                          context.read<SetNewRegion>().updateSelectedRegion(
-                              _secondRegionList[_selectedRegionIndex]["name"]);
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          backgroundColor: Colors.brown.shade200,
-                          foregroundColor: Colors.white,
-                        ),
-                        child: Text(
-                          "변경하기",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     // readJson();
     return StatefulBuilder(builder: (context, setState) {
       return Scaffold(
@@ -249,15 +54,17 @@ class _BookinfoDetailState extends State<BookinfoDetail>
           body: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width / 12),
                 child: Column(
                   children: [
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         onPressed: () {
-                          readJson();
-                          selectAddress(context);
+                          ref
+                              .read(regionStateProvider.notifier)
+                              .setRegion('주소변경값');
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -273,7 +80,7 @@ class _BookinfoDetailState extends State<BookinfoDetail>
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text(context.watch<SetNewRegion>().selectedRegion),
+                            Text(regionNow),
                           ],
                         ),
                       ),
@@ -366,11 +173,13 @@ class _BookinfoDetailState extends State<BookinfoDetail>
                   controller: _tabController,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 30),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width / 12),
                       child: DonatingList(),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 30),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width / 12),
                       child: KeepingList(),
                     ),
                   ],
@@ -379,28 +188,5 @@ class _BookinfoDetailState extends State<BookinfoDetail>
             ],
           ));
     });
-  }
-}
-
-// class RegionList {
-//   final List<Region>? regions;
-//   RegionList({this.regions});
-
-//   factory RegionList.fromJson(String jsonString) {
-//     List<dynamic> listFromJson = json.decode(jsonString);
-//     List<Region> regions = <Region>[];
-
-//     regions = listFromJson.map((region) => Region.fromJson(region)).toList();
-//     return RegionList(regions: regions);
-//   }
-// }
-
-class SetNewRegion with ChangeNotifier {
-  String selectedRegion = "서울특별시 구로구";
-  // TODO: 로그인 유저 default 주소정보 저장
-
-  void updateSelectedRegion(String value) {
-    selectedRegion = value;
-    notifyListeners();
   }
 }

@@ -61,7 +61,8 @@ class _SearchMainState extends State<SearchMain> {
               // ),
             ),
             body: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 10),
               child: Center(
                 child: Stack(
                   children: [

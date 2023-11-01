@@ -49,7 +49,8 @@ class _MyPageMainState extends State<MyPageMain>
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width / 8),
             child: Column(
               children: [
                 Center(
@@ -138,15 +139,18 @@ class _MyPageMainState extends State<MyPageMain>
               controller: _tabController,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 12),
                   child: MyDonatingList(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 12),
                   child: MyKeepingList(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 12),
                   child: MyKeepingList(),
                 ),
               ],

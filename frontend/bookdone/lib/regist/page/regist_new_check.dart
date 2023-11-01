@@ -22,7 +22,8 @@ class _RegistNewCheckState extends State<RegistNewCheck> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 12),
           child: Column(
             children: [
               Row(

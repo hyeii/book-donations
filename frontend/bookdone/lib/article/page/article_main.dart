@@ -27,7 +27,8 @@ class ArticleMain extends HookWidget {
           // ),
           ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 50, right: 50),
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width / 10),
         child: SingleChildScrollView(
           child: Center(
             child: Column(

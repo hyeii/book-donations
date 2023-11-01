@@ -19,7 +19,7 @@ class AddComplete extends HookWidget {
               height: 20,
             ),
             Text(
-              '반갑습니다',
+              '반가워용',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
             ),
             Text(
@@ -28,11 +28,11 @@ class AddComplete extends HookWidget {
                 fontSize: 18,
               ),
             ),
-            FloatingActionButton(
+            ElevatedButton(
               onPressed: () {
                 context.goNamed('home');
               },
-              shape: CircleBorder(),
+              // shape: CircleBorder(),
               child: Text('ㄱㄱ'),
             )
           ],

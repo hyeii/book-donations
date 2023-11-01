@@ -14,8 +14,8 @@ class OnboardingPage extends StatelessWidget {
         pages: [
           // 첫 번째 페이지
           PageViewModel(
-            title: "책도네 11",
-            body: "첫번째 페이지 멘트 어쩌구",
+            title: "",
+            body: "첫번째 페이지 어쩌구",
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
                 color: Colors.blueAccent,
@@ -30,8 +30,8 @@ class OnboardingPage extends StatelessWidget {
           ),
           // 두 번째 페이지
           PageViewModel(
-            title: "책도네 22",
-            body: "두번째 페이지 멘트 어쩌구",
+            title: "",
+            body: "두번째 페이지 어쩌구",
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
                 color: Colors.blueAccent,
@@ -45,7 +45,7 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
           PageViewModel(
-            title: "책도네 33",
+            title: "",
             // body: '세번째 페이지 멘트 어쩌구',
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
@@ -60,23 +60,35 @@ class OnboardingPage extends StatelessWidget {
             ),
             bodyWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text('책도네 세번쨰 페이지'),
-                Text('책도네 세번쨰 페이징'),
+              children: [
+                Text('책도네 세번째 페이지'),
+                Text('책도네 세번째 페이징'),
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: 로그인 구현
+                    // LoginApi.kakaoLogin(context);
+                    // context.goNamed('home');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddAdditionalInfo()));
+                  },
+                  child: const Text("카카오로그인"),
+                ),
               ],
             ),
-            footer: ElevatedButton(
-              onPressed: () {
-                // TODO: 로그인 구현
-                LoginApi.kakaoLogin(context);
-                // context.goNamed('home');
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddAdditionalInfo()));
-              },
-              child: const Text("카카오로 시작하기"),
-            ),
+            // footer: ElevatedButton(
+            //   onPressed: () {
+            //     // TODO: 로그인 구현
+            //     // LoginApi.kakaoLogin(context);
+            //     // context.goNamed('home');
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => AddAdditionalInfo()));
+            //   },
+            //   child: const Text("카카오로 시작하기"),
+            // ),
           ),
         ],
         showDoneButton: false,

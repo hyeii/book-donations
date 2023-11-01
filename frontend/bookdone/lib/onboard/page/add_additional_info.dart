@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:bookdone/onboard/page/add_complete.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:image_picker/image_picker.dart';
@@ -65,7 +62,7 @@ class AddAdditionalInfo extends HookWidget {
                 height: 10,
               ),
               const Divider(
-                thickness: 3,
+                thickness: 1,
               ),
               const SizedBox(
                 height: 10,
@@ -100,7 +97,7 @@ class AddAdditionalInfo extends HookWidget {
                   height: 20,
                 ),
                 Text(
-                  '안녕하세요',
+                  '안녕하세요 추후수정',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
                 ),
                 SizedBox(
@@ -112,15 +109,13 @@ class AddAdditionalInfo extends HookWidget {
                     height: imageSize,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/defaultimage.png')),
                     ),
                     child: GestureDetector(
                       onTap: () {
                         _showBottomSheet();
                       },
-                      child: Icon(
-                        Icons.account_circle,
-                        size: imageSize,
-                      ),
                     ),
                   )
                 else

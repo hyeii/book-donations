@@ -11,7 +11,7 @@ public class MemberResponse {
     private Long id;
     private String oauthId;
     private String nickname;
-    private String address;
+    private Integer address;
     private Integer point;
     private String email;
     private String image;

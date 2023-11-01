@@ -23,7 +23,6 @@ public class AddDonationUseCase {
     private final TradeRepository tradeRepository;
 
     public Long addDonation(DonationAddRequest donationAddRequest) {
-        //todo images s3로 저장
         Donation donation = donationAddRequest.toDomain();
         Long id = donationRepository.save(donation);
 
@@ -33,7 +32,6 @@ public class AddDonationUseCase {
     }
 
     public Long readdDonation(DonationAddRequest donationAddRequest) {
-        //todo images s3로 저장
 
         Donation donation = donationAddRequest.toDomain();
         Long id = donationRepository.update(donation);

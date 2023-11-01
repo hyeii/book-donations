@@ -17,7 +17,7 @@ public class DonationAddRequest {
     private Long id;
     private Long isbn;
     private Long memberId;
-    private Integer address;
+    private String address;
     private String content;
     private boolean canDelivery;
     private List<MultipartFile> images = new ArrayList<>();

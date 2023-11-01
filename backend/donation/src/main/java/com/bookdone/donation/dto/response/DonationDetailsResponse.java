@@ -15,7 +15,7 @@ public class DonationDetailsResponse {
     private Long id;
     private Long isbn;
     private String nickname;
-    private Integer address;
+    private String address;
     private String content;
     private boolean canDelivery;
     private List<HistoryResponse> historyResponseList;

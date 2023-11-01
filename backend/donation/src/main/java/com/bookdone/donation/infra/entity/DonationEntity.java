@@ -32,7 +32,7 @@ public class DonationEntity {
     private Long memberId;
 
     @Column(nullable = false)
-    private Integer address;
+    private String address;
 
     @Column(nullable = false)
     private String content;

@@ -14,6 +14,6 @@ public class DonationListResponse {
     private Long id;
     private String nickname;
     private Long historyCount;
-    private Integer address;
+    private String address;
     private LocalDateTime createdAt;
 }

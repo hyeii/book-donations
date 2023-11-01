@@ -2,6 +2,7 @@ package com.bookdone.donation.infra.database;
 
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
+import com.bookdone.donation.dto.response.DonationCountResponse;
 import com.bookdone.donation.infra.entity.DonationEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -36,9 +37,14 @@ public class DonationRepositoryImpl implements DonationRepository {
     }
 
     @Override
-    public List<Donation> findAllByIsbnAndAddress(Long isbn, Integer address) {
+    public List<Donation> findAllByIsbnAndAddress(Long isbn, String address) {
         List<DonationEntity> donationEntityList = jpaDonationRepository.findAllByIsbnAndAddress(isbn, address);
         return donationEntityList.stream().map(Donation::createDonation).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DonationCountResponse> countAllByIsbnAndAddress(Long isbn, String address) {
+        return jpaDonationRepository.countAllByIsbnAndAddress(isbn, address.substring(0 , 2));
     }
 
 }

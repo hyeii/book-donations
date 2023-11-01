@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "member-service")
+@FeignClient(name = "member-service", url = "${FeignClient.url}")
 public interface MemberClient {
-    @GetMapping("/{memberId}")
+    @GetMapping("/members/{memberId}")
     ResponseEntity<?> getMemberInfo(@PathVariable long memberId);
 
-    @GetMapping
+    @GetMapping("/members")
     ResponseEntity<?> getMemberInfoList(List<Long> memberIdList);
 }

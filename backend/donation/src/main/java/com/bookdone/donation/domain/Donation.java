@@ -14,7 +14,7 @@ public class Donation {
     private Long id;
     private Long isbn;
     private Long memberId;
-    private Integer address;
+    private String address;
     private String content;
     private DonationStatus status;
     private boolean canDelivery;

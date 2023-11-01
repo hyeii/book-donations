@@ -5,6 +5,7 @@ import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.donation.application.repository.DonationImageRepository;
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
+import com.bookdone.donation.dto.response.DonationCountResponse;
 import com.bookdone.donation.dto.response.DonationDetailsResponse;
 import com.bookdone.donation.dto.response.DonationListResponse;
 import com.bookdone.history.application.repository.HistoryRepository;
@@ -34,7 +35,7 @@ public class FindDonationUseCase {
     private final MemberClient memberClient;
     private final ResponseUtil responseUtil;
 
-    public List<DonationListResponse> findDonationList(Long isbn, Integer address) throws JsonProcessingException {
+    public List<DonationListResponse> findDonationList(Long isbn, String address) throws JsonProcessingException {
         List<Donation> donationList = donationRepository.findAllByIsbnAndAddress(isbn, address);
 
         if (donationList.isEmpty()) return null;
@@ -139,4 +140,8 @@ public class FindDonationUseCase {
                 .build();
     }
 
+    public List<DonationCountResponse> countDonationCount(Long isbn, String address) {
+
+        return donationRepository.countAllByIsbnAndAddress(isbn, address);
+    }
 }

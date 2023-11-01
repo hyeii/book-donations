@@ -21,13 +21,18 @@ public class DonationController {
     private final ModifyDonationUseCase modifyDonationUseCase;
 
     @GetMapping
-    public ResponseEntity<?> donationList(@RequestParam Long isbn, @RequestParam Integer address) throws JsonProcessingException {
+    public ResponseEntity<?> donationList(@RequestParam Long isbn, @RequestParam String address) throws JsonProcessingException {
         return BaseResponse.okWithData(HttpStatus.OK, "게시글 목록이 조회되었습니다.", findDonationUseCase.findDonationList(isbn, address));
     }
 
     @GetMapping("/{donationId}")
     public ResponseEntity<?> donationDetails(@PathVariable Long donationId) throws JsonProcessingException {
         return BaseResponse.okWithData(HttpStatus.OK, "게시글이 조회되었습니다.", findDonationUseCase.findDonation(donationId));
+    }
+
+    @GetMapping("/address")
+    public ResponseEntity<?> donationCountByAddress(@RequestParam Long isbn, @RequestParam String address) {
+        return BaseResponse.okWithData(HttpStatus.OK, "주소별 책 개수가 조회되었습니다.", findDonationUseCase.countDonationCount(isbn, address));
     }
 
     @PostMapping

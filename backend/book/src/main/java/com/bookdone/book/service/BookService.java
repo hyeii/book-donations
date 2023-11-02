@@ -1,6 +1,8 @@
 package com.bookdone.book.service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -26,10 +28,8 @@ public class BookService {
 			.orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다"));
 	}
 
-	public void temp(String isbn) {
-		bookRepository.save(Book.builder()
-			.isbn(isbn)
-			.title("hi")
-			.build());
+	public List<BookDto> getBooksDetail(List<String> isbnList) {
+		return bookRepository.findByIsbnIn(isbnList)
+			.stream().map(Book::toDto).collect(Collectors.toList());
 	}
 }

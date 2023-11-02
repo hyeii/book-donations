@@ -68,6 +68,12 @@ public class BookController {
 		return BaseResponse.okWithData(HttpStatus.OK, "책 상세 조회 완료", book);
 	}
 
+	@GetMapping("/details")
+	public ResponseEntity<?> getBooksDetail(@RequestBody List<String> isbns) {
+		List<BookDto> books = bookService.getBooksDetail(isbns);
+		return BaseResponse.okWithData(HttpStatus.OK, "여러 책 상세 조회 완료", books);
+	}
+
 	// TODO : 책에 대한 리뷰 조회
 	@GetMapping("/reviews/{isbn}")
 	public ResponseEntity<?> getReviews(@PathVariable String isbn) {

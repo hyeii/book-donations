@@ -56,7 +56,7 @@ public class BookController {
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
 	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) {
-		List<BookAutoCompDto> bookAutoCompDto = redisSearchService.getAutocompleteSuggestionsWithISBN(title);
+		List<BookAutoCompDto> bookAutoCompDto = redisSearchService.autoCompletion(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookAutoCompDto);
 	}
 

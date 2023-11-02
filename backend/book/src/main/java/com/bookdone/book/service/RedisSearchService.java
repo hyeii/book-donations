@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
+import com.bookdone.book.document.Book;
 
 import com.bookdone.book.dto.BookAutoCompDto;
+import com.bookdone.book.repository.ElasticSearchRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +24,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RedisSearchService {
 	private final RedisTemplate<String, String> redisTemplate;
+	private final ElasticSearchRepository elasticSearchRepository;
+
+	public List<BookAutoCompDto> autoCompletion(String query){
+		Pageable top5 = PageRequest.of(0, 5);
+		return elasticSearchRepository.autoSearchByTitle(query, top5)
+			.stream()
+			.map(Book::toAutoCompDto)
+			.collect(Collectors.toList());
+	}
+
 
 	public List<BookAutoCompDto> getAutocompleteSuggestionsWithISBN(String query) {
 		ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();

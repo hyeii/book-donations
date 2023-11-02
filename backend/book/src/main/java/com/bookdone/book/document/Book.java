@@ -5,6 +5,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import com.bookdone.book.dto.BookAutoCompDto;
 import com.bookdone.book.dto.BookDto;
 
 import lombok.Getter;
@@ -73,6 +74,13 @@ public class Book {
 			.publisherUrl(this.publisherUrl)
 			.inputDate(this.inputDate)
 			.updateDate(this.updateDate)
+			.build();
+	}
+
+	public BookAutoCompDto toAutoCompDto() {
+		return BookAutoCompDto.builder()
+			.title(this.title)
+			.isbn(this.eaIsbn)
 			.build();
 	}
 }

@@ -5,7 +5,7 @@ spring:
 #    active: secret # secret yml
   elasticsearch:
     port: 9200
-    host: localhost
+    host: k9a308.p.ssafy.io
 
   application:
     name: book-service

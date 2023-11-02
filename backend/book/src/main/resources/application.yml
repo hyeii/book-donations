@@ -3,6 +3,10 @@ server:
 spring:
 #  profiles:
 #    active: secret # secret yml
+  elasticsearch:
+    port: 9200
+    host: localhost
+
   application:
     name: book-service
   datasource:

@@ -1,6 +1,7 @@
 import 'package:bookdone/search/model/book.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:retrofit/retrofit.dart';
 
 // class SearchService extends ChangeNotifier {
@@ -23,18 +24,23 @@ import 'package:retrofit/retrofit.dart';
 //     notifyListeners();
 //   }
 // }
-part 'search_service.g.dart';
+// part 'search_service.g.dart';
 
-@RestApi(baseUrl: 'http://k9a308.p.ssafy.io:8000')
-abstract class SearchService {
-  factory SearchService(Dio dio, {String? baseUrl}) = _SearchService;
+// // String url = dotenv.get('API_URL');
 
-  @GET('/api/books/search/{title}')
-  Future<Book> searchBook(@Path() String title);
+// @RestApi(baseUrl: String.fromEnvironment('API_URL'))
+// abstract class SearchService {
+//   factory SearchService(Dio dio, {String? baseUrl}) = _SearchService;
 
-  @GET('/api/books/detail/{isbn}')
-  Future<BookDetail> getDetailBook(@Path() String isbn);
+//   @GET('/api/books/search/{title}')
+//   Future<Book> searchBook(@Path() String title);
 
-  @GET('/api/books/auto-completion/{title}')
-  Future<AutoList> getAutoCompletion(@Path() String title);
-}
+//   @GET('/api/books/detail/{isbn}')
+//   Future<BookDetail> getDetailBook(@Path() String isbn);
+
+//   @GET('/api/books/auto-completion/{title}')
+//   Future<AutoList> getAutoCompletion(@Path() String title);
+// }
+
+
+// Futurebuilder 와야대

@@ -10,6 +10,7 @@ class RegistExistList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String isbn = ref.watch(getIsbnProvider);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -32,6 +33,7 @@ class RegistExistList extends HookConsumerWidget {
               SizedBox(
                 height: 10,
               ),
+              Text(ref.watch(getIsbnProvider)),
               Text(ref.watch(getIsbnProvider)),
               ExistCard(),
             ],

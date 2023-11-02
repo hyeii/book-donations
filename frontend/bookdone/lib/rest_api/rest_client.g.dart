@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_service.dart';
+part of 'rest_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,13 +8,11 @@ part of 'search_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _SearchService implements SearchService {
-  _SearchService(
+class _RestClient implements RestClient {
+  _RestClient(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'http://k9a308.p.ssafy.io:8000';
-  }
+  });
 
   final Dio _dio;
 

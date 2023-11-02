@@ -13,6 +13,6 @@ public interface ElasticSearchRepository extends ElasticsearchRepository<Book, L
 	// title 필드를 기반으로 검색하는 쿼리 메소드
 	List<Book> findByTitleContaining(String title);
 
-	@Query("{\"bool\": {\"must\": [{\"match\": {\"title\": \"?0\"}}]}}")
+	@Query("{\"match\": {\"title\": {\"query\": \"?0\"}}}")
 	List<Book> searchByTitle(String title);
 }

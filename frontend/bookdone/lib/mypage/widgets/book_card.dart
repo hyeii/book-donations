@@ -65,7 +65,7 @@ class BookCard extends HookWidget {
                             padding: EdgeInsets.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: Text("작성하기"),
+                          child: Text("히스토리"),
                         ),
                       ),
                     ],

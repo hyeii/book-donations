@@ -15,7 +15,8 @@ class ChatRoomCard extends HookWidget {
       width: double.infinity,
       height: 90,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 30.0),
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width / 10),
         child: Row(
           children: [
             ClipRRect(

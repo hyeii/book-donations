@@ -23,7 +23,8 @@ class _MyPageNotificationsState extends State<MyPageNotifications> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 10),
           child: Column(
             children: [
               SizedBox(

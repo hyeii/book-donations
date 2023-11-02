@@ -12,7 +12,14 @@ class LoginApi {
       debugPrint('카톡으루로그잉');
       try {
         await UserApi.instance.loginWithKakaoTalk();
-        print('카카오톡으로 로그인 성공');
+        debugPrint('카카오톡으로 로그인 성공');
+        if (await checkHasToken()) {
+          var token = await TokenManagerProvider.instance.manager.getToken();
+          debugPrint('토큰냠냠 ${token!.accessToken}');
+          debugPrint('${token.toJson()}');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
+        }
       } catch (error) {
         print('카카오톡으로 로그인 실패 $error');
 

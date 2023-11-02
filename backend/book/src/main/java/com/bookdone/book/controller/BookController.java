@@ -17,6 +17,7 @@ import com.bookdone.book.dto.BookAutoCompDto;
 import com.bookdone.book.dto.BookDto;
 import com.bookdone.book.dto.LikesRequestDto;
 import com.bookdone.book.dto.LikesResponseDto;
+import com.bookdone.book.service.ElasticSearchService;
 import com.bookdone.book.service.LikesService;
 import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.book.dto.ReviewRequestDto;
@@ -43,6 +44,7 @@ public class BookController {
 	private final LikesService likesService;
 	private final MemberClient memberClient;
 	private final ResponseUtil responseUtil;
+	private final ElasticSearchService elasticSearchService;
 
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@PostMapping("/temp/{isbn}")
@@ -61,7 +63,8 @@ public class BookController {
 	// TODO : 엔터 쳤을 때 이동하는 곳
 	@GetMapping("/search/{title}")
 	public ResponseEntity<?> searchBookList(@PathVariable String title) {
-		List<Book> books = bookService.searchBookList(title);
+		//List<Book> books = bookService.searchBookList(title);
+		List<BookDto> books = elasticSearchService.searchBookList(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 리스트 조회 완료", books);
 	}
 

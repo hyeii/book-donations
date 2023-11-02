@@ -18,59 +18,58 @@ import lombok.NoArgsConstructor;
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "TITLE", columnDefinition = "TEXT")
+	@Lob  // TEXT 타입에는 @Lob 어노테이션을 사용합니다.
 	private String title;
 
-	@Column(name = "VOL", columnDefinition = "TEXT")
+	@Column(length = 100)  // VARCHAR 타입에는 length 속성을 사용합니다.
 	private String vol;
 
-	@Column(name = "SERIES_TITLE", columnDefinition = "TEXT")
+	@Lob
 	private String seriesTitle;
 
-	@Column(name = "SERIES_NO", columnDefinition = "TEXT")
+	@Column(length = 100)
 	private String seriesNo;
 
-	@Column(name = "AUTHOR", columnDefinition = "TEXT")
+	@Lob
 	private String author;
 
-	@Column(name = "EA_ISBN", columnDefinition = "TEXT")
+	@Column(length = 100, name = "ea_isbn")
 	private String isbn;
 
-	@Column(name = "EA_ADD_CODE", columnDefinition = "TEXT")
+	@Column(length = 100)
 	private String eaAddCode;
 
-	@Column(name = "SET_ISBN", columnDefinition = "TEXT")
+	@Column(length = 100)
 	private String setIsbn;
 
-	@Column(name = "SET_ADD_CODE", columnDefinition = "TEXT")
+	@Column(length = 100)
 	private String setAddCode;
 
-	@Column(name = "SUBJECT", columnDefinition = "TEXT")
-	private String subject;
+	@Column(length = 150)
+	private String publisher;
 
-	@Column(name = "TITLE_URL", columnDefinition = "TEXT")
-	private String titleUrl;
-
-	@Column(name = "PUBLISHER_URL", columnDefinition = "TEXT")
-	private String publisherUrl;
-
-	@Column(name = "INPUT_DATE", columnDefinition = "TEXT")
-	private String inputDate;
-
-	@Column(name = "UPDATE_DATE", columnDefinition = "TEXT")
-	private String updateDate;
-
-	@Column(name = "BOOK_SIZE", columnDefinition = "TEXT")
-	private String bookSize;
-
-	@Column(name = "PAGE", columnDefinition = "TEXT")
+	@Column(length = 100)
 	private String page;
 
-	@Column(name = "PUBLISHER", columnDefinition = "TEXT")
-	private String publisher;
+	@Column(length = 100)
+	private String bookSize;
+
+	@Column(length = 100)
+	private String subject;
+
+	@Lob
+	private String titleUrl;
+
+	@Lob
+	private String publisherUrl;
+
+	@Column(length = 100)
+	private String inputDate;
+
+	@Column(length = 100)
+	private String updateDate;
 
 	public BookDto toDto() {
 		BookDto bookDto = new BookDto();

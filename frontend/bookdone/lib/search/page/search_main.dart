@@ -5,8 +5,6 @@ import 'package:bookdone/search/widgets/search_result_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // env 사용
 
 class SearchMain extends HookWidget {
   const SearchMain({super.key});
@@ -19,9 +17,9 @@ class SearchMain extends HookWidget {
     var viewAutoComplete = useState(false);
 
     var searchedList = useState<List<BookData>>([]);
+    var searchText = useState('');
+    var autoValue = useState('');
 
-    // return Consumer<SearchService>(
-    //   builder: (context, searchService, child) {
     return GestureDetector(
       onTap: () {
         viewAutoComplete.value = false;
@@ -29,11 +27,6 @@ class SearchMain extends HookWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: false,
-          // title: Text("검색"),
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back),
-          //   onPressed: () {},
-          // ),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(
@@ -67,6 +60,7 @@ class SearchMain extends HookWidget {
                           suffixIcon: IconButton(
                               onPressed: () {
                                 viewAutoComplete.value = false;
+                                searchText.value = searchController.text;
                                 // searchedList.value = searchService
                                 //         .searchBook(searchController.text);
                               },
@@ -75,28 +69,27 @@ class SearchMain extends HookWidget {
                         ),
                         onChanged: (value) {
                           viewAutoComplete.value = true;
+                          autoValue.value = searchController.text;
                         },
                         onSubmitted: (value) {
-                          // searchedList.value =
-                          //     searchService.searchBook(searchController.text);
+                          viewAutoComplete.value = false;
+                          searchText.value = searchController.text;
                         },
                       ),
                     ),
-                    // const AutocompleteBasicExample(),
                     SizedBox(
                       height: 20,
                     ),
-                    // SizedBox(
-                    //     child: searchText != ""
-                    //         ? Align(
-                    //             alignment: Alignment.centerLeft,
-                    //             child: Text("$searchText 검색 결과"),
-                    //           )
-                    //         : null),
+                    SizedBox(
+                        child: searchText != ''
+                            ? Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("${searchText.value} 검색 결과"),
+                              )
+                            : null),
                     SizedBox(
                       height: 10,
                     ),
-
                     Container(
                       child: Expanded(
                         child: ListView.builder(
@@ -108,25 +101,44 @@ class SearchMain extends HookWidget {
                         ),
                       ),
                     ),
+                    FutureBuilder(
+                      future: searchService.searchBook(searchText.value),
+                      builder: (_, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.data == null) {
+                          return Text('');
+                        }
+
+                        final searchedList = snapshot.data!.data;
+
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: searchedList.length,
+                            itemBuilder: (_, index) {
+                              BookData book = searchedList[index];
+                              return SearchResultCard(book: book);
+                            },
+                          ),
+                        );
+                      },
+                    )
                   ],
                 ),
-                if (viewAutoComplete.value) AutocompleteList(),
-                // Positioned(
-                //   top: 50,
-                //   child: Column(
-                //     children: autolist.map((item) {
-                //       return GestureDetector(
-                //         onTap: () {
-                //           // TODO: 검색으로 isbn 넘기기
-                //         },
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: Text(item),
-                //         ),
-                //       );
-                //     }).toList(),
-                //   ),
-                // )
+                if (viewAutoComplete.value)
+                  FutureBuilder<AutoList>(
+                    future: searchService.getAutoCompletion(autoValue.value),
+                    builder: (_, snapshot) {
+                      if (snapshot.data == null) return Container();
+                      final autoCompleteList = snapshot.data!.data;
+
+                      return AutocompleteList(autoListData: autoCompleteList);
+                    },
+                  )
               ],
             ),
           ),

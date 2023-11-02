@@ -23,7 +23,7 @@ public class RankingUpdateEventListener {
     private final RedisTemplate<String, String> redisTemplate;
     private final String RANKING_KEY = "rank";
 
-    @KafkaListener(topics = "ranking_update", groupId = "ranking_group")
+    @KafkaListener(topics = "ranking-update", groupId = "ranking-group")
     public void updateRanking(String message) {
         log.info("event catch!!!!!!!!!!!!!!!!!!! = {}", message);
         ObjectMapper objectMapper = new ObjectMapper();

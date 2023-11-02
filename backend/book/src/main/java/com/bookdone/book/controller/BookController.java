@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookdone.book.dto.BookAutoCompDto;
 import com.bookdone.book.dto.BookDto;
+import com.bookdone.book.dto.BookTitleUrlDto;
 import com.bookdone.book.dto.LikesRequestDto;
 import com.bookdone.book.dto.LikesResponseDto;
 import com.bookdone.book.service.ElasticSearchService;
@@ -121,4 +122,9 @@ public class BookController {
 		return BaseResponse.ok(HttpStatus.OK, message);
 	}
 
+	@PostMapping("/title-image")
+	public ResponseEntity<?> addTitleImage(@RequestBody List<BookTitleUrlDto> bookTitleUrlDtoList) {
+		bookService.addTitleImage(bookTitleUrlDtoList);
+		return BaseResponse.ok(HttpStatus.OK, "title-url 등록 완료");
+	}
 }

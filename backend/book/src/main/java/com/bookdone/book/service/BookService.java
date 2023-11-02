@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookdone.book.dto.BookDto;
+import com.bookdone.book.dto.BookTitleUrlDto;
 import com.bookdone.book.entity.Book;
 import com.bookdone.book.repository.BookRepository;
 
@@ -17,6 +19,13 @@ import lombok.RequiredArgsConstructor;
 public class BookService {
 
 	private final BookRepository bookRepository;
+
+	@Transactional
+	public void addTitleImage(List<BookTitleUrlDto> bookTitleUrlDtoList) {
+		for (BookTitleUrlDto dto : bookTitleUrlDtoList) {
+			bookRepository.updateTitleUrlByIsbn(dto.getIsbn(), dto.getTitleUrl());
+		}
+	}
 
 	public List<Book> searchBookList(String title) {
 		return bookRepository.findByTitleContaining(title);

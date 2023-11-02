@@ -1,16 +1,14 @@
+import 'package:bookdone/regist/service/scan_barcode.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RegistNewCheck extends StatefulWidget {
+class RegistNewCheck extends HookConsumerWidget {
   const RegistNewCheck({super.key});
 
   @override
-  State<RegistNewCheck> createState() => _RegistNewCheckState();
-}
-
-class _RegistNewCheckState extends State<RegistNewCheck> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    String isbn = ref.watch(getIsbnProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,

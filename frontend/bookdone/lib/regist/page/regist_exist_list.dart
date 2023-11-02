@@ -1,16 +1,15 @@
+import 'package:bookdone/regist/service/scan_barcode.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RegistExistList extends StatefulWidget {
+class RegistExistList extends HookConsumerWidget {
   const RegistExistList({super.key});
 
   @override
-  State<RegistExistList> createState() => _RegistExistListState();
-}
-
-class _RegistExistListState extends State<RegistExistList> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    String isbn = ref.watch(getIsbnProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -33,6 +32,7 @@ class _RegistExistListState extends State<RegistExistList> {
               SizedBox(
                 height: 10,
               ),
+              Text(ref.watch(getIsbnProvider)),
               ExistCard(),
             ],
           ),
@@ -41,10 +41,10 @@ class _RegistExistListState extends State<RegistExistList> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
-              width: 170,
+              width: MediaQuery.of(context).size.width * 3 / 7,
               child: ElevatedButton(
                 onPressed: () {
                   // TODO: alert 확인창x
@@ -63,7 +63,7 @@ class _RegistExistListState extends State<RegistExistList> {
               ),
             ),
             SizedBox(
-              width: 170,
+              width: MediaQuery.of(context).size.width * 3 / 7,
               child: ElevatedButton(
                 onPressed: () {
                   // TODO: alert 확인창x
@@ -75,7 +75,7 @@ class _RegistExistListState extends State<RegistExistList> {
                     textStyle: const TextStyle(fontSize: 15),
                     backgroundColor: Colors.brown.shade300,
                     foregroundColor: Colors.white),
-                child: Text("등록하기"),
+                child: Text("등록하기", style: TextStyle(fontFamily: "SCDream4")),
               ),
             ),
           ],
@@ -85,14 +85,9 @@ class _RegistExistListState extends State<RegistExistList> {
   }
 }
 
-class ExistCard extends StatefulWidget {
+class ExistCard extends HookWidget {
   const ExistCard({super.key});
 
-  @override
-  State<ExistCard> createState() => _ExistCardState();
-}
-
-class _ExistCardState extends State<ExistCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

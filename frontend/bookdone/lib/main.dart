@@ -9,9 +9,11 @@ import 'package:bookdone/onboard/page/onboaring_page.dart';
 import 'package:bookdone/regist/page/regist_data.dart';
 import 'package:bookdone/regist/page/regist_exist_list.dart';
 import 'package:bookdone/regist/page/regist_new_check.dart';
+import 'package:bookdone/regist/service/scan_barcode.dart';
 import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/search/service/search_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -92,8 +94,6 @@ class CustomNavigationHelper {
       GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> chatTabNavigatorKey =
       GlobalKey<NavigatorState>();
-  static final GlobalKey<NavigatorState> registNavigatorKey =
-      GlobalKey<NavigatorState>();
 
   BuildContext get context =>
       router.routerDelegate.navigatorKey.currentContext!;
@@ -145,21 +145,6 @@ class CustomNavigationHelper {
                 pageBuilder: (context, state) {
                   return getPage(
                     child: const SearchMain(),
-                    state: state,
-                  );
-                },
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            navigatorKey: registNavigatorKey,
-            routes: [
-              GoRoute(
-                name: 'registPath',
-                path: '/regist',
-                pageBuilder: (context, state) {
-                  return getPage(
-                    child: const RegistData(),
                     state: state,
                   );
                 },
@@ -269,6 +254,28 @@ class CustomNavigationHelper {
       ),
       GoRoute(
         parentNavigatorKey: parentNavigatorKey,
+        name: 'registexist',
+        path: '/registexist',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const RegistExistList(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: parentNavigatorKey,
+        name: 'registnew',
+        path: '/registnew',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const RegistNewCheck(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: parentNavigatorKey,
         name: 'onboarding',
         path: '/onboarding',
         pageBuilder: (context, state) {
@@ -344,6 +351,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButton: FloatingRegistBtn(),
       // appBar: AppBar(
       //   title: const Text('Bottom Navigator Shell'),
       // ),
@@ -368,10 +377,6 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'regist',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
@@ -407,6 +412,62 @@ class FirstPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class FloatingRegistBtn extends HookConsumerWidget {
+  const FloatingRegistBtn({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SpeedDial(
+      // animatedIcon: AnimatedIcons.menu_close,
+      activeIcon: Icons.close,
+      spacing: 10,
+      icon: Icons.add,
+      visible: true,
+      curve: Curves.bounceIn,
+      backgroundColor: Colors.brown.shade500,
+      foregroundColor: Colors.white,
+      shape: CircleBorder(),
+      children: [
+        SpeedDialChild(
+            shape: CircleBorder(),
+            child: const Icon(
+              Icons.menu_book_sharp,
+              color: Colors.white,
+              size: 22,
+            ),
+            label: "책도네로 받은 책을 기부할래요",
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 13.0),
+            backgroundColor: Colors.brown.shade400,
+            labelBackgroundColor: Colors.brown.shade400,
+            onTap: () async {
+              ref.read(getIsbnProvider.notifier).scanBarcodeNormal();
+              await context.pushNamed('registexist');
+            }),
+        SpeedDialChild(
+          shape: CircleBorder(),
+          child: const Icon(
+            Icons.import_contacts_sharp,
+            color: Colors.white,
+            size: 22,
+          ),
+          label: "새로운 책을 기부할래요",
+          backgroundColor: Colors.brown.shade400,
+          labelBackgroundColor: Colors.brown.shade400,
+          labelStyle: const TextStyle(
+              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
+          onTap: () async {
+            ref.read(getIsbnProvider.notifier).scanBarcodeNormal();
+            await context.pushNamed('registnew');
+          },
+        ),
+      ],
     );
   }
 }

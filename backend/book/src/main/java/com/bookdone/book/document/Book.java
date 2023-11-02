@@ -4,23 +4,31 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.InnerField;
+import org.springframework.data.elasticsearch.annotations.MultiField;
 
 import com.bookdone.book.dto.BookAutoCompDto;
 import com.bookdone.book.dto.BookDto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Document(indexName = "books")
+@ToString
 public class Book {
 	@Id
 	@Field(type = FieldType.Keyword, name = "ID")
 	private String id;
 
-	@Field(type = FieldType.Text, name = "TITLE")
-	private String title; // 엘라스틱서치 필드명과 일치하도록 변경
+	@MultiField(
+		mainField = @Field(type = FieldType.Text, fielddata = true, name = "TITLE"),
+		otherFields = @InnerField(suffix = "keyword", type = FieldType.Keyword)
+	)
+	private String title;
+
 	@Field(type = FieldType.Text, index = false, name = "VOL")
 	private String vol;
 	@Field(type = FieldType.Text, index = false, name = "SERIES_TITLE")

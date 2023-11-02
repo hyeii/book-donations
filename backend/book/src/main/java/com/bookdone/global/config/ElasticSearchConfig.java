@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@EnableElasticsearchRepositories // elasticsearch repository 허용
+@EnableElasticsearchRepositories
 public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
 
 	@Value("${spring.elasticsearch.host}")

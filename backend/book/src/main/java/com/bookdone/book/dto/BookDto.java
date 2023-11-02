@@ -26,16 +26,11 @@ public class BookDto {
 	private String eaAddCode;
 	private String setIsbn;
 	private String setAddCode;
-	private String setExpression;
 	private String publisher;
-	private String editionStmt;
 	private String page;
 	private String bookSize;
 	private String subject;
 	private String titleUrl;
-	private String bookTbCntUrl;
-	private String bookIntroductionUrl;
-	private String bookSummaryUrl;
 	private String publisherUrl;
 	private String inputDate;
 	private String updateDate;

@@ -1,5 +1,6 @@
 package com.bookdone.book.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,7 @@ import com.bookdone.book.service.LikesService;
 import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.book.dto.ReviewRequestDto;
 import com.bookdone.book.dto.ReviewResponseDto;
-import com.bookdone.book.entity.Book;
 import com.bookdone.book.service.BookService;
-import com.bookdone.book.service.RedisSearchService;
 import com.bookdone.book.service.ReviewService;
 import com.bookdone.global.response.BaseResponse;
 import com.bookdone.client.api.MemberClient;
@@ -40,31 +39,23 @@ public class BookController {
 
 	private final ReviewService reviewService;
 	private final BookService bookService;
-	private final RedisSearchService redisSearchService;
 	private final LikesService likesService;
 	private final MemberClient memberClient;
 	private final ResponseUtil responseUtil;
 	private final ElasticSearchService elasticSearchService;
 
 	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
-	@PostMapping("/temp/{isbn}")
-	public ResponseEntity<?> temp(@PathVariable String isbn) {
-		bookService.temp(isbn);
-		return BaseResponse.ok(HttpStatus.OK, "책 임시 등록");
-	}
-
-	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
 	@GetMapping("/auto-completion/{title}")
-	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) {
-		List<BookAutoCompDto> bookAutoCompDto = redisSearchService.autoCompletion(title);
+	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) throws IOException {
+		List<BookAutoCompDto> bookAutoCompDto = elasticSearchService.autoCompletion(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookAutoCompDto);
 	}
 
 	// TODO : 엔터 쳤을 때 이동하는 곳
 	@GetMapping("/search/{title}")
-	public ResponseEntity<?> searchBookList(@PathVariable String title) {
-		//List<Book> books = bookService.searchBookList(title);
-		List<BookDto> books = elasticSearchService.searchBookList(title);
+	public ResponseEntity<?> searchBookList(@PathVariable String title) throws IOException {
+		List<BookDto> books = elasticSearchService.searchBooks(title);
+		// List<BookDto> books = elasticSearchService.searchBookList(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 리스트 조회 완료", books);
 	}
 

@@ -15,43 +15,42 @@ import lombok.Setter;
 @Document(indexName = "books")
 public class Book {
 	@Id
+	@Field(type = FieldType.Keyword, name = "ID")
 	private String id;
 
-	@Field(type = FieldType.Text)
-	private String title; // 검색에 사용될 필드
-
-	// 검색에 사용되지 않는 필드들에 대해선 index = false 설정
-	@Field(type = FieldType.Integer, index = false)
+	@Field(type = FieldType.Text, name = "TITLE")
+	private String title; // 엘라스틱서치 필드명과 일치하도록 변경
+	@Field(type = FieldType.Text, index = false, name = "VOL")
 	private String vol;
-	@Field(type = FieldType.Text, index = false)
+	@Field(type = FieldType.Text, index = false, name = "SERIES_TITLE")
 	private String seriesTitle;
-	@Field(type = FieldType.Integer, index = false)
+	@Field(type = FieldType.Text, index = false, name = "SERIES_NO")
 	private String seriesNo;
-	@Field(type = FieldType.Text, index = false)
+	@Field(type = FieldType.Text, index = false, name = "AUTHOR")
 	private String author;
-	@Field(type = FieldType.Keyword, index = false)
+	@Field(type = FieldType.Text, index = false, name = "EA_ISBN")
 	private String eaIsbn;
-	@Field(type = FieldType.Keyword, index = false)
+	@Field(type = FieldType.Text, index = false, name = "EA_ADD_CODE")
 	private String eaAddCode;
-	@Field(type = FieldType.Keyword, index = false)
+	@Field(type = FieldType.Text, index = false, name = "SET_ISBN")
 	private String setIsbn;
-	@Field(type = FieldType.Keyword, index = false)
+	@Field(type = FieldType.Text, index = false, name = "SET_ADD_CODE")
 	private String setAddCode;
-	@Field(type = FieldType.Text, index = false)
+	@Field(type = FieldType.Text, index = false, name = "PUBLISHER")
 	private String publisher;
-	@Field(type = FieldType.Integer, index = false)
+	@Field(type = FieldType.Text, index = false, name = "PAGE")
 	private String page;
-	@Field(type = FieldType.Text, index = false)
+	@Field(type = FieldType.Text, index = false, name = "BOOK_SIZE")
 	private String bookSize;
-	@Field(type = FieldType.Text, index = false)
+	@Field(type = FieldType.Text, index = false, name = "SUBJECT")
 	private String subject;
-	@Field(type = FieldType.Text, index = false)
+	@Field(type = FieldType.Text, index = false, name = "TITLE_URL")
 	private String titleUrl;
-	@Field(type = FieldType.Text, index = false)
+	@Field(type = FieldType.Text, index = false, name = "PUBLISHER_URL")
 	private String publisherUrl;
-	@Field(type = FieldType.Date, index = false)
+	@Field(type = FieldType.Text, index = false, name = "INPUT_DATE")
 	private String inputDate;
-	@Field(type = FieldType.Date, index = false)
+	@Field(type = FieldType.Text, index = false, name = "UPDATE_DATE")
 	private String updateDate;
 
 	public BookDto toDto() {

@@ -10,6 +10,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -62,10 +63,12 @@ public class ElasticSearchService {
 		SearchRequest searchRequest = new SearchRequest("books"); // 인덱스 이름
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		searchSourceBuilder.query(QueryBuilders.boolQuery()
-			.should(QueryBuilders.prefixQuery("TITLE.keyword", title).boost(5)) // 5점을 줘서 정렬 순위를 높임
-			.should(QueryBuilders.matchQuery("TITLE", title).operator(Operator.AND))
+		searchSourceBuilder.query(
+			QueryBuilders.boolQuery()
+				.should(QueryBuilders.prefixQuery("TITLE.keyword", title).boost(5)) // 5점을 줘서 정렬 순위를 높임
+				.should(QueryBuilders.matchQuery("TITLE", title).operator(Operator.AND).fuzziness(Fuzziness.ONE))
 		);
+
 		searchSourceBuilder.size(size); // 반환 사이즈
 		searchSourceBuilder.sort(SortBuilders.scoreSort().order(SortOrder.DESC)); // boost 점수 _score 로 정렬
 

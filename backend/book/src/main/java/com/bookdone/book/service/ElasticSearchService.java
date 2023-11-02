@@ -20,7 +20,7 @@ public class ElasticSearchService {
 	private final ElasticSearchRepository elasticSearchRepository;
 
 	public List<BookDto> searchBookList(String title) {
-		return elasticSearchRepository.findByTitleContaining(title).stream()
+		return elasticSearchRepository.searchByTitle(title).stream()
 			.map(Book::toDto)
 			.collect(Collectors.toList());
 	}

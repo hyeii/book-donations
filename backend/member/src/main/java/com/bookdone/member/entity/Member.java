@@ -44,9 +44,6 @@ public class Member {
     @Column(columnDefinition = "integer default 0")
     private Integer point;
 
-    @Column(length = 25)
-    private String email;
-
     private String image;
 
     private String roles;

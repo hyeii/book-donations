@@ -22,8 +22,6 @@ public class MemberResponse {
 
     private Integer point;
 
-    private String email;
-
     private String image;
 
     public static MemberResponse toResponse(Member member) {
@@ -33,7 +31,6 @@ public class MemberResponse {
                 .nickname(member.getNickname())
                 .address(member.getAddress())
                 .point(member.getPoint())
-                .email(member.getEmail())
                 .image(member.getImage())
                 .build();
     }

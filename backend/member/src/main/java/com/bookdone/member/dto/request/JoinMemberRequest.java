@@ -13,14 +13,12 @@ import lombok.NoArgsConstructor;
 public class JoinMemberRequest {
     private String oauthId;
     private String nickname;
-    private String email;
 
     public Member toEntity() {
         return Member
                 .builder()
                 .oauthId(oauthId)
                 .nickname(nickname)
-                .email(email)
                 .point(3)
                 .roles("USER_ROLE")
                 .address("9999")

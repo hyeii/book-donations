@@ -1,3 +1,4 @@
+import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:bookdone/search/service/search_service.dart';
 import 'package:bookdone/search/widgets/autocomplete_list.dart';
@@ -13,7 +14,7 @@ class SearchMain extends HookWidget {
   Widget build(BuildContext context) {
     FocusNode textFocus = FocusNode();
     final searchController = useTextEditingController();
-    final searchService = useMemoized(() => SearchService(Dio()));
+    final restClient = useMemoized(() => RestClient(Dio()));
     var viewAutoComplete = useState(false);
 
     var searchedList = useState<List<BookData>>([]);
@@ -81,7 +82,7 @@ class SearchMain extends HookWidget {
                       height: 20,
                     ),
                     SizedBox(
-                        child: searchText != ''
+                        child: searchText.value != ''
                             ? Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text("${searchText.value} 검색 결과"),
@@ -90,19 +91,17 @@ class SearchMain extends HookWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      child: Expanded(
-                        child: ListView.builder(
-                          itemCount: searchedList.value.length,
-                          itemBuilder: (context, index) {
-                            BookData book = searchedList.value[index];
-                            return SearchResultCard(book: book);
-                          },
-                        ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: searchedList.value.length,
+                        itemBuilder: (context, index) {
+                          BookData book = searchedList.value[index];
+                          return SearchResultCard(book: book);
+                        },
                       ),
                     ),
                     FutureBuilder(
-                      future: searchService.searchBook(searchText.value),
+                      future: restClient.searchBook(searchText.value),
                       builder: (_, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -111,7 +110,7 @@ class SearchMain extends HookWidget {
                           );
                         }
                         if (snapshot.data == null) {
-                          return Text('');
+                          return SizedBox.shrink();
                         }
 
                         final searchedList = snapshot.data!.data;
@@ -131,7 +130,7 @@ class SearchMain extends HookWidget {
                 ),
                 if (viewAutoComplete.value)
                   FutureBuilder<AutoList>(
-                    future: searchService.getAutoCompletion(autoValue.value),
+                    future: restClient.getAutoCompletion(autoValue.value),
                     builder: (_, snapshot) {
                       if (snapshot.data == null) return Container();
                       final autoCompleteList = snapshot.data!.data;

@@ -15,28 +15,28 @@ class ChatMain extends HookWidget {
     String wsUrl = dotenv.get('WS_URL');
     final stompClient = useState<StompClient?>(null);
 
-    useEffect(() {
-      void onConnect(StompFrame frame) {
-        stompClient.value?.subscribe(
-            destination: '/sub',
-            callback: (StompFrame frame) {
-              print('Received: ${frame.body}');
-            });
-      }
+    // useEffect(() {
+    //   void onConnect(StompFrame frame) {
+    //     stompClient.value?.subscribe(
+    //         destination: '/sub',
+    //         callback: (StompFrame frame) {
+    //           print('Received: ${frame.body}');
+    //         });
+    //   }
 
-      stompClient.value = StompClient(
-          config: StompConfig(
-              url: '$wsUrl',
-              onConnect: onConnect,
-              onWebSocketError: (dynamic error) => print(error),
-              stompConnectHeaders: {}));
+    //   stompClient.value = StompClient(
+    //       config: StompConfig(
+    //           url: '$wsUrl',
+    //           onConnect: onConnect,
+    //           onWebSocketError: (dynamic error) => print(error),
+    //           stompConnectHeaders: {}));
 
-      stompClient.value?.activate();
+    //   stompClient.value?.activate();
 
-      return () {
-        stompClient.value?.deactivate();
-      };
-    }, const []);
+    //   return () {
+    //     stompClient.value?.deactivate();
+    //   };
+    // }, const []);
 
     return Scaffold(
       appBar: AppBar(

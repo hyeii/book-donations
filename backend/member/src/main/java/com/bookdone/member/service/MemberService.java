@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,5 +62,10 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다."));
         member.updateImage(image);
+    }
+
+    public boolean isNicknameAvailable(String nickname) {
+        Optional<Member> optionalMember = memberRepository.findByNickname(nickname);
+        return !optionalMember.isPresent();
     }
 }

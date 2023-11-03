@@ -32,7 +32,7 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic rankingUpdate() {
         return TopicBuilder.name(topicName)
-                .partitions(5)
+                .partitions(1)
                 .replicas(3)
                 .build();
     }

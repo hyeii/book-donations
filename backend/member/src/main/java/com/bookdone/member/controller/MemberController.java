@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,16 @@ public class MemberController {
         return BaseResponse.ok(HttpStatus.OK, "프로필 사진 업데이트 완료");
     }
 
-    //TODO: REQ (MemberID) -> (MemberInfo)
-    //TODO: REQ (List MemherID) -> (List MemberInfo)
+    @GetMapping("check-nickname/{nickname}")
+    public ResponseEntity<?> checkNickname(@PathVariable String nickname) {
+        boolean isAvailable = memberService.isNicknameAvailable(nickname);
+        Map<String, Boolean> data = new HashMap<>();
+        if (isAvailable) {
+            data.put("사용 가능 여부", true);
+            return BaseResponse.okWithData(HttpStatus.OK, "사용 가능한 닉네임 입니다", data);
+        } else {
+            data.put("사용 가능 여부", false);
+            return BaseResponse.okWithData(HttpStatus.OK, "이미 사용중인 닉네임 입니다", data);
+        }
+    }
 }

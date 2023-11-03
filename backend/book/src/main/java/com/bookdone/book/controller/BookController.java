@@ -2,6 +2,7 @@ package com.bookdone.book.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,8 +72,8 @@ public class BookController {
 
 	@GetMapping("/details")
 	public ResponseEntity<?> getBooksDetail(@RequestBody List<String> isbns) {
-		List<BookDto> books = bookService.getBooksDetail(isbns);
-		return BaseResponse.okWithData(HttpStatus.OK, "여러 책 상세 조회 완료", books);
+		Map<String, BookDto> booksDetailMap = bookService.getBooksDetailMap(isbns);
+		return BaseResponse.okWithData(HttpStatus.OK, "여러 책 상세 조회 완료", booksDetailMap);
 	}
 
 	// TODO : 책에 대한 리뷰 조회

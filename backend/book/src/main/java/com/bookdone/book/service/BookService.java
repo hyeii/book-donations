@@ -2,6 +2,7 @@ package com.bookdone.book.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -37,8 +38,12 @@ public class BookService {
 			.orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다"));
 	}
 
-	public List<BookDto> getBooksDetail(List<String> isbnList) {
+	public Map<String, BookDto> getBooksDetailMap(List<String> isbnList) {
 		return bookRepository.findByIsbnIn(isbnList)
-			.stream().map(Book::toDto).collect(Collectors.toList());
+			.stream()
+			.collect(Collectors.toMap(
+				Book::getIsbn, // ISBN을 키로 사용
+				Book::toDto    // Book 객체를 BookDto로 변환하는 함수를 값으로 사용
+			));
 	}
 }

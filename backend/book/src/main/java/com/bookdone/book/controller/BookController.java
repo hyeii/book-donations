@@ -72,7 +72,7 @@ public class BookController {
 
 	@GetMapping("/details")
 	public ResponseEntity<?> getBooksDetail(@RequestBody List<String> isbns) {
-		Map<String, BookDto> booksDetailMap = bookService.getBooksDetailMap(isbns);
+		Map<String, BookDto> booksDetailMap = bookService.getBooksDetailMap2(isbns);
 		return BaseResponse.okWithData(HttpStatus.OK, "여러 책 상세 조회 완료", booksDetailMap);
 	}
 

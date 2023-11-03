@@ -1,6 +1,7 @@
 package com.bookdone.book.service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,5 +46,15 @@ public class BookService {
 				Book::getIsbn, // ISBN을 키로 사용
 				Book::toDto    // Book 객체를 BookDto로 변환하는 함수를 값으로 사용
 			));
+	}
+
+	@Transactional
+	public Map<String, BookDto> getBooksDetailMap2(List<String> isbnList) {
+		Map<String, BookDto> booksMap = new HashMap<>();
+		for (String isbn : isbnList) {
+			bookRepository.findByIsbn(isbn)
+				.ifPresent(book -> booksMap.put(isbn, book.toDto()));
+		}
+		return booksMap;
 	}
 }

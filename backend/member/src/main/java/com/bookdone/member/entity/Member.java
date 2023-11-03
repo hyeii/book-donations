@@ -39,7 +39,7 @@ public class Member {
     @Column(length = 20, unique = true)
     private String nickname;
 
-    private Integer address;
+    private String address;
 
     @Column(columnDefinition = "integer default 0")
     private Integer point;
@@ -58,7 +58,7 @@ public class Member {
         return new ArrayList<>();
     }
 
-    public void updateNicknameAndAddress(String nickname, Integer address) {
+    public void updateNicknameAndAddress(String nickname, String address) {
         this.nickname = nickname;
         this.address = address;
     }

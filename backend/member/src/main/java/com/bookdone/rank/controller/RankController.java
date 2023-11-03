@@ -35,8 +35,6 @@ public class RankController {
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);
         }
-        log.info("payload!! {}", payload);
-        log.info("kafka tm = {}", kafkaTemplate);
         kafkaTemplate.send("ranking-update", payload);
         return BaseResponse.ok(HttpStatus.OK, "producing complete");
     }

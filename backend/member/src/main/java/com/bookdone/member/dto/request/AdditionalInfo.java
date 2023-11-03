@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AdditionalInfo {
     String nickname;
-    Integer address;
+    String address;
 }

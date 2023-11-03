@@ -86,10 +86,10 @@ public class MemberController {
         boolean isAvailable = memberService.isNicknameAvailable(nickname);
         Map<String, Boolean> data = new HashMap<>();
         if (isAvailable) {
-            data.put("사용 가능 여부", true);
+            data.put("available", true);
             return BaseResponse.okWithData(HttpStatus.OK, "사용 가능한 닉네임 입니다", data);
         } else {
-            data.put("사용 가능 여부", false);
+            data.put("available", false);
             return BaseResponse.okWithData(HttpStatus.OK, "이미 사용중인 닉네임 입니다", data);
         }
     }

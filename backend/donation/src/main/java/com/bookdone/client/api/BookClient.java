@@ -5,8 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "book-service")
+import java.util.List;
+
+@FeignClient(name = "book-service", url = "${FeignClient.book.url}")
 public interface BookClient {
+    @GetMapping("/isbn/{isbn}")
+    ResponseEntity<?> getBookInfo(@PathVariable Long isbn);
+
     @GetMapping
-    ResponseEntity<?> getBookInfo(@PathVariable long isbn);
+    ResponseEntity<?> getBookInfoList(List<Long> isbnList);
 }

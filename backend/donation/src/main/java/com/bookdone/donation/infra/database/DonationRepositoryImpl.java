@@ -37,6 +37,12 @@ public class DonationRepositoryImpl implements DonationRepository {
     }
 
     @Override
+    public List<Donation> findAllByMemberId(Long memberId) {
+        List<DonationEntity> donationEntityList = jpaDonationRepository.findAllByMemberId(memberId);
+        return donationEntityList.stream().map(Donation::createDonation).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Donation> findAllByIsbnAndAddress(Long isbn, String address) {
         List<DonationEntity> donationEntityList = jpaDonationRepository.findAllByIsbnAndAddress(isbn, address);
         return donationEntityList.stream().map(Donation::createDonation).collect(Collectors.toList());

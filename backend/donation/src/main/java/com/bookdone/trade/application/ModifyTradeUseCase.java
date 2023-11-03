@@ -1,5 +1,7 @@
 package com.bookdone.trade.application;
 
+import com.bookdone.donation.application.repository.DonationRepository;
+import com.bookdone.donation.domain.Donation;
 import com.bookdone.trade.application.repository.TradeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,9 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ModifyTradeUseCase {
     private final TradeRepository tradeRepository;
+    private final DonationRepository donationRepository;
 
     public void changeStatusToDonationRequested(Long donationId, Long memberId) {
         tradeRepository.updateStatus(donationId, memberId, TradeStatus.DONATION_REQUESTED);
+        Donation donation = donationRepository.findById(donationId);
+        donation.changeStatusToTrading();
+        donationRepository.save(donation);
     }
 
     public void changeStatusToDonationConfirmed(Long donationId, Long memberId) {
@@ -25,5 +31,10 @@ public class ModifyTradeUseCase {
 
     public void changeStatusToCompletionConfirmed(Long donationId, Long memberId) {
         tradeRepository.updateStatus(donationId, memberId, TradeStatus.COMPLETION_CONFIRMED);
+
+        Donation donation = donationRepository.findById(donationId);
+        donation.changeStatusToKeeping();
+        donation.changeMemberId(memberId);
+        donationRepository.save(donation);
     }
 }

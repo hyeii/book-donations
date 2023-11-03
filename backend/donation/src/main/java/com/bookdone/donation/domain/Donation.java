@@ -53,4 +53,9 @@ public class Donation {
         this.status = DonationStatus.KEEPING;
     }
 
+    public void changeStatusToTrading() {this.status = DonationStatus.TRADING; }
+
+    public void changeMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
 }

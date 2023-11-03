@@ -13,6 +13,8 @@ public interface DonationRepository {
 
     public Donation findById(Long id);
 
+    public List<Donation> findAllByMemberId(Long memberId);
+
     public List<Donation> findAllByIsbnAndAddress(Long isbn, String address);
 
     public List<DonationCountResponse> countAllByIsbnAndAddress(Long isbn, String address);

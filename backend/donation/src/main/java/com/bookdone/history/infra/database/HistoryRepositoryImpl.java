@@ -39,7 +39,7 @@ public class HistoryRepositoryImpl implements HistoryRepository {
     }
 
     @Override
-    public List<History> findAll(Long donationId) {
+    public List<History> findAllByDonationId(Long donationId) {
         List<HistoryEntity> historyEntityList = jpaHistoryRepository.findAllByDonationIdAndStatusIsWritten(donationId);
 
         return historyEntityList.stream().map(History::createHistory).collect(Collectors.toList());
@@ -48,5 +48,12 @@ public class HistoryRepositoryImpl implements HistoryRepository {
     @Override
     public Long countAllByDonationId(Long donationId) {
         return jpaHistoryRepository.countAllByDonationId(donationId);
+    }
+
+    @Override
+    public History findLastHistoryByDonationId(Long donationId) {
+        HistoryEntity historyEntity = jpaHistoryRepository.findTopByDonationIdOrderByDonatedAtDesc(donationId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 히스토리가 없습니다."));
+        return History.createHistory(historyEntity);
     }
 }

@@ -4,9 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum TradeStatus {
-    NONE,
-    DONATION_REQUESTED,
-    DONATION_CONFIRMED,
-    COMPLETION_REQUESTED,
-    COMPLETION_CONFIRMED
+    NONE(0),
+    DONATION_REQUESTED(1),
+    DONATION_CONFIRMED(2),
+    COMPLETION_REQUESTED(3),
+    COMPLETION_CONFIRMED(4);
+
+    private Integer value;
+
+    TradeStatus(Integer value) {
+        this.value = value;
+    }
 }

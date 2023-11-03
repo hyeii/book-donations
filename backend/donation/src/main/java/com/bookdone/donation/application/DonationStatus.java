@@ -5,5 +5,6 @@ import lombok.Getter;
 @Getter
 public enum DonationStatus {
     KEEPING,
-    DONATING;
+    DONATING,
+    TRADING;
 }

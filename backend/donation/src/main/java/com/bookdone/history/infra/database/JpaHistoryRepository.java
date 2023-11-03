@@ -13,8 +13,13 @@ public interface JpaHistoryRepository extends JpaRepository<HistoryEntity, Long>
 
     Optional<HistoryEntity> findByDonationIdAndMemberId(Long donationId, Long memberId);
 
-    @Query(value = "SELECT h FROM HistoryEntity h WHERE h.donationId = :donationId AND h.status = com.bookdone.history.application.HistoryStatus.WRITTEN ORDER BY h.donatedAt DESC")
+    @Query(value = "SELECT h " +
+            "FROM HistoryEntity h " +
+            "WHERE h.donationId = :donationId AND h.status = com.bookdone.history.application.HistoryStatus.WRITTEN " +
+            "ORDER BY h.donatedAt DESC")
     List<HistoryEntity> findAllByDonationIdAndStatusIsWritten(Long donationId);
 
     Long countAllByDonationId(Long donationId);
+
+    Optional<HistoryEntity> findTopByDonationIdOrderByDonatedAtDesc(Long donationId);
 }

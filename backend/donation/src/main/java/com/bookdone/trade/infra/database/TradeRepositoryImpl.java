@@ -29,10 +29,17 @@ public class TradeRepositoryImpl implements TradeRepository {
     public void updateStatus(Long donationId, Long memberId, TradeStatus tradeStatus) {
         TradeEntity tradeEntity = jpaTradeRepository.findByDonationIdAndMemberId(donationId, memberId)
                 .orElseThrow(() -> new IllegalArgumentException("도네이션이 존재하지 않습니다."));
-        if(tradeEntity.getTradeStatus() == tradeStatus)
-            throw new IllegalArgumentException("이미 동일한 거래 상태입니다.");
+        if(tradeEntity.getTradeStatus().getValue() >= tradeStatus.getValue())
+            throw new IllegalArgumentException("유효하지 않은 상태 변경입니다.");
         tradeEntity.updateStatus(tradeStatus);
         jpaTradeRepository.save(tradeEntity);
+    }
+
+    @Override
+    public void deleteTrade(Long donationId, Long memberId) {
+        TradeEntity tradeEntity = jpaTradeRepository.findByDonationIdAndMemberId(donationId, memberId)
+                .orElseThrow(() -> new IllegalArgumentException("도네이션이 존재하지 않습니다."));
+        jpaTradeRepository.delete(tradeEntity);
     }
 
 }

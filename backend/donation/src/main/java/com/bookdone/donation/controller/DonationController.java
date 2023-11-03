@@ -25,6 +25,11 @@ public class DonationController {
         return BaseResponse.okWithData(HttpStatus.OK, "게시글 목록이 조회되었습니다.", findDonationUseCase.findDonationList(isbn, address));
     }
 
+    @GetMapping("/members")
+    public ResponseEntity<?> donationListByMember(@RequestHeader("member-id") Long memberId) {
+        return BaseResponse.okWithData(HttpStatus.OK, "보유중 목록이 조회되었습니다.", findDonationUseCase.findDonationListByMember(memberId));
+    }
+
     @GetMapping("/{donationId}")
     public ResponseEntity<?> donationDetails(@PathVariable Long donationId) throws JsonProcessingException {
         return BaseResponse.okWithData(HttpStatus.OK, "게시글이 조회되었습니다.", findDonationUseCase.findDonation(donationId));
@@ -36,18 +41,20 @@ public class DonationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> donationAdd(DonationAddRequest donationAddRequest) {
+    public ResponseEntity<?> donationAdd(@RequestHeader("member-id") Long memberId, @RequestBody DonationAddRequest donationAddRequest) {
+        donationAddRequest.setMemberId(memberId);
         return BaseResponse.okWithData(HttpStatus.CREATED,"게시글이 등록되었습니다.", addDonationUseCase.addDonation(donationAddRequest));
     }
 
     @PutMapping("/{donationId}")
-    public ResponseEntity<?> donationReadd(@PathVariable Long donationId, DonationAddRequest donationAddRequest){
+    public ResponseEntity<?> donationReadd(@PathVariable Long donationId, @RequestHeader("member-id") Long memberId, @RequestBody DonationAddRequest donationAddRequest){
         donationAddRequest.setId(donationId);
+        donationAddRequest.setMemberId(memberId);
         return BaseResponse.okWithData(HttpStatus.CREATED, "게시글이 등록되었습니다.", addDonationUseCase.readdDonation(donationAddRequest));
     }
 
     @PatchMapping("/{donationId}/keeping")
-    public ResponseEntity<?> donationChangeIntoKeeping(@PathVariable Long donationId) {
+    public ResponseEntity<?> donationChangeToKeeping(@PathVariable Long donationId) {
         modifyDonationUseCase.changeStatusToKeeping(donationId);
         return BaseResponse.ok(HttpStatus.OK, "게시글이 삭제되었습니다.");
     }

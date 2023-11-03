@@ -66,7 +66,7 @@ public class FindHistoryUseCase {
     }
 
     public List<HistoryResponse> findAll(Long donationId) {
-        List<History> historyList = historyRepository.findAll(donationId);
+        List<History> historyList = historyRepository.findAllByDonationId(donationId);
 
         List<Long> memberIdList = historyList.stream()
                 .map(history -> history.getMemberId())

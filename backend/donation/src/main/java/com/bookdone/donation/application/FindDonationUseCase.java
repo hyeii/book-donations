@@ -1,6 +1,8 @@
 package com.bookdone.donation.application;
 
+import com.bookdone.client.api.BookClient;
 import com.bookdone.client.api.MemberClient;
+import com.bookdone.client.dto.BookResponse;
 import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.donation.application.repository.DonationImageRepository;
 import com.bookdone.donation.application.repository.DonationRepository;
@@ -8,6 +10,7 @@ import com.bookdone.donation.domain.Donation;
 import com.bookdone.donation.dto.response.DonationCountResponse;
 import com.bookdone.donation.dto.response.DonationDetailsResponse;
 import com.bookdone.donation.dto.response.DonationListResponse;
+import com.bookdone.donation.dto.response.DonationMyPageResponse;
 import com.bookdone.history.application.repository.HistoryRepository;
 import com.bookdone.history.domain.History;
 import com.bookdone.history.dto.response.HistoryResponse;
@@ -34,6 +37,7 @@ public class FindDonationUseCase {
     private final DonationImageRepository donationImageRepository;
     private final MemberClient memberClient;
     private final ResponseUtil responseUtil;
+    private final BookClient bookClient;
 
     public List<DonationListResponse> findDonationList(Long isbn, String address) throws JsonProcessingException {
         List<Donation> donationList = donationRepository.findAllByIsbnAndAddress(isbn, address);
@@ -62,6 +66,24 @@ public class FindDonationUseCase {
         return donationListResponseList;
     }
 
+    public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, MemberResponse> memberResponseMap) {
+        List<DonationListResponse> donationListResponseList = new ArrayList<>();
+
+        for (Donation donation : donationList) {
+            DonationListResponse donationListResponse = DonationListResponse
+                    .builder()
+                    .id(donation.getId())
+                    .nickname(memberResponseMap.get(donation.getId()).getNickname())
+                    .historyCount(historyRepository.countAllByDonationId(donation.getId()))
+                    .address(donation.getAddress())
+                    .createdAt(donation.getCreatedAt())
+                    .build();
+            donationListResponseList.add(donationListResponse);
+        }
+
+        return donationListResponseList;
+    }
+
     public DonationDetailsResponse findDonation(Long id) throws JsonProcessingException {
         Donation donation = donationRepository.findById(id);
 
@@ -80,7 +102,7 @@ public class FindDonationUseCase {
         //todo imageUrlList
         List<String> imageUrlList = donationImageRepository.findImageUrlList(id);
 
-        List<History> historyList = historyRepository.findAll(id);
+        List<History> historyList = historyRepository.findAllByDonationId(id);
         List<Long> memberIdList = historyList.stream()
                 .map(history -> history.getMemberId()).collect(Collectors.toList());
 
@@ -95,24 +117,6 @@ public class FindDonationUseCase {
 //        memberResponseMap.put(2L, new MemberResponse(2L, "2", "abcd", "address2", 1,"email2", "image2"));
 
         return createDonationResponse(donation, imageUrlList, memberResponseMap, historyList, memberResponse);
-    }
-
-    public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, MemberResponse> memberResponseMap) {
-        List<DonationListResponse> donationListResponseList = new ArrayList<>();
-
-        for (Donation donation : donationList) {
-            DonationListResponse donationListResponse = DonationListResponse
-                    .builder()
-                    .id(donation.getId())
-                    .nickname(memberResponseMap.get(donation.getId()).getNickname())
-                    .historyCount(historyRepository.countAllByDonationId(donation.getId()))
-                    .address(donation.getAddress())
-                    .createdAt(donation.getCreatedAt())
-                    .build();
-            donationListResponseList.add(donationListResponse);
-        }
-
-        return donationListResponseList;
     }
 
     public DonationDetailsResponse createDonationResponse(
@@ -140,8 +144,63 @@ public class FindDonationUseCase {
                 .build();
     }
 
-    public List<DonationCountResponse> countDonationCount(Long isbn, String address) {
+    public List<DonationMyPageResponse> findDonationListByMember(Long memberId) {
+        List<Donation> donationList = donationRepository.findAllByMemberId(memberId);
 
+        Map<Long, BookResponse> bookResponseMap = null;
+
+        List<Long> isbnList = donationList.stream().map(donation -> donation.getIsbn())
+                .collect(Collectors.toList());
+
+        try {
+            bookResponseMap = responseUtil.extractDataFromResponse(bookClient.getBookInfoList(isbnList), Map.class);
+        } catch (FeignException.NotFound e) {
+            throw e;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return createDonationMyPageResponse(donationList, bookResponseMap);
+    }
+
+    public List<DonationMyPageResponse> createDonationMyPageResponse(List<Donation> donationList, Map<Long, BookResponse> bookResponseMap) {
+        List<DonationMyPageResponse> donationMyPageResponseList = donationList.stream().map(donation -> {
+
+            List<History> historyList = historyRepository.findAllByDonationId(donation.getId());
+            List<Long> memberIdList = historyList.stream().map(history -> history.getMemberId())
+                    .collect(Collectors.toList());
+
+            List<HistoryResponse> historyResponseList = null;
+
+            try {
+                Map<Long, MemberResponse> memberResponseMap = responseUtil.extractDataFromResponse(memberClient.getMemberInfoList(memberIdList), Map.class);
+                historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
+                        .content(history.getContent())
+                        .nickname(memberResponseMap.get(history.getMemberId()).getNickname())
+                        .createdAt(history.getCreatedAt())
+                        .build()).collect(Collectors.toList());
+            } catch (FeignException.NotFound e) {
+                throw e;
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
+            History lastHistory = historyRepository.findLastHistoryByDonationId(donation.getId());
+
+            return DonationMyPageResponse.builder()
+                    .donationStatus(donation.getStatus())
+                    .id(donation.getId())
+                    .title(bookResponseMap.get(donation.getIsbn()).getTitle())
+                    .titleUrl(bookResponseMap.get(donation.getIsbn()).getTitleUrl())
+                    .historyResponseList(historyResponseList)
+                    .donatedAt(lastHistory.getDonatedAt())
+                    .build();
+        }).collect(Collectors.toList());
+
+        return donationMyPageResponseList;
+    }
+
+    public List<DonationCountResponse> countDonationCount(Long isbn, String address) {
         return donationRepository.countAllByIsbnAndAddress(isbn, address);
     }
 }

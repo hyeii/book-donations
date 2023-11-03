@@ -9,8 +9,13 @@ import java.util.List;
 
 public interface JpaDonationRepository extends JpaRepository<DonationEntity, Long> {
     List<DonationEntity> findAllByIsbnAndAddress(Long isbn, String address);
+    List<DonationEntity> findAllByMemberId(Long memberId);
 
-    @Query("SELECT new com.bookdone.donation.dto.response.DonationCountResponse(d.address, COUNT(d)) FROM DonationEntity d WHERE d.isbn = :isbn AND" +
-            " d.address LIKE :address% GROUP BY d.address")
+    @Query("SELECT new com.bookdone.donation.dto.response.DonationCountResponse(d.address, COUNT(d)) " +
+            "FROM DonationEntity d " +
+            "WHERE d.isbn = :isbn " +
+            "AND d.address LIKE :address% " +
+            "AND d.status = com.bookdone.donation.application.DonationStatus.KEEPING " +
+            "GROUP BY d.address")
     List<DonationCountResponse> countAllByIsbnAndAddress(Long isbn, String address);
 }

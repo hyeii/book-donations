@@ -8,12 +8,6 @@ class AutocompleteList extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List<String> autolist = [
-    //   '자동완dfsdf성1',
-    //   '자동완sdfsdfsdfsdf성2',
-    //   '자동완성3',
-    //   '자동완성4sdfsdfsesdfsdfsdfsdfsdfsdfsdfsdfsdfsdd'
-    // ];
     return Positioned(
       top: 55,
       right: 20,

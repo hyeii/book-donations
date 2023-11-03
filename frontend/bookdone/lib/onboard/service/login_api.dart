@@ -1,17 +1,21 @@
 import 'package:bookdone/onboard/page/add_additional_info.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class LoginApi {
-  String baseURL = dotenv.get('API_URL');
+  static String baseURL = dotenv.get('API_URL');
 
   static Future<void> kakaoLogin(context) async {
     if (await isKakaoTalkInstalled()) {
       debugPrint('카톡으루로그잉');
       try {
         await UserApi.instance.loginWithKakaoTalk();
+        // await AuthCodeClient.instance.authorizeWithTalk(
+        //   redirectUri: 'http://k9a308.p.ssafy.io:8000/api/auth/kakao',
+        // );
         debugPrint('카카오톡으로 로그인 성공');
         if (await checkHasToken()) {
           var token = await TokenManagerProvider.instance.manager.getToken();
@@ -38,15 +42,19 @@ class LoginApi {
       }
     } else {
       debugPrint('계정로긍이');
-      debugPrint(await KakaoSdk.origin);
+      // debugPrint(await KakaoSdk.origin);
       // debugPrint(await KakaoSdk.origin);
       try {
         await UserApi.instance.loginWithKakaoAccount();
+        // await AuthCodeClient.instance.authorize(
+        //   redirectUri: 'http://k9a308.p.ssafy.io:8000/api/auth/kakao',
+        // );
         debugPrint('카카오계정으로 로그인 성공');
         if (await checkHasToken()) {
           var token = await TokenManagerProvider.instance.manager.getToken();
           debugPrint('토큰냠냠 ${token!.accessToken}');
           debugPrint('${token.toJson()}');
+          signup();
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
         }
@@ -82,5 +90,19 @@ class LoginApi {
 
       return false;
     }
+  }
+
+  static Future<void> signup() async {
+    var token = await TokenManagerProvider.instance.manager.getToken();
+    // AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
+    // debugPrint(tokenInfo.toString());
+    // debugPrint(token.toString());
+
+    var dio = Dio();
+
+    dio.options.headers['Authorization'] = 'Bearer ${token!.idToken}';
+    debugPrint(dio.options.headers.toString());
+    var res = await dio.post('$baseURL/api/auth');
+    debugPrint(res.toString());
   }
 }

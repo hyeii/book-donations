@@ -12,7 +12,7 @@ class SearchMain extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    FocusNode textFocus = FocusNode();
+    // FocusNode textFocus = FocusNode();
     final searchController = useTextEditingController();
     final restClient = useMemoized(() => RestClient(Dio()));
     var viewAutoComplete = useState(false);
@@ -41,7 +41,7 @@ class SearchMain extends HookWidget {
                       width: double.infinity,
                       child: TextField(
                         controller: searchController,
-                        focusNode: textFocus,
+                        // focusNode: textFocus,
                         style: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: 15,
@@ -62,8 +62,10 @@ class SearchMain extends HookWidget {
                               onPressed: () {
                                 viewAutoComplete.value = false;
                                 searchText.value = searchController.text;
-                                // searchedList.value = searchService
-                                //         .searchBook(searchController.text);
+                                // debugPrint(searchText.value);
+                                // debugPrint(restClient
+                                //     .searchBook(searchText.value)
+                                //     .toString());
                               },
                               icon: Icon(Icons.search)),
                           suffixIconColor: Colors.black,
@@ -90,15 +92,6 @@ class SearchMain extends HookWidget {
                             : null),
                     SizedBox(
                       height: 10,
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: searchedList.value.length,
-                        itemBuilder: (context, index) {
-                          BookData book = searchedList.value[index];
-                          return SearchResultCard(book: book);
-                        },
-                      ),
                     ),
                     FutureBuilder(
                       future: restClient.searchBook(searchText.value),

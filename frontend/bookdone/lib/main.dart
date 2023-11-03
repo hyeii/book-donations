@@ -25,6 +25,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 void main() async {
   await dotenv.load(fileName: ".env.dev");
   KakaoSdk.init(nativeAppKey: 'kakaoKey');
+  // KakaoSdk.init(nativeAppKey: 'e3c8ccc7c18aab689b55bd298c775981');
   CustomNavigationHelper.instance;
   runApp(
     // MultiProvider(
@@ -44,34 +45,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-            primaryColor: Colors.white,
-            appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-            useMaterial3: true,
-            fontFamily: "SCDream4",
-            textTheme: TextTheme(
-              bodyLarge: TextStyle(fontSize: 12),
-              bodyMedium: TextStyle(fontSize: 15),
-              // 기본 text fontsize
-              bodySmall: TextStyle(fontSize: 12),
-              labelLarge: TextStyle(fontSize: 15),
-              // 기본 button fontsize
-              displayMedium: TextStyle(fontSize: 12),
-              titleMedium: TextStyle(fontSize: 13),
-              titleLarge: TextStyle(fontSize: 15), // AppBar title
-            ),
-            bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
-            bottomNavigationBarTheme:
-                BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-        routerConfig: CustomNavigationHelper.router,
-      ),
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+          primaryColor: Colors.white,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+          useMaterial3: true,
+          fontFamily: "SCDream4",
+          textTheme: TextTheme(
+            bodyLarge: TextStyle(fontSize: 12),
+            bodyMedium: TextStyle(fontSize: 12),
+            // 기본 text fontsize
+            bodySmall: TextStyle(fontSize: 12),
+            labelLarge: TextStyle(fontSize: 12),
+            // 기본 button fontsize
+            displayMedium: TextStyle(fontSize: 12),
+            titleMedium: TextStyle(fontSize: 13),
+            titleLarge: TextStyle(fontSize: 12), // AppBar title
+          ),
+          bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
+          bottomNavigationBarTheme:
+              BottomNavigationBarThemeData(backgroundColor: Colors.white)),
+      routerConfig: CustomNavigationHelper.router,
     );
   }
 }

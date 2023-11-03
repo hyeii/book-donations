@@ -12,7 +12,9 @@ class _RestClient implements RestClient {
   _RestClient(
     this._dio, {
     this.baseUrl,
-  });
+  }) {
+    baseUrl ??= 'http://k9a308.p.ssafy.io:8000';
+  }
 
   final Dio _dio;
 
@@ -27,7 +29,10 @@ class _RestClient implements RestClient {
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<Book>(Options(
       method: 'GET',
-      headers: _headers,
+      headers: {
+        'Authorization':
+            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaXNzIjoiYm9va2RvbmUuY29tIiwiZXhwIjoxNjk5MTU3Mzc3LCJpYXQiOjE2OTg5NzczNzd9.frLOrgTajuakbtTiK5MWDOyUaiP9su906TTD2Dfa3NN2HYNDT6PDzc4Mzo_hFd2X8wn-AF8cz_KJp-lFt2eKEQ'
+      },
       extra: _extra,
     )
             .compose(
@@ -54,7 +59,10 @@ class _RestClient implements RestClient {
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BookDetail>(Options(
       method: 'GET',
-      headers: _headers,
+      headers: {
+        'Authorization':
+            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaXNzIjoiYm9va2RvbmUuY29tIiwiZXhwIjoxNjk5MTU3Mzc3LCJpYXQiOjE2OTg5NzczNzd9.frLOrgTajuakbtTiK5MWDOyUaiP9su906TTD2Dfa3NN2HYNDT6PDzc4Mzo_hFd2X8wn-AF8cz_KJp-lFt2eKEQ'
+      },
       extra: _extra,
     )
             .compose(
@@ -81,7 +89,10 @@ class _RestClient implements RestClient {
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<AutoList>(Options(
       method: 'GET',
-      headers: _headers,
+      headers: {
+        'Authorization':
+            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaXNzIjoiYm9va2RvbmUuY29tIiwiZXhwIjoxNjk5MTU3Mzc3LCJpYXQiOjE2OTg5NzczNzd9.frLOrgTajuakbtTiK5MWDOyUaiP9su906TTD2Dfa3NN2HYNDT6PDzc4Mzo_hFd2X8wn-AF8cz_KJp-lFt2eKEQ'
+      },
       extra: _extra,
     )
             .compose(

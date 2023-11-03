@@ -66,8 +66,8 @@ class OnboardingPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // TODO: 로그인 구현
-                    LoginApi.kakaoLogin(context);
-                    // context.goNamed('bookinfoMain');
+                    // LoginApi.kakaoLogin(context);
+                    context.goNamed('home');
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => TestPage()));
                   },

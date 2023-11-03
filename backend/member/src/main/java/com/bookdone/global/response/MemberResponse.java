@@ -18,7 +18,7 @@ public class MemberResponse {
 
     private String nickname;
 
-    private Integer address;
+    private String address;
 
     private Integer point;
 

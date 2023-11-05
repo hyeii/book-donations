@@ -22,11 +22,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          Text('스플래시페이지????'),
-          Text('1.5초 뒤에 홈으로 가야됨'),
-        ],
+      child: Image(
+        image: AssetImage("assets/images/logo_ver0.2.png"),
+        width: MediaQuery.of(context).size.width * 2 / 3,
       ),
     );
   }

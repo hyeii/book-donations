@@ -20,8 +20,7 @@ Region _$RegionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Region {
-  String get first => throw _privateConstructorUsedError;
-  List<SecondList> get secondList => throw _privateConstructorUsedError;
+  List<RegionInfo> get region => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,13 +32,156 @@ abstract class $RegionCopyWith<$Res> {
   factory $RegionCopyWith(Region value, $Res Function(Region) then) =
       _$RegionCopyWithImpl<$Res, Region>;
   @useResult
-  $Res call({String first, List<SecondList> secondList});
+  $Res call({List<RegionInfo> region});
 }
 
 /// @nodoc
 class _$RegionCopyWithImpl<$Res, $Val extends Region>
     implements $RegionCopyWith<$Res> {
   _$RegionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? region = null,
+  }) {
+    return _then(_value.copyWith(
+      region: null == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as List<RegionInfo>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RegionImplCopyWith<$Res> implements $RegionCopyWith<$Res> {
+  factory _$$RegionImplCopyWith(
+          _$RegionImpl value, $Res Function(_$RegionImpl) then) =
+      __$$RegionImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<RegionInfo> region});
+}
+
+/// @nodoc
+class __$$RegionImplCopyWithImpl<$Res>
+    extends _$RegionCopyWithImpl<$Res, _$RegionImpl>
+    implements _$$RegionImplCopyWith<$Res> {
+  __$$RegionImplCopyWithImpl(
+      _$RegionImpl _value, $Res Function(_$RegionImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? region = null,
+  }) {
+    return _then(_$RegionImpl(
+      region: null == region
+          ? _value._region
+          : region // ignore: cast_nullable_to_non_nullable
+              as List<RegionInfo>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RegionImpl implements _Region {
+  const _$RegionImpl({required final List<RegionInfo> region})
+      : _region = region;
+
+  factory _$RegionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RegionImplFromJson(json);
+
+  final List<RegionInfo> _region;
+  @override
+  List<RegionInfo> get region {
+    if (_region is EqualUnmodifiableListView) return _region;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_region);
+  }
+
+  @override
+  String toString() {
+    return 'Region(region: $region)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RegionImpl &&
+            const DeepCollectionEquality().equals(other._region, _region));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_region));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RegionImplCopyWith<_$RegionImpl> get copyWith =>
+      __$$RegionImplCopyWithImpl<_$RegionImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RegionImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Region implements Region {
+  const factory _Region({required final List<RegionInfo> region}) =
+      _$RegionImpl;
+
+  factory _Region.fromJson(Map<String, dynamic> json) = _$RegionImpl.fromJson;
+
+  @override
+  List<RegionInfo> get region;
+  @override
+  @JsonKey(ignore: true)
+  _$$RegionImplCopyWith<_$RegionImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+RegionInfo _$RegionInfoFromJson(Map<String, dynamic> json) {
+  return _RegionInfo.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RegionInfo {
+  String get first => throw _privateConstructorUsedError;
+  List<SecondList> get secondList => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RegionInfoCopyWith<RegionInfo> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RegionInfoCopyWith<$Res> {
+  factory $RegionInfoCopyWith(
+          RegionInfo value, $Res Function(RegionInfo) then) =
+      _$RegionInfoCopyWithImpl<$Res, RegionInfo>;
+  @useResult
+  $Res call({String first, List<SecondList> secondList});
+}
+
+/// @nodoc
+class _$RegionInfoCopyWithImpl<$Res, $Val extends RegionInfo>
+    implements $RegionInfoCopyWith<$Res> {
+  _$RegionInfoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -66,21 +208,22 @@ class _$RegionCopyWithImpl<$Res, $Val extends Region>
 }
 
 /// @nodoc
-abstract class _$$RegionImplCopyWith<$Res> implements $RegionCopyWith<$Res> {
-  factory _$$RegionImplCopyWith(
-          _$RegionImpl value, $Res Function(_$RegionImpl) then) =
-      __$$RegionImplCopyWithImpl<$Res>;
+abstract class _$$RegionInfoImplCopyWith<$Res>
+    implements $RegionInfoCopyWith<$Res> {
+  factory _$$RegionInfoImplCopyWith(
+          _$RegionInfoImpl value, $Res Function(_$RegionInfoImpl) then) =
+      __$$RegionInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String first, List<SecondList> secondList});
 }
 
 /// @nodoc
-class __$$RegionImplCopyWithImpl<$Res>
-    extends _$RegionCopyWithImpl<$Res, _$RegionImpl>
-    implements _$$RegionImplCopyWith<$Res> {
-  __$$RegionImplCopyWithImpl(
-      _$RegionImpl _value, $Res Function(_$RegionImpl) _then)
+class __$$RegionInfoImplCopyWithImpl<$Res>
+    extends _$RegionInfoCopyWithImpl<$Res, _$RegionInfoImpl>
+    implements _$$RegionInfoImplCopyWith<$Res> {
+  __$$RegionInfoImplCopyWithImpl(
+      _$RegionInfoImpl _value, $Res Function(_$RegionInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -89,7 +232,7 @@ class __$$RegionImplCopyWithImpl<$Res>
     Object? first = null,
     Object? secondList = null,
   }) {
-    return _then(_$RegionImpl(
+    return _then(_$RegionInfoImpl(
       first: null == first
           ? _value.first
           : first // ignore: cast_nullable_to_non_nullable
@@ -104,13 +247,13 @@ class __$$RegionImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$RegionImpl implements _Region {
-  const _$RegionImpl(
+class _$RegionInfoImpl implements _RegionInfo {
+  const _$RegionInfoImpl(
       {required this.first, required final List<SecondList> secondList})
       : _secondList = secondList;
 
-  factory _$RegionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RegionImplFromJson(json);
+  factory _$RegionInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RegionInfoImplFromJson(json);
 
   @override
   final String first;
@@ -124,14 +267,14 @@ class _$RegionImpl implements _Region {
 
   @override
   String toString() {
-    return 'Region(first: $first, secondList: $secondList)';
+    return 'RegionInfo(first: $first, secondList: $secondList)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RegionImpl &&
+            other is _$RegionInfoImpl &&
             (identical(other.first, first) || other.first == first) &&
             const DeepCollectionEquality()
                 .equals(other._secondList, _secondList));
@@ -145,23 +288,24 @@ class _$RegionImpl implements _Region {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$RegionImplCopyWith<_$RegionImpl> get copyWith =>
-      __$$RegionImplCopyWithImpl<_$RegionImpl>(this, _$identity);
+  _$$RegionInfoImplCopyWith<_$RegionInfoImpl> get copyWith =>
+      __$$RegionInfoImplCopyWithImpl<_$RegionInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$RegionImplToJson(
+    return _$$RegionInfoImplToJson(
       this,
     );
   }
 }
 
-abstract class _Region implements Region {
-  const factory _Region(
+abstract class _RegionInfo implements RegionInfo {
+  const factory _RegionInfo(
       {required final String first,
-      required final List<SecondList> secondList}) = _$RegionImpl;
+      required final List<SecondList> secondList}) = _$RegionInfoImpl;
 
-  factory _Region.fromJson(Map<String, dynamic> json) = _$RegionImpl.fromJson;
+  factory _RegionInfo.fromJson(Map<String, dynamic> json) =
+      _$RegionInfoImpl.fromJson;
 
   @override
   String get first;
@@ -169,7 +313,7 @@ abstract class _Region implements Region {
   List<SecondList> get secondList;
   @override
   @JsonKey(ignore: true)
-  _$$RegionImplCopyWith<_$RegionImpl> get copyWith =>
+  _$$RegionInfoImplCopyWith<_$RegionInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

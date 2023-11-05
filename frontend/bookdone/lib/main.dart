@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "SCDream4",
           textTheme: TextTheme(
-            bodyLarge: TextStyle(fontSize: 12),
+            bodyLarge: TextStyle(fontSize: 15),
             bodyMedium: TextStyle(fontSize: 12),
             // 기본 text fontsize
             bodySmall: TextStyle(fontSize: 12),
@@ -304,7 +304,7 @@ class CustomNavigationHelper {
 
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: '/home',
+      initialLocation: '/firstpage',
       routes: routes,
     );
   }
@@ -415,19 +415,39 @@ class FirstPage extends StatelessWidget {
     }
 
     return Scaffold(
-      body: Column(children: [
+      backgroundColor: Color(0xff928C85),
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         if (loginStatus == 0)
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('책도네 첫페이지임!!'),
-              ElevatedButton(
-                onPressed: () {
-                  context.goNamed('onboarding');
-                },
-                child: Text('알아보기'),
-              )
-            ],
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage("assets/images/logo_ver0.2.png"),
+                  width: MediaQuery.of(context).size.width * 2 / 3,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    context.goNamed('onboarding');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                      // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                          //모서리를 둥글게
+                          borderRadius: BorderRadius.circular(8)),
+                      backgroundColor: Colors.brown.shade700,
+                      foregroundColor: Colors.white),
+                  child: Text('알아보기'),
+                )
+              ],
+            ),
           ),
         if (loginStatus == 1) SplashPage()
       ]),

@@ -7,11 +7,21 @@ part 'region.g.dart';
 @freezed
 class Region with _$Region {
   const factory Region({
-    required String first,
-    required List<SecondList> secondList,
+    required List<RegionInfo> region,
   }) = _Region;
 
   factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
+}
+
+@freezed
+class RegionInfo with _$RegionInfo {
+  const factory RegionInfo({
+    required String first,
+    required List<SecondList> secondList,
+  }) = _RegionInfo;
+
+  factory RegionInfo.fromJson(Map<String, dynamic> json) =>
+      _$RegionInfoFromJson(json);
 }
 
 @freezed

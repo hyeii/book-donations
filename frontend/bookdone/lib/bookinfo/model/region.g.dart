@@ -7,13 +7,25 @@ part of 'region.dart';
 // **************************************************************************
 
 _$RegionImpl _$$RegionImplFromJson(Map<String, dynamic> json) => _$RegionImpl(
+      region: (json['region'] as List<dynamic>)
+          .map((e) => RegionInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$RegionImplToJson(_$RegionImpl instance) =>
+    <String, dynamic>{
+      'region': instance.region,
+    };
+
+_$RegionInfoImpl _$$RegionInfoImplFromJson(Map<String, dynamic> json) =>
+    _$RegionInfoImpl(
       first: json['first'] as String,
       secondList: (json['secondList'] as List<dynamic>)
           .map((e) => SecondList.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$RegionImplToJson(_$RegionImpl instance) =>
+Map<String, dynamic> _$$RegionInfoImplToJson(_$RegionInfoImpl instance) =>
     <String, dynamic>{
       'first': instance.first,
       'secondList': instance.secondList,

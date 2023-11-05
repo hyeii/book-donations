@@ -4,6 +4,7 @@ import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/onboard/page/add_complete.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/util/repository/region_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +25,8 @@ class AddAdditionalInfo extends HookConsumerWidget {
     var regionName = useState('지역을 선택해주세요');
     var validate = useState(0);
     // 0 : 확인 전, 1 : 확인 후 사용 가능, 2 : 확인 후 사용 불가능, 3 : 입력안함
-    var regionList = useState<List<Region>>([]);
+
+    var regionList = useState<List<RegionInfo>>([]);
     var secondRegionList = useState<List<SecondList>>([]);
     var selectedRegionIndex = useState(0);
     var firstRegionIndex = useState(0);
@@ -101,13 +103,13 @@ class AddAdditionalInfo extends HookConsumerWidget {
     //   );
     // }
     Future<void> readJson() async {
-      // final regionData =
-      //     await rootBundle.loadString('assets/json/localcode.json');
-      // _regionList = RegionList.fromJson(regionData).regions ?? <Region>[];
-      // notifyListeners();
-      final res = await rootBundle.loadString("assets/json/localcode.json");
-      final data = await json.decode(res);
-      regionList.value = List<Region>.from(data['region']);
+      final jsonString =
+          await rootBundle.loadString("assets/json/localcode.json");
+      final response = await json.decode(jsonString) as Map<String, dynamic>;
+      final result = Region.fromJson(response);
+      print('테스트 : ${result.region[0].first}');
+      regionList.value = result.region;
+      // regionList.value = List<Region>.from(data['region']);
     }
 
     void selectAddress(context) {
@@ -144,11 +146,11 @@ class AddAdditionalInfo extends HookConsumerWidget {
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onTap: () {
-                                      // secondRegionList.value =
-                                      //     regionList.value[index].secondList;
-                                      // // _secondRegionListIndex = index;
-                                      // selectedRegionIndex.value = 0;
-                                      // firstRegionIndex.value = index;
+                                      secondRegionList.value =
+                                          regionList.value[index].secondList;
+                                      // _secondRegionListIndex = index;
+                                      selectedRegionIndex.value = 0;
+                                      firstRegionIndex.value = index;
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(3.0),
@@ -166,20 +168,19 @@ class AddAdditionalInfo extends HookConsumerWidget {
                                               top: 4.0, bottom: 4.0),
                                           child: Center(
                                             child: Text(
-                                                // regionList.value[index].first,
-                                                ""
-                                                // style: TextStyle(
-                                                //     color:
-                                                //         firstRegionIndex.value ==
-                                                //                 index
-                                                //             ? Colors.white
-                                                //             : Colors.black,
-                                                //     fontWeight:
-                                                //         firstRegionIndex.value ==
-                                                //                 index
-                                                //             ? FontWeight.bold
-                                                //             : FontWeight.normal),
-                                                ),
+                                              regionList.value[index].first,
+                                              style: TextStyle(
+                                                  color:
+                                                      firstRegionIndex.value ==
+                                                              index
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                  fontWeight:
+                                                      firstRegionIndex.value ==
+                                                              index
+                                                          ? FontWeight.bold
+                                                          : FontWeight.normal),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -484,6 +485,7 @@ class AddAdditionalInfo extends HookConsumerWidget {
                 ElevatedButton(
                   onPressed: () {
                     readJson();
+
                     selectAddress(context);
                   },
                   style: ElevatedButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:bookdone/bookinfo/model/book_comment.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/rest_api/app_dio.dart';
 import 'package:bookdone/rest_api/auth_dio.dart';
@@ -35,4 +36,10 @@ abstract class RestClient {
 
   @PATCH('/api/members/additional-info')
   Future<void> postAdditionalInfo(@Body() Map<String, dynamic> map);
+
+  @GET('/api/books/reviews/{isbn}')
+  Future<BookComment> getCommentsList(@Path() String isbn);
+
+  @POST('/api/books/reviews')
+  Future<void> postComment(@Body() Map<String, dynamic> map);
 }

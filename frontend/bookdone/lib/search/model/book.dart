@@ -24,6 +24,7 @@ class BookData with _$BookData {
     required String seriesNo,
     required String author,
     required String isbn,
+    required String titleUrl,
     required String publisher,
   }) = _BookData;
 

@@ -6,21 +6,23 @@ import 'package:bookdone/search/widgets/search_result_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class SearchMain extends HookWidget {
+class SearchMain extends HookConsumerWidget {
   const SearchMain({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // FocusNode textFocus = FocusNode();
     final searchController = useTextEditingController();
-    final restClient = useMemoized(() => RestClient(Dio()));
+    final restClient = ref.read(restApiClientProvider);
     var viewAutoComplete = useState(false);
 
     var searchedList = useState<List<BookData>>([]);
     var searchText = useState('');
     var autoValue = useState('');
-
+    print(restClient.searchBook('웨않도ㅙㄴ'));
     return GestureDetector(
       onTap: () {
         viewAutoComplete.value = false;

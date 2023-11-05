@@ -41,14 +41,14 @@ class RegistNewCheck extends HookConsumerWidget {
                     return SizedBox.shrink();
                   }
                   final bookDetail = snapshot.data!.data;
+                  debugPrint(bookDetail.toString());
 
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CachedNetworkImage(
                         width: 120,
-                        imageUrl:
-                            "https://image.aladin.co.kr/product/32129/40/cover500/8954695051_1.jpg",
+                        imageUrl: bookDetail.titleUrl,
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
@@ -56,15 +56,18 @@ class RegistNewCheck extends HookConsumerWidget {
                       SizedBox(
                         width: 20,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(bookDetail.title),
-                          Text(bookDetail.publisher),
-                          Text("2099-99-99"),
-                          Text(isbn)
-                          // TODO: 길이 조정
-                        ],
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(bookDetail.title),
+                            Text(bookDetail.author),
+                            Text(bookDetail.publisher),
+                            Text("2099-99-99"),
+                            Text(isbn)
+                            // TODO: 길이 조정
+                          ],
+                        ),
                       )
                     ],
                   );

@@ -5,7 +5,9 @@ import 'package:bookdone/chat/page/chat_main.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
+import 'package:bookdone/onboard/page/add_additional_info.dart';
 import 'package:bookdone/onboard/page/onboaring_page.dart';
+import 'package:bookdone/onboard/page/splash_page.dart';
 import 'package:bookdone/regist/page/regist_data.dart';
 import 'package:bookdone/regist/page/regist_exist_list.dart';
 import 'package:bookdone/regist/page/regist_new_check.dart';
@@ -13,6 +15,7 @@ import 'package:bookdone/regist/service/scan_barcode.dart';
 import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/search/service/search_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,20 +24,14 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env.dev");
-  KakaoSdk.init(nativeAppKey: 'kakaoKey');
-  // KakaoSdk.init(nativeAppKey: 'e3c8ccc7c18aab689b55bd298c775981');
+  String kakaoNativeKey = dotenv.get('KAKAO_NATIVE_KEY');
+  KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   CustomNavigationHelper.instance;
   runApp(
-    // MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider(create: (context) => SearchService()),
-    //     ChangeNotifierProvider(create: (context) => SetNewRegion()),
-    //   ],
-    //   ProviderScope(child: MyApp()),
-    // ),
     const ProviderScope(child: MyApp()),
   );
 }
@@ -283,6 +280,17 @@ class CustomNavigationHelper {
       ),
       GoRoute(
         parentNavigatorKey: parentNavigatorKey,
+        name: 'addadditionalinfo',
+        path: '/addadditionalinfo',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const AddAdditionalInfo(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: parentNavigatorKey,
         name: 'firstpage',
         path: '/firstpage',
         pageBuilder: (context, state) {
@@ -296,7 +304,7 @@ class CustomNavigationHelper {
 
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: '/firstpage',
+      initialLocation: '/home',
       routes: routes,
     );
   }
@@ -393,21 +401,36 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loginStatus = 0;
+    void getIsLogin() async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
+      int? value = pref.getInt('loginStatus');
+
+      if (value == null) {
+        loginStatus = 0;
+      } else {
+        loginStatus = value;
+      }
+    }
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('책도네 첫페이지임!!'),
-            ElevatedButton(
-              onPressed: () {
-                context.goNamed('onboarding');
-              },
-              child: Text('알아보기'),
-            )
-          ],
-        ),
-      ),
+      body: Column(children: [
+        if (loginStatus == 0)
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('책도네 첫페이지임!!'),
+              ElevatedButton(
+                onPressed: () {
+                  context.goNamed('onboarding');
+                },
+                child: Text('알아보기'),
+              )
+            ],
+          ),
+        if (loginStatus == 1) SplashPage()
+      ]),
     );
   }
 }

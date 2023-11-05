@@ -12,9 +12,7 @@ class _RestClient implements RestClient {
   _RestClient(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'http://k9a308.p.ssafy.io:8000';
-  }
+  });
 
   final Dio _dio;
 
@@ -29,10 +27,7 @@ class _RestClient implements RestClient {
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<Book>(Options(
       method: 'GET',
-      headers: {
-        'Authorization':
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaXNzIjoiYm9va2RvbmUuY29tIiwiZXhwIjoxNjk5MTU3Mzc3LCJpYXQiOjE2OTg5NzczNzd9.frLOrgTajuakbtTiK5MWDOyUaiP9su906TTD2Dfa3NN2HYNDT6PDzc4Mzo_hFd2X8wn-AF8cz_KJp-lFt2eKEQ'
-      },
+      headers: _headers,
       extra: _extra,
     )
             .compose(
@@ -59,10 +54,7 @@ class _RestClient implements RestClient {
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BookDetail>(Options(
       method: 'GET',
-      headers: {
-        'Authorization':
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaXNzIjoiYm9va2RvbmUuY29tIiwiZXhwIjoxNjk5MTU3Mzc3LCJpYXQiOjE2OTg5NzczNzd9.frLOrgTajuakbtTiK5MWDOyUaiP9su906TTD2Dfa3NN2HYNDT6PDzc4Mzo_hFd2X8wn-AF8cz_KJp-lFt2eKEQ'
-      },
+      headers: _headers,
       extra: _extra,
     )
             .compose(
@@ -89,10 +81,7 @@ class _RestClient implements RestClient {
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<AutoList>(Options(
       method: 'GET',
-      headers: {
-        'Authorization':
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaXNzIjoiYm9va2RvbmUuY29tIiwiZXhwIjoxNjk5MTU3Mzc3LCJpYXQiOjE2OTg5NzczNzd9.frLOrgTajuakbtTiK5MWDOyUaiP9su906TTD2Dfa3NN2HYNDT6PDzc4Mzo_hFd2X8wn-AF8cz_KJp-lFt2eKEQ'
-      },
+      headers: _headers,
       extra: _extra,
     )
             .compose(
@@ -108,6 +97,58 @@ class _RestClient implements RestClient {
             ))));
     final value = AutoList.fromJson(_result.data!);
     return value;
+  }
+
+  @override
+  Future<CheckNickname> checkNickname(String nickname) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<CheckNickname>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/members/check-nickname/${nickname}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = CheckNickname.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<void> postAdditionalInfo(Map<String, dynamic> map) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(map);
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/api/members/additional-info',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
@@ -140,3 +181,25 @@ class _RestClient implements RestClient {
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$restApiClientHash() => r'4fe6f2e7a3e2005f4718f153b045eb67c3175cc4';
+
+/// See also [restApiClient].
+@ProviderFor(restApiClient)
+final restApiClientProvider = AutoDisposeProvider<RestClient>.internal(
+  restApiClient,
+  name: r'restApiClientProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$restApiClientHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RestApiClientRef = AutoDisposeProviderRef<RestClient>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

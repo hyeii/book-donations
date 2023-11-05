@@ -2,6 +2,7 @@ import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchResultCard extends StatelessWidget {
   const SearchResultCard({super.key, required this.book});
@@ -33,8 +34,7 @@ class SearchResultCard extends StatelessWidget {
                   height: MediaQuery.of(context).size.width / 6,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
-                  imageUrl:
-                      "https://image.aladin.co.kr/product/31399/67/cover500/k452832203_1.jpg",
+                  imageUrl: book.titleUrl,
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
@@ -86,8 +86,19 @@ class SearchResultCard extends StatelessWidget {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 foregroundColor: Colors.brown.shade600,
                               ),
-                              child: Text(
-                                "자세히 보기",
+                              child: TextButton(
+                                onPressed: () {
+                                  context.pushNamed('bookinfoMain');
+                                },
+                                style: TextButton.styleFrom(
+                                  minimumSize: Size.zero,
+                                  padding: EdgeInsets.zero,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
+                                child: Text(
+                                  "자세히 보기",
+                                ),
                               ),
                             ),
                           ),

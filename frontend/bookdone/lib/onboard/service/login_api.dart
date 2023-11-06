@@ -3,10 +3,12 @@ import 'package:bookdone/main.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/onboard/page/add_additional_info.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
+import 'package:bookdone/router/router_path.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginApi {
   static String baseURL = dotenv.get('API_URL');
 
-  static Future<void> kakaoLogin(context, ref) async {
+  static Future<void> kakaoLogin(BuildContext context) async {
     if (await isKakaoTalkInstalled()) {
       debugPrint('카톡으루로그잉');
       try {
@@ -25,8 +27,9 @@ class LoginApi {
           var token = await TokenManagerProvider.instance.manager.getToken();
           debugPrint('토큰냠냠 ${token!.accessToken}');
           debugPrint('${token.toJson()}');
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
+          context.go(RouterPath.addAdditionalInfo);
         }
       } catch (error) {
         print('카카오톡으로 로그인 실패 $error');
@@ -40,9 +43,9 @@ class LoginApi {
         try {
           await UserApi.instance.loginWithKakaoAccount();
           print('카카오계정으로 로그인 성공');
-          signup(context, ref);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          signup(context);
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => MyHomePage()));
         } catch (error) {
           print('카카오계정으로 로그인 실패 $error');
         }
@@ -57,7 +60,7 @@ class LoginApi {
           var token = await TokenManagerProvider.instance.manager.getToken();
           debugPrint('토큰냠냠 ${token!.accessToken}');
           debugPrint('${token.toJson()}');
-          signup(context, ref);
+          signup(context);
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
         }
@@ -95,7 +98,7 @@ class LoginApi {
     }
   }
 
-  static Future<void> signup(context, ref) async {
+  static Future<void> signup(context) async {
     var token = await TokenManagerProvider.instance.manager.getToken();
     // AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
     // debugPrint(tokenInfo.toString());
@@ -162,9 +165,7 @@ class LoginApi {
       // await ref.read(userInfoRepositoryProvider).restoreUserData(user);
       // 저장했으니 로그인 완료!
       print(pref.getString('address'));
-      // context.go('/home');
-      Navigator.of(context, rootNavigator: true)
-          .pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
+      context.go(RouterPath.homePath);
     } else {
       // 처음 로그인한 유저. 추가정보 입력으로 보내기
       SharedPreferences pref = await SharedPreferences.getInstance();

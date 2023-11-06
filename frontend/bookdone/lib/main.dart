@@ -67,15 +67,6 @@ class CustomNavigationHelper {
   GoRouteInformationParser get routeInformationParser =>
       router.routeInformationParser;
 
-  static const String homePath = '/home';
-  static const String mypagePath = '/mypage';
-  static const String searchPath = '/search';
-  static const String addHistoryPath = '/addhistory';
-  static const String chatPath = '/chat';
-  static const String notificationPath = '/notification';
-  static const String registPath = '/regist';
-  static const String bookinfoDetailPath = '/bookinfodetail';
-
   factory CustomNavigationHelper() {
     return _instance;
   }

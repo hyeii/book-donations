@@ -1,4 +1,5 @@
 import 'package:bookdone/main.dart';
+import 'package:bookdone/router/router_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends HookConsumerWidget {
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      routerConfig: CustomNavigationHelper.router,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

@@ -202,6 +202,7 @@ mixin _$BookData {
   String get seriesNo => throw _privateConstructorUsedError;
   String get author => throw _privateConstructorUsedError;
   String get isbn => throw _privateConstructorUsedError;
+  String get titleUrl => throw _privateConstructorUsedError;
   String get publisher => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -222,6 +223,7 @@ abstract class $BookDataCopyWith<$Res> {
       String seriesNo,
       String author,
       String isbn,
+      String titleUrl,
       String publisher});
 }
 
@@ -244,6 +246,7 @@ class _$BookDataCopyWithImpl<$Res, $Val extends BookData>
     Object? seriesNo = null,
     Object? author = null,
     Object? isbn = null,
+    Object? titleUrl = null,
     Object? publisher = null,
   }) {
     return _then(_value.copyWith(
@@ -271,6 +274,10 @@ class _$BookDataCopyWithImpl<$Res, $Val extends BookData>
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
               as String,
+      titleUrl: null == titleUrl
+          ? _value.titleUrl
+          : titleUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       publisher: null == publisher
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
@@ -294,6 +301,7 @@ abstract class _$$BookDataImplCopyWith<$Res>
       String seriesNo,
       String author,
       String isbn,
+      String titleUrl,
       String publisher});
 }
 
@@ -314,6 +322,7 @@ class __$$BookDataImplCopyWithImpl<$Res>
     Object? seriesNo = null,
     Object? author = null,
     Object? isbn = null,
+    Object? titleUrl = null,
     Object? publisher = null,
   }) {
     return _then(_$BookDataImpl(
@@ -341,6 +350,10 @@ class __$$BookDataImplCopyWithImpl<$Res>
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
               as String,
+      titleUrl: null == titleUrl
+          ? _value.titleUrl
+          : titleUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       publisher: null == publisher
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
@@ -359,6 +372,7 @@ class _$BookDataImpl implements _BookData {
       required this.seriesNo,
       required this.author,
       required this.isbn,
+      required this.titleUrl,
       required this.publisher});
 
   factory _$BookDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -377,11 +391,13 @@ class _$BookDataImpl implements _BookData {
   @override
   final String isbn;
   @override
+  final String titleUrl;
+  @override
   final String publisher;
 
   @override
   String toString() {
-    return 'BookData(id: $id, title: $title, seriesTitle: $seriesTitle, seriesNo: $seriesNo, author: $author, isbn: $isbn, publisher: $publisher)';
+    return 'BookData(id: $id, title: $title, seriesTitle: $seriesTitle, seriesNo: $seriesNo, author: $author, isbn: $isbn, titleUrl: $titleUrl, publisher: $publisher)';
   }
 
   @override
@@ -397,14 +413,16 @@ class _$BookDataImpl implements _BookData {
                 other.seriesNo == seriesNo) &&
             (identical(other.author, author) || other.author == author) &&
             (identical(other.isbn, isbn) || other.isbn == isbn) &&
+            (identical(other.titleUrl, titleUrl) ||
+                other.titleUrl == titleUrl) &&
             (identical(other.publisher, publisher) ||
                 other.publisher == publisher));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, seriesTitle, seriesNo, author, isbn, publisher);
+  int get hashCode => Object.hash(runtimeType, id, title, seriesTitle, seriesNo,
+      author, isbn, titleUrl, publisher);
 
   @JsonKey(ignore: true)
   @override
@@ -428,6 +446,7 @@ abstract class _BookData implements BookData {
       required final String seriesNo,
       required final String author,
       required final String isbn,
+      required final String titleUrl,
       required final String publisher}) = _$BookDataImpl;
 
   factory _BookData.fromJson(Map<String, dynamic> json) =
@@ -445,6 +464,8 @@ abstract class _BookData implements BookData {
   String get author;
   @override
   String get isbn;
+  @override
+  String get titleUrl;
   @override
   String get publisher;
   @override

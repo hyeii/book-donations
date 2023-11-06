@@ -2,8 +2,10 @@ import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 
-class SearchResultCard extends StatelessWidget {
+class SearchResultCard extends HookWidget {
   const SearchResultCard({super.key, required this.book});
 
   final BookData book;
@@ -14,7 +16,7 @@ class SearchResultCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: double.infinity,
-        height: 110,
+        height: MediaQuery.of(context).size.width / 4,
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.black12,
@@ -23,18 +25,17 @@ class SearchResultCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           child: Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: CachedNetworkImage(
-                  width: 80,
-                  height: 80,
+                  width: MediaQuery.of(context).size.width / 6,
+                  height: MediaQuery.of(context).size.width / 6,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
-                  imageUrl:
-                      "https://image.aladin.co.kr/product/31399/67/cover500/k452832203_1.jpg",
+                  imageUrl: book.titleUrl,
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
@@ -60,13 +61,16 @@ class SearchResultCard extends StatelessWidget {
                             overflow: TextOverflow.fade,
                             softWrap: false,
                           ),
-                          Text("마치다 소노코 지음"),
+                          Text(
+                            '${book.author} 지음',
+                            style: TextStyle(overflow: TextOverflow.ellipsis),
+                          ),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("현재 3권 기부중"),
+                          // Text("현재 3권 기부중"),
                           SizedBox(
                             width: 10,
                           ),
@@ -83,8 +87,19 @@ class SearchResultCard extends StatelessWidget {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 foregroundColor: Colors.brown.shade600,
                               ),
-                              child: Text(
-                                "자세히 보기",
+                              child: TextButton(
+                                onPressed: () {
+                                  context.pushNamed('bookinfoMain');
+                                },
+                                style: TextButton.styleFrom(
+                                  minimumSize: Size.zero,
+                                  padding: EdgeInsets.zero,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
+                                child: Text(
+                                  "자세히 보기",
+                                ),
                               ),
                             ),
                           ),

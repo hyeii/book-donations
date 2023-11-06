@@ -29,6 +29,7 @@ _$BookDataImpl _$$BookDataImplFromJson(Map<String, dynamic> json) =>
       seriesNo: json['seriesNo'] as String,
       author: json['author'] as String,
       isbn: json['isbn'] as String,
+      titleUrl: json['titleUrl'] as String,
       publisher: json['publisher'] as String,
     );
 
@@ -40,6 +41,7 @@ Map<String, dynamic> _$$BookDataImplToJson(_$BookDataImpl instance) =>
       'seriesNo': instance.seriesNo,
       'author': instance.author,
       'isbn': instance.isbn,
+      'titleUrl': instance.titleUrl,
       'publisher': instance.publisher,
     };
 

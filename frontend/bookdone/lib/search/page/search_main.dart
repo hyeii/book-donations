@@ -6,21 +6,23 @@ import 'package:bookdone/search/widgets/search_result_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class SearchMain extends HookWidget {
+class SearchMain extends HookConsumerWidget {
   const SearchMain({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    FocusNode textFocus = FocusNode();
+  Widget build(BuildContext context, WidgetRef ref) {
+    // FocusNode textFocus = FocusNode();
     final searchController = useTextEditingController();
-    final restClient = useMemoized(() => RestClient(Dio()));
+    final restClient = ref.read(restApiClientProvider);
     var viewAutoComplete = useState(false);
 
     var searchedList = useState<List<BookData>>([]);
     var searchText = useState('');
     var autoValue = useState('');
-
+    print(restClient.searchBook('웨않도ㅙㄴ'));
     return GestureDetector(
       onTap: () {
         viewAutoComplete.value = false;
@@ -41,7 +43,7 @@ class SearchMain extends HookWidget {
                       width: double.infinity,
                       child: TextField(
                         controller: searchController,
-                        focusNode: textFocus,
+                        // focusNode: textFocus,
                         style: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: 15,
@@ -62,8 +64,10 @@ class SearchMain extends HookWidget {
                               onPressed: () {
                                 viewAutoComplete.value = false;
                                 searchText.value = searchController.text;
-                                // searchedList.value = searchService
-                                //         .searchBook(searchController.text);
+                                // debugPrint(searchText.value);
+                                // debugPrint(restClient
+                                //     .searchBook(searchText.value)
+                                //     .toString());
                               },
                               icon: Icon(Icons.search)),
                           suffixIconColor: Colors.black,
@@ -90,15 +94,6 @@ class SearchMain extends HookWidget {
                             : null),
                     SizedBox(
                       height: 10,
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: searchedList.value.length,
-                        itemBuilder: (context, index) {
-                          BookData book = searchedList.value[index];
-                          return SearchResultCard(book: book);
-                        },
-                      ),
                     ),
                     FutureBuilder(
                       future: restClient.searchBook(searchText.value),

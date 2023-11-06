@@ -5,7 +5,9 @@ import 'package:bookdone/chat/page/chat_main.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
+import 'package:bookdone/onboard/page/add_additional_info.dart';
 import 'package:bookdone/onboard/page/onboaring_page.dart';
+import 'package:bookdone/onboard/page/splash_page.dart';
 import 'package:bookdone/regist/page/regist_data.dart';
 import 'package:bookdone/regist/page/regist_exist_list.dart';
 import 'package:bookdone/regist/page/regist_new_check.dart';
@@ -13,6 +15,7 @@ import 'package:bookdone/regist/service/scan_barcode.dart';
 import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/search/service/search_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,19 +24,14 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env.dev");
-  KakaoSdk.init(nativeAppKey: 'kakaoKey');
+  String kakaoNativeKey = dotenv.get('KAKAO_NATIVE_KEY');
+  KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   CustomNavigationHelper.instance;
   runApp(
-    // MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider(create: (context) => SearchService()),
-    //     ChangeNotifierProvider(create: (context) => SetNewRegion()),
-    //   ],
-    //   ProviderScope(child: MyApp()),
-    // ),
     const ProviderScope(child: MyApp()),
   );
 }
@@ -44,34 +42,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-            primaryColor: Colors.white,
-            appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-            useMaterial3: true,
-            fontFamily: "SCDream4",
-            textTheme: TextTheme(
-              bodyLarge: TextStyle(fontSize: 12),
-              bodyMedium: TextStyle(fontSize: 15),
-              // 기본 text fontsize
-              bodySmall: TextStyle(fontSize: 12),
-              labelLarge: TextStyle(fontSize: 15),
-              // 기본 button fontsize
-              displayMedium: TextStyle(fontSize: 12),
-              titleMedium: TextStyle(fontSize: 13),
-              titleLarge: TextStyle(fontSize: 15), // AppBar title
-            ),
-            bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
-            bottomNavigationBarTheme:
-                BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-        routerConfig: CustomNavigationHelper.router,
-      ),
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+          primaryColor: Colors.white,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+          useMaterial3: true,
+          fontFamily: "SCDream4",
+          textTheme: TextTheme(
+            bodyLarge: TextStyle(fontSize: 15),
+            bodyMedium: TextStyle(fontSize: 12),
+            // 기본 text fontsize
+            bodySmall: TextStyle(fontSize: 12),
+            labelLarge: TextStyle(fontSize: 12),
+            // 기본 button fontsize
+            displayMedium: TextStyle(fontSize: 12),
+            titleMedium: TextStyle(fontSize: 13),
+            titleLarge: TextStyle(fontSize: 12), // AppBar title
+          ),
+          bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
+          bottomNavigationBarTheme:
+              BottomNavigationBarThemeData(backgroundColor: Colors.white)),
+      routerConfig: CustomNavigationHelper.router,
     );
   }
 }
@@ -287,6 +280,17 @@ class CustomNavigationHelper {
       ),
       GoRoute(
         parentNavigatorKey: parentNavigatorKey,
+        name: 'addadditionalinfo',
+        path: '/addadditionalinfo',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const AddAdditionalInfo(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: parentNavigatorKey,
         name: 'firstpage',
         path: '/firstpage',
         pageBuilder: (context, state) {
@@ -397,21 +401,56 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loginStatus = 0;
+    void getIsLogin() async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
+      int? value = pref.getInt('loginStatus');
+
+      if (value == null) {
+        loginStatus = 0;
+      } else {
+        loginStatus = value;
+      }
+    }
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('책도네 첫페이지임!!'),
-            ElevatedButton(
-              onPressed: () {
-                context.goNamed('onboarding');
-              },
-              child: Text('알아보기'),
-            )
-          ],
-        ),
-      ),
+      backgroundColor: Color(0xff928C85),
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        if (loginStatus == 0)
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage("assets/images/logo_ver0.2.png"),
+                  width: MediaQuery.of(context).size.width * 2 / 3,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    context.goNamed('onboarding');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                      // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                          //모서리를 둥글게
+                          borderRadius: BorderRadius.circular(8)),
+                      backgroundColor: Colors.brown.shade700,
+                      foregroundColor: Colors.white),
+                  child: Text('알아보기'),
+                )
+              ],
+            ),
+          ),
+        if (loginStatus == 1) SplashPage()
+      ]),
     );
   }
 }

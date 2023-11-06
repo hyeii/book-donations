@@ -10,16 +10,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ChatRoomCreateRequest {
-
 	@NotNull
-	private Long donationId;
-
-	@Null
-	@Setter
-	private Long memberId;
-
+	private Long tradeId;
+	private String senderNickname;
+	private String receiverNickname;
 }

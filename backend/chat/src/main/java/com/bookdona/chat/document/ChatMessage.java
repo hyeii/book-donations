@@ -21,8 +21,8 @@ public class ChatMessage {
 
 	@Id
 	private ObjectId id;
-	private ObjectId chatRoomId;
-	private Long authorId;
+	private Long tradeId;
+	private String senderNickname;
 	private String message;
 	@CreatedDate
 	private LocalDateTime createdAt;

@@ -17,7 +17,7 @@ import lombok.Setter;
 @Builder
 public class ChatMessageResponse {
 
-	Member author;
+	String senderNickname;
 	String message;
 	LocalDateTime createdAt;
 }

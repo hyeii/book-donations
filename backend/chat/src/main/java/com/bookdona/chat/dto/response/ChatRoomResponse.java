@@ -13,12 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ChatRoomResponse {
 
-	private String chatRoomId;
-	private String bookImage;
-	private String bookTitle;
+	private long tradeId;
 	private String opponentNickname;
 	private String lastMessage;
 	private LocalDateTime lastMessageTime;
-	private Boolean isDonor;
-
 }

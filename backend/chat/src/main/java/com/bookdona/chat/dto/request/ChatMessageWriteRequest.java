@@ -1,5 +1,7 @@
 package com.bookdona.chat.dto.request;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -15,4 +17,7 @@ public class ChatMessageWriteRequest {
 
 	@NotBlank
 	String message;
+	String senderNickname;
+	String receiverNickname;
+	LocalDateTime createdAt;
 }

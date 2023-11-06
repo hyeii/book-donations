@@ -34,9 +34,15 @@ public class ChatController {
 	@PostMapping("")
 	public ResponseEntity<?> chatRoomCreate(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
 		@RequestHeader("member-id") Long memberId) throws JsonProcessingException {
-		chatRoomCreateRequest.setMemberId(memberId);
 		ChatRoomResponse chatRoomResponse = chatService.addChatRoom(chatRoomCreateRequest);
 		return BaseResponse.okWithData(HttpStatus.OK, "채팅방이 생성되었습니다.", chatRoomResponse);
+	}
+
+	@PostMapping("/{tradeId}")
+	public ResponseEntity<?> chatMessageWrite(@PathVariable Long tradeId,
+		@RequestBody ChatMessageWriteRequest chatMessageWriteRequest, @RequestHeader("member-id") Long memberId) {
+		chatService.addChatMessage(tradeId, chatMessageWriteRequest);
+		return BaseResponse.ok(HttpStatus.OK, "채팅 입력에 성공했습니다.");
 	}
 
 	@GetMapping("")
@@ -45,31 +51,26 @@ public class ChatController {
 		return BaseResponse.okWithData(HttpStatus.OK, "채팅방 목록 조회에 성공했습니다.", chatRoomResponseList);
 	}
 
-	@GetMapping("/{chatRoomId}/messages")
-	public ResponseEntity<?> chatMessageList(@PathVariable String chatRoomId) throws JsonProcessingException {
-		List<ChatMessageResponse> chatMessageResponseList = chatService.findChatMessageList(chatRoomId);
+	@GetMapping("/{tradeId}/messages")
+	public ResponseEntity<?> chatMessageList(@PathVariable Long tradeId,
+		@RequestHeader("member-id") Long memberId) throws JsonProcessingException {
+		List<ChatMessageResponse> chatMessageResponseList = chatService.findChatMessageList(tradeId, memberId);
 		return BaseResponse.okWithData(HttpStatus.OK, "채팅 메세지 목록 조회에 성공했습니다.", chatMessageResponseList);
 	}
 
-	@GetMapping("/{chatRoomId}/opponent")
-	public ResponseEntity<?> chatOpponent(@PathVariable String chatRoomId,
-		@RequestHeader("member-id") Long memberId) throws
-		JsonProcessingException {
-		ChatOpponentResponse chatOpponentResponse = chatService.findChatOpponent(chatRoomId, memberId);
-		return BaseResponse.okWithData(HttpStatus.OK, "채팅 상대 조회에 성공했습니다.", chatOpponentResponse);
-	}
-
-	@PostMapping("/{chatRoomId}")
-	public ResponseEntity<?> chatMessageWrite(@PathVariable String chatRoomId,
-		@RequestBody ChatMessageWriteRequest chatMessageWriteRequest, @RequestHeader("member-id") Long memberId) {
-		chatService.addChatMessage(chatRoomId, chatMessageWriteRequest, memberId);
-		return BaseResponse.ok(HttpStatus.OK, "채팅 입력에 성공했습니다.");
-	}
-
-	@PatchMapping("/{chatRoomId}")
-	public ResponseEntity<?> chatRoomExit(@PathVariable String chatRoomId, @RequestHeader("member-id") Long memberId) {
-		chatService.exitChatRoom(chatRoomId, memberId);
-		return BaseResponse.ok(HttpStatus.OK, "채팅방에서 퇴장했습니다.");
-	}
+	//
+	// @GetMapping("/{tradeId}/opponent")
+	// public ResponseEntity<?> chatOpponent(@PathVariable String tradeId,
+	// 	@RequestHeader("member-id") Long memberId) throws
+	// 	JsonProcessingException {
+	// 	ChatOpponentResponse chatOpponentResponse = chatService.findChatOpponent(tradeId, memberId);
+	// 	return BaseResponse.okWithData(HttpStatus.OK, "채팅 상대 조회에 성공했습니다.", chatOpponentResponse);
+	// }
+	//
+	// @PatchMapping("/{chatRoomId}")
+	// public ResponseEntity<?> chatRoomExit(@PathVariable String chatRoomId, @RequestHeader("member-id") Long memberId) {
+	// 	chatService.exitChatRoom(chatRoomId, memberId);
+	// 	return BaseResponse.ok(HttpStatus.OK, "채팅방에서 퇴장했습니다.");
+	// }
 
 }

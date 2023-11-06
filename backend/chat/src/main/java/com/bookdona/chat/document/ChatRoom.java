@@ -1,6 +1,7 @@
 package com.bookdona.chat.document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,20 +23,19 @@ public class ChatRoom {
 
 	@Id
 	private ObjectId id;
-	private Long donorId;
-	private Long requesterId;
-	private Long donationId;
+	private Long tradeId;
+	private String participant1Nickname;
+	private String participant2Nickname;
 	private ObjectId lastChatId;
 	@CreatedDate
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdAt;
 	private Boolean isLive;
 
-	public Long getOpponent(Long memberId) {
-		if (donorId == null)
-			throw new BusinessException("채팅 상대방을 찾을 수 없습니다.");
-		return memberId.equals(donorId) ? requesterId : donorId;
-	}
+	// public Long getOpponent(Long memberId) {
+	// 	if (donorId == null)
+	// 		throw new BusinessException("채팅 상대방을 찾을 수 없습니다.");
+	// 	return memberId.equals(donorId) ? requesterId : donorId;
+	// }
 
 	public void kill() {
 		this.isLive = false;

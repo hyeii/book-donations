@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class Book {
 
 	String title;
-	Long ea_isbn;
+	Long isbn;
 	String title_url;
 }

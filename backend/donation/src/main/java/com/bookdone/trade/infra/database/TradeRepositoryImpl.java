@@ -12,7 +12,7 @@ public class TradeRepositoryImpl implements TradeRepository {
     private final JpaTradeRepository jpaTradeRepository;
 
     @Override
-    public void addTrade(Long donationId, Long memberId) {
+    public Long addTrade(Long donationId, Long memberId) {
         TradeEntity tradeEntity = TradeEntity.builder()
                 .donationId(donationId)
                 .memberId(memberId)
@@ -22,7 +22,7 @@ public class TradeRepositoryImpl implements TradeRepository {
         jpaTradeRepository.findByDonationIdAndMemberId(donationId, memberId)
                 .ifPresent(entity -> tradeEntity.updateId(entity.getId()));
 
-        jpaTradeRepository.save(tradeEntity);
+        return jpaTradeRepository.save(tradeEntity).getId();
     }
 
     @Override

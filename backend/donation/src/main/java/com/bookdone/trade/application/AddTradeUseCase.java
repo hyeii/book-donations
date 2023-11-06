@@ -12,7 +12,7 @@ public class AddTradeUseCase {
 
     private final TradeRepository tradeRepository;
 
-    public void tradeAdd(Long donationId, Long memberId) {
-        tradeRepository.addTrade(donationId, memberId);
+    public Long tradeAdd(Long donationId, Long memberId) {
+        return tradeRepository.addTrade(donationId, memberId);
     }
 }

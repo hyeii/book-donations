@@ -4,10 +4,10 @@ import com.bookdone.global.dto.BaseResponse;
 import com.bookdone.trade.application.AddTradeUseCase;
 import com.bookdone.trade.application.ModifyTradeUseCase;
 import com.bookdone.trade.application.RemoveTradeUseCase;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +18,7 @@ public class TradeController {
     private final ModifyTradeUseCase modifyTradeUseCase;
     private final RemoveTradeUseCase removeTradeUseCase;
     private final AddTradeUseCase addTradeUseCase;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @PatchMapping("/{donationId}/members/{memberId}/reservations/request")
     public ResponseEntity<?> tradeChangeToDonationRequested(@PathVariable Long donationId, @PathVariable Long memberId) {
@@ -40,6 +41,13 @@ public class TradeController {
     @PatchMapping("/{donationId}/members/{memberId}/completion/confirm")
     public ResponseEntity<?> tradeChangeToCompletionConfirmed(@PathVariable Long donationId, @PathVariable Long memberId) {
         modifyTradeUseCase.changeStatusToCompletionConfirmed(donationId, memberId);
+//        String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
+//        try {
+//            payload = new ObjectMapper().writeValueAsString(nicknames);
+//        } catch (Exception e) {
+//            return BaseResponse.fail("json 변환 실패", 400);
+//        }
+//        kafkaTemplate.send("ranking-update", payload);
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
@@ -51,7 +59,9 @@ public class TradeController {
 
     @PostMapping("{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeAdd(@PathVariable Long donationId, @PathVariable Long memberId) {
-        addTradeUseCase.tradeAdd(donationId, memberId);
-        return BaseResponse.ok(HttpStatus.CREATED, "거래가 등록되었습니다.");
+        return BaseResponse.okWithData(
+                HttpStatus.CREATED,
+                "거래가 등록되었습니다.",
+                addTradeUseCase.tradeAdd(donationId, memberId));
     }
 }

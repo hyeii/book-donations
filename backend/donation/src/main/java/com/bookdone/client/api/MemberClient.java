@@ -9,9 +9,9 @@ import java.util.List;
 
 @FeignClient(name = "member-service")
 public interface MemberClient {
-    @GetMapping("nicknames/{memberId}")
+    @GetMapping("/api/members/nicknames/{memberId}")
     ResponseEntity<?> getNickname(@PathVariable Long memberId);
 
-    @GetMapping("nicknames")
+    @GetMapping("/api/members/nicknames")
     ResponseEntity<?> getNicknameList(List<Long> memberIdList);
 }

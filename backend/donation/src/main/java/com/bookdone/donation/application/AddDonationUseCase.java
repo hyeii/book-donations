@@ -27,7 +27,6 @@ public class AddDonationUseCase {
         Long id = donationRepository.save(donation);
 
         donationImageRepository.saveImageList(id, donationAddRequest.getImages());
-        tradeRepository.addTrade(id, donationAddRequest.getMemberId());
         return id;
     }
 
@@ -37,7 +36,6 @@ public class AddDonationUseCase {
         Long id = donationRepository.update(donation);
 
         donationImageRepository.saveImageList(id, donationAddRequest.getImages());
-        tradeRepository.addTrade(id, donationAddRequest.getMemberId());
         return id;
     }
 

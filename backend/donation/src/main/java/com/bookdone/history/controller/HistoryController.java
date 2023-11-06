@@ -39,10 +39,4 @@ public class HistoryController {
         historyAddRequest.setDonationId(donationId);
         return BaseResponse.okWithData(HttpStatus.CREATED, "히스토리 작성 완료", addHistoryUseCase.updateHistory(historyAddRequest));
     }
-
-    //todo kafka
-    @PostMapping("/donations/{donationId}")
-    public ResponseEntity<?> addDummyHistory() {
-        return null;
-    }
 }

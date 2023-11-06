@@ -48,10 +48,10 @@ public class FindDonationUseCase {
                 .map(donation -> donation.getMemberId())
                 .collect(Collectors.toList());
 
-        Map<Long, MemberResponse> memberResponseMap = null;
+        Map<Long, String> nicknameMap = null;
 
         try {
-            memberResponseMap = responseUtil.extractDataFromResponse(memberClient.getMemberInfoList(memberIdList), Map.class);
+            nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
         } catch (FeignException.NotFound e) {
             throw e;
         }
@@ -61,19 +61,19 @@ public class FindDonationUseCase {
 //        memberResponseMap.put(2L, new MemberResponse(2L, "2", "abcd", "address2", 1,"email2", "image2"));
 
         List<DonationListResponse> donationListResponseList = createDonationListResponse(
-                donationList, memberResponseMap);
+                donationList, nicknameMap);
 
         return donationListResponseList;
     }
 
-    public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, MemberResponse> memberResponseMap) {
+    public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, String> nicknameMap) {
         List<DonationListResponse> donationListResponseList = new ArrayList<>();
 
         for (Donation donation : donationList) {
             DonationListResponse donationListResponse = DonationListResponse
                     .builder()
                     .id(donation.getId())
-                    .nickname(memberResponseMap.get(donation.getId()).getNickname())
+                    .nickname(nicknameMap.get(donation.getId()))
                     .historyCount(historyRepository.countAllByDonationId(donation.getId()))
                     .address(donation.getAddress())
                     .createdAt(donation.getCreatedAt())
@@ -87,11 +87,11 @@ public class FindDonationUseCase {
     public DonationDetailsResponse findDonation(Long id) throws JsonProcessingException {
         Donation donation = donationRepository.findById(id);
 
-        MemberResponse memberResponse = null;
+        String nickname = null;
 
         //todo nickname
         try {
-            memberResponse = responseUtil.extractDataFromResponse(memberClient.getMemberInfo(donation.getMemberId()), MemberResponse.class);
+            nickname = responseUtil.extractDataFromResponse(memberClient.getNickname(donation.getMemberId()),String.class);
         } catch (FeignException.NotFound e) {
             throw e;
         }
@@ -106,9 +106,9 @@ public class FindDonationUseCase {
         List<Long> memberIdList = historyList.stream()
                 .map(history -> history.getMemberId()).collect(Collectors.toList());
 
-        Map<Long, MemberResponse> memberResponseMap = null;
+        Map<Long, String> nicknameMap = null;
         try {
-            memberResponseMap = responseUtil.extractDataFromResponse(memberClient.getMemberInfoList(memberIdList), Map.class);
+            nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
         } catch (FeignException.NotFound e) {
             throw e;
         }
@@ -116,26 +116,26 @@ public class FindDonationUseCase {
 //        memberResponseMap.put(1L, new MemberResponse(1L, "1", "abc", "address", 1,"email", "image"));
 //        memberResponseMap.put(2L, new MemberResponse(2L, "2", "abcd", "address2", 1,"email2", "image2"));
 
-        return createDonationResponse(donation, imageUrlList, memberResponseMap, historyList, memberResponse);
+        return createDonationResponse(donation, imageUrlList, nicknameMap, historyList, nickname);
     }
 
     public DonationDetailsResponse createDonationResponse(
             Donation donation,
             List<String> imageUrlList,
-            Map<Long, MemberResponse> memberResponseMap,
+            Map<Long, String> nicknameMap,
             List<History> historyList,
-            MemberResponse memberResponse) {
+            String nickname) {
 
         List<HistoryResponse> historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                 .content(history.getContent())
-                .nickname(memberResponseMap.get(history.getMemberId()).getNickname())
+                .nickname(nicknameMap.get(history.getMemberId()))
                 .createdAt(history.getCreatedAt())
                 .build()).collect(Collectors.toList());
 
         return DonationDetailsResponse.builder()
                 .id(donation.getId())
                 .isbn(donation.getIsbn())
-                .nickname(memberResponse.getNickname())
+                .nickname(nickname)
                 .address(donation.getAddress())
                 .content(donation.getContent())
                 .canDelivery(donation.isCanDelivery())
@@ -173,10 +173,10 @@ public class FindDonationUseCase {
             List<HistoryResponse> historyResponseList = null;
 
             try {
-                Map<Long, MemberResponse> memberResponseMap = responseUtil.extractDataFromResponse(memberClient.getMemberInfoList(memberIdList), Map.class);
+                Map<Long, String> nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
                 historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                         .content(history.getContent())
-                        .nickname(memberResponseMap.get(history.getMemberId()).getNickname())
+                        .nickname(nicknameMap.get(history.getMemberId()))
                         .createdAt(history.getCreatedAt())
                         .build()).collect(Collectors.toList());
             } catch (FeignException.NotFound e) {

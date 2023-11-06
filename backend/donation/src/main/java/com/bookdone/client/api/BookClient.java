@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "book-service", url = "${FeignClient.book.url}")
+@FeignClient(name = "book-service")
 public interface BookClient {
     @GetMapping("/isbn/{isbn}")
     ResponseEntity<?> getBookInfo(@PathVariable Long isbn);

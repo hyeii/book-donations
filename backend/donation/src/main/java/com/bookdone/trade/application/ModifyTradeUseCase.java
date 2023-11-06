@@ -2,6 +2,7 @@ package com.bookdone.trade.application;
 
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
+import com.bookdone.history.application.repository.HistoryRepository;
 import com.bookdone.trade.application.repository.TradeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ModifyTradeUseCase {
     private final TradeRepository tradeRepository;
     private final DonationRepository donationRepository;
+    private final HistoryRepository historyRepository;
 
     public void changeStatusToDonationRequested(Long donationId, Long memberId) {
         tradeRepository.updateStatus(donationId, memberId, TradeStatus.DONATION_REQUESTED);
@@ -36,5 +38,6 @@ public class ModifyTradeUseCase {
         donation.changeStatusToKeeping();
         donation.changeMemberId(memberId);
         donationRepository.save(donation);
+        historyRepository.saveDummyHistory(donationId, memberId);
     }
 }

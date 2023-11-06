@@ -1,5 +1,6 @@
 package com.bookdone.history.infra.database;
 
+import com.bookdone.history.application.HistoryStatus;
 import com.bookdone.history.application.repository.HistoryRepository;
 import com.bookdone.history.domain.History;
 import com.bookdone.history.infra.entity.HistoryEntity;
@@ -55,5 +56,15 @@ public class HistoryRepositoryImpl implements HistoryRepository {
         HistoryEntity historyEntity = jpaHistoryRepository.findTopByDonationIdOrderByDonatedAtDesc(donationId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 히스토리가 없습니다."));
         return History.createHistory(historyEntity);
+    }
+
+    @Override
+    public void saveDummyHistory(Long donationId, Long memberId) {
+        HistoryEntity historyEntity = HistoryEntity.builder()
+                .donationId(donationId)
+                .memberId(memberId)
+                .status(HistoryStatus.UNWRITTEN)
+                .build();
+        jpaHistoryRepository.save(historyEntity);
     }
 }

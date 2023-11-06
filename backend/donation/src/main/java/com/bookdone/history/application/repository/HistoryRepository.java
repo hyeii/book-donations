@@ -13,4 +13,5 @@ public interface HistoryRepository {
     public List<History> findAllByDonationId(Long donationId);
     public Long countAllByDonationId(Long donationId);
     public History findLastHistoryByDonationId(Long donationId);
+    public void saveDummyHistory(Long donationId, Long memberId);
 }

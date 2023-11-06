@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:bookdone/onboard/widgets/components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Items {
@@ -17,24 +19,9 @@ class Items {
   });
 }
 
-class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({Key? key}) : super(key: key);
+class OnboardingPage extends HookConsumerWidget {
+  // const OnboardingPage({Key? key}) : super(key: key);
 
-  @override
-  State<OnboardingPage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<OnboardingPage> {
-  PageController pageController = PageController(initialPage: 0);
-  int currentIndex = 0;
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
-
-  /// Anime
   Widget animationDo(
     int index,
     int delay,
@@ -71,117 +58,116 @@ class _HomePageState extends State<OnboardingPage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
+    final pageController = usePageController();
+    var currentIndex = useState(0);
     return Scaffold(
-        body: SizedBox(
-      width: size.width,
-      height: size.height,
-      child: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: PageView.builder(
-              controller: pageController,
-              itemCount: listOfItems.length,
-              onPageChanged: (newIndex) {
-                setState(() {
-                  currentIndex = newIndex;
-                });
-              },
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: ((context, index) {
-                return SizedBox(
-                  width: size.width,
-                  height: size.height,
-                  child: Column(
-                    children: [
-                      /// IMG
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(15, 40, 15, 10),
-                        width: size.width,
-                        height: size.height / 2.5,
-                        child: animationDo(
-                          index,
-                          100,
-                          SvgPicture.asset(listOfItems[index].img),
-                        ),
-                      ),
-
-                      /// TITLE TEXT
-                      Padding(
-                          padding: const EdgeInsets.only(top: 25, bottom: 15),
+      body: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: PageView.builder(
+                controller: pageController,
+                itemCount: listOfItems.length,
+                onPageChanged: (newIndex) {
+                  currentIndex.value = newIndex;
+                },
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: ((context, index) {
+                  return SizedBox(
+                    width: size.width,
+                    height: size.height,
+                    child: Column(
+                      children: [
+                        /// IMG
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(15, 40, 15, 10),
+                          width: size.width,
+                          height: size.height / 2.5,
                           child: animationDo(
                             index,
-                            300,
-                            Text(
-                              listOfItems[index].title,
-                              textAlign: TextAlign.center,
-                              style: textTheme.bodyMedium,
-                            ),
-                          )),
-
-                      /// SUBTITLE TEXT
-                      animationDo(
-                        index,
-                        500,
-                        Text(
-                          listOfItems[index].subTitle,
-                          textAlign: TextAlign.center,
-                          style: textTheme.bodyMedium,
+                            100,
+                            SvgPicture.asset(listOfItems[index].img),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
 
-          /// ---------------------------
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              currentIndex == 2
+                        /// TITLE TEXT
+                        Padding(
+                            padding: const EdgeInsets.only(top: 25, bottom: 15),
+                            child: animationDo(
+                              index,
+                              300,
+                              Text(
+                                listOfItems[index].title,
+                                textAlign: TextAlign.center,
+                                style: textTheme.bodyMedium,
+                              ),
+                            )),
 
-                  /// GET STARTED BTN
-                  ? animationDo(
-                      3, 200, GetStartBtn(size: size, textTheme: textTheme))
-
-                  /// SKIP BTN
-                  : SizedBox.shrink(),
-              SizedBox(
-                height: 30,
+                        /// SUBTITLE TEXT
+                        animationDo(
+                          index,
+                          500,
+                          Text(
+                            listOfItems[index].subTitle,
+                            textAlign: TextAlign.center,
+                            style: textTheme.bodyMedium,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
               ),
-              SmoothPageIndicator(
-                controller: pageController,
-                count: listOfItems.length,
-                effect: const ExpandingDotsEffect(
-                  spacing: 6.0,
-                  radius: 10.0,
-                  dotWidth: 10.0,
-                  dotHeight: 10.0,
-                  expansionFactor: 3.8,
-                  dotColor: Colors.grey,
-                  activeDotColor: Colors.brown,
+            ),
+
+            /// ---------------------------
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                currentIndex.value == 2
+
+                    /// GET STARTED BTN
+                    ? animationDo(
+                        3, 200, GetStartBtn(size: size, textTheme: textTheme))
+
+                    /// SKIP BTN
+                    : SizedBox.shrink(),
+                SizedBox(
+                  height: 30,
                 ),
-                onDotClicked: (newIndex) {
-                  setState(() {
-                    currentIndex = newIndex;
+                SmoothPageIndicator(
+                  controller: pageController,
+                  count: listOfItems.length,
+                  effect: const ExpandingDotsEffect(
+                    spacing: 6.0,
+                    radius: 10.0,
+                    dotWidth: 10.0,
+                    dotHeight: 10.0,
+                    expansionFactor: 3.8,
+                    dotColor: Colors.grey,
+                    activeDotColor: Colors.brown,
+                  ),
+                  onDotClicked: (newIndex) {
+                    currentIndex.value = newIndex;
                     pageController.animateToPage(newIndex,
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.ease);
-                  });
-                },
-              ),
-              SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
-        ],
+                  },
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

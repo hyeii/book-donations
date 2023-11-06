@@ -999,3 +999,188 @@ abstract class _Available implements Available {
   _$$AvailableImplCopyWith<_$AvailableImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+UserInfoRes _$UserInfoResFromJson(Map<String, dynamic> json) {
+  return _UserInfoRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserInfoRes {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  MemberInfo get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserInfoResCopyWith<UserInfoRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserInfoResCopyWith<$Res> {
+  factory $UserInfoResCopyWith(
+          UserInfoRes value, $Res Function(UserInfoRes) then) =
+      _$UserInfoResCopyWithImpl<$Res, UserInfoRes>;
+  @useResult
+  $Res call({bool success, String msg, MemberInfo data});
+
+  $MemberInfoCopyWith<$Res> get data;
+}
+
+/// @nodoc
+class _$UserInfoResCopyWithImpl<$Res, $Val extends UserInfoRes>
+    implements $UserInfoResCopyWith<$Res> {
+  _$UserInfoResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as MemberInfo,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MemberInfoCopyWith<$Res> get data {
+    return $MemberInfoCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$UserInfoResImplCopyWith<$Res>
+    implements $UserInfoResCopyWith<$Res> {
+  factory _$$UserInfoResImplCopyWith(
+          _$UserInfoResImpl value, $Res Function(_$UserInfoResImpl) then) =
+      __$$UserInfoResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, MemberInfo data});
+
+  @override
+  $MemberInfoCopyWith<$Res> get data;
+}
+
+/// @nodoc
+class __$$UserInfoResImplCopyWithImpl<$Res>
+    extends _$UserInfoResCopyWithImpl<$Res, _$UserInfoResImpl>
+    implements _$$UserInfoResImplCopyWith<$Res> {
+  __$$UserInfoResImplCopyWithImpl(
+      _$UserInfoResImpl _value, $Res Function(_$UserInfoResImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$UserInfoResImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as MemberInfo,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserInfoResImpl implements _UserInfoRes {
+  const _$UserInfoResImpl(
+      {required this.success, required this.msg, required this.data});
+
+  factory _$UserInfoResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserInfoResImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  @override
+  final MemberInfo data;
+
+  @override
+  String toString() {
+    return 'UserInfoRes(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserInfoResImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, msg, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserInfoResImplCopyWith<_$UserInfoResImpl> get copyWith =>
+      __$$UserInfoResImplCopyWithImpl<_$UserInfoResImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserInfoResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UserInfoRes implements UserInfoRes {
+  const factory _UserInfoRes(
+      {required final bool success,
+      required final String msg,
+      required final MemberInfo data}) = _$UserInfoResImpl;
+
+  factory _UserInfoRes.fromJson(Map<String, dynamic> json) =
+      _$UserInfoResImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  MemberInfo get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserInfoResImplCopyWith<_$UserInfoResImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

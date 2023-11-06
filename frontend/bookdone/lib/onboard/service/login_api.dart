@@ -1,17 +1,19 @@
 import 'package:bookdone/main.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/onboard/page/add_additional_info.dart';
+import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginApi {
   static String baseURL = dotenv.get('API_URL');
 
-  static Future<void> kakaoLogin(context) async {
+  static Future<void> kakaoLogin(context, ref) async {
     if (await isKakaoTalkInstalled()) {
       debugPrint('카톡으루로그잉');
       try {
@@ -36,7 +38,7 @@ class LoginApi {
         try {
           await UserApi.instance.loginWithKakaoAccount();
           print('카카오계정으로 로그인 성공');
-          signup(context);
+          signup(context, ref);
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MyHomePage()));
         } catch (error) {
@@ -53,7 +55,7 @@ class LoginApi {
           var token = await TokenManagerProvider.instance.manager.getToken();
           debugPrint('토큰냠냠 ${token!.accessToken}');
           debugPrint('${token.toJson()}');
-          signup(context);
+          signup(context, ref);
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
         }
@@ -91,7 +93,7 @@ class LoginApi {
     }
   }
 
-  static Future<void> signup(context) async {
+  static Future<void> signup(context, ref) async {
     var token = await TokenManagerProvider.instance.manager.getToken();
     // AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
     // debugPrint(tokenInfo.toString());
@@ -154,6 +156,8 @@ class LoginApi {
       await pref.setString('accessToken', user.accessToken);
       await pref.setString('oauthId', user.member.oauthId);
       // TODO: accessToken secure storage로 관리하기
+      // await ref.watch(userInfoRepositoryProvider).restoreUserData(user);
+      // await ref.read(userInfoRepositoryProvider).restoreUserData(user);
       // 저장했으니 로그인 완료!
       context.pushNamed('home');
     } else {
@@ -161,6 +165,9 @@ class LoginApi {
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setString('accessToken', user.accessToken);
       // context.pushNamed('addadditionalinfo');
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
     }
     // debugPrint(res);
   }

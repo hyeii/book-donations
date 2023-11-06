@@ -81,3 +81,17 @@ Map<String, dynamic> _$$AvailableImplToJson(_$AvailableImpl instance) =>
     <String, dynamic>{
       'available': instance.available,
     };
+
+_$UserInfoResImpl _$$UserInfoResImplFromJson(Map<String, dynamic> json) =>
+    _$UserInfoResImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: MemberInfo.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$UserInfoResImplToJson(_$UserInfoResImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };

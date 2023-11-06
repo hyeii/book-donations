@@ -66,3 +66,15 @@ class Available with _$Available {
   factory Available.fromJson(Map<String, dynamic> json) =>
       _$AvailableFromJson(json);
 }
+
+@freezed
+class UserInfoRes with _$UserInfoRes {
+  const factory UserInfoRes({
+    required bool success,
+    required String msg,
+    required MemberInfo data,
+  }) = _UserInfoRes;
+
+  factory UserInfoRes.fromJson(Map<String, Object?> json) =>
+      _$UserInfoResFromJson(json);
+}

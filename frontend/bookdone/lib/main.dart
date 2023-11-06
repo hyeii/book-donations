@@ -6,6 +6,7 @@ import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
 import 'package:bookdone/onboard/page/add_additional_info.dart';
+import 'package:bookdone/onboard/page/add_complete.dart';
 import 'package:bookdone/onboard/page/onboaring_page.dart';
 import 'package:bookdone/onboard/page/splash_page.dart';
 import 'package:bookdone/regist/page/regist_data.dart';
@@ -273,7 +274,7 @@ class CustomNavigationHelper {
         path: '/onboarding',
         pageBuilder: (context, state) {
           return getPage(
-            child: const OnboardingPage(),
+            child: OnboardingPage(),
             state: state,
           );
         },
@@ -285,6 +286,17 @@ class CustomNavigationHelper {
         pageBuilder: (context, state) {
           return getPage(
             child: const AddAdditionalInfo(),
+            state: state,
+          );
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: parentNavigatorKey,
+        name: 'addcomplete',
+        path: '/addcomplete',
+        pageBuilder: (context, state) {
+          return getPage(
+            child: const AddComplete(),
             state: state,
           );
         },

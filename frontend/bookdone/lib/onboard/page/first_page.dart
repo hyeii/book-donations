@@ -1,4 +1,5 @@
 import 'package:bookdone/onboard/page/splash_page.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/router/router_path.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -40,7 +41,7 @@ class FirstPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    context.go(RouterPath.onboarding);
+                    OnboardingRoute().go(context);
                   },
                   style: ElevatedButton.styleFrom(
                       minimumSize: Size.zero,

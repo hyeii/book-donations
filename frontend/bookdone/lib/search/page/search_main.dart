@@ -3,6 +3,8 @@ import 'package:bookdone/search/model/book.dart';
 import 'package:bookdone/search/service/search_service.dart';
 import 'package:bookdone/search/widgets/autocomplete_list.dart';
 import 'package:bookdone/search/widgets/search_result_card.dart';
+import 'package:bookdone/top/page/top_navigation_bar.dart';
+import 'package:bookdone/widgets/floating_register_btn.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -137,6 +139,9 @@ class SearchMain extends HookConsumerWidget {
             ),
           ),
         ),
+        bottomNavigationBar: TopNavigationBar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        floatingActionButton: FloatingRegisterBtn(),
       ),
     );
   }

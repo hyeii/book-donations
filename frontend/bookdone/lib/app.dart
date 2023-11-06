@@ -8,8 +8,12 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
     return MaterialApp.router(
       title: 'Flutter Demo',
+      routerDelegate: router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           primaryColor: Colors.white,
@@ -30,7 +34,6 @@ class MyApp extends HookConsumerWidget {
           bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.white)),
-      routerConfig: ref.watch(routerProvider),
     );
   }
 }

@@ -21,6 +21,16 @@ import 'package:go_router/go_router.dart';
 
 part 'app_routes.g.dart';
 
+@TypedGoRoute<TopPageRoute>(
+  path: RouterPath.topPage,
+)
+class TopPageRoute extends GoRouteData {
+  const TopPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const TopPage();
+}
+
 @TypedGoRoute<FirstPageRoute>(
   path: RouterPath.firstPage,
 )

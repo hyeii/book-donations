@@ -28,11 +28,11 @@ public class FindHistoryUseCase {
     public HistoryResponse findHistoryById(Long id) throws JsonProcessingException {
         History history = historyRepository.findById(id);
 
-        MemberResponse memberResponse = null;
+        String nickname = null;
 
         try {
-            memberResponse = responseUtil.extractDataFromResponse(
-                    memberClient.getMemberInfo(history.getMemberId()), MemberResponse.class);
+            nickname = responseUtil.extractDataFromResponse(
+                    memberClient.getNickname(history.getMemberId()), String.class);
         } catch (FeignException.NotFound e) {
             throw e;
         }
@@ -40,18 +40,18 @@ public class FindHistoryUseCase {
         return HistoryResponse.builder()
                 .content(history.getContent())
                 .createdAt(history.getCreatedAt())
-                .nickname(memberResponse.getNickname())
+                .nickname(nickname)
                 .build();
     }
 
     public HistoryResponse findHistoryByDonationIdAndMemberId(Long donationId, Long memberId) {
         History history = historyRepository.findByDonationIdAndMemberId(donationId, memberId);
 
-        MemberResponse memberResponse = null;
+        String nickname = null;
 
         try {
-            memberResponse = responseUtil.extractDataFromResponse(
-                    memberClient.getMemberInfo(history.getMemberId()), MemberResponse.class);
+            nickname = responseUtil.extractDataFromResponse(
+                    memberClient.getNickname(history.getMemberId()), String.class);
         } catch (FeignException.NotFound e) {
             throw e;
         } catch (JsonProcessingException e) {
@@ -61,7 +61,7 @@ public class FindHistoryUseCase {
         return HistoryResponse.builder()
                 .content(history.getContent())
                 .createdAt(history.getCreatedAt())
-                .nickname(memberResponse.getNickname())
+                .nickname(nickname)
                 .build();
     }
 
@@ -72,28 +72,28 @@ public class FindHistoryUseCase {
                 .map(history -> history.getMemberId())
                 .collect(Collectors.toList());
 
-        Map<Long, MemberResponse> memberResponseMap = null;
+        Map<Long, String> nicknameMap = null;
         try {
-            memberResponseMap = responseUtil.extractDataFromResponse(memberClient.getMemberInfoList(memberIdList), Map.class);
+            nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
         } catch (FeignException.NotFound e) {
             throw e;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        List<HistoryResponse> historyResponseList = createHistoryResponseList(historyList, memberResponseMap);
+        List<HistoryResponse> historyResponseList = createHistoryResponseList(historyList, nicknameMap);
         return historyResponseList;
     }
 
     public List<HistoryResponse> createHistoryResponseList(
-            List<History> historyList, Map<Long, MemberResponse> memberResponseMap) {
+            List<History> historyList, Map<Long, String> nicknameMap) {
         List<HistoryResponse> historyResponseList = new ArrayList<>();
 
         for(History history : historyList) {
             HistoryResponse historyResponse = HistoryResponse.builder()
                     .content(history.getContent())
                     .createdAt(history.getCreatedAt())
-                    .nickname(memberResponseMap.get(history.getMemberId()).getNickname())
+                    .nickname(nicknameMap.get(history.getMemberId()))
                     .build();
             historyResponseList.add(historyResponse);
         }

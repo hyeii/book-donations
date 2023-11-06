@@ -37,6 +37,7 @@ public class AuthService {
             log.error("login error : {}", e.getMessage());
             ResponseEntity<Object> response = memberServiceClient.join(JoinMemberRequest.createJoinMemberRequest(memberData));
             member = FeignResponse.extractDataFromResponse(response, MemberResponse.class);
+            newMember = true;
         }
 
         AuthResponse authResponse = AuthResponse.create(member, newMember);

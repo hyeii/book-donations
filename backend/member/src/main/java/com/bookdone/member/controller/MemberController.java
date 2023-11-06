@@ -48,7 +48,7 @@ public class MemberController {
         return BaseResponse.okWithData(HttpStatus.OK, "멤버 리스트 조회 완료", members);
     }
 
-    @GetMapping("/nicknames")
+    @PostMapping("/nicknames")
     public ResponseEntity<?> getNicknames(@RequestBody List<Long> memberIds) {
         Map<Long, String> nicknames = memberService.findNicknamesByMemberIds(memberIds);
         return BaseResponse.okWithData(HttpStatus.OK, "멤버 리스트 조회 완료", nicknames);

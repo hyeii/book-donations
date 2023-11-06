@@ -40,6 +40,12 @@ public class MemberService {
                 .collect(Collectors.toMap(Member::getId, member -> MemberResponse.toResponse(member)));
     }
 
+    public Map<Long, String> findNicknamesByMemberIds(List<Long> memberIds) {
+        List<Member> members = memberRepository.findByIdIn(memberIds);
+        return members.stream()
+                .collect(Collectors.toMap(Member::getId, Member::getNickname));
+    }
+
     @Transactional
     public MemberResponse join(JoinMemberRequest joinMemberRequest) {
         Member member = joinMemberRequest.toEntity();

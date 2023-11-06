@@ -7,9 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BookinfoMain extends HookConsumerWidget {
-  const BookinfoMain({super.key});
+  const BookinfoMain({super.key, required this.isbn});
+  final String isbn;
+
+  final testIsbn = '9791193235065';
+
+  Future<void> checkkk() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    print(pref);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +42,7 @@ class BookinfoMain extends HookConsumerWidget {
             child: Column(
               children: [
                 FutureBuilder(
-                  future: restClient.getDetailBook('isbn'), // TODO: 수정
+                  future: restClient.getDetailBook('9791193235065'), // TODO: 수정
                   builder: (_, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -106,6 +115,7 @@ class BookinfoMain extends HookConsumerWidget {
                         ElevatedButton(
                           onPressed: () {
                             context.pushNamed('bookinfodetail');
+                            checkkk();
                           },
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -143,7 +153,7 @@ class BookinfoMain extends HookConsumerWidget {
                 ),
                 CommentInput(),
                 FutureBuilder(
-                  future: restClient.getCommentsList('isbn'),
+                  future: restClient.getCommentsList(isbn),
                   builder: (_, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(

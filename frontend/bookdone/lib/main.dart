@@ -211,12 +211,12 @@ class CustomNavigationHelper {
         },
       ),
       GoRoute(
-        // parentNavigatorKey: parentNavigatorKey,
+        parentNavigatorKey: parentNavigatorKey,
         name: 'bookinfoMain',
         path: '/bookinfomain',
         pageBuilder: (context, state) {
           return getPage(
-            child: const BookinfoMain(),
+            child: BookinfoMain(isbn: 'isbn'),
             state: state,
           );
         },
@@ -232,7 +232,7 @@ class CustomNavigationHelper {
             },
             routes: [
               GoRoute(
-                // parentNavigatorKey: parentNavigatorKey,
+                parentNavigatorKey: parentNavigatorKey,
                 name: 'articlemain',
                 path: 'articlemain',
                 pageBuilder: (context, state) {

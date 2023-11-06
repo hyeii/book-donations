@@ -2,6 +2,7 @@ import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentInput extends HookConsumerWidget {
   const CommentInput({super.key});
@@ -10,6 +11,13 @@ class CommentInput extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
     String comment = "";
+    var userNickname = useState('');
+
+    Future<void> getUser() async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      userNickname.value = pref.getString('nickname') ?? '';
+      print(userNickname.value);
+    }
 
     void _tryValidation() {
       final isValid = _formKey.currentState!.validate();
@@ -45,10 +53,11 @@ class CommentInput extends HookConsumerWidget {
         ),
         ElevatedButton(
           onPressed: () async {
+            getUser();
             _tryValidation();
             await ref.read(restApiClientProvider).postComment({
-              "isbn": "9999999999",
-              "writer": "현재 사용자",
+              "isbn": "9791193235065",
+              "writer": userNickname.value,
               "review": comment,
             });
           },

@@ -79,7 +79,9 @@ class SearchResultCard extends HookWidget {
                             child: TextButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => BookinfoMain()));
+                                    builder: (context) => BookinfoMain(
+                                          isbn: book.isbn,
+                                        )));
                               },
                               style: TextButton.styleFrom(
                                 minimumSize: Size.zero,

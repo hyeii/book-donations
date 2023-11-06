@@ -25,6 +25,7 @@ class GetStartBtn extends HookConsumerWidget {
       Future.delayed(const Duration(seconds: 1)).then((value) {
         isLoading.value = false;
         LoginApi.kakaoLogin(context, ref);
+        ;
       });
     }
 

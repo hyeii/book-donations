@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -137,7 +138,7 @@ class LoginApi {
     final res = UserRes.fromJson(_result.data!);
     print(res);
     UserData user = res.data;
-    if (res.data.newMember) {
+    if (res.data.newMember == false) {
       // 여기 들어왔다는건 이미 가입된 유저인데 이번에 로그인한 유저이니까
       // pref에 저장해야 할 정보 ::
       // 닉네임
@@ -159,15 +160,18 @@ class LoginApi {
       // await ref.watch(userInfoRepositoryProvider).restoreUserData(user);
       // await ref.read(userInfoRepositoryProvider).restoreUserData(user);
       // 저장했으니 로그인 완료!
-      context.pushNamed('home');
+      print(pref.getString('address'));
+      // context.go('/home');
+      Navigator.of(context, rootNavigator: true)
+          .pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
     } else {
       // 처음 로그인한 유저. 추가정보 입력으로 보내기
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setString('accessToken', user.accessToken);
       // context.pushNamed('addadditionalinfo');
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
     }
     // debugPrint(res);
   }

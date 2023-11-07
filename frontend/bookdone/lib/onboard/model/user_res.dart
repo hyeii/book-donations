@@ -34,11 +34,10 @@ class MemberInfo with _$MemberInfo {
   const factory MemberInfo({
     required int id,
     required String oauthId,
-    required String nickname,
+    required dynamic nickname,
     required String address,
-    required String fcmToken,
+    required dynamic fcmToken,
     required int point,
-    required String email,
     required String image,
   }) = _MemberInfo;
 

@@ -40,11 +40,10 @@ _$MemberInfoImpl _$$MemberInfoImplFromJson(Map<String, dynamic> json) =>
     _$MemberInfoImpl(
       id: json['id'] as int,
       oauthId: json['oauthId'] as String,
-      nickname: json['nickname'] as String,
+      nickname: json['nickname'],
       address: json['address'] as String,
-      fcmToken: json['fcmToken'] as String,
+      fcmToken: json['fcmToken'],
       point: json['point'] as int,
-      email: json['email'] as String,
       image: json['image'] as String,
     );
 
@@ -56,7 +55,6 @@ Map<String, dynamic> _$$MemberInfoImplToJson(_$MemberInfoImpl instance) =>
       'address': instance.address,
       'fcmToken': instance.fcmToken,
       'point': instance.point,
-      'email': instance.email,
       'image': instance.image,
     };
 

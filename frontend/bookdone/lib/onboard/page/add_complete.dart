@@ -32,7 +32,8 @@ class AddComplete extends HookWidget {
             ElevatedButton(
               onPressed: () {
                 // context.go('/home');
-                HomeRoute().go(context);
+                // HomeRoute().go(context);
+                TopPageRoute().go(context);
               },
               // shape: CircleBorder(),
               child: Text('ㄱㄱ'),

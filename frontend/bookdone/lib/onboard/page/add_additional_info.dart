@@ -3,14 +3,18 @@ import 'dart:convert';
 import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/onboard/page/add_complete.dart';
+import 'package:bookdone/onboard/repository/user_repository.dart';
+import 'package:bookdone/onboard/service/set_user_api.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/util/repository/region_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddAdditionalInfo extends HookConsumerWidget {
   const AddAdditionalInfo({super.key});
@@ -33,6 +37,19 @@ class AddAdditionalInfo extends HookConsumerWidget {
     var selectedRegionCode = useState('');
     // XFile? _pickedFile; // XFile
     final imageSize = MediaQuery.of(context).size.width / 5;
+
+    var fcmToken = useState('');
+
+    var complete = useState(false);
+
+    void getFcmToken() async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString('fcmToken');
+      if (token != null) {
+        fcmToken.value = token;
+      }
+      print(fcmToken.value);
+    }
 
     // _getCameraImage() async {
     //   final pickedFile =
@@ -102,12 +119,31 @@ class AddAdditionalInfo extends HookConsumerWidget {
     //     },
     //   );
     // }
+
+    Future<void> addFinalInfo() async {
+      await restClient.postAdditionalInfo({
+        'nickname': nickName.value,
+        'address': regionCode.value,
+        'fcmToken': fcmToken.value
+      });
+      print(fcmToken.value);
+
+      // MemberInfo user =await ref.read(userInfoRepositoryProvider).restoreUserData(user);
+      // await pref.setInt('loginStatus', 1);
+      // await pref.setString('nickname', nickName.value);
+      // await pref.setInt('bookmarkCnt', user.member.point);
+      // await pref.setString('address', user.member.address);
+      // await pref.setString('profileImage', user.member.image);
+      // await pref.setString('accessToken', user.accessToken);
+      // await pref.setString('oauthId', user.member.oauthId);
+    }
+
     Future<void> readJson() async {
       final jsonString =
           await rootBundle.loadString("assets/json/localcode.json");
       final response = await json.decode(jsonString) as Map<String, dynamic>;
       final result = Region.fromJson(response);
-      print('테스트 : ${result.region[0].first}');
+      // print('테스트 : ${result.region[0].first}');
       regionList.value = result.region;
       // regionList.value = List<Region>.from(data['region']);
     }
@@ -253,9 +289,12 @@ class AddAdditionalInfo extends HookConsumerWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             // TODO: 지역코드 서버로 보내기
+                            regionCode.value = secondRegionList
+                                .value[selectedRegionIndex.value].code;
 
                             regionName.value = secondRegionList
                                 .value[selectedRegionIndex.value].name;
+
                             Navigator.of(context).pop();
                           },
                           style: ElevatedButton.styleFrom(
@@ -363,8 +402,14 @@ class AddAdditionalInfo extends HookConsumerWidget {
                       ),
                       ElevatedButton(
                         onPressed: () async {
-                          await restClient.postAdditionalInfo(
-                              {'nickname': nickName.value, 'address': '1122'});
+                          // print(nickName.value);
+                          // print(regionCode.value);
+                          await restClient.postAdditionalInfo({
+                            'nickname': nickName.value,
+                            'address': regionCode.value
+                          });
+                          complete.value = true;
+                          SetUserApi.updateMyInfo(ref);
                         },
                         child: Text('확인'),
                       ),
@@ -527,8 +572,10 @@ class AddAdditionalInfo extends HookConsumerWidget {
             _checkAlert();
 
             // context.goNamed('home');
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => AddComplete()));
+            if (complete.value) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddComplete()));
+            }
           },
           child: Text('완료'),
         ),

@@ -40,10 +40,11 @@ _$MemberInfoImpl _$$MemberInfoImplFromJson(Map<String, dynamic> json) =>
     _$MemberInfoImpl(
       id: json['id'] as int,
       oauthId: json['oauthId'] as String,
-      nickname: json['nickname'],
+      nickname: json['nickname'] as String,
       address: json['address'] as String,
+      fcmToken: json['fcmToken'] as String,
       point: json['point'] as int,
-      email: json['email'],
+      email: json['email'] as String,
       image: json['image'] as String,
     );
 
@@ -53,6 +54,7 @@ Map<String, dynamic> _$$MemberInfoImplToJson(_$MemberInfoImpl instance) =>
       'oauthId': instance.oauthId,
       'nickname': instance.nickname,
       'address': instance.address,
+      'fcmToken': instance.fcmToken,
       'point': instance.point,
       'email': instance.email,
       'image': instance.image,
@@ -80,4 +82,18 @@ _$AvailableImpl _$$AvailableImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$AvailableImplToJson(_$AvailableImpl instance) =>
     <String, dynamic>{
       'available': instance.available,
+    };
+
+_$UserInfoResImpl _$$UserInfoResImplFromJson(Map<String, dynamic> json) =>
+    _$UserInfoResImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: MemberInfo.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$UserInfoResImplToJson(_$UserInfoResImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
     };

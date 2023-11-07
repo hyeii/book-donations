@@ -6,6 +6,7 @@ class CommentCard extends HookWidget {
   const CommentCard({super.key, required this.comment});
 
   final Comment comment;
+  // var create = comment.createdAt.year;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,8 @@ class CommentCard extends HookWidget {
               comment.writer,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text(comment.createdAt as String)
+            Text(
+                '${comment.createdAt.year}-${comment.createdAt.month}-${comment.createdAt.day} ${comment.createdAt.hour}:${comment.createdAt.minute}')
           ],
         ),
         SizedBox(

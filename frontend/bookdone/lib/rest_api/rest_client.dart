@@ -42,4 +42,7 @@ abstract class RestClient {
 
   @POST('/api/books/reviews')
   Future<void> postComment(@Body() Map<String, dynamic> map);
+
+  @GET('/api/members/me')
+  Future<UserInfoRes> getMyInfo();
 }

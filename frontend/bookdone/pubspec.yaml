@@ -59,6 +59,10 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   animate_do: ^3.1.2
   flutter_svg: ^2.0.9
+  go_router_builder: ^2.3.4
+  firebase_core: ^2.21.0
+  firebase_messaging: ^14.7.3
+  flutter_local_notifications: ^16.1.0
 
 dev_dependencies:
   flutter_test:

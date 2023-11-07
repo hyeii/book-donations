@@ -1,6 +1,5 @@
-import 'package:bookdone/main.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
-import 'package:bookdone/onboard/page/add_additional_info.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginApi {
   static String baseURL = dotenv.get('API_URL');
 
-  static Future<void> kakaoLogin(context) async {
+  static Future<void> kakaoLogin(BuildContext context) async {
     if (await isKakaoTalkInstalled()) {
       debugPrint('카톡으루로그잉');
       try {
@@ -21,8 +20,7 @@ class LoginApi {
           var token = await TokenManagerProvider.instance.manager.getToken();
           debugPrint('토큰냠냠 ${token!.accessToken}');
           debugPrint('${token.toJson()}');
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
+          signup(context);
         }
       } catch (error) {
         print('카카오톡으로 로그인 실패 $error');
@@ -37,15 +35,14 @@ class LoginApi {
           await UserApi.instance.loginWithKakaoAccount();
           print('카카오계정으로 로그인 성공');
           signup(context);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => MyHomePage()));
         } catch (error) {
           print('카카오계정으로 로그인 실패 $error');
         }
       }
     } else {
       debugPrint('계정로긍이');
-      // debugPrint(await KakaoSdk.origin);
       try {
         await UserApi.instance.loginWithKakaoAccount();
         debugPrint('카카오계정으로 로그인 성공');
@@ -54,8 +51,6 @@ class LoginApi {
           debugPrint('토큰냠냠 ${token!.accessToken}');
           debugPrint('${token.toJson()}');
           signup(context);
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => AddAdditionalInfo()));
         }
       } catch (error) {
         debugPrint('카카오계정으로 로그인 실패 $error');
@@ -93,14 +88,12 @@ class LoginApi {
 
   static Future<void> signup(context) async {
     var token = await TokenManagerProvider.instance.manager.getToken();
-    // AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
-    // debugPrint(tokenInfo.toString());
-    // debugPrint(token.toString());
 
     var dio = Dio();
 
     dio.options.headers['Authorization'] = 'Bearer ${token!.idToken}';
     debugPrint(dio.options.headers.toString());
+    debugPrint('여기얌');
 
     RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
       if (T != dynamic &&
@@ -135,16 +128,8 @@ class LoginApi {
     final res = UserRes.fromJson(_result.data!);
     print(res);
     UserData user = res.data;
-    if (res.data.newMember) {
-      // 여기 들어왔다는건 이미 가입된 유저인데 이번에 로그인한 유저이니까
-      // pref에 저장해야 할 정보 ::
-      // 닉네임
-      // 책갈피 수
-      // 주소 코드
-      // 프로필 이미지 url
-      // 현재 로그인 상태
-      // accessToken
-      // oauthId
+    if (res.data.newMember == false) {
+      // 여기 들어왔다는건 이미 가입된 유저인데 이번에 로그인한 유저
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setInt('loginStatus', 1);
       await pref.setString('nickname', user.member.nickname);
@@ -154,13 +139,16 @@ class LoginApi {
       await pref.setString('accessToken', user.accessToken);
       await pref.setString('oauthId', user.member.oauthId);
       // TODO: accessToken secure storage로 관리하기
+      // await ref.watch(userInfoRepositoryProvider).restoreUserData(user);
+      // await ref.read(userInfoRepositoryProvider).restoreUserData(user);
+
       // 저장했으니 로그인 완료!
-      context.pushNamed('home');
+      TopPageRoute().go(context);
     } else {
       // 처음 로그인한 유저. 추가정보 입력으로 보내기
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setString('accessToken', user.accessToken);
-      // context.pushNamed('addadditionalinfo');
+      AddAdditionalRoute().go(context);
     }
     // debugPrint(res);
   }

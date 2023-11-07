@@ -34,10 +34,11 @@ class MemberInfo with _$MemberInfo {
   const factory MemberInfo({
     required int id,
     required String oauthId,
-    required dynamic nickname,
+    required String nickname,
     required String address,
+    required String fcmToken,
     required int point,
-    required dynamic email,
+    required String email,
     required String image,
   }) = _MemberInfo;
 
@@ -65,4 +66,16 @@ class Available with _$Available {
 
   factory Available.fromJson(Map<String, dynamic> json) =>
       _$AvailableFromJson(json);
+}
+
+@freezed
+class UserInfoRes with _$UserInfoRes {
+  const factory UserInfoRes({
+    required bool success,
+    required String msg,
+    required MemberInfo data,
+  }) = _UserInfoRes;
+
+  factory UserInfoRes.fromJson(Map<String, Object?> json) =>
+      _$UserInfoResFromJson(json);
 }

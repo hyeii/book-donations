@@ -419,10 +419,11 @@ MemberInfo _$MemberInfoFromJson(Map<String, dynamic> json) {
 mixin _$MemberInfo {
   int get id => throw _privateConstructorUsedError;
   String get oauthId => throw _privateConstructorUsedError;
-  dynamic get nickname => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
+  String get fcmToken => throw _privateConstructorUsedError;
   int get point => throw _privateConstructorUsedError;
-  dynamic get email => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -440,10 +441,11 @@ abstract class $MemberInfoCopyWith<$Res> {
   $Res call(
       {int id,
       String oauthId,
-      dynamic nickname,
+      String nickname,
       String address,
+      String fcmToken,
       int point,
-      dynamic email,
+      String email,
       String image});
 }
 
@@ -462,10 +464,11 @@ class _$MemberInfoCopyWithImpl<$Res, $Val extends MemberInfo>
   $Res call({
     Object? id = null,
     Object? oauthId = null,
-    Object? nickname = freezed,
+    Object? nickname = null,
     Object? address = null,
+    Object? fcmToken = null,
     Object? point = null,
-    Object? email = freezed,
+    Object? email = null,
     Object? image = null,
   }) {
     return _then(_value.copyWith(
@@ -477,22 +480,26 @@ class _$MemberInfoCopyWithImpl<$Res, $Val extends MemberInfo>
           ? _value.oauthId
           : oauthId // ignore: cast_nullable_to_non_nullable
               as String,
-      nickname: freezed == nickname
+      nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      fcmToken: null == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
               as String,
       point: null == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
               as int,
-      email: freezed == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -512,10 +519,11 @@ abstract class _$$MemberInfoImplCopyWith<$Res>
   $Res call(
       {int id,
       String oauthId,
-      dynamic nickname,
+      String nickname,
       String address,
+      String fcmToken,
       int point,
-      dynamic email,
+      String email,
       String image});
 }
 
@@ -532,10 +540,11 @@ class __$$MemberInfoImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? oauthId = null,
-    Object? nickname = freezed,
+    Object? nickname = null,
     Object? address = null,
+    Object? fcmToken = null,
     Object? point = null,
-    Object? email = freezed,
+    Object? email = null,
     Object? image = null,
   }) {
     return _then(_$MemberInfoImpl(
@@ -547,22 +556,26 @@ class __$$MemberInfoImplCopyWithImpl<$Res>
           ? _value.oauthId
           : oauthId // ignore: cast_nullable_to_non_nullable
               as String,
-      nickname: freezed == nickname
+      nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      fcmToken: null == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
               as String,
       point: null == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
               as int,
-      email: freezed == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -579,6 +592,7 @@ class _$MemberInfoImpl implements _MemberInfo {
       required this.oauthId,
       required this.nickname,
       required this.address,
+      required this.fcmToken,
       required this.point,
       required this.email,
       required this.image});
@@ -591,19 +605,21 @@ class _$MemberInfoImpl implements _MemberInfo {
   @override
   final String oauthId;
   @override
-  final dynamic nickname;
+  final String nickname;
   @override
   final String address;
   @override
+  final String fcmToken;
+  @override
   final int point;
   @override
-  final dynamic email;
+  final String email;
   @override
   final String image;
 
   @override
   String toString() {
-    return 'MemberInfo(id: $id, oauthId: $oauthId, nickname: $nickname, address: $address, point: $point, email: $email, image: $image)';
+    return 'MemberInfo(id: $id, oauthId: $oauthId, nickname: $nickname, address: $address, fcmToken: $fcmToken, point: $point, email: $email, image: $image)';
   }
 
   @override
@@ -613,24 +629,20 @@ class _$MemberInfoImpl implements _MemberInfo {
             other is _$MemberInfoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.oauthId, oauthId) || other.oauthId == oauthId) &&
-            const DeepCollectionEquality().equals(other.nickname, nickname) &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname) &&
             (identical(other.address, address) || other.address == address) &&
+            (identical(other.fcmToken, fcmToken) ||
+                other.fcmToken == fcmToken) &&
             (identical(other.point, point) || other.point == point) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      oauthId,
-      const DeepCollectionEquality().hash(nickname),
-      address,
-      point,
-      const DeepCollectionEquality().hash(email),
-      image);
+  int get hashCode => Object.hash(runtimeType, id, oauthId, nickname, address,
+      fcmToken, point, email, image);
 
   @JsonKey(ignore: true)
   @override
@@ -650,10 +662,11 @@ abstract class _MemberInfo implements MemberInfo {
   const factory _MemberInfo(
       {required final int id,
       required final String oauthId,
-      required final dynamic nickname,
+      required final String nickname,
       required final String address,
+      required final String fcmToken,
       required final int point,
-      required final dynamic email,
+      required final String email,
       required final String image}) = _$MemberInfoImpl;
 
   factory _MemberInfo.fromJson(Map<String, dynamic> json) =
@@ -664,13 +677,15 @@ abstract class _MemberInfo implements MemberInfo {
   @override
   String get oauthId;
   @override
-  dynamic get nickname;
+  String get nickname;
   @override
   String get address;
   @override
+  String get fcmToken;
+  @override
   int get point;
   @override
-  dynamic get email;
+  String get email;
   @override
   String get image;
   @override
@@ -997,5 +1012,190 @@ abstract class _Available implements Available {
   @override
   @JsonKey(ignore: true)
   _$$AvailableImplCopyWith<_$AvailableImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+UserInfoRes _$UserInfoResFromJson(Map<String, dynamic> json) {
+  return _UserInfoRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserInfoRes {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  MemberInfo get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserInfoResCopyWith<UserInfoRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserInfoResCopyWith<$Res> {
+  factory $UserInfoResCopyWith(
+          UserInfoRes value, $Res Function(UserInfoRes) then) =
+      _$UserInfoResCopyWithImpl<$Res, UserInfoRes>;
+  @useResult
+  $Res call({bool success, String msg, MemberInfo data});
+
+  $MemberInfoCopyWith<$Res> get data;
+}
+
+/// @nodoc
+class _$UserInfoResCopyWithImpl<$Res, $Val extends UserInfoRes>
+    implements $UserInfoResCopyWith<$Res> {
+  _$UserInfoResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as MemberInfo,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MemberInfoCopyWith<$Res> get data {
+    return $MemberInfoCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$UserInfoResImplCopyWith<$Res>
+    implements $UserInfoResCopyWith<$Res> {
+  factory _$$UserInfoResImplCopyWith(
+          _$UserInfoResImpl value, $Res Function(_$UserInfoResImpl) then) =
+      __$$UserInfoResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, MemberInfo data});
+
+  @override
+  $MemberInfoCopyWith<$Res> get data;
+}
+
+/// @nodoc
+class __$$UserInfoResImplCopyWithImpl<$Res>
+    extends _$UserInfoResCopyWithImpl<$Res, _$UserInfoResImpl>
+    implements _$$UserInfoResImplCopyWith<$Res> {
+  __$$UserInfoResImplCopyWithImpl(
+      _$UserInfoResImpl _value, $Res Function(_$UserInfoResImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$UserInfoResImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as MemberInfo,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserInfoResImpl implements _UserInfoRes {
+  const _$UserInfoResImpl(
+      {required this.success, required this.msg, required this.data});
+
+  factory _$UserInfoResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserInfoResImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  @override
+  final MemberInfo data;
+
+  @override
+  String toString() {
+    return 'UserInfoRes(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserInfoResImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, msg, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserInfoResImplCopyWith<_$UserInfoResImpl> get copyWith =>
+      __$$UserInfoResImplCopyWithImpl<_$UserInfoResImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserInfoResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UserInfoRes implements UserInfoRes {
+  const factory _UserInfoRes(
+      {required final bool success,
+      required final String msg,
+      required final MemberInfo data}) = _$UserInfoResImpl;
+
+  factory _UserInfoRes.fromJson(Map<String, dynamic> json) =
+      _$UserInfoResImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  MemberInfo get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserInfoResImplCopyWith<_$UserInfoResImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

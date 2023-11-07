@@ -1,4 +1,5 @@
 import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,9 @@ class SearchResultCard extends HookWidget {
                             child: TextButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => BookinfoMain()));
+                                    builder: (context) => BookinfoMain(
+                                          isbn: book.isbn,
+                                        )));
                               },
                               style: TextButton.styleFrom(
                                 minimumSize: Size.zero,
@@ -89,7 +92,8 @@ class SearchResultCard extends HookWidget {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  context.pushNamed('bookinfoMain');
+                                  BookinfoMainRoute(isbn: book.isbn)
+                                      .push(context);
                                 },
                                 style: TextButton.styleFrom(
                                   minimumSize: Size.zero,

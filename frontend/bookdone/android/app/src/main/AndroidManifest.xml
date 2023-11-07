@@ -41,7 +41,13 @@
 
                <!-- Redirect URI, "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식 -->
                <data android:scheme="kakaokakaoKey" android:host="oauth"/>
-           </intent-filter>
-       </activity>
-    </application>
+            </intent-filter>
+        </activity>
+        <!--   알림 받기    -->
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" android:exported="false" />
+        <!--   Notification    -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="somain_notification" />
+        </application>
 </manifest>

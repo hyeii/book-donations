@@ -34,7 +34,7 @@ public class Member {
     @Column(columnDefinition = "integer default 0")
     private Integer point;
 
-    @Column(length = 100)
+    @Column(length = 300)
     private String fcmToken;
 
     private String image;

@@ -93,7 +93,7 @@ class SearchResultCard extends HookWidget {
                               child: TextButton(
                                 onPressed: () {
                                   BookinfoMainRoute(isbn: book.isbn)
-                                      .go(context);
+                                      .push(context);
                                 },
                                 style: TextButton.styleFrom(
                                   minimumSize: Size.zero,

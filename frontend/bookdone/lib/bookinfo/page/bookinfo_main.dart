@@ -23,7 +23,7 @@ class BookinfoMain extends HookConsumerWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // context.pop();
+            context.pop();
           },
         ),
       ),
@@ -104,7 +104,7 @@ class BookinfoMain extends HookConsumerWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          BookinfoDetailRoute(isbn: isbn).go(context);
+                          BookinfoDetailRoute(isbn: isbn).push(context);
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(

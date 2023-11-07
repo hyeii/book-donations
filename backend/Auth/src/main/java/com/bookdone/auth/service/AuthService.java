@@ -37,10 +37,12 @@ public class AuthService {
             log.error("login error : {}", e.getMessage());
             ResponseEntity<Object> response = memberServiceClient.join(JoinMemberRequest.createJoinMemberRequest(memberData));
             member = FeignResponse.extractDataFromResponse(response, MemberResponse.class);
+            log.info("feign ok join");
             newMember = true;
         }
 
         AuthResponse authResponse = AuthResponse.create(member, newMember);
+        log.info("login auth res = {}", authResponse);
         template.opsForValue()
                 .set("refresh " + member.getId(), authResponse.getRefreshToken(), Duration.ofDays(20));
 

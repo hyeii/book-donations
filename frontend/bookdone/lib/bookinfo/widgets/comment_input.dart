@@ -8,8 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentInput extends HookConsumerWidget {
-  const CommentInput({super.key, required this.isbn});
+  const CommentInput({super.key, required this.isbn, required this.nickname});
   final String isbn;
+  final String nickname;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,6 +26,13 @@ class CommentInput extends HookConsumerWidget {
       userNickname.value = pref.getString('nickname') ?? '';
       print(userNickname.value);
       print(isbn);
+    }
+
+    Future<void> getNickname() async {
+      final name =
+          await ref.watch(userDataRepositoryProvider).restoreNickname();
+      userNickname.value = name;
+      debugPrint('여기얌 ${userNickname.value}');
     }
 
     // void _tryValidation() {
@@ -61,15 +69,17 @@ class CommentInput extends HookConsumerWidget {
         if (commentValidate.value == -1) Text('댓글을 입력해주세요'),
         ElevatedButton(
           onPressed: () async {
+            // await getUser();
+            await getNickname();
             if (comment.value == '') {
               commentValidate.value = -1;
               return;
             } else {
-              getUser();
               // _tryValidation();
+              // print(nickname);
               await ref.read(restApiClientProvider).postComment({
                 "isbn": isbn,
-                "writer": userNickname.value,
+                "writer": nickname,
                 "review": comment.value,
               });
               BookinfoDetailRoute(isbn: isbn).location;

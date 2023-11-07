@@ -62,101 +62,99 @@ class BookinfoDetail extends HookConsumerWidget {
       showDialog(
         context: context,
         builder: (context) {
-          // readJson();
-          return StatefulBuilder(builder: (context, setState) {
-            return Dialog(
-              child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        "지역을 선택해주세요",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: regionList.value.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                selectedRegionIndex.value = index;
-                                selectedRegionCode.value =
-                                    regionList.value[index].first;
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Container(
-                                  decoration: selectedRegionIndex.value == index
-                                      ? BoxDecoration(
-                                          color: Colors.brown.shade300,
-                                          borderRadius:
-                                              BorderRadius.circular(10))
-                                      : BoxDecoration(color: Colors.white),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 4.0, bottom: 4.0),
-                                    child: Center(
-                                      child: Text(
-                                        regionList.value[index].first,
-                                        style: TextStyle(
-                                            color: selectedRegionIndex.value ==
-                                                    index
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight:
-                                                selectedRegionIndex.value ==
-                                                        index
-                                                    ? FontWeight.bold
-                                                    : FontWeight.normal),
-                                      ),
+          return Dialog(
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      "지역을 선택해주세요",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: regionList.value.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              selectedRegionIndex.value = index;
+                              selectedRegionCode.value =
+                                  regionList.value[index].first;
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Container(
+                                decoration: selectedRegionIndex.value == index
+                                    ? BoxDecoration(
+                                        color: Colors.brown.shade300,
+                                        borderRadius: BorderRadius.circular(10))
+                                    : BoxDecoration(color: Colors.white),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 4.0, bottom: 4.0),
+                                  child: Center(
+                                    child: Text(
+                                      regionList.value[index].first,
+                                      style: TextStyle(
+                                          color:
+                                              selectedRegionIndex.value == index
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                          fontWeight:
+                                              selectedRegionIndex.value == index
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal),
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // TODO: 지역코드 서버로 보내기
-                            selectedRegionCode.value = regionNow;
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // TODO: 지역코드 서버로 보내기
+                          ref
+                              .read(regionStateProvider.notifier)
+                              .setRegion(selectedRegionCode.value);
+                          // selectedRegionCode.value = regionNow;
 
-                            Navigator.of(context).pop();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            backgroundColor: Colors.brown.shade200,
-                            foregroundColor: Colors.white,
-                          ),
-                          child: Text(
-                            "완료",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          backgroundColor: Colors.brown.shade200,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          "완료",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            );
-          });
+            ),
+          );
         },
       );
     }

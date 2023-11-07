@@ -16,7 +16,18 @@ class BookinfoMain extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
-    final userNickname = ref.read(userDataRepositoryProvider).restoreNickname();
+    // final userNickname =
+    //     ref.watch(userDataRepositoryProvider).restoreNickname();
+    var username = useState('');
+
+    void getNickname() async {
+      final userNickname =
+          await ref.watch(userDataRepositoryProvider).restoreNickname();
+      username.value = userNickname;
+      debugPrint('여기얌 ${username.value}');
+    }
+
+    useEffect(() => getNickname);
 
     return Scaffold(
       appBar: AppBar(
@@ -107,7 +118,6 @@ class BookinfoMain extends HookConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           BookinfoDetailRoute(isbn: isbn).push(context);
-                          print(userNickname);
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -143,7 +153,7 @@ class BookinfoMain extends HookConsumerWidget {
               SizedBox(
                 height: 10,
               ),
-              CommentInput(isbn: isbn),
+              CommentInput(isbn: isbn, nickname: username.value),
               FutureBuilder(
                 future: restClient.getCommentsList(isbn),
                 builder: (_, snapshot) {

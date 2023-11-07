@@ -3,7 +3,6 @@ package com.bookdone.donation.application;
 import com.bookdone.client.api.BookClient;
 import com.bookdone.client.api.MemberClient;
 import com.bookdone.client.dto.BookResponse;
-import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.donation.application.repository.DonationImageRepository;
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
@@ -56,10 +55,6 @@ public class FindDonationUseCase {
             throw e;
         }
 
-//        memberResponseMap = new HashMap<>();
-//        memberResponseMap.put(1L, new MemberResponse(1L, "1", "abc", "address", 1,"email", "image"));
-//        memberResponseMap.put(2L, new MemberResponse(2L, "2", "abcd", "address2", 1,"email2", "image2"));
-
         List<DonationListResponse> donationListResponseList = createDonationListResponse(
                 donationList, nicknameMap);
 
@@ -89,17 +84,12 @@ public class FindDonationUseCase {
 
         String nickname = null;
 
-        //todo nickname
         try {
             nickname = responseUtil.extractDataFromResponse(memberClient.getNickname(donation.getMemberId()),String.class);
         } catch (FeignException.NotFound e) {
             throw e;
         }
 
-//        memberResponse = new MemberResponse(
-//                1L, "1", "abc", "address", 1,"email", "image");
-
-        //todo imageUrlList
         List<String> imageUrlList = donationImageRepository.findImageUrlList(id);
 
         List<History> historyList = historyRepository.findAllByDonationId(id);
@@ -112,9 +102,6 @@ public class FindDonationUseCase {
         } catch (FeignException.NotFound e) {
             throw e;
         }
-//        memberResponseMap = new HashMap<>();
-//        memberResponseMap.put(1L, new MemberResponse(1L, "1", "abc", "address", 1,"email", "image"));
-//        memberResponseMap.put(2L, new MemberResponse(2L, "2", "abcd", "address2", 1,"email2", "image2"));
 
         return createDonationResponse(donation, imageUrlList, nicknameMap, historyList, nickname);
     }

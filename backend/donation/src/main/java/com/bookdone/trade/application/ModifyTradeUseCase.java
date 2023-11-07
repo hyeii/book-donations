@@ -31,7 +31,7 @@ public class ModifyTradeUseCase {
         tradeRepository.updateStatus(donationId, memberId, TradeStatus.COMPLETION_REQUESTED);
     }
 
-    public void changeStatusToCompletionConfirmed(Long donationId, Long memberId) {
+    public Long changeStatusToCompletionConfirmed(Long donationId, Long memberId) {
         tradeRepository.updateStatus(donationId, memberId, TradeStatus.COMPLETION_CONFIRMED);
 
         Donation donation = donationRepository.findById(donationId);
@@ -39,5 +39,6 @@ public class ModifyTradeUseCase {
         donation.changeMemberId(memberId);
         donationRepository.save(donation);
         historyRepository.saveDummyHistory(donationId, memberId);
+        return donation.getMemberId();
     }
 }

@@ -4,6 +4,7 @@ import com.bookdone.global.dto.BaseResponse;
 import com.bookdone.trade.application.AddTradeUseCase;
 import com.bookdone.trade.application.ModifyTradeUseCase;
 import com.bookdone.trade.application.RemoveTradeUseCase;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,13 @@ public class TradeController {
     @PatchMapping("/{donationId}/members/{memberId}/reservations/request")
     public ResponseEntity<?> tradeChangeToDonationRequested(@PathVariable Long donationId, @PathVariable Long memberId) {
         modifyTradeUseCase.changeStatusToDonationRequested(donationId, memberId);
+        String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
+        try {
+            payload = new ObjectMapper().writeValueAsString(memberId);
+        } catch (Exception e) {
+            return BaseResponse.fail("json 변환 실패", 400);
+        }
+        kafkaTemplate.send("reservation-request", payload);
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
@@ -40,28 +48,37 @@ public class TradeController {
 
     @PatchMapping("/{donationId}/members/{memberId}/completion/confirm")
     public ResponseEntity<?> tradeChangeToCompletionConfirmed(@PathVariable Long donationId, @PathVariable Long memberId) {
-        modifyTradeUseCase.changeStatusToCompletionConfirmed(donationId, memberId);
-//        String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
-//        try {
-//            payload = new ObjectMapper().writeValueAsString(nicknames);
-//        } catch (Exception e) {
-//            return BaseResponse.fail("json 변환 실패", 400);
-//        }
-//        kafkaTemplate.send("ranking-update", payload);
+        Long id = modifyTradeUseCase.changeStatusToCompletionConfirmed(donationId, memberId);
+        String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
+        try {
+            payload = new ObjectMapper().writeValueAsString(id);
+        } catch (Exception e) {
+            return BaseResponse.fail("json 변환 실패", 400);
+        }
+        kafkaTemplate.send("donation-finish", payload);
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
     @DeleteMapping("{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeRemove(@PathVariable Long donationId, @PathVariable Long memberId) {
         removeTradeUseCase.removeTrade(donationId, memberId);
+
+        String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
+        try {
+            payload = new ObjectMapper().writeValueAsString(memberId);
+        } catch (Exception e) {
+            return BaseResponse.fail("json 변환 실패", 400);
+        }
+        kafkaTemplate.send("donation-cancel", payload);
         return BaseResponse.ok(HttpStatus.OK, "거래가 취소되었습니다.");
     }
 
     @PostMapping("{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeAdd(@PathVariable Long donationId, @PathVariable Long memberId) {
+        Long id = addTradeUseCase.tradeAdd(donationId, memberId);
         return BaseResponse.okWithData(
                 HttpStatus.CREATED,
                 "거래가 등록되었습니다.",
-                addTradeUseCase.tradeAdd(donationId, memberId));
+                id);
     }
 }

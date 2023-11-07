@@ -10,17 +10,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.KafkaAdmin;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Configuration
 public class KafkaTopicConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
-    @Value("${spring.kafka.topic.name}")
+    @Value("${spring.kafka.topic.res-req.name}")
     private String topicName;
+    @Value("${spring.kafka.topic.don-can.name}")
+    private String topicName2;
+    @Value("${spring.kafka.topic.don-fin.name}")
+    private String topicName3;
 
     @Bean
     public KafkaAdmin admin() {
@@ -30,11 +32,14 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic rankingUpdate() {
-        return TopicBuilder.name(topicName)
-                .partitions(1)
-                .replicas(3)
-                .build();
+    public KafkaAdmin.NewTopics topicsBuilder() {
+        return new KafkaAdmin.NewTopics(
+                TopicBuilder.name(topicName)
+                        .build(),
+                TopicBuilder.name(topicName2)
+                        .build(),
+                TopicBuilder.name(topicName3)
+                        .build());
     }
 
     // 토픽을 확인하고 이미 존재하면 삭제한 다음 다시 생성하는 메서드
@@ -59,9 +64,33 @@ public class KafkaTopicConfig {
                     Thread.currentThread().interrupt();
                 }
             }
+            else if (t.equals(topicName2)) {
+                // 토픽이 존재하면 삭제
+                client.deleteTopics(Collections.singleton(topicName2));
+                try {
+                    // 삭제가 완료될 때까지 기다림
+                    Thread.sleep(500); // Kafka의 토픽 삭제는 시간이 걸릴 수 있으니 적절한 대기 시간 설정 필요
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            else if (t.equals(topicName3)) {
+                // 토픽이 존재하면 삭제
+                client.deleteTopics(Collections.singleton(topicName3));
+                try {
+                    // 삭제가 완료될 때까지 기다림
+                    Thread.sleep(500); // Kafka의 토픽 삭제는 시간이 걸릴 수 있으니 적절한 대기 시간 설정 필요
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
         });
         // 토픽 다시 생성
-        client.createTopics(Collections.singleton(rankingUpdate()));
+        List<NewTopic> newTopics = new ArrayList<>();
+        newTopics.add(TopicBuilder.name(topicName).build());
+        newTopics.add(TopicBuilder.name(topicName2).build());
+        newTopics.add(TopicBuilder.name(topicName3).build());
+        client.createTopics(newTopics);
     }
 }
 

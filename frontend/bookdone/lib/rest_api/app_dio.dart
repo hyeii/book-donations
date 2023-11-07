@@ -31,7 +31,7 @@ Dio dio(DioRef ref) {
             await ref.read(userRepositoryProvider).restoreAuth();
         options.headers
             .putIfAbsent('Authorization', () => 'Bearer $accessToken');
-        // print('옵션 확인 ${options.headers}');
+        print('옵션 확인 ${options.headers}');
 
         handler.next(options);
       },

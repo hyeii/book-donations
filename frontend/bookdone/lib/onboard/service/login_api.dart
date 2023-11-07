@@ -129,6 +129,7 @@ class LoginApi {
     print(res);
     UserData user = res.data;
     if (res.data.newMember == false) {
+      print('여기');
       // 여기 들어왔다는건 이미 가입된 유저인데 이번에 로그인한 유저
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setInt('loginStatus', 1);
@@ -141,14 +142,20 @@ class LoginApi {
       // TODO: accessToken secure storage로 관리하기
       // await ref.watch(userInfoRepositoryProvider).restoreUserData(user);
       // await ref.read(userInfoRepositoryProvider).restoreUserData(user);
+      print(pref.getString('fcmToken'));
+      print('테스트');
 
       // 저장했으니 로그인 완료!
       TopPageRoute().go(context);
+      // HomeRoute().go(context);
     } else {
+      print('여기이ㅏ너이ㅏㄹ');
       // 처음 로그인한 유저. 추가정보 입력으로 보내기
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setString('accessToken', user.accessToken);
       AddAdditionalRoute().go(context);
+      print(pref.getString('fcmToken'));
+      print('테스트');
     }
     // debugPrint(res);
   }

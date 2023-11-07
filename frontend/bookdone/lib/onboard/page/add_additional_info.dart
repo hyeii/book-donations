@@ -126,7 +126,7 @@ class AddAdditionalInfo extends HookConsumerWidget {
         'address': regionCode.value,
         'fcmToken': fcmToken.value
       });
-      print(fcmToken.value);
+      print('fcm토큰 주 ㅓ !!! ${fcmToken.value}');
 
       // MemberInfo user =await ref.read(userInfoRepositoryProvider).restoreUserData(user);
       // await pref.setInt('loginStatus', 1);
@@ -406,7 +406,8 @@ class AddAdditionalInfo extends HookConsumerWidget {
                           // print(regionCode.value);
                           await restClient.postAdditionalInfo({
                             'nickname': nickName.value,
-                            'address': regionCode.value
+                            'address': regionCode.value,
+                            'fcmToken': fcmToken.value
                           });
                           complete.value = true;
                           SetUserApi.updateMyInfo(ref);
@@ -568,6 +569,8 @@ class AddAdditionalInfo extends HookConsumerWidget {
               _checkValidAlert();
               return;
             }
+            getFcmToken();
+            print('토큰토큰 ${fcmToken.value}');
 
             _checkAlert();
 

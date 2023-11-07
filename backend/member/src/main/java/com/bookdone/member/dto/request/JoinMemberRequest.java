@@ -20,6 +20,7 @@ public class JoinMemberRequest {
                 .oauthId(oauthId)
                 .nickname(nickname)
                 .point(3)
+                .fcmToken(null)
                 .roles("USER_ROLE")
                 .address("9999")
                 .image("")

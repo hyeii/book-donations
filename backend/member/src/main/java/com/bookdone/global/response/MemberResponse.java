@@ -20,6 +20,8 @@ public class MemberResponse {
 
     private String address;
 
+    private String fcmToken;
+
     private Integer point;
 
     private String image;
@@ -30,6 +32,7 @@ public class MemberResponse {
                 .oauthId(member.getOauthId())
                 .nickname(member.getNickname())
                 .address(member.getAddress())
+                .fcmToken(member.getFcmToken())
                 .point(member.getPoint())
                 .image(member.getImage())
                 .build();

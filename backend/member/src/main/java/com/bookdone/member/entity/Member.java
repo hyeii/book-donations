@@ -1,21 +1,11 @@
 package com.bookdone.member.entity;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 
 @Getter
@@ -44,9 +34,13 @@ public class Member {
     @Column(columnDefinition = "integer default 0")
     private Integer point;
 
+    @Column(length = 100)
+    private String fcmToken;
+
     private String image;
 
     private String roles;
+
 
     public List<String> getRoleList() {
         if (this.roles.length() > 0) {
@@ -55,9 +49,10 @@ public class Member {
         return new ArrayList<>();
     }
 
-    public void updateNicknameAndAddress(String nickname, String address) {
+    public void updateNicknameAndAddress(String nickname, String address, String fcmToken) {
         this.nickname = nickname;
         this.address = address;
+        this.fcmToken = fcmToken;
     }
 
     public void updateImage(String image) {

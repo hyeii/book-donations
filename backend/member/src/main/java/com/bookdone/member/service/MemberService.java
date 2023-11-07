@@ -59,7 +59,7 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));
         member.updateNicknameAndAddress(
-                additionalInfo.getNickname(), additionalInfo.getAddress()
+                additionalInfo.getNickname(), additionalInfo.getAddress(), additionalInfo.getFcmToken()
         );
     }
 

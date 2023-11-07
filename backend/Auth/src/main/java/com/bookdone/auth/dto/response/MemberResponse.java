@@ -19,6 +19,8 @@ public class MemberResponse {
 
     private String address;
 
+    private String fcmToken;
+
     private Integer point;
 
     private String email;

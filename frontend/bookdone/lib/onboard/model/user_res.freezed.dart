@@ -419,10 +419,11 @@ MemberInfo _$MemberInfoFromJson(Map<String, dynamic> json) {
 mixin _$MemberInfo {
   int get id => throw _privateConstructorUsedError;
   String get oauthId => throw _privateConstructorUsedError;
-  dynamic get nickname => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
+  String get fcmToken => throw _privateConstructorUsedError;
   int get point => throw _privateConstructorUsedError;
-  dynamic get email => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -440,10 +441,11 @@ abstract class $MemberInfoCopyWith<$Res> {
   $Res call(
       {int id,
       String oauthId,
-      dynamic nickname,
+      String nickname,
       String address,
+      String fcmToken,
       int point,
-      dynamic email,
+      String email,
       String image});
 }
 
@@ -462,10 +464,11 @@ class _$MemberInfoCopyWithImpl<$Res, $Val extends MemberInfo>
   $Res call({
     Object? id = null,
     Object? oauthId = null,
-    Object? nickname = freezed,
+    Object? nickname = null,
     Object? address = null,
+    Object? fcmToken = null,
     Object? point = null,
-    Object? email = freezed,
+    Object? email = null,
     Object? image = null,
   }) {
     return _then(_value.copyWith(
@@ -477,22 +480,26 @@ class _$MemberInfoCopyWithImpl<$Res, $Val extends MemberInfo>
           ? _value.oauthId
           : oauthId // ignore: cast_nullable_to_non_nullable
               as String,
-      nickname: freezed == nickname
+      nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      fcmToken: null == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
               as String,
       point: null == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
               as int,
-      email: freezed == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -512,10 +519,11 @@ abstract class _$$MemberInfoImplCopyWith<$Res>
   $Res call(
       {int id,
       String oauthId,
-      dynamic nickname,
+      String nickname,
       String address,
+      String fcmToken,
       int point,
-      dynamic email,
+      String email,
       String image});
 }
 
@@ -532,10 +540,11 @@ class __$$MemberInfoImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? oauthId = null,
-    Object? nickname = freezed,
+    Object? nickname = null,
     Object? address = null,
+    Object? fcmToken = null,
     Object? point = null,
-    Object? email = freezed,
+    Object? email = null,
     Object? image = null,
   }) {
     return _then(_$MemberInfoImpl(
@@ -547,22 +556,26 @@ class __$$MemberInfoImplCopyWithImpl<$Res>
           ? _value.oauthId
           : oauthId // ignore: cast_nullable_to_non_nullable
               as String,
-      nickname: freezed == nickname
+      nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      fcmToken: null == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
               as String,
       point: null == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
               as int,
-      email: freezed == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -579,6 +592,7 @@ class _$MemberInfoImpl implements _MemberInfo {
       required this.oauthId,
       required this.nickname,
       required this.address,
+      required this.fcmToken,
       required this.point,
       required this.email,
       required this.image});
@@ -591,19 +605,21 @@ class _$MemberInfoImpl implements _MemberInfo {
   @override
   final String oauthId;
   @override
-  final dynamic nickname;
+  final String nickname;
   @override
   final String address;
   @override
+  final String fcmToken;
+  @override
   final int point;
   @override
-  final dynamic email;
+  final String email;
   @override
   final String image;
 
   @override
   String toString() {
-    return 'MemberInfo(id: $id, oauthId: $oauthId, nickname: $nickname, address: $address, point: $point, email: $email, image: $image)';
+    return 'MemberInfo(id: $id, oauthId: $oauthId, nickname: $nickname, address: $address, fcmToken: $fcmToken, point: $point, email: $email, image: $image)';
   }
 
   @override
@@ -613,24 +629,20 @@ class _$MemberInfoImpl implements _MemberInfo {
             other is _$MemberInfoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.oauthId, oauthId) || other.oauthId == oauthId) &&
-            const DeepCollectionEquality().equals(other.nickname, nickname) &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname) &&
             (identical(other.address, address) || other.address == address) &&
+            (identical(other.fcmToken, fcmToken) ||
+                other.fcmToken == fcmToken) &&
             (identical(other.point, point) || other.point == point) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      oauthId,
-      const DeepCollectionEquality().hash(nickname),
-      address,
-      point,
-      const DeepCollectionEquality().hash(email),
-      image);
+  int get hashCode => Object.hash(runtimeType, id, oauthId, nickname, address,
+      fcmToken, point, email, image);
 
   @JsonKey(ignore: true)
   @override
@@ -650,10 +662,11 @@ abstract class _MemberInfo implements MemberInfo {
   const factory _MemberInfo(
       {required final int id,
       required final String oauthId,
-      required final dynamic nickname,
+      required final String nickname,
       required final String address,
+      required final String fcmToken,
       required final int point,
-      required final dynamic email,
+      required final String email,
       required final String image}) = _$MemberInfoImpl;
 
   factory _MemberInfo.fromJson(Map<String, dynamic> json) =
@@ -664,13 +677,15 @@ abstract class _MemberInfo implements MemberInfo {
   @override
   String get oauthId;
   @override
-  dynamic get nickname;
+  String get nickname;
   @override
   String get address;
   @override
+  String get fcmToken;
+  @override
   int get point;
   @override
-  dynamic get email;
+  String get email;
   @override
   String get image;
   @override

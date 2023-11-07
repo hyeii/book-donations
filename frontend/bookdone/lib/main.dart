@@ -10,12 +10,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env.dev");
   String kakaoNativeKey = dotenv.get('KAKAO_NATIVE_KEY');
   WidgetsFlutterBinding.ensureInitialized();
-  // String? firebaseToken = await fcmSetting();
+  String? firebaseToken = await fcmSetting();
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  if (firebaseToken != null) {
+    await pref.setString('fcmToken', firebaseToken);
+  }
   KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(
     const ProviderScope(child: MyApp()),

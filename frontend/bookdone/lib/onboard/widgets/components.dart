@@ -14,7 +14,6 @@ class GetStartBtn extends HookConsumerWidget {
 
   final Size size;
   final TextTheme textTheme;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // bool isLoading = false;

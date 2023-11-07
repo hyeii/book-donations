@@ -36,6 +36,7 @@ class MemberInfo with _$MemberInfo {
     required String oauthId,
     required String nickname,
     required String address,
+    required String fcmToken,
     required int point,
     required String email,
     required String image,

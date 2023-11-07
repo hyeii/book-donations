@@ -38,7 +38,18 @@ class AddAdditionalInfo extends HookConsumerWidget {
     // XFile? _pickedFile; // XFile
     final imageSize = MediaQuery.of(context).size.width / 5;
 
+    var fcmToken = useState('');
+
     var complete = useState(false);
+
+    void getFcmToken() async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString('fcmToken');
+      if (token != null) {
+        fcmToken.value = token;
+      }
+      print(fcmToken.value);
+    }
 
     // _getCameraImage() async {
     //   final pickedFile =
@@ -110,8 +121,12 @@ class AddAdditionalInfo extends HookConsumerWidget {
     // }
 
     Future<void> addFinalInfo() async {
-      await restClient.postAdditionalInfo(
-          {'nickname': nickName.value, 'address': regionCode.value});
+      await restClient.postAdditionalInfo({
+        'nickname': nickName.value,
+        'address': regionCode.value,
+        'fcmToken': fcmToken.value
+      });
+      print(fcmToken.value);
 
       // MemberInfo user =await ref.read(userInfoRepositoryProvider).restoreUserData(user);
       // await pref.setInt('loginStatus', 1);

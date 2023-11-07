@@ -1,5 +1,6 @@
 import 'package:bookdone/bookinfo/widgets/comment_card.dart';
 import 'package:bookdone/bookinfo/widgets/comment_input.dart';
+import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,6 +16,7 @@ class BookinfoMain extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
+    final userNickname = ref.read(userDataRepositoryProvider).restoreNickname();
 
     return Scaffold(
       appBar: AppBar(
@@ -105,6 +107,7 @@ class BookinfoMain extends HookConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           BookinfoDetailRoute(isbn: isbn).push(context);
+                          print(userNickname);
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(

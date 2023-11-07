@@ -93,6 +93,7 @@ class LoginApi {
 
     dio.options.headers['Authorization'] = 'Bearer ${token!.idToken}';
     debugPrint(dio.options.headers.toString());
+    debugPrint('여기얌');
 
     RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
       if (T != dynamic &&

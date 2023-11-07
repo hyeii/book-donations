@@ -31,6 +31,7 @@ public class AuthController {
 
         memberData = oidcUtil.decodeIdToken(idToken);
         AuthResponse token = authService.login(memberData);
+        log.info("Auth Response = {}", token);
         return BaseResponse.okWithData(HttpStatus.OK, "로그인 완료", token);
     }
 }

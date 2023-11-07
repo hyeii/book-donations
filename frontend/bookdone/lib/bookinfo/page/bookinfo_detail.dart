@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/bookinfo/widgets/donating_list.dart';
 import 'package:bookdone/bookinfo/widgets/keeping_list.dart';
+import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -42,6 +44,122 @@ class BookinfoDetail extends HookConsumerWidget {
     final regionNow = ref.watch(regionStateProvider);
     final _tabController =
         useTabController(initialLength: tabs.length, initialIndex: 0);
+    var regionList = useState<List<RegionInfo>>([]);
+    var selectedRegionIndex = useState(0);
+    var selectedRegionCode = useState('');
+
+    Future<void> readJson() async {
+      final jsonString =
+          await rootBundle.loadString("assets/json/localcode.json");
+      final response = await json.decode(jsonString) as Map<String, dynamic>;
+      final result = Region.fromJson(response);
+      // print('테스트 : ${result.region[0].first}');
+      regionList.value = result.region;
+      // regionList.value = List<Region>.from(data['region']);
+    }
+
+    void selectAddress(context) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          // readJson();
+          return StatefulBuilder(builder: (context, setState) {
+            return Dialog(
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 3,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        "지역을 선택해주세요",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: regionList.value.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                selectedRegionIndex.value = index;
+                                selectedRegionCode.value =
+                                    regionList.value[index].first;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Container(
+                                  decoration: selectedRegionIndex.value == index
+                                      ? BoxDecoration(
+                                          color: Colors.brown.shade300,
+                                          borderRadius:
+                                              BorderRadius.circular(10))
+                                      : BoxDecoration(color: Colors.white),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 4.0, bottom: 4.0),
+                                    child: Center(
+                                      child: Text(
+                                        regionList.value[index].first,
+                                        style: TextStyle(
+                                            color: selectedRegionIndex.value ==
+                                                    index
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight:
+                                                selectedRegionIndex.value ==
+                                                        index
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // TODO: 지역코드 서버로 보내기
+                            selectedRegionCode.value = regionNow;
+
+                            Navigator.of(context).pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            backgroundColor: Colors.brown.shade200,
+                            foregroundColor: Colors.white,
+                          ),
+                          child: Text(
+                            "완료",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }
 
     // readJson();
     return StatefulBuilder(builder: (context, setState) {
@@ -67,9 +185,12 @@ class BookinfoDetail extends HookConsumerWidget {
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         onPressed: () {
-                          ref
-                              .read(regionStateProvider.notifier)
-                              .setRegion('주소변경값');
+                          readJson();
+
+                          selectAddress(context);
+                          // ref
+                          //     .read(regionStateProvider.notifier)
+                          //     .setRegion('주소변경값');
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(

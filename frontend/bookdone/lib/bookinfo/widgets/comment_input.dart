@@ -1,4 +1,5 @@
 import 'package:bookdone/onboard/model/user_res.dart';
+import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class CommentInput extends HookConsumerWidget {
     var userNickname = useState('');
     var commentValidate = useState(0);
     var commentController = useTextEditingController();
+    // final getUserData = ref.read(userDataRepositoryProvider).restoreNickname();
 
     Future<void> getUser() async {
       SharedPreferences pref = await SharedPreferences.getInstance();

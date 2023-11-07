@@ -1,5 +1,6 @@
 import 'package:bookdone/app.dart';
 import 'package:bookdone/chat/page/chat_main.dart';
+import 'package:bookdone/fcm_setting.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/top/page/top_navigation_bar.dart';
@@ -13,6 +14,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 void main() async {
   await dotenv.load(fileName: ".env.dev");
   String kakaoNativeKey = dotenv.get('KAKAO_NATIVE_KEY');
+  WidgetsFlutterBinding.ensureInitialized();
+  // String? firebaseToken = await fcmSetting();
   KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(
     const ProviderScope(child: MyApp()),

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "724136759646",
+    "project_id": "bookdone-3a0d1",
+    "storage_bucket": "bookdone-3a0d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724136759646:android:5c952cefcbe5e500ef7fcf",
+        "android_client_info": {
+          "package_name": "com.example.bookdone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiPQgBt-tsVcYRxX44JP1Fp1Nz5v_G6mM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

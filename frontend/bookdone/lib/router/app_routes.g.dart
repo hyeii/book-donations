@@ -309,10 +309,15 @@ RouteBase get $bookinfoDetailRoute => GoRouteData.$route(
 
 extension $BookinfoDetailRouteExtension on BookinfoDetailRoute {
   static BookinfoDetailRoute _fromState(GoRouterState state) =>
-      const BookinfoDetailRoute();
+      BookinfoDetailRoute(
+        isbn: state.uri.queryParameters['isbn']!,
+      );
 
   String get location => GoRouteData.$location(
         '/bookinfodetail',
+        queryParams: {
+          'isbn': isbn,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

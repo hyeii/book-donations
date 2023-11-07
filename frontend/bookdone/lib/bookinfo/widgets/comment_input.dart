@@ -1,37 +1,45 @@
+import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentInput extends HookConsumerWidget {
-  const CommentInput({super.key});
+  const CommentInput({super.key, required this.isbn});
+  final String isbn;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
-    String comment = "";
+    // final _formKey = GlobalKey<FormState>();
+    var comment = useState('');
     var userNickname = useState('');
+    var commentValidate = useState(0);
+    var commentController = useTextEditingController();
 
     Future<void> getUser() async {
       SharedPreferences pref = await SharedPreferences.getInstance();
       userNickname.value = pref.getString('nickname') ?? '';
       print(userNickname.value);
+      print(isbn);
     }
 
-    void _tryValidation() {
-      final isValid = _formKey.currentState!.validate();
-      if (isValid) {
-        _formKey.currentState!.save();
-      }
-    }
+    // void _tryValidation() {
+    //   final isValid = _formKey.currentState!.validate();
+    //   if (isValid) {
+    //     _formKey.currentState!.save();
+    //   }
+    // }
 
     return Column(
       children: [
         Form(
-          key: _formKey,
-          child: TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+          // key: _formKey,
+          child: TextField(
+            controller: commentController,
+            // onTapOutside: (event) =>
+            //     FocusManager.instance.primaryFocus?.unfocus(),
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(
@@ -42,24 +50,28 @@ class CommentInput extends HookConsumerWidget {
             ),
             maxLength: 100,
             maxLines: 2,
-            onSaved: (value) {
-              comment = value!;
-            },
-            validator: (value) {
-              if (value!.isEmpty) return "댓글을 입력해주세요.";
-              return null;
+            onChanged: (text) {
+              comment.value = commentController.text;
+              commentValidate.value = 0;
             },
           ),
         ),
+        if (commentValidate.value == -1) Text('댓글을 입력해주세요'),
         ElevatedButton(
           onPressed: () async {
-            getUser();
-            _tryValidation();
-            await ref.read(restApiClientProvider).postComment({
-              "isbn": "9791193235065",
-              "writer": userNickname.value,
-              "review": comment,
-            });
+            if (comment.value == '') {
+              commentValidate.value = -1;
+              return;
+            } else {
+              getUser();
+              // _tryValidation();
+              await ref.read(restApiClientProvider).postComment({
+                "isbn": isbn,
+                "writer": userNickname.value,
+                "review": comment.value,
+              });
+              BookinfoDetailRoute(isbn: isbn).location;
+            }
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -71,7 +83,7 @@ class CommentInput extends HookConsumerWidget {
           child: const Text(
             "등록",
           ),
-        )
+        ),
       ],
     );
   }

@@ -1,18 +1,10 @@
-import 'package:bookdone/app.dart';
-import 'package:bookdone/main.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
-import 'package:bookdone/onboard/page/add_additional_info.dart';
-import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/router/app_routes.dart';
-import 'package:bookdone/router/router_path.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginApi {

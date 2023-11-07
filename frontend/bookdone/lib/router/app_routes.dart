@@ -149,10 +149,12 @@ class BookinfoMainRoute extends GoRouteData {
   path: RouterPath.bookinfoDetail,
 )
 class BookinfoDetailRoute extends GoRouteData {
-  const BookinfoDetailRoute();
+  const BookinfoDetailRoute({required this.isbn});
+  final String isbn;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => BookinfoDetail();
+  Widget build(BuildContext context, GoRouterState state) =>
+      BookinfoDetail(isbn: isbn);
 }
 
 @TypedGoRoute<ArticleMainRoute>(

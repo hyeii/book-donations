@@ -12,5 +12,5 @@ public interface MemberClient {
     ResponseEntity<?> getNickname(@PathVariable Long memberId);
 
     @GetMapping("/api/members/nicknames")
-    ResponseEntity<?> getNicknameList(@RequestParam List<Long> memberIdList);
+    ResponseEntity<?> getNicknameList(@RequestParam List<Long> memberIds);
 }

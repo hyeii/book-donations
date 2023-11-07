@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name="member-service")
 public interface MemberClient {
-	@GetMapping("/me")
+	@GetMapping("/api/members/me")
 	ResponseEntity<?> getMemberInfo(@RequestHeader("member-id") long memberId);
-
 }

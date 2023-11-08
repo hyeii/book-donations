@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/trades/donations")
@@ -26,7 +29,9 @@ public class TradeController {
         modifyTradeUseCase.changeStatusToDonationRequested(donationId, memberId);
         String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
         try {
-            payload = new ObjectMapper().writeValueAsString(memberId);
+            Map<String, Long> map = new HashMap<>();
+            map.put("memberId", memberId);
+            payload = new ObjectMapper().writeValueAsString(map);
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);
         }
@@ -51,7 +56,10 @@ public class TradeController {
         Long id = modifyTradeUseCase.changeStatusToCompletionConfirmed(donationId, memberId);
         String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
         try {
-            payload = new ObjectMapper().writeValueAsString(id);
+            Map<String, Long> map = new HashMap<>();
+            map.put("donor", id);
+            map.put("receiver", memberId);
+            payload = new ObjectMapper().writeValueAsString(map);
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);
         }
@@ -65,7 +73,9 @@ public class TradeController {
 
         String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
         try {
-            payload = new ObjectMapper().writeValueAsString(memberId);
+            Map<String, Long> map = new HashMap<>();
+            map.put("memberId", memberId);
+            payload = new ObjectMapper().writeValueAsString(map);
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);
         }

@@ -161,10 +161,15 @@ class BookinfoDetailRoute extends GoRouteData {
   path: RouterPath.articleMain,
 )
 class ArticleMainRoute extends GoRouteData {
-  const ArticleMainRoute();
+  const ArticleMainRoute({required this.isbn, required this.id});
+  final String isbn;
+  final int id;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => ArticleMain();
+  Widget build(BuildContext context, GoRouterState state) => ArticleMain(
+        isbn: isbn,
+        id: id,
+      );
 }
 
 @TypedGoRoute<SplashRoute>(

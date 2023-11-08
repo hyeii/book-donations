@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bookdone/bookinfo/model/donation.dart';
 import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/bookinfo/widgets/donating_list.dart';
 import 'package:bookdone/bookinfo/widgets/keeping_list.dart';
@@ -47,6 +48,7 @@ class BookinfoDetail extends HookConsumerWidget {
     var regionList = useState<List<RegionInfo>>([]);
     var selectedRegionIndex = useState(0);
     var selectedRegionCode = useState('');
+    var donatingList = useState<List<DonationByRegion>>([]);
 
     Future<void> readJson() async {
       final jsonString =
@@ -58,7 +60,13 @@ class BookinfoDetail extends HookConsumerWidget {
       // regionList.value = List<Region>.from(data['region']);
     }
 
-    void selectAddress(context) {
+    Future<void> getDonationList() async {
+      DonationByRegionData data =
+          await restClient.getDonationByRegion(isbn, selectedRegionCode.value);
+      donatingList.value = data.data!;
+    }
+
+    Future<void> selectAddress(context) async {
       showDialog(
         context: context,
         builder: (context) {
@@ -129,14 +137,16 @@ class BookinfoDetail extends HookConsumerWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // TODO: 지역코드 서버로 보내기
-                          ref
-                              .read(regionStateProvider.notifier)
-                              .setRegion(selectedRegionCode.value);
+                          // ref
+                          //     .read(regionStateProvider.notifier)
+                          //     .setRegion(selectedRegionCode.value);
                           // selectedRegionCode.value = regionNow;
+                          // DonationByRegionData data = await restClient
+                          //     .getDonationByRegion(isbn, "1100");
 
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -293,68 +303,6 @@ class BookinfoDetail extends HookConsumerWidget {
                             ),
                           );
                         }),
-                    // Container(
-                    //   width: double.infinity,
-                    //   height: 120,
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.grey.shade200,
-                    //     borderRadius: BorderRadius.circular(20.0),
-                    //   ),
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                    //     child: Row(
-                    //       children: [
-                    //         SizedBox(
-                    //           width: 20,
-                    //         ),
-                    //         ClipRRect(
-                    //           borderRadius: BorderRadius.circular(15.0),
-                    //           child: CachedNetworkImage(
-                    //             width: 80,
-                    //             height: 80,
-                    //             fit: BoxFit.cover,
-                    //             alignment: Alignment.topCenter,
-                    //             imageUrl:
-                    //                 "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg",
-                    //             placeholder: (context, url) =>
-                    //                 CircularProgressIndicator(),
-                    //             errorWidget: (context, url, error) =>
-                    //                 Icon(Icons.error),
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           width: 20,
-                    //         ),
-                    //         Flexible(
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.only(
-                    //                 top: 10.0, bottom: 10.0),
-                    //             child: Column(
-                    //               crossAxisAlignment: CrossAxisAlignment.start,
-                    //               mainAxisAlignment:
-                    //                   MainAxisAlignment.spaceBetween,
-                    //               children: [
-                    //                 Text(
-                    //                   "방금 떠나온 세계",
-                    //                   style: TextStyle(
-                    //                       fontWeight: FontWeight.bold),
-                    //                 ),
-                    //                 Text(
-                    //                   "김초엽 지음",
-                    //                   style: TextStyle(
-                    //                       color: Colors.grey.shade600),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           width: 20,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 10,
                     ),
@@ -380,7 +328,8 @@ class BookinfoDetail extends HookConsumerWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width / 12),
-                      child: DonatingList(),
+                      child: DonatingList(
+                          isbn: isbn, donateList: donatingList.value),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(

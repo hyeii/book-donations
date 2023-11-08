@@ -22,7 +22,7 @@ final baseOptionsProvider = AutoDisposeProvider<BaseOptions>.internal(
 );
 
 typedef BaseOptionsRef = AutoDisposeProviderRef<BaseOptions>;
-String _$dioHash() => r'8645ab8da198147334a530e8430694ac39a0f140';
+String _$dioHash() => r'658e63226782c0d5248ebbee3c861ca130b47365';
 
 /// dio를 가져와요
 ///

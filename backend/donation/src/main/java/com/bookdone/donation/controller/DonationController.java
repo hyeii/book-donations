@@ -25,7 +25,7 @@ public class DonationController {
         return BaseResponse.okWithData(HttpStatus.OK, "게시글 목록이 조회되었습니다.", findDonationUseCase.findDonationList(isbn, address));
     }
 
-    @GetMapping("/members")
+    @GetMapping("/members/me")
     public ResponseEntity<?> donationListByMember(@RequestHeader("member-id") Long memberId) {
         return BaseResponse.okWithData(HttpStatus.OK, "보유중 목록이 조회되었습니다.", findDonationUseCase.findDonationListByMember(memberId));
     }

@@ -56,4 +56,10 @@ abstract class RestClient {
 
   @GET('/api/donations/{donationId}')
   Future<ArticleRespByid> getArticleById(@Path() int donationId);
+
+  @GET('/api/donations/address')
+  Future<KeepingBookByRegion> getKeepingCntByRegion(
+    @Query("isbn") String isbn,
+    @Query("address") String address,
+  );
 }

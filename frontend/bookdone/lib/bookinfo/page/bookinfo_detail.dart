@@ -49,6 +49,7 @@ class BookinfoDetail extends HookConsumerWidget {
     var selectedRegionIndex = useState(0);
     var selectedRegionCode = useState('');
     var donatingList = useState<List<DonationByRegion>>([]);
+    var keepingList = useState<List<KeepingBookData>>([]);
 
     Future<void> readJson() async {
       final jsonString =
@@ -60,11 +61,29 @@ class BookinfoDetail extends HookConsumerWidget {
       // regionList.value = List<Region>.from(data['region']);
     }
 
-    Future<void> getDonationList() async {
+    Future<List<DonationByRegion>?> getDonationList() async {
       DonationByRegionData data =
           await restClient.getDonationByRegion(isbn, selectedRegionCode.value);
-      donatingList.value = data.data!;
+      return data.data;
     }
+
+    Future<List<KeepingBookData>?> getKeepingCnt() async {
+      KeepingBookByRegion data = await restClient.getKeepingCntByRegion(
+          isbn, selectedRegionCode.value);
+      return data.data;
+    }
+
+    useEffect(() {
+      getDonationList().then((data) {
+        donatingList.value = data!;
+      }).catchError((error) {
+        print(error);
+      });
+      getKeepingCnt().then((data) {
+        keepingList.value = data!;
+      });
+      return null;
+    }, []);
 
     Future<void> selectAddress(context) async {
       showDialog(
@@ -329,12 +348,15 @@ class BookinfoDetail extends HookConsumerWidget {
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width / 12),
                       child: DonatingList(
-                          isbn: isbn, donateList: donatingList.value),
+                        isbn: isbn,
+                        donateList: donatingList.value,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width / 12),
-                      child: KeepingList(),
+                      child: KeepingList(
+                          isbn: isbn, keepingList: keepingList.value),
                     ),
                   ],
                 ),

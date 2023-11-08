@@ -1,13 +1,16 @@
+import 'package:bookdone/bookinfo/model/donation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class KeepingCard extends HookWidget {
-  const KeepingCard({super.key});
+  const KeepingCard({super.key, required this.isbn, required this.keeping});
+  final String isbn;
+  final KeepingBookData keeping;
 
   @override
   Widget build(BuildContext context) {
     final area = useState('서울시 마포구');
-    final bookCnt = useState(0);
+
     return Column(
       children: [
         SizedBox(
@@ -17,7 +20,7 @@ class KeepingCard extends HookWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${area.value}에 ${bookCnt.value}권의 책이 있어요',
+              '${keeping.address}에 ${keeping.bookCount}권의 책이 있어요',
               style: TextStyle(fontSize: 17),
             ),
             IconButton(

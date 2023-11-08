@@ -13,11 +13,6 @@ class ArticleMain extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final title = useState('바다가 들리는 편의점');
-    final historyCount = useState(0);
-    final donatorComment = useState('책 깨끗해용 재미써용');
-    final author = useState('저자이름');
-    final publisher = useState('출판사');
     final pubDate = useState('2028년 13월 32일');
     final discription = useState('기타 책 관련 설명');
     final restClient = ref.read(restApiClientProvider);

@@ -450,3 +450,364 @@ abstract class _DonationByRegion implements DonationByRegion {
   _$$DonationByRegionImplCopyWith<_$DonationByRegionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+KeepingBookByRegion _$KeepingBookByRegionFromJson(Map<String, dynamic> json) {
+  return _KeepingBookByRegion.fromJson(json);
+}
+
+/// @nodoc
+mixin _$KeepingBookByRegion {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  List<KeepingBookData> get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $KeepingBookByRegionCopyWith<KeepingBookByRegion> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $KeepingBookByRegionCopyWith<$Res> {
+  factory $KeepingBookByRegionCopyWith(
+          KeepingBookByRegion value, $Res Function(KeepingBookByRegion) then) =
+      _$KeepingBookByRegionCopyWithImpl<$Res, KeepingBookByRegion>;
+  @useResult
+  $Res call({bool success, String msg, List<KeepingBookData> data});
+}
+
+/// @nodoc
+class _$KeepingBookByRegionCopyWithImpl<$Res, $Val extends KeepingBookByRegion>
+    implements $KeepingBookByRegionCopyWith<$Res> {
+  _$KeepingBookByRegionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<KeepingBookData>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$KeepingBookByRegionImplCopyWith<$Res>
+    implements $KeepingBookByRegionCopyWith<$Res> {
+  factory _$$KeepingBookByRegionImplCopyWith(_$KeepingBookByRegionImpl value,
+          $Res Function(_$KeepingBookByRegionImpl) then) =
+      __$$KeepingBookByRegionImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, List<KeepingBookData> data});
+}
+
+/// @nodoc
+class __$$KeepingBookByRegionImplCopyWithImpl<$Res>
+    extends _$KeepingBookByRegionCopyWithImpl<$Res, _$KeepingBookByRegionImpl>
+    implements _$$KeepingBookByRegionImplCopyWith<$Res> {
+  __$$KeepingBookByRegionImplCopyWithImpl(_$KeepingBookByRegionImpl _value,
+      $Res Function(_$KeepingBookByRegionImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$KeepingBookByRegionImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<KeepingBookData>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$KeepingBookByRegionImpl
+    with DiagnosticableTreeMixin
+    implements _KeepingBookByRegion {
+  const _$KeepingBookByRegionImpl(
+      {required this.success,
+      required this.msg,
+      required final List<KeepingBookData> data})
+      : _data = data;
+
+  factory _$KeepingBookByRegionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KeepingBookByRegionImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  final List<KeepingBookData> _data;
+  @override
+  List<KeepingBookData> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'KeepingBookByRegion(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'KeepingBookByRegion'))
+      ..add(DiagnosticsProperty('success', success))
+      ..add(DiagnosticsProperty('msg', msg))
+      ..add(DiagnosticsProperty('data', data));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$KeepingBookByRegionImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, success, msg, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$KeepingBookByRegionImplCopyWith<_$KeepingBookByRegionImpl> get copyWith =>
+      __$$KeepingBookByRegionImplCopyWithImpl<_$KeepingBookByRegionImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$KeepingBookByRegionImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _KeepingBookByRegion implements KeepingBookByRegion {
+  const factory _KeepingBookByRegion(
+      {required final bool success,
+      required final String msg,
+      required final List<KeepingBookData> data}) = _$KeepingBookByRegionImpl;
+
+  factory _KeepingBookByRegion.fromJson(Map<String, dynamic> json) =
+      _$KeepingBookByRegionImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  List<KeepingBookData> get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$KeepingBookByRegionImplCopyWith<_$KeepingBookByRegionImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+KeepingBookData _$KeepingBookDataFromJson(Map<String, dynamic> json) {
+  return _KeepingBookData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$KeepingBookData {
+  String get address => throw _privateConstructorUsedError;
+  int get bookCount => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $KeepingBookDataCopyWith<KeepingBookData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $KeepingBookDataCopyWith<$Res> {
+  factory $KeepingBookDataCopyWith(
+          KeepingBookData value, $Res Function(KeepingBookData) then) =
+      _$KeepingBookDataCopyWithImpl<$Res, KeepingBookData>;
+  @useResult
+  $Res call({String address, int bookCount});
+}
+
+/// @nodoc
+class _$KeepingBookDataCopyWithImpl<$Res, $Val extends KeepingBookData>
+    implements $KeepingBookDataCopyWith<$Res> {
+  _$KeepingBookDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? address = null,
+    Object? bookCount = null,
+  }) {
+    return _then(_value.copyWith(
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      bookCount: null == bookCount
+          ? _value.bookCount
+          : bookCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$KeepingBookDataImplCopyWith<$Res>
+    implements $KeepingBookDataCopyWith<$Res> {
+  factory _$$KeepingBookDataImplCopyWith(_$KeepingBookDataImpl value,
+          $Res Function(_$KeepingBookDataImpl) then) =
+      __$$KeepingBookDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String address, int bookCount});
+}
+
+/// @nodoc
+class __$$KeepingBookDataImplCopyWithImpl<$Res>
+    extends _$KeepingBookDataCopyWithImpl<$Res, _$KeepingBookDataImpl>
+    implements _$$KeepingBookDataImplCopyWith<$Res> {
+  __$$KeepingBookDataImplCopyWithImpl(
+      _$KeepingBookDataImpl _value, $Res Function(_$KeepingBookDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? address = null,
+    Object? bookCount = null,
+  }) {
+    return _then(_$KeepingBookDataImpl(
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      bookCount: null == bookCount
+          ? _value.bookCount
+          : bookCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$KeepingBookDataImpl
+    with DiagnosticableTreeMixin
+    implements _KeepingBookData {
+  const _$KeepingBookDataImpl({required this.address, required this.bookCount});
+
+  factory _$KeepingBookDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KeepingBookDataImplFromJson(json);
+
+  @override
+  final String address;
+  @override
+  final int bookCount;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'KeepingBookData(address: $address, bookCount: $bookCount)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'KeepingBookData'))
+      ..add(DiagnosticsProperty('address', address))
+      ..add(DiagnosticsProperty('bookCount', bookCount));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$KeepingBookDataImpl &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.bookCount, bookCount) ||
+                other.bookCount == bookCount));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, address, bookCount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$KeepingBookDataImplCopyWith<_$KeepingBookDataImpl> get copyWith =>
+      __$$KeepingBookDataImplCopyWithImpl<_$KeepingBookDataImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$KeepingBookDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _KeepingBookData implements KeepingBookData {
+  const factory _KeepingBookData(
+      {required final String address,
+      required final int bookCount}) = _$KeepingBookDataImpl;
+
+  factory _KeepingBookData.fromJson(Map<String, dynamic> json) =
+      _$KeepingBookDataImpl.fromJson;
+
+  @override
+  String get address;
+  @override
+  int get bookCount;
+  @override
+  @JsonKey(ignore: true)
+  _$$KeepingBookDataImplCopyWith<_$KeepingBookDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

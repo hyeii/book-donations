@@ -43,3 +43,35 @@ Map<String, dynamic> _$$DonationByRegionImplToJson(
       'address': instance.address,
       'createdAt': instance.createdAt,
     };
+
+_$KeepingBookByRegionImpl _$$KeepingBookByRegionImplFromJson(
+        Map<String, dynamic> json) =>
+    _$KeepingBookByRegionImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: (json['data'] as List<dynamic>)
+          .map((e) => KeepingBookData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$KeepingBookByRegionImplToJson(
+        _$KeepingBookByRegionImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+_$KeepingBookDataImpl _$$KeepingBookDataImplFromJson(
+        Map<String, dynamic> json) =>
+    _$KeepingBookDataImpl(
+      address: json['address'] as String,
+      bookCount: json['bookCount'] as int,
+    );
+
+Map<String, dynamic> _$$KeepingBookDataImplToJson(
+        _$KeepingBookDataImpl instance) =>
+    <String, dynamic>{
+      'address': instance.address,
+      'bookCount': instance.bookCount,
+    };

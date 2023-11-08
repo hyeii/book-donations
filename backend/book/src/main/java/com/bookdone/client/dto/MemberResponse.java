@@ -16,7 +16,7 @@ public class MemberResponse {
 	private String oauthId;
 	private String nickname;
 	private String address;
+	private String fcmToken;
 	private Integer point;
-	private String email;
 	private String image;
 }

@@ -43,13 +43,13 @@ public class DonationRepositoryImpl implements DonationRepository {
     }
 
     @Override
-    public List<Donation> findAllByIsbnAndAddress(Long isbn, String address) {
+    public List<Donation> findAllByIsbnAndAddress(String isbn, String address) {
         List<DonationEntity> donationEntityList = jpaDonationRepository.findAllByIsbnAndAddress(isbn, address);
         return donationEntityList.stream().map(Donation::createDonation).collect(Collectors.toList());
     }
 
     @Override
-    public List<DonationCountResponse> countAllByIsbnAndAddress(Long isbn, String address) {
+    public List<DonationCountResponse> countAllByIsbnAndAddress(String isbn, String address) {
         return jpaDonationRepository.countAllByIsbnAndAddress(isbn, address.substring(0 , 2));
     }
 

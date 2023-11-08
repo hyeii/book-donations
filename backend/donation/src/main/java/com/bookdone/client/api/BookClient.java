@@ -11,8 +11,8 @@ import java.util.List;
 @FeignClient(name = "book-service")
 public interface BookClient {
     @GetMapping("/api/books/detail/{isbn}")
-    ResponseEntity<?> getBookInfo(@PathVariable Long isbn);
+    ResponseEntity<?> getBookInfo(@PathVariable String isbn);
 
     @GetMapping("/api/books/details")
-    ResponseEntity<?> getBookInfoList(@RequestParam List<Long> isbnList);
+    ResponseEntity<?> getBookInfoList(@RequestParam List<String> isbns);
 }

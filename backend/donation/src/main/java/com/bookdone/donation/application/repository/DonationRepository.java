@@ -15,7 +15,7 @@ public interface DonationRepository {
 
     public List<Donation> findAllByMemberId(Long memberId);
 
-    public List<Donation> findAllByIsbnAndAddress(Long isbn, String address);
+    public List<Donation> findAllByIsbnAndAddress(String isbn, String address);
 
-    public List<DonationCountResponse> countAllByIsbnAndAddress(Long isbn, String address);
+    public List<DonationCountResponse> countAllByIsbnAndAddress(String isbn, String address);
 }

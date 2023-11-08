@@ -38,7 +38,7 @@ public class FindDonationUseCase {
     private final ResponseUtil responseUtil;
     private final BookClient bookClient;
 
-    public List<DonationListResponse> findDonationList(Long isbn, String address) throws JsonProcessingException {
+    public List<DonationListResponse> findDonationList(String isbn, String address) throws JsonProcessingException {
         List<Donation> donationList = donationRepository.findAllByIsbnAndAddress(isbn, address);
 
         if (donationList.isEmpty()) return null;
@@ -136,7 +136,7 @@ public class FindDonationUseCase {
 
         Map<Long, BookResponse> bookResponseMap = null;
 
-        List<Long> isbnList = donationList.stream().map(donation -> donation.getIsbn())
+        List<String> isbnList = donationList.stream().map(donation -> donation.getIsbn())
                 .collect(Collectors.toList());
 
         try {
@@ -187,7 +187,7 @@ public class FindDonationUseCase {
         return donationMyPageResponseList;
     }
 
-    public List<DonationCountResponse> countDonationCount(Long isbn, String address) {
+    public List<DonationCountResponse> countDonationCount(String isbn, String address) {
         return donationRepository.countAllByIsbnAndAddress(isbn, address);
     }
 }

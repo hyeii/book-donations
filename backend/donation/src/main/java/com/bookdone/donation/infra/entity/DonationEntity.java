@@ -26,7 +26,7 @@ public class DonationEntity {
     private Long id;
 
     @Column(name = "isbn", nullable = false)
-    private Long isbn;
+    private String isbn;
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;

@@ -13,7 +13,7 @@ import java.util.List;
 public class DonationDetailsResponse {
 
     private Long id;
-    private Long isbn;
+    private String isbn;
     private String nickname;
     private String address;
     private String content;

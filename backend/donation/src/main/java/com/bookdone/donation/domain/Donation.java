@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Donation {
     private Long id;
-    private Long isbn;
+    private String isbn;
     private Long memberId;
     private String address;
     private String content;

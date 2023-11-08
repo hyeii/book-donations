@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class DonationListRequest {
-    private Long isbn;
+    private String isbn;
     private Integer address;
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public class DonationAddRequest {
 
     private Long id;
-    private Long isbn;
+    private String isbn;
     private Long memberId;
     private String address;
     private String content;

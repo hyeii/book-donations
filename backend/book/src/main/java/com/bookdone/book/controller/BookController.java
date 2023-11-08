@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookdone.book.dto.BookAutoCompDto;
@@ -71,7 +72,7 @@ public class BookController {
 	}
 
 	@GetMapping("/details")
-	public ResponseEntity<?> getBooksDetail(@RequestBody List<String> isbns) {
+	public ResponseEntity<?> getBooksDetail(@RequestParam List<String> isbns) {
 		Map<String, BookDto> booksDetailMap = bookService.getBooksDetailMap2(isbns);
 		return BaseResponse.okWithData(HttpStatus.OK, "여러 책 상세 조회 완료", booksDetailMap);
 	}

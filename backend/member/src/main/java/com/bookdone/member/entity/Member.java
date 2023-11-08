@@ -55,6 +55,17 @@ public class Member {
         this.fcmToken = fcmToken;
     }
 
+    public void increasePoint() {
+        this.point++;
+    }
+
+    public void decreasePoint() {
+        if (point <= 0) {
+            throw new IllegalArgumentException("사용할 포인트가 없습니다.");
+        }
+        this.point--;
+    }
+
     public void updateImage(String image) {
         this.image = image;
     }

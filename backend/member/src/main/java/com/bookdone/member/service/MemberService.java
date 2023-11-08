@@ -22,6 +22,15 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    public void updateMembersPointById(Long id, Boolean isPositive) {
+        Member member = getMemberOrThrow(id);
+        if (isPositive) {
+            member.increasePoint();
+        } else {
+            member.decreasePoint();
+        }
+    }
+
     public MemberResponse findByOauthId(String oauthId) {
         Member member = memberRepository.findByOauthId(oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다"));
@@ -29,8 +38,7 @@ public class MemberService {
     }
 
     public MemberResponse findById(Long id) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));
+        Member member = getMemberOrThrow(id);
         return MemberResponse.toResponse(member);
     }
 
@@ -56,8 +64,7 @@ public class MemberService {
 
     @Transactional
     public void updateJoinMember(Long id, AdditionalInfo additionalInfo) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));
+        Member member = getMemberOrThrow(id);
         member.updateNicknameAndAddress(
                 additionalInfo.getNickname(), additionalInfo.getAddress(), additionalInfo.getFcmToken()
         );
@@ -65,9 +72,14 @@ public class MemberService {
 
     @Transactional
     public void updateImage(Long id, String image) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다."));
+        Member member = getMemberOrThrow(id);
         member.updateImage(image);
+    }
+
+    public Member getMemberOrThrow(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));
+        return member;
     }
 
     public boolean isNicknameAvailable(String nickname) {

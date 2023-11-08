@@ -1,5 +1,8 @@
-package com.bookdone.rank.event;
+package com.bookdone.rank.event.listener;
 
+import com.bookdone.member.entity.Member;
+import com.bookdone.member.repository.MemberRepository;
+import com.bookdone.member.service.MemberService;
 import com.bookdone.rank.dto.MemberScoreDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -21,16 +22,21 @@ import java.util.Set;
 public class RankingUpdateEventListener {
 
     private final RedisTemplate<String, String> redisTemplate;
+    private final ObjectMapper objectMapper;
+    private final MemberService memberService;
     private final String RANKING_KEY = "rank";
 
-    @KafkaListener(topics = "ranking-update", groupId = "ranking-group")
+    @KafkaListener(topics = "donation-finish")
     public void updateRanking(String message) {
-        log.info("event catch!!!!!!!!!!!!!!!!!!! = {}", message);
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            List<String> nicknames = objectMapper.readValue(message, new TypeReference<List<String>>() {
+            Map<String, Long> map = objectMapper.readValue(message, new TypeReference<Map<String, Long>>() {
             });
-            nicknames.forEach(nickname -> updateScore(nickname));
+
+            map.values()
+                    .stream()
+                    .map(memberService::getMemberOrThrow)
+                    .forEach(member -> updateScore(member.getNickname()));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,7 +71,6 @@ public class RankingUpdateEventListener {
                 }
             });
         }
-
         return topMemberScores;
     }
 }

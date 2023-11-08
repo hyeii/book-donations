@@ -19,7 +19,7 @@ class ArticleRespByid with _$ArticleRespByid {
 class ArticleData with _$ArticleData {
   const factory ArticleData({
     required int id,
-    required int isbn,
+    required String isbn,
     required String nickname,
     required String address,
     required String content,

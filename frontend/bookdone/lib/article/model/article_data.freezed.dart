@@ -207,7 +207,7 @@ ArticleData _$ArticleDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ArticleData {
   int get id => throw _privateConstructorUsedError;
-  int get isbn => throw _privateConstructorUsedError;
+  String get isbn => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
@@ -230,7 +230,7 @@ abstract class $ArticleDataCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int isbn,
+      String isbn,
       String nickname,
       String address,
       String content,
@@ -269,7 +269,7 @@ class _$ArticleDataCopyWithImpl<$Res, $Val extends ArticleData>
       isbn: null == isbn
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
@@ -308,7 +308,7 @@ abstract class _$$ArticleDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      int isbn,
+      String isbn,
       String nickname,
       String address,
       String content,
@@ -345,7 +345,7 @@ class __$$ArticleDataImplCopyWithImpl<$Res>
       isbn: null == isbn
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
@@ -395,7 +395,7 @@ class _$ArticleDataImpl implements _ArticleData {
   @override
   final int id;
   @override
-  final int isbn;
+  final String isbn;
   @override
   final String nickname;
   @override
@@ -478,7 +478,7 @@ class _$ArticleDataImpl implements _ArticleData {
 abstract class _ArticleData implements ArticleData {
   const factory _ArticleData(
       {required final int id,
-      required final int isbn,
+      required final String isbn,
       required final String nickname,
       required final String address,
       required final String content,
@@ -492,7 +492,7 @@ abstract class _ArticleData implements ArticleData {
   @override
   int get id;
   @override
-  int get isbn;
+  String get isbn;
   @override
   String get nickname;
   @override

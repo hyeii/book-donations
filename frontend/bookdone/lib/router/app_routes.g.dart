@@ -387,10 +387,15 @@ RouteBase get $registerRoute => GoRouteData.$route(
     );
 
 extension $RegisterRouteExtension on RegisterRoute {
-  static RegisterRoute _fromState(GoRouterState state) => const RegisterRoute();
+  static RegisterRoute _fromState(GoRouterState state) => RegisterRoute(
+        isbn: state.uri.queryParameters['isbn']!,
+      );
 
   String get location => GoRouteData.$location(
         '/regist',
+        queryParams: {
+          'isbn': isbn,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

@@ -6,6 +6,7 @@ import 'package:bookdone/onboard/page/add_complete.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/onboard/service/set_user_api.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/util/repository/region_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,14 @@ class AddAdditionalInfo extends HookConsumerWidget {
         fcmToken.value = token;
       }
       print(fcmToken.value);
+    }
+
+    Future<void> sendInfo() async {
+      await restClient.postAdditionalInfo({
+        'nickname': nickName.value,
+        'address': regionCode.value,
+        'fcmToken': fcmToken.value
+      });
     }
 
     // _getCameraImage() async {
@@ -401,16 +410,11 @@ class AddAdditionalInfo extends HookConsumerWidget {
                         width: 20,
                       ),
                       ElevatedButton(
-                        onPressed: () async {
-                          // print(nickName.value);
-                          // print(regionCode.value);
-                          await restClient.postAdditionalInfo({
-                            'nickname': nickName.value,
-                            'address': regionCode.value,
-                            'fcmToken': fcmToken.value
-                          });
-                          complete.value = true;
+                        onPressed: () {
+                          sendInfo();
+                          // complete.value = true;
                           SetUserApi.updateMyInfo(ref);
+                          AddCompleteRoute().push(context);
                         },
                         child: Text('확인'),
                       ),
@@ -563,22 +567,21 @@ class AddAdditionalInfo extends HookConsumerWidget {
             backgroundColor: Colors.brown.shade400,
             foregroundColor: Colors.white,
           ),
-          onPressed: () {
+          onPressed: () async {
             // TODO: 로그인 구현
             if (validate.value != 1) {
               _checkValidAlert();
               return;
             }
             getFcmToken();
-            print('토큰토큰 ${fcmToken.value}');
+            // print('토큰토큰 ${fcmToken.value}');
 
-            _checkAlert();
+            await _checkAlert();
 
             // context.goNamed('home');
-            if (complete.value) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddComplete()));
-            }
+            // if (complete.value) {
+            //   AddCompleteRoute().push(context);
+            // }
           },
           child: Text('완료'),
         ),

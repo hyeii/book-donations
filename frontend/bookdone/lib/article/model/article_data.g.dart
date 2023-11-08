@@ -25,7 +25,7 @@ Map<String, dynamic> _$$ArticleRespByidImplToJson(
 _$ArticleDataImpl _$$ArticleDataImplFromJson(Map<String, dynamic> json) =>
     _$ArticleDataImpl(
       id: json['id'] as int,
-      isbn: json['isbn'] as int,
+      isbn: json['isbn'] as String,
       nickname: json['nickname'] as String,
       address: json['address'] as String,
       content: json['content'] as String,

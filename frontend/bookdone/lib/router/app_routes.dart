@@ -186,10 +186,12 @@ class SplashRoute extends GoRouteData {
   path: RouterPath.registerPath,
 )
 class RegisterRoute extends GoRouteData {
-  const RegisterRoute();
+  const RegisterRoute({required this.isbn});
+  final String isbn;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => RegistData();
+  Widget build(BuildContext context, GoRouterState state) =>
+      RegistData(isbn: isbn);
 }
 
 @TypedGoRoute<RegisterExistRoute>(

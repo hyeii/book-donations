@@ -2,6 +2,7 @@ import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/bookinfo/model/book_comment.dart';
 import 'package:bookdone/bookinfo/model/donation.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
+import 'package:bookdone/regist/model/regist_get_data.dart';
 import 'package:bookdone/rest_api/app_dio.dart';
 import 'package:bookdone/rest_api/auth_dio.dart';
 import 'package:bookdone/search/model/book.dart';
@@ -62,4 +63,10 @@ abstract class RestClient {
     @Query("isbn") String isbn,
     @Query("address") String address,
   );
+
+  @POST('/api/books/likes')
+  Future<BooksLikeResp> setBooksLikes(@Body() Map<String, dynamic> map);
+
+  @POST('/api/donations')
+  Future<RegisterResponse> registArticle(@Body() Map<String, dynamic> map);
 }

@@ -1,10 +1,12 @@
 import 'package:bookdone/regist/service/scan_barcode.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RegistNewCheck extends HookConsumerWidget {
@@ -13,7 +15,7 @@ class RegistNewCheck extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String isbn = ref.watch(getIsbnProvider);
-    final restClient = useMemoized(() => RestClient(Dio()));
+    final restClient = ref.read(restApiClientProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -115,7 +117,7 @@ class RegistNewCheck extends HookConsumerWidget {
               width: 170,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: alert 확인창x
+                  RegisterRoute(isbn: isbn).push(context);
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -53,9 +53,8 @@ public class HistoryRepositoryImpl implements HistoryRepository {
 
     @Override
     public History findLastHistoryByDonationId(Long donationId) {
-        HistoryEntity historyEntity = jpaHistoryRepository.findTopByDonationIdOrderByDonatedAtDesc(donationId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 히스토리가 없습니다."));
-        return History.createHistory(historyEntity);
+        HistoryEntity historyEntity = jpaHistoryRepository.findTopByDonationIdOrderByDonatedAtDesc(donationId).get();
+        return historyEntity == null ? null : History.createHistory(historyEntity);
     }
 
     @Override

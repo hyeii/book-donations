@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -53,8 +54,8 @@ public class HistoryRepositoryImpl implements HistoryRepository {
 
     @Override
     public History findLastHistoryByDonationId(Long donationId) {
-        HistoryEntity historyEntity = jpaHistoryRepository.findTopByDonationIdOrderByDonatedAtDesc(donationId).get();
-        return historyEntity == null ? null : History.createHistory(historyEntity);
+        Optional<HistoryEntity> historyEntity = jpaHistoryRepository.findTopByDonationIdOrderByDonatedAtDesc(donationId);
+        return historyEntity.map(History::createHistory).orElse(null);
     }
 
     @Override

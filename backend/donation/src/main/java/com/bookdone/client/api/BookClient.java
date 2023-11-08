@@ -10,9 +10,9 @@ import java.util.List;
 
 @FeignClient(name = "book-service")
 public interface BookClient {
-    @GetMapping("/api/books/isbn/{isbn}")
+    @GetMapping("/api/books/detail/{isbn}")
     ResponseEntity<?> getBookInfo(@PathVariable Long isbn);
 
-    @GetMapping("/api/books/isbn")
+    @GetMapping("/api/books/details")
     ResponseEntity<?> getBookInfoList(@RequestParam List<Long> isbnList);
 }

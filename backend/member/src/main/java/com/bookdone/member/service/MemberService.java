@@ -22,6 +22,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public void updateMembersPointById(Long id, Boolean isPositive) {
         Member member = getMemberOrThrow(id);
         if (isPositive) {

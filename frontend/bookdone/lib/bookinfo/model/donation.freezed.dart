@@ -811,3 +811,417 @@ abstract class _KeepingBookData implements KeepingBookData {
   _$$KeepingBookDataImplCopyWith<_$KeepingBookDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+BooksLikeResp _$BooksLikeRespFromJson(Map<String, dynamic> json) {
+  return _BooksLikeResp.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BooksLikeResp {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  List<BooksLikeData>? get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BooksLikeRespCopyWith<BooksLikeResp> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BooksLikeRespCopyWith<$Res> {
+  factory $BooksLikeRespCopyWith(
+          BooksLikeResp value, $Res Function(BooksLikeResp) then) =
+      _$BooksLikeRespCopyWithImpl<$Res, BooksLikeResp>;
+  @useResult
+  $Res call({bool success, String msg, List<BooksLikeData>? data});
+}
+
+/// @nodoc
+class _$BooksLikeRespCopyWithImpl<$Res, $Val extends BooksLikeResp>
+    implements $BooksLikeRespCopyWith<$Res> {
+  _$BooksLikeRespCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<BooksLikeData>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$BooksLikeRespImplCopyWith<$Res>
+    implements $BooksLikeRespCopyWith<$Res> {
+  factory _$$BooksLikeRespImplCopyWith(
+          _$BooksLikeRespImpl value, $Res Function(_$BooksLikeRespImpl) then) =
+      __$$BooksLikeRespImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, List<BooksLikeData>? data});
+}
+
+/// @nodoc
+class __$$BooksLikeRespImplCopyWithImpl<$Res>
+    extends _$BooksLikeRespCopyWithImpl<$Res, _$BooksLikeRespImpl>
+    implements _$$BooksLikeRespImplCopyWith<$Res> {
+  __$$BooksLikeRespImplCopyWithImpl(
+      _$BooksLikeRespImpl _value, $Res Function(_$BooksLikeRespImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_$BooksLikeRespImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<BooksLikeData>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BooksLikeRespImpl
+    with DiagnosticableTreeMixin
+    implements _BooksLikeResp {
+  const _$BooksLikeRespImpl(
+      {required this.success,
+      required this.msg,
+      final List<BooksLikeData>? data})
+      : _data = data;
+
+  factory _$BooksLikeRespImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BooksLikeRespImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  final List<BooksLikeData>? _data;
+  @override
+  List<BooksLikeData>? get data {
+    final value = _data;
+    if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BooksLikeResp(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BooksLikeResp'))
+      ..add(DiagnosticsProperty('success', success))
+      ..add(DiagnosticsProperty('msg', msg))
+      ..add(DiagnosticsProperty('data', data));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BooksLikeRespImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, success, msg, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BooksLikeRespImplCopyWith<_$BooksLikeRespImpl> get copyWith =>
+      __$$BooksLikeRespImplCopyWithImpl<_$BooksLikeRespImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BooksLikeRespImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _BooksLikeResp implements BooksLikeResp {
+  const factory _BooksLikeResp(
+      {required final bool success,
+      required final String msg,
+      final List<BooksLikeData>? data}) = _$BooksLikeRespImpl;
+
+  factory _BooksLikeResp.fromJson(Map<String, dynamic> json) =
+      _$BooksLikeRespImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  List<BooksLikeData>? get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$BooksLikeRespImplCopyWith<_$BooksLikeRespImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+BooksLikeData _$BooksLikeDataFromJson(Map<String, dynamic> json) {
+  return _BooksLikeData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BooksLikeData {
+  BookData get book => throw _privateConstructorUsedError;
+  String get localCode => throw _privateConstructorUsedError;
+  int get count => throw _privateConstructorUsedError;
+  bool get likes => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BooksLikeDataCopyWith<BooksLikeData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BooksLikeDataCopyWith<$Res> {
+  factory $BooksLikeDataCopyWith(
+          BooksLikeData value, $Res Function(BooksLikeData) then) =
+      _$BooksLikeDataCopyWithImpl<$Res, BooksLikeData>;
+  @useResult
+  $Res call({BookData book, String localCode, int count, bool likes});
+
+  $BookDataCopyWith<$Res> get book;
+}
+
+/// @nodoc
+class _$BooksLikeDataCopyWithImpl<$Res, $Val extends BooksLikeData>
+    implements $BooksLikeDataCopyWith<$Res> {
+  _$BooksLikeDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? book = null,
+    Object? localCode = null,
+    Object? count = null,
+    Object? likes = null,
+  }) {
+    return _then(_value.copyWith(
+      book: null == book
+          ? _value.book
+          : book // ignore: cast_nullable_to_non_nullable
+              as BookData,
+      localCode: null == localCode
+          ? _value.localCode
+          : localCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      likes: null == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BookDataCopyWith<$Res> get book {
+    return $BookDataCopyWith<$Res>(_value.book, (value) {
+      return _then(_value.copyWith(book: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$BooksLikeDataImplCopyWith<$Res>
+    implements $BooksLikeDataCopyWith<$Res> {
+  factory _$$BooksLikeDataImplCopyWith(
+          _$BooksLikeDataImpl value, $Res Function(_$BooksLikeDataImpl) then) =
+      __$$BooksLikeDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({BookData book, String localCode, int count, bool likes});
+
+  @override
+  $BookDataCopyWith<$Res> get book;
+}
+
+/// @nodoc
+class __$$BooksLikeDataImplCopyWithImpl<$Res>
+    extends _$BooksLikeDataCopyWithImpl<$Res, _$BooksLikeDataImpl>
+    implements _$$BooksLikeDataImplCopyWith<$Res> {
+  __$$BooksLikeDataImplCopyWithImpl(
+      _$BooksLikeDataImpl _value, $Res Function(_$BooksLikeDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? book = null,
+    Object? localCode = null,
+    Object? count = null,
+    Object? likes = null,
+  }) {
+    return _then(_$BooksLikeDataImpl(
+      book: null == book
+          ? _value.book
+          : book // ignore: cast_nullable_to_non_nullable
+              as BookData,
+      localCode: null == localCode
+          ? _value.localCode
+          : localCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      likes: null == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BooksLikeDataImpl
+    with DiagnosticableTreeMixin
+    implements _BooksLikeData {
+  const _$BooksLikeDataImpl(
+      {required this.book,
+      required this.localCode,
+      required this.count,
+      required this.likes});
+
+  factory _$BooksLikeDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BooksLikeDataImplFromJson(json);
+
+  @override
+  final BookData book;
+  @override
+  final String localCode;
+  @override
+  final int count;
+  @override
+  final bool likes;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BooksLikeData(book: $book, localCode: $localCode, count: $count, likes: $likes)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BooksLikeData'))
+      ..add(DiagnosticsProperty('book', book))
+      ..add(DiagnosticsProperty('localCode', localCode))
+      ..add(DiagnosticsProperty('count', count))
+      ..add(DiagnosticsProperty('likes', likes));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BooksLikeDataImpl &&
+            (identical(other.book, book) || other.book == book) &&
+            (identical(other.localCode, localCode) ||
+                other.localCode == localCode) &&
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.likes, likes) || other.likes == likes));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, book, localCode, count, likes);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BooksLikeDataImplCopyWith<_$BooksLikeDataImpl> get copyWith =>
+      __$$BooksLikeDataImplCopyWithImpl<_$BooksLikeDataImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BooksLikeDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _BooksLikeData implements BooksLikeData {
+  const factory _BooksLikeData(
+      {required final BookData book,
+      required final String localCode,
+      required final int count,
+      required final bool likes}) = _$BooksLikeDataImpl;
+
+  factory _BooksLikeData.fromJson(Map<String, dynamic> json) =
+      _$BooksLikeDataImpl.fromJson;
+
+  @override
+  BookData get book;
+  @override
+  String get localCode;
+  @override
+  int get count;
+  @override
+  bool get likes;
+  @override
+  @JsonKey(ignore: true)
+  _$$BooksLikeDataImplCopyWith<_$BooksLikeDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

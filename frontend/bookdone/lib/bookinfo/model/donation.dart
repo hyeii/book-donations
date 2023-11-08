@@ -1,3 +1,4 @@
+import 'package:bookdone/search/model/book.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 // ignore: unused_import
 import 'package:flutter/foundation.dart';
@@ -54,4 +55,30 @@ class KeepingBookData with _$KeepingBookData {
 
   factory KeepingBookData.fromJson(Map<String, dynamic> json) =>
       _$KeepingBookDataFromJson(json);
+}
+
+// 알림 관련
+@freezed
+class BooksLikeResp with _$BooksLikeResp {
+  const factory BooksLikeResp({
+    required bool success,
+    required String msg,
+    List<BooksLikeData>? data,
+  }) = _BooksLikeResp;
+
+  factory BooksLikeResp.fromJson(Map<String, dynamic> json) =>
+      _$BooksLikeRespFromJson(json);
+}
+
+@freezed
+class BooksLikeData with _$BooksLikeData {
+  const factory BooksLikeData({
+    required BookData book,
+    required String localCode,
+    required int count,
+    required bool likes,
+  }) = _BooksLikeData;
+
+  factory BooksLikeData.fromJson(Map<String, dynamic> json) =>
+      _$BooksLikeDataFromJson(json);
 }

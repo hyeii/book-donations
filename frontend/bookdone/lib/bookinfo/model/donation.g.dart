@@ -75,3 +75,35 @@ Map<String, dynamic> _$$KeepingBookDataImplToJson(
       'address': instance.address,
       'bookCount': instance.bookCount,
     };
+
+_$BooksLikeRespImpl _$$BooksLikeRespImplFromJson(Map<String, dynamic> json) =>
+    _$BooksLikeRespImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => BooksLikeData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$BooksLikeRespImplToJson(_$BooksLikeRespImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+_$BooksLikeDataImpl _$$BooksLikeDataImplFromJson(Map<String, dynamic> json) =>
+    _$BooksLikeDataImpl(
+      book: BookData.fromJson(json['book'] as Map<String, dynamic>),
+      localCode: json['localCode'] as String,
+      count: json['count'] as int,
+      likes: json['likes'] as bool,
+    );
+
+Map<String, dynamic> _$$BooksLikeDataImplToJson(_$BooksLikeDataImpl instance) =>
+    <String, dynamic>{
+      'book': instance.book,
+      'localCode': instance.localCode,
+      'count': instance.count,
+      'likes': instance.likes,
+    };

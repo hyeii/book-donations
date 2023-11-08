@@ -21,19 +21,19 @@ class CommentInput extends HookConsumerWidget {
     var commentController = useTextEditingController();
     // final getUserData = ref.read(userDataRepositoryProvider).restoreNickname();
 
-    Future<void> getUser() async {
+    Future<String> getUser() async {
       SharedPreferences pref = await SharedPreferences.getInstance();
-      userNickname.value = pref.getString('nickname') ?? '';
-      print(userNickname.value);
-      print(isbn);
+      return pref.getString('nickname') ?? '';
     }
 
-    Future<void> getNickname() async {
-      final name =
-          await ref.watch(userDataRepositoryProvider).restoreNickname();
-      userNickname.value = name;
-      debugPrint('여기얌 ${userNickname.value}');
-    }
+    useEffect(() {
+      getUser().then((name) {
+        userNickname.value = name;
+      }).catchError((error) {
+        print(error);
+      });
+      return null;
+    }, []);
 
     // void _tryValidation() {
     //   final isValid = _formKey.currentState!.validate();
@@ -68,18 +68,16 @@ class CommentInput extends HookConsumerWidget {
         ),
         if (commentValidate.value == -1) Text('댓글을 입력해주세요'),
         ElevatedButton(
-          onPressed: () async {
-            // await getUser();
-            await getNickname();
+          onPressed: () {
             if (comment.value == '') {
               commentValidate.value = -1;
               return;
             } else {
               // _tryValidation();
               // print(nickname);
-              await ref.read(restApiClientProvider).postComment({
+              ref.read(restApiClientProvider).postComment({
                 "isbn": isbn,
-                "writer": nickname,
+                "writer": userNickname.value,
                 "review": comment.value,
               });
               BookinfoDetailRoute(isbn: isbn).location;

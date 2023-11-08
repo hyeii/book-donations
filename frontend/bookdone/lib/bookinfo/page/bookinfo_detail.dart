@@ -356,7 +356,10 @@ class BookinfoDetail extends HookConsumerWidget {
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width / 12),
                       child: KeepingList(
-                          isbn: isbn, keepingList: keepingList.value),
+                          isbn: isbn,
+                          regionIndex: selectedRegionIndex.value,
+                          keepingList: keepingList.value,
+                          regionList: regionList.value),
                     ),
                   ],
                 ),

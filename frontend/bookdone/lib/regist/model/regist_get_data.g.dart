@@ -11,7 +11,7 @@ _$RegisterResponseImpl _$$RegisterResponseImplFromJson(
     _$RegisterResponseImpl(
       success: json['success'] as bool,
       msg: json['msg'] as String,
-      data: RegisterId.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] as int,
     );
 
 Map<String, dynamic> _$$RegisterResponseImplToJson(

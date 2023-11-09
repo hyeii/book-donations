@@ -22,7 +22,7 @@ RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) {
 mixin _$RegisterResponse {
   bool get success => throw _privateConstructorUsedError;
   String get msg => throw _privateConstructorUsedError;
-  RegisterId get data => throw _privateConstructorUsedError;
+  int get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,9 +36,7 @@ abstract class $RegisterResponseCopyWith<$Res> {
           RegisterResponse value, $Res Function(RegisterResponse) then) =
       _$RegisterResponseCopyWithImpl<$Res, RegisterResponse>;
   @useResult
-  $Res call({bool success, String msg, RegisterId data});
-
-  $RegisterIdCopyWith<$Res> get data;
+  $Res call({bool success, String msg, int data});
 }
 
 /// @nodoc
@@ -70,16 +68,8 @@ class _$RegisterResponseCopyWithImpl<$Res, $Val extends RegisterResponse>
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as RegisterId,
+              as int,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $RegisterIdCopyWith<$Res> get data {
-    return $RegisterIdCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
-    });
   }
 }
 
@@ -91,10 +81,7 @@ abstract class _$$RegisterResponseImplCopyWith<$Res>
       __$$RegisterResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool success, String msg, RegisterId data});
-
-  @override
-  $RegisterIdCopyWith<$Res> get data;
+  $Res call({bool success, String msg, int data});
 }
 
 /// @nodoc
@@ -124,7 +111,7 @@ class __$$RegisterResponseImplCopyWithImpl<$Res>
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as RegisterId,
+              as int,
     ));
   }
 }
@@ -143,7 +130,7 @@ class _$RegisterResponseImpl implements _RegisterResponse {
   @override
   final String msg;
   @override
-  final RegisterId data;
+  final int data;
 
   @override
   String toString() {
@@ -183,7 +170,7 @@ abstract class _RegisterResponse implements RegisterResponse {
   const factory _RegisterResponse(
       {required final bool success,
       required final String msg,
-      required final RegisterId data}) = _$RegisterResponseImpl;
+      required final int data}) = _$RegisterResponseImpl;
 
   factory _RegisterResponse.fromJson(Map<String, dynamic> json) =
       _$RegisterResponseImpl.fromJson;
@@ -193,7 +180,7 @@ abstract class _RegisterResponse implements RegisterResponse {
   @override
   String get msg;
   @override
-  RegisterId get data;
+  int get data;
   @override
   @JsonKey(ignore: true)
   _$$RegisterResponseImplCopyWith<_$RegisterResponseImpl> get copyWith =>

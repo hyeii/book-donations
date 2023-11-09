@@ -8,7 +8,7 @@ class RegisterResponse with _$RegisterResponse {
   const factory RegisterResponse({
     required bool success,
     required String msg,
-    required RegisterId data,
+    required int data,
   }) = _RegisterResponse;
 
   factory RegisterResponse.fromJson(Map<String, dynamic> json) =>

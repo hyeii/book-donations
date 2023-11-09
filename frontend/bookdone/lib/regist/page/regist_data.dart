@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/regist/model/regist_get_data.dart';
+import 'package:bookdone/regist/widgets/check_register.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,7 +21,6 @@ class RegistData extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
     final picker = ImagePicker();
     var _pickedImgs = useState<List<XFile>>([]);
     final restClient = ref.read(restApiClientProvider);
@@ -39,30 +38,16 @@ class RegistData extends HookConsumerWidget {
     var images = useState<List<XFile>?>([]);
     var content = useState('');
 
-//     {
-// 	"isbn" : 123456789,
-// 	"address" : "3125",
-// 	"content" : "이 책 기부합니다.",
-// 	"canDelivery" : false,
-// 	"images" : ["1번 이미지", "2번 이미지", ...]
-
-// }
-
-    Future<void> createArticle() async {
-      List<MultipartFile> files = images.value!
-          .map((img) => MultipartFile.fromFileSync(img.path))
-          .toList();
-      var formData = FormData.fromMap({'image': files});
-      print(formData);
-      RegisterResponse data = await restClient.registArticle({
-        "isbn": isbn,
-        "address": regionCode.value,
-        "content": content.value,
-        "canDelivery": false,
-        "images": formData,
-      });
-      RegisterId idValue = data.data;
-      print(idValue.id);
+    Future<void> createArticle(List<MultipartFile> files) async {
+      await restClient.registArticle(
+          isbn: isbn,
+          address: regionCode.value,
+          content: content.value,
+          canDelivery: false,
+          images: files);
+      // RegisterId idValue = data.data;
+      // print(idValue.id);
+      // print(idValue.id);
     }
 
     Future<void> _pickImg() async {
@@ -149,6 +134,39 @@ class RegistData extends HookConsumerWidget {
       );
     }
 
+    void checkRegister(context) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Column(children: [
+                Text('기부글을 등록할까요?'),
+                ElevatedButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  child: Text('취소'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // createArticle();
+                  },
+                  child: Text('등록'),
+                )
+              ]),
+            ),
+          );
+        },
+      );
+    }
+
     void selectAddress(context) {
       showDialog(
         context: context,
@@ -223,48 +241,53 @@ class RegistData extends HookConsumerWidget {
                           ),
                           // if (_secondRegionList.isNotEmpty)
                           Expanded(
-                              child: ListView(
-                            children: List.generate(
-                                secondRegionList.value.length, (index) {
-                              final isSelected =
-                                  selectedRegionIndex.value == index;
-                              return GestureDetector(
-                                onTap: () {
-                                  selectedRegionIndex.value = index;
-                                  regionCode.value =
-                                      secondRegionList.value[index].code;
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: isSelected
-                                          ? Colors.brown.shade300
-                                          : Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
+                            child: ListView(
+                              children: List.generate(
+                                secondRegionList.value.length,
+                                (index) {
+                                  final isSelected =
+                                      selectedRegionIndex.value == index;
+                                  return GestureDetector(
+                                    onTap: () {
+                                      selectedRegionIndex.value = index;
+                                      regionCode.value =
+                                          secondRegionList.value[index].code;
+                                    },
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 4.0, bottom: 4.0),
-                                      child: Center(
-                                        child: Text(
-                                          secondRegionList.value[index].second,
-                                          style: TextStyle(
-                                            color: isSelected
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: isSelected
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? Colors.brown.shade300
+                                              : Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 4.0, bottom: 4.0),
+                                          child: Center(
+                                            child: Text(
+                                              secondRegionList
+                                                  .value[index].second,
+                                              style: TextStyle(
+                                                color: isSelected
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            }),
-                          )),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                           // if (_secondRegionList.isEmpty) Text("선택 ㄱㄱ")
                         ],
                       ),
@@ -560,19 +583,11 @@ class RegistData extends HookConsumerWidget {
           alignment: Alignment.centerRight,
           child: SizedBox(
             width: 170,
-            child: ElevatedButton(
-              onPressed: () {
-                // createArticle();
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  fixedSize: Size(20, 100),
-                  textStyle: const TextStyle(fontSize: 15),
-                  backgroundColor: Colors.brown.shade300,
-                  foregroundColor: Colors.white),
-              child: Text("등록하기"),
-            ),
+            child: CheckRegister(
+                isbn: isbn,
+                address: regionCode.value,
+                content: content.value,
+                images: images.value),
           ),
         ),
       ),

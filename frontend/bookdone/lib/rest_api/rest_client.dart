@@ -68,5 +68,12 @@ abstract class RestClient {
   Future<BooksLikeResp> setBooksLikes(@Body() Map<String, dynamic> map);
 
   @POST('/api/donations')
-  Future<RegisterResponse> registArticle(@Body() Map<String, dynamic> map);
+  @MultiPart()
+  Future<RegisterResponse> registArticle({
+    @Part() required String isbn,
+    @Part() required String address,
+    @Part() required String content,
+    @Part() required bool canDelivery,
+    @Part() required List<MultipartFile> images,
+  });
 }

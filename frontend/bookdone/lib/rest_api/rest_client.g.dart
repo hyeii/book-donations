@@ -352,17 +352,40 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<RegisterResponse> registArticle(Map<String, dynamic> map) async {
+  Future<RegisterResponse> registArticle({
+    required String isbn,
+    required String address,
+    required String content,
+    required bool canDelivery,
+    required List<MultipartFile> images,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(map);
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'isbn',
+      isbn,
+    ));
+    _data.fields.add(MapEntry(
+      'address',
+      address,
+    ));
+    _data.fields.add(MapEntry(
+      'content',
+      content,
+    ));
+    _data.fields.add(MapEntry(
+      'canDelivery',
+      canDelivery.toString(),
+    ));
+    _data.files.addAll(images.map((i) => MapEntry('images', i)));
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<RegisterResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

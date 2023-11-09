@@ -1,0 +1,72 @@
+import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/router/app_routes.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+
+class CheckRegister extends HookConsumerWidget {
+  const CheckRegister(
+      {super.key,
+      required this.isbn,
+      required this.address,
+      required this.content,
+      this.images});
+  final List<XFile>? images;
+  final String isbn;
+  final String address;
+  final String content;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var files = useState<List<MultipartFile>>([]);
+    useEffect(() {
+      if (images != null) {
+        files.value =
+            images!.map((img) => MultipartFile.fromFileSync(img.path)).toList();
+      } else {
+        files.value = [];
+      }
+      return null;
+    }, []);
+    final restClient = ref.read(restApiClientProvider);
+    return ElevatedButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('기부글을 등록할까요?'),
+          // content: const Text('AlertDialog description'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: const Text('취소'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await restClient.registArticle(
+                    isbn: isbn,
+                    address: address,
+                    content: content,
+                    canDelivery: false,
+                    images: files.value);
+                MyPageRoute().go(context);
+              },
+              child: const Text('등록'),
+            ),
+          ],
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          fixedSize: Size(20, 100),
+          backgroundColor: Colors.brown.shade300,
+          foregroundColor: Colors.white),
+      child: const Text('등록하기'),
+    );
+  }
+}

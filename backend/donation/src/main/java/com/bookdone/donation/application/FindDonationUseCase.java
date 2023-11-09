@@ -70,7 +70,10 @@ public class FindDonationUseCase {
     public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, String> nicknameMap) {
         List<DonationListResponse> donationListResponseList = new ArrayList<>();
 
+        log.info("nicknameMap={}", nicknameMap);
+
         ObjectMapper objectMapper = new ObjectMapper();
+
 
         for (Donation donation : donationList) {
             String nickname = objectMapper.convertValue(nicknameMap.get(donation.getMemberId()), String.class);

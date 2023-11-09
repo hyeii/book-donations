@@ -43,8 +43,8 @@ public class TradeController {
         modifyTradeUseCase.changeStatusToDonationRequested(donationId, memberId);
         String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
         try {
-            Map<String, Long> map = new HashMap<>();
-            map.put("memberId", memberId);
+            Map<String, String> map = new HashMap<>();
+            map.put("memberId", String.valueOf(memberId));
             payload = new ObjectMapper().writeValueAsString(map);
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);

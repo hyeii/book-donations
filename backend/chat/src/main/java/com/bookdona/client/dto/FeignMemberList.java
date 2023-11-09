@@ -18,9 +18,7 @@ public class FeignMemberList {
 	List<FeignMember> feignMemberList;
 
 	public Map<Long, String> toMap() {
-
 		return feignMemberList.stream()
-			.collect(Collectors.toMap(FeignMember::getMemberId, FeignMember::getNickname));
-
+			.collect(Collectors.toMap(FeignMember::getId, FeignMember::getNickname));
 	}
 }

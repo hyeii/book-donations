@@ -14,4 +14,6 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessage, Obje
 	List<ChatMessage> findByIdIn(List<ObjectId> chatMessageIds);
 
 	List<ChatMessage> findByTradeId(Long tradeId);
+
+	void deleteAllByTradeId(Long tradeId);
 }

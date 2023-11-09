@@ -1,10 +1,15 @@
 package com.bookdona.chat.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.bookdona.chat.document.ChatMessage;
@@ -29,33 +34,44 @@ import com.bookdona.global.util.FeignResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ChatService {
 
 	private final ChatRoomRepository chatRoomRepository;
 	private final ChatMessageRepository chatMessageRepository;
 	private final DonationClient donationClient;
+	@Qualifier("testClient")
 	private final MemberClient memberClient;
 
-	public ChatRoomResponse addChatRoom(ChatRoomCreateRequest chatRoomCreateRequest) throws JsonProcessingException {
+	public void addChatRoom(ChatRoomCreateRequest chatRoomCreateRequest) {
+		Optional<ChatRoom> existingChatRoom = chatRoomRepository.findByTradeIdAndUsersInAnyOrder(
+			chatRoomCreateRequest.getTradeId(),
+			chatRoomCreateRequest.getUser1(),
+			chatRoomCreateRequest.getUser2());
 
-		// FeignDonation donation = FeignResponse.extractDataFromResponse(
-		// 	donationClient.getDonationInfo(chatRoomCreateRequest.getDonationId()), FeignDonation.class);
-		ChatRoom chatRoom = ChatRoom.builder()
-			.tradeId(chatRoomCreateRequest.getTradeId())
-			.participant1Nickname(chatRoomCreateRequest.getSenderNickname())
-			.participant2Nickname(chatRoomCreateRequest.getReceiverNickname())
-			.isLive(true)
-			.build();
-
-		chatRoomRepository.save(chatRoom);
-
-		ChatRoomResponse chatRoomResponse = ChatRoomResponse.builder()
-			.tradeId(chatRoomCreateRequest.getTradeId())
-			.build();
-		return chatRoomResponse;
+		if (existingChatRoom.isPresent()) {
+			ChatRoom room = existingChatRoom.get();
+			if (!room.getIsLive()) {
+				room.setIsLive(true); // 재사용 , 
+				chatMessageRepository.deleteAllByTradeId(room.getTradeId()); // 이전 방 채팅 기록 삭제
+				chatRoomRepository.save(room);
+			} else {
+				throw new IllegalArgumentException("이미 존재하는 채팅방입니다: " + room);
+			}
+		} else {
+			// 존재하지 않는 경우, 새로운 채팅방 생성
+			ChatRoom chatRoom = ChatRoom.builder()
+				.tradeId(chatRoomCreateRequest.getTradeId())
+				.user1(chatRoomCreateRequest.getUser1())
+				.user2(chatRoomCreateRequest.getUser2())
+				.isLive(true)
+				.build();
+			chatRoomRepository.save(chatRoom);
+		}
 	}
 
 	public void addChatMessage(Long tradeId, ChatMessageWriteRequest chatMessageWriteRequest) {
@@ -81,52 +97,55 @@ public class ChatService {
 	// 마지막 채팅, 마지막 채팅 시간, 상대방 닉네임
 	public List<ChatRoomResponse> findChatRoomList(Long memberId) throws JsonProcessingException {
 		// memberId로 페인쏴서 닉네임 받아오기
-		String memberNickname = "";
-		// 채팅방 리스트 불러옴
-		List<ChatRoom> chatRoomList = chatRoomRepository.findByParticipant1NicknameOrParticipant1Nickname(
+		FeignMember feignMember = FeignResponse.extractDataFromResponse(memberClient.getMemberByMemberId(memberId),
+			FeignMember.class);
+		log.info("feignMember: {}", feignMember);
+		String memberNickname = feignMember.getNickname();
+
+		// true 채팅방 리스트 불러옴
+		List<ChatRoom> chatRoomList = chatRoomRepository.findByUser1OrUser2AndIsLiveTrue(
 			memberNickname, memberNickname);
 
-		// 채팅방 리스트의 정보를 통해 마지막 채팅 정보 불러옴
+		log.info("chatRoomList: {}", chatRoomList);
+
+		// 마지막 채팅 메시지 정보를 가져오기
 		Map<Long, ChatMessage> lastChatMessageMap = chatMessageRepository
-			.findByIdIn(
-				chatRoomList.stream()
-					.map(chatRoom -> chatRoom.getLastChatId())
-					.collect(Collectors.toList())
-			).stream()
+			.findByIdIn(chatRoomList.stream()
+				.map(ChatRoom::getLastChatId)
+				.filter(Objects::nonNull) // null이 아닌 lastChatId만 필터링
+				.collect(Collectors.toList()))
+			.stream()
 			.collect(Collectors.toMap(ChatMessage::getTradeId, chatMessage -> chatMessage));
+
+		log.info("lastChatMessageMap: {}", lastChatMessageMap);
 
 		// 채팅방 정보와 마지막 메시지를 조합하여 결과 리스트 생성
 		List<ChatRoomResponse> responseList = chatRoomList.stream().map(chatRoom -> {
-			ChatMessage lastMessage = lastChatMessageMap.get(chatRoom.getLastChatId());
-			String opponentNickname = chatRoom.getParticipant1Nickname().equals(memberNickname)
-				? chatRoom.getParticipant2Nickname() : chatRoom.getParticipant1Nickname();
+			String lastMessageContent = "";
+			LocalDateTime lastMessageCreatedAt = LocalDateTime.now();
+			String userNickname = "";
 
-			// DTO에 상대방 닉네임과 마지막 메시지 내용 설정
-			return new ChatRoomResponse(chatRoom.getTradeId(), opponentNickname, lastMessage.getMessage(),
-				lastMessage.getCreatedAt());
+			if (lastChatMessageMap.containsKey(chatRoom.getTradeId())) {
+				ChatMessage lastMessage = lastChatMessageMap.get(chatRoom.getTradeId());
+				userNickname = lastMessage.getSenderNickname();
+				lastMessageContent = lastMessage.getMessage();
+				lastMessageCreatedAt = lastMessage.getCreatedAt();
+			}
+			return new ChatRoomResponse(chatRoom.getTradeId(), userNickname, lastMessageContent, lastMessageCreatedAt);
 		}).collect(Collectors.toList());
 
 		return responseList;
 	}
 
-	public void existChatRoom(Long tradeId) {
-		ChatRoom chatRoom = chatRoomRepository.findByTradeId(tradeId)
-			.orElseThrow(() -> new BusinessException("존재하지 않는 채팅방입니다."));
-		// if (chatRoom.getDonorId().equals(memberId) || chatRoom.getRequesterId().equals(memberId)) {
-		// 	chatRoom.kill();
-		// 	chatRoomRepository.save(chatRoom);
-		// } else
-		// 	throw new BusinessException("잘못된 접근입니다.");
-	}
-
-	// TODO: member feign
-	// TODO: member feign 이 필요 한지 모르겠음, 프론트에서 구분 가능할 것 같은데
-	public List<ChatMessageResponse> findChatMessageList(long tradeId, long memberId) throws JsonProcessingException {
+	public List<ChatMessageResponse> findChatMessageList(long tradeId) {
 		ChatRoom chatRoom = chatRoomRepository.findByTradeId(tradeId)
 			.orElseThrow(() -> new BusinessException("존재하지 않는 채팅방입니다."));
 
 		// feign
-		String memberNickname = "";
+		// FeignMember feignMember = FeignResponse.extractDataFromResponse(memberClient.getMemberByMemberId(memberId),
+		// 	FeignMember.class);
+		// log.info("feignMember: {}", feignMember);
+		// String memberNickname = feignMember.getNickname();
 
 		return chatMessageRepository.findByTradeId(chatRoom.getTradeId())
 			.stream()
@@ -138,19 +157,4 @@ public class ChatService {
 			.collect(Collectors.toList());
 	}
 
-	// public ChatOpponentResponse findChatOpponent(String chatRoomId, Long memberId) throws JsonProcessingException {
-	// 	ChatRoom chatRoom = chatRoomRepository.findById(new ObjectId(chatRoomId))
-	// 		.orElseThrow(() -> new BusinessException("존재하지 않는 채팅방입니다."));
-	// 	Long opponentId = chatRoom.getOpponent(memberId);
-	// 	FeignMember feignMember = FeignResponse.extractDataFromResponse(memberClient.getMemberInfo(opponentId),
-	// 		FeignMember.class);
-	//
-	// 	return ChatOpponentResponse.builder()
-	// 		.member(Member.builder()
-	// 			.memberId(feignMember.getMemberId())
-	// 			.nickname(feignMember.getNickname())
-	// 			.image(feignMember.getImage())
-	// 			.build())
-	// 		.build();
-	// }
 }

@@ -34,19 +34,10 @@ public class ChatController {
 	private final ChatService chatService;
 
 	@PostMapping("")
-	public ResponseEntity<?> chatRoomCreate(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
-		@RequestHeader("member-id") Long memberId) throws JsonProcessingException {
+	public ResponseEntity<?> chatRoomCreate(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest) {
 		log.info("채팅방 생성 요청: {}", chatRoomCreateRequest);
-		ChatRoomResponse chatRoomResponse = chatService.addChatRoom(chatRoomCreateRequest);
-		return BaseResponse.okWithData(HttpStatus.OK, "채팅방이 생성되었습니다.", chatRoomResponse);
-	}
-
-	@PostMapping("/{tradeId}")
-	public ResponseEntity<?> chatMessageWrite(@PathVariable Long tradeId,
-		@RequestBody ChatMessageWriteRequest chatMessageWriteRequest, @RequestHeader("member-id") Long memberId) {
-		log.info("채팅 입력 요청: {}", chatMessageWriteRequest);
-		chatService.addChatMessage(tradeId, chatMessageWriteRequest);
-		return BaseResponse.ok(HttpStatus.OK, "채팅 입력에 성공했습니다.");
+		chatService.addChatRoom(chatRoomCreateRequest);
+		return BaseResponse.ok(HttpStatus.OK, "채팅방이 생성되었습니다.");
 	}
 
 	@GetMapping("")
@@ -60,23 +51,16 @@ public class ChatController {
 	public ResponseEntity<?> chatMessageList(@PathVariable Long tradeId,
 		@RequestHeader("member-id") Long memberId) throws JsonProcessingException {
 		log.info("채팅 메세지 목록 조회 요청");
-		List<ChatMessageResponse> chatMessageResponseList = chatService.findChatMessageList(tradeId, memberId);
+		List<ChatMessageResponse> chatMessageResponseList = chatService.findChatMessageList(tradeId);
 		return BaseResponse.okWithData(HttpStatus.OK, "채팅 메세지 목록 조회에 성공했습니다.", chatMessageResponseList);
 	}
 
-	//
-	// @GetMapping("/{tradeId}/opponent")
-	// public ResponseEntity<?> chatOpponent(@PathVariable String tradeId,
-	// 	@RequestHeader("member-id") Long memberId) throws
-	// 	JsonProcessingException {
-	// 	ChatOpponentResponse chatOpponentResponse = chatService.findChatOpponent(tradeId, memberId);
-	// 	return BaseResponse.okWithData(HttpStatus.OK, "채팅 상대 조회에 성공했습니다.", chatOpponentResponse);
-	// }
-	//
-	// @PatchMapping("/{chatRoomId}")
-	// public ResponseEntity<?> chatRoomExit(@PathVariable String chatRoomId, @RequestHeader("member-id") Long memberId) {
-	// 	chatService.exitChatRoom(chatRoomId, memberId);
-	// 	return BaseResponse.ok(HttpStatus.OK, "채팅방에서 퇴장했습니다.");
-	// }
-
+	// web socket 에서 처리함
+	@PostMapping("/{tradeId}")
+	public ResponseEntity<?> chatMessageWrite(@PathVariable Long tradeId,
+		@RequestBody ChatMessageWriteRequest chatMessageWriteRequest) {
+		log.info("채팅 입력 요청: {}", chatMessageWriteRequest);
+		chatService.addChatMessage(tradeId, chatMessageWriteRequest);
+		return BaseResponse.ok(HttpStatus.OK, "채팅 입력에 성공했습니다.");
+	}
 }

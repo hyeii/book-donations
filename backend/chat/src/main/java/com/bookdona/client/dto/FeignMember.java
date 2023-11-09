@@ -4,14 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class FeignMember {
-
-	Long memberId;
+	Long id;
+	String oauthId;
+	String address;
 	String nickname;
 	String image;
+	String fcmToken;
+	Integer point;
 }

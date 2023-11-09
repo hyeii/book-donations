@@ -19,6 +19,6 @@ import lombok.ToString;
 public class ChatRoomCreateRequest {
 	@NotNull
 	private Long tradeId;
-	private String senderNickname;
-	private String receiverNickname;
+	private String user1;
+	private String user2;
 }

@@ -19,7 +19,6 @@ public class ChatMessageWriteRequest {
 
 	@NotBlank
 	String message;
+	Long tradeId;
 	String senderNickname;
-	String receiverNickname;
-	LocalDateTime createdAt;
 }

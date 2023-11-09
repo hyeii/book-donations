@@ -14,18 +14,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class ChatRoom {
 
 	@Id
 	private ObjectId id;
 	private Long tradeId;
-	private String participant1Nickname;
-	private String participant2Nickname;
+	private String user1;
+	private String user2;
 	private ObjectId lastChatId;
 	@CreatedDate
 	private LocalDateTime createdAt;

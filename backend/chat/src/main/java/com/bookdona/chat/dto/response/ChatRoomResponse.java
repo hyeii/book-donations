@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ChatRoomResponse {
 
 	private long tradeId;
-	private String opponentNickname;
+	private String userNickname;
 	private String lastMessage;
 	private LocalDateTime lastMessageTime;
 }

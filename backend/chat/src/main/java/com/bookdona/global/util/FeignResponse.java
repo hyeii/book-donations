@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.bookdona.global.response.SuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,19 +19,20 @@ public class FeignResponse {
 	public static <T> T extractDataFromResponse(ResponseEntity<?> responseEntity, Class<T> clazz) throws
 		IllegalArgumentException,
 		JsonProcessingException {
-		HttpStatus status = responseEntity.getStatusCode();
-		log.info("body : {}", responseEntity.getBody());
-		Map<String, Object> objectMap = (HashMap<String, Object>)responseEntity.getBody();
-		log.info("map : {} ", objectMap);
-		boolean success = (boolean)objectMap.get("success");
 
-		// 응답 코드가 2xx가 아니면 오류 던지기
-		if (!success) {
-			String msg = (String)objectMap.get("msg");
-			throw new IllegalArgumentException("API 호출 실패: " + msg);
+		if (responseEntity.getBody() instanceof SuccessResponse) {
+			SuccessResponse successResponse = (SuccessResponse) responseEntity.getBody();
+			log.info("SuccessResponse: {}", successResponse);
+
+			if (!successResponse.isSuccess()) {
+				String msg = successResponse.getMsg();
+				throw new IllegalArgumentException("API 호출 실패: " + msg);
+			}
+
+			T data = objectMapper.convertValue(successResponse.getData(), clazz);
+			return data;
+		} else {
+			throw new IllegalArgumentException("응답이 SuccessResponse 타입이 아닙니다.");
 		}
-
-		Object data = objectMap.get("data");
-		return objectMapper.convertValue(data, clazz);
 	}
 }

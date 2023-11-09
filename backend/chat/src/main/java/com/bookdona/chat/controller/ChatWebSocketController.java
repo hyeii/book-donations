@@ -27,25 +27,27 @@ public class ChatWebSocketController {
 	// 클라이언트에서 /app/chat/{tradeId} 서버로 메시지를 전송
 
 	// TODO: 해당 채팅방 참여 인원 모두에게 callback
-	// TODO: donationId 를 기준으로 채팅방 Id를 동기화 할거임
+	// TODO: tradeId 를 기준으로 채팅방 Id를 동기화 할거임
 	@MessageMapping("/chat/{tradeId}")
 	public void sendChat(@DestinationVariable Long tradeId,
 		@Payload ChatMessageWriteRequest chatMessageWriteRequest) {
 		log.info("{} 방에 채팅 보내기 {}", tradeId, chatMessageWriteRequest);
+		// messaging
+		messagingTemplate.convertAndSend("/sub/chat/" + tradeId, chatMessageWriteRequest);
+		// 채팅 방에 채팅 추가
+		chatService.addChatMessage(tradeId, chatMessageWriteRequest);
 
+		// 알림
 		// 온라인 상태 확인
 		String onlineStatus = redisTemplate.opsForValue()
-			.get("member:" + chatMessageWriteRequest.getReceiverNickname());
+			.get("member:" + chatMessageWriteRequest.getSenderNickname());
 
-		// 온라인일 경우 pub, sender receiver 둘다에게 보냄
 		if ("online".equals(onlineStatus)) {
-			messagingTemplate.convertAndSend("/sub/chat/" + tradeId, chatMessageWriteRequest);
-		} else { // 알림
+			// 온라인일 경우 pub, sender receiver 둘다에게 보냄
+		} else {
 
 		}
 
-		// 채팅 방에 채팅 추가
-		chatService.addChatMessage(tradeId, chatMessageWriteRequest);
 		// 채팅 방의 마지막 채팅 변경
 		// chatService.addChatMessage(tradeId, chatMessageWriteRequest);
 	}

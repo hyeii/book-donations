@@ -15,6 +15,7 @@ import com.bookdone.history.domain.History;
 import com.bookdone.history.dto.response.HistoryResponse;
 import com.bookdone.util.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -174,15 +175,14 @@ public class FindDonationUseCase {
             }
 
             History lastHistory = historyRepository.findLastHistoryByDonationId(donation.getId());
-            BookDto bookDto = bookResponseMap.get(donation.getIsbn());
-            log.info("bookResponseMap {}",bookDto);
-            log.info("title {}",bookDto.getTitle());
-            log.info("titleUrl {}",bookDto.getTitleUrl());
+            ObjectMapper objectMapper = new ObjectMapper();
+            BookDto bookDto = objectMapper.convertValue(bookResponseMap.get(donation.getIsbn()), BookDto.class);
+            
             return DonationMyPageResponse.builder()
                     .donationStatus(donation.getStatus())
                     .id(donation.getId())
-//                    .title(bookResponseMap.get(donation.getIsbn()).getTitle())
-//                    .titleUrl(bookResponseMap.get(donation.getIsbn()).getTitleUrl())
+                    .title(bookDto.getTitle())
+                    .titleUrl(bookDto.getTitleUrl())
                     .historyResponseList(historyResponseList)
                     .donatedAt(lastHistory == null ? donation.getCreatedAt() : lastHistory.getDonatedAt())
                     .build();

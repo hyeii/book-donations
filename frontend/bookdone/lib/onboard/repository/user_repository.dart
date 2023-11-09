@@ -55,7 +55,7 @@ class UserDataRepository {
 
   Future<int> restorePoint() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    int point = pref.getInt('point') ?? 0;
+    int point = pref.getInt('bookmarkCnt') ?? 0;
     return point;
   }
 

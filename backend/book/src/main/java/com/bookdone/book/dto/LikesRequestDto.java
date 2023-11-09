@@ -14,6 +14,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class LikesRequestDto {
-	int localCode;
+	String localCode;
 	String isbn;
 }

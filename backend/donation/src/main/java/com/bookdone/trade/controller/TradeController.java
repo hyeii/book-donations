@@ -67,7 +67,7 @@ public class TradeController {
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
-    @DeleteMapping("{donationId}/members/{memberId}")
+    @DeleteMapping("/{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeRemove(@PathVariable Long donationId, @PathVariable Long memberId) {
         removeTradeUseCase.removeTrade(donationId, memberId);
 
@@ -83,7 +83,7 @@ public class TradeController {
         return BaseResponse.ok(HttpStatus.OK, "거래가 취소되었습니다.");
     }
 
-    @PostMapping("{donationId}/members/{memberId}")
+    @PostMapping("/{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeAdd(@PathVariable Long donationId, @PathVariable Long memberId) {
         Long id = addTradeUseCase.tradeAdd(donationId, memberId);
         return BaseResponse.okWithData(

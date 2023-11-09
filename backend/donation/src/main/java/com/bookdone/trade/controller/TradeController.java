@@ -4,6 +4,7 @@ import com.bookdone.global.dto.BaseResponse;
 import com.bookdone.trade.application.AddTradeUseCase;
 import com.bookdone.trade.application.ModifyTradeUseCase;
 import com.bookdone.trade.application.RemoveTradeUseCase;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,16 @@ public class TradeController {
     private final RemoveTradeUseCase removeTradeUseCase;
     private final AddTradeUseCase addTradeUseCase;
     private final KafkaTemplate<String, String> kafkaTemplate;
+
+    @GetMapping("/test/kafka")
+    public ResponseEntity<?> test() throws JsonProcessingException {
+        Map<String, String> map = new HashMap<>();
+        map.put("memberId", "33");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String payload = objectMapper.writeValueAsString(map);
+        kafkaTemplate.send("reservation-request", payload);
+        return BaseResponse.ok(HttpStatus.OK, "OK");
+    }
 
     @PatchMapping("/{donationId}/members/{memberId}/reservations/request")
     public ResponseEntity<?> tradeChangeToDonationRequested(@PathVariable Long donationId, @PathVariable Long memberId) {

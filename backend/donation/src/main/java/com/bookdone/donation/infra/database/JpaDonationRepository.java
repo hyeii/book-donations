@@ -15,7 +15,7 @@ public interface JpaDonationRepository extends JpaRepository<DonationEntity, Lon
             "FROM DonationEntity d " +
             "WHERE d.isbn = :isbn " +
             "AND d.address LIKE :address% " +
-            "AND d.status = com.bookdone.donation.application.DonationStatus.KEEPING")
+            "AND d.status = com.bookdone.donation.application.DonationStatus.DONATING")
     List<DonationEntity> findAllAddressByIsbnAndAddress(String isbn, String address);
 
     @Query("SELECT new com.bookdone.donation.dto.response.DonationCountResponse(d.address, COUNT(d)) " +

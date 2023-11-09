@@ -134,7 +134,7 @@ public class FindDonationUseCase {
     public List<DonationMyPageResponse> findDonationListByMember(Long memberId) {
         List<Donation> donationList = donationRepository.findAllByMemberId(memberId);
 
-        Map<Long, BookResponse> bookResponseMap = null;
+        Map<String, BookResponse> bookResponseMap = null;
 
         List<String> isbnList = donationList.stream().map(donation -> donation.getIsbn())
                 .collect(Collectors.toList());
@@ -150,7 +150,7 @@ public class FindDonationUseCase {
         return createDonationMyPageResponse(donationList, bookResponseMap);
     }
 
-    public List<DonationMyPageResponse> createDonationMyPageResponse(List<Donation> donationList, Map<Long, BookResponse> bookResponseMap) {
+    public List<DonationMyPageResponse> createDonationMyPageResponse(List<Donation> donationList, Map<String, BookResponse> bookResponseMap) {
         List<DonationMyPageResponse> donationMyPageResponseList = donationList.stream().map(donation -> {
 
             List<History> historyList = historyRepository.findAllByDonationId(donation.getId());

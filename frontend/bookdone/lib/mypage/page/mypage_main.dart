@@ -1,21 +1,18 @@
+import 'package:bookdone/mypage/model/my_book.dart';
 import 'package:bookdone/mypage/widgets/my_donating_list.dart';
 import 'package:bookdone/mypage/widgets/my_keeping_list.dart';
+import 'package:bookdone/onboard/repository/user_repository.dart';
+import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/top/page/top_navigation_bar.dart';
 import 'package:bookdone/widgets/floating_register_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MyPageMain extends StatefulWidget {
-  const MyPageMain({Key? key}) : super(key: key);
+class MyPageMain extends HookConsumerWidget {
+  MyPageMain({Key? key}) : super(key: key);
 
-  @override
-  State<MyPageMain> createState() => _MyPageMainState();
-}
-
-class _MyPageMainState extends State<MyPageMain>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
   final List<Tab> tabs = <Tab>[
     Tab(
       text: '기부 중',
@@ -29,23 +26,48 @@ class _MyPageMainState extends State<MyPageMain>
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      length: tabs.length,
-      vsync: this,
-      initialIndex: 0,
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _tabController =
+        useTabController(initialLength: tabs.length, initialIndex: 0);
+    final restClient = ref.read(restApiClientProvider);
+    var nickname = useState('');
+    var point = useState(0);
+    var donatingBook = useState<List<BookInfo>>([]);
+    var keepingBook = useState<List<BookInfo>>([]);
+    // ref.read(userDataRepositoryProvider).restoreNickname().then((value) => {nickname=value});
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+    // Future<String> getUser() async {
+    //   SharedPreferences pref = await SharedPreferences.getInstance();
+    //   String name = pref.getString('nickname') ?? '';
+    //   return name;
+    // }
+    var repository = ref.read(userDataRepositoryProvider);
+    useEffect(() {
+      repository.restoreNickname().then((name) {
+        nickname.value = name;
+      }).catchError((error) {
+        print(error);
+      });
+      repository.restorePoint().then((value) {
+        point.value = value;
+      }).catchError((error) {
+        print(error);
+      });
+      restClient.getMyBook().then((bookData) {
+        for (var book in bookData.data) {
+          if (book.donationStatus == 'keeping') {
+            keepingBook.value.add(book);
+          } else {
+            if (book.historyResponseList.isNotEmpty) {
+              keepingBook.value.add(book);
+            }
+            donatingBook.value.add(book);
+          }
+        }
+      });
+      return null;
+    }, []);
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -78,8 +100,8 @@ class _MyPageMainState extends State<MyPageMain>
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("000님의 서재"),
-                              Text("책갈피 3개"),
+                              Text("${nickname.value}님의 서재"),
+                              Text("책갈피 ${point.value}개"),
                             ],
                           ),
                         ],
@@ -143,7 +165,9 @@ class _MyPageMainState extends State<MyPageMain>
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
-                  child: MyDonatingList(),
+                  child: MyDonatingList(
+
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(

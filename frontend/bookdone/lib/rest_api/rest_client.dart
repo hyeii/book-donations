@@ -1,6 +1,7 @@
 import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/bookinfo/model/book_comment.dart';
 import 'package:bookdone/bookinfo/model/donation.dart';
+import 'package:bookdone/mypage/model/my_book.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/regist/model/regist_get_data.dart';
 import 'package:bookdone/rest_api/app_dio.dart';
@@ -76,4 +77,7 @@ abstract class RestClient {
     @Part() required bool canDelivery,
     @Part() required List<MultipartFile> images,
   });
+
+  @GET('/api/donations/members/mypage')
+  Future<MyBookData> getMyBook();
 }

@@ -11,6 +11,13 @@ public interface JpaDonationRepository extends JpaRepository<DonationEntity, Lon
     List<DonationEntity> findAllByIsbnAndAddress(String isbn, String address);
     List<DonationEntity> findAllByMemberId(Long memberId);
 
+    @Query("SELECT DonationEntity " +
+            "FROM DonationEntity d " +
+            "WHERE d.isbn = :isbn " +
+            "AND d.address LIKE :address% " +
+            "AND d.status = com.bookdone.donation.application.DonationStatus.KEEPING")
+    List<DonationEntity> findAllAddressByIsbnAndAddress(String isbn, String address);
+
     @Query("SELECT new com.bookdone.donation.dto.response.DonationCountResponse(d.address, COUNT(d)) " +
             "FROM DonationEntity d " +
             "WHERE d.isbn = :isbn " +

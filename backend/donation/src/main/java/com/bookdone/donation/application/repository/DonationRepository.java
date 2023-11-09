@@ -18,4 +18,6 @@ public interface DonationRepository {
     public List<Donation> findAllByIsbnAndAddress(String isbn, String address);
 
     public List<DonationCountResponse> countAllByIsbnAndAddress(String isbn, String address);
+
+    public List<Donation> findAllAddressByIsbnAndAddress(String isbn, String address);
 }

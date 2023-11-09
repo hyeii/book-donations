@@ -53,4 +53,11 @@ public class DonationRepositoryImpl implements DonationRepository {
         return jpaDonationRepository.countAllByIsbnAndAddress(isbn, address.substring(0 , 2));
     }
 
+    @Override
+    public List<Donation> findAllAddressByIsbnAndAddress(String isbn, String address) {
+        List<DonationEntity> donationEntityList = jpaDonationRepository
+                .findAllAddressByIsbnAndAddress(isbn, address.substring(0, 2));
+        return donationEntityList.stream().map(Donation::createDonation).collect(Collectors.toList());
+    }
+
 }

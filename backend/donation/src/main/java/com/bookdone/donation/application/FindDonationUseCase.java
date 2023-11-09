@@ -41,7 +41,11 @@ public class FindDonationUseCase {
     private final BookClient bookClient;
 
     public List<DonationListResponse> findDonationList(String isbn, String address) throws JsonProcessingException {
-        List<Donation> donationList = donationRepository.findAllByIsbnAndAddress(isbn, address);
+        List<Donation> donationList = null;
+        if(isbn.substring(2, 4).equals("00"))
+            donationList = donationRepository.findAllAddressByIsbnAndAddress(isbn, address);
+        else
+            donationList = donationRepository.findAllByIsbnAndAddress(isbn, address);
 
         if (donationList.isEmpty()) return null;
 

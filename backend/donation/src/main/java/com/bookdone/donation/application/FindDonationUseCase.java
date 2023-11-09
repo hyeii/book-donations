@@ -77,6 +77,7 @@ public class FindDonationUseCase {
 
         for (Donation donation : donationList) {
             String nickname = objectMapper.convertValue(nicknameMap.get(donation.getMemberId()), String.class);
+            log.info("id={}", donation.getMemberId());
             log.info("nickname={}", nickname);
 
             DonationListResponse donationListResponse = DonationListResponse

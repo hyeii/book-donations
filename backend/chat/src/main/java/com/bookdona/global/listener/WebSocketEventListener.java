@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class WebSocketEventListener {
 
-	private final KafkaTemplate<String, String> kafkaTemplate;
+	//private final KafkaTemplate<String, String> kafkaTemplate;
 
 	@EventListener
 	public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -29,8 +29,8 @@ public class WebSocketEventListener {
 		log.info("socket disConnection event - user: {}", event.getUser());
 	}
 
-	public void sendMessageToKafka(String userId, String message) {
-		// userId를 키로 사용하여 메시지를 Kafka의 특정 파티션으로 보냄
-		kafkaTemplate.send("topicName", userId, message);
-	}
+	// public void sendMessageToKafka(String userId, String message) {
+	// 	// userId를 키로 사용하여 메시지를 Kafka의 특정 파티션으로 보냄
+	// 	kafkaTemplate.send("topicName", userId, message);
+	// }
 }

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatWebSocketController {
 
 	private final SimpMessagingTemplate messagingTemplate;
-	private final RedisTemplate<String, String> redisTemplate;
+	private final RedisTemplate<String, String> redisTemplate; // 온라인 유저 확인 용도
 	private final ChatService chatService;
 
 	// 클라이언트에서 /app/chat/{tradeId} 서버로 메시지를 전송

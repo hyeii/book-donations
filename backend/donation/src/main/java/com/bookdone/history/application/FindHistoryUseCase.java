@@ -1,7 +1,6 @@
 package com.bookdone.history.application;
 
 import com.bookdone.client.api.MemberClient;
-import com.bookdone.client.dto.MemberResponse;
 import com.bookdone.history.application.repository.HistoryRepository;
 import com.bookdone.history.domain.History;
 import com.bookdone.history.dto.response.HistoryResponse;

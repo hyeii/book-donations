@@ -2,7 +2,7 @@ package com.bookdone.donation.application;
 
 import com.bookdone.client.api.BookClient;
 import com.bookdone.client.api.MemberClient;
-import com.bookdone.client.dto.BookResponse;
+import com.bookdone.client.dto.BookDto;
 import com.bookdone.donation.application.repository.DonationImageRepository;
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -134,7 +133,7 @@ public class FindDonationUseCase {
     public List<DonationMyPageResponse> findDonationListByMember(Long memberId) {
         List<Donation> donationList = donationRepository.findAllByMemberId(memberId);
 
-        Map<String, BookResponse> bookResponseMap = null;
+        Map<String, BookDto> bookResponseMap = null;
 
         List<String> isbnList = donationList.stream().map(donation -> donation.getIsbn())
                 .collect(Collectors.toList());
@@ -150,7 +149,7 @@ public class FindDonationUseCase {
         return createDonationMyPageResponse(donationList, bookResponseMap);
     }
 
-    public List<DonationMyPageResponse> createDonationMyPageResponse(List<Donation> donationList, Map<String, BookResponse> bookResponseMap) {
+    public List<DonationMyPageResponse> createDonationMyPageResponse(List<Donation> donationList, Map<String, BookDto> bookResponseMap) {
         List<DonationMyPageResponse> donationMyPageResponseList = donationList.stream().map(donation -> {
 
             List<History> historyList = historyRepository.findAllByDonationId(donation.getId());

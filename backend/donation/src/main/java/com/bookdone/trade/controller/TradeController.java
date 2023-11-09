@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/trades/donations")
+@RequestMapping("/api/trades/donations")
 public class TradeController {
 
     private final ModifyTradeUseCase modifyTradeUseCase;

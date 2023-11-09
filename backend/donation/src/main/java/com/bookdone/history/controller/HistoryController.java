@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/histories")
+@RequestMapping("/api/histories")
 public class HistoryController {
     private final AddHistoryUseCase addHistoryUseCase;
     private final FindHistoryUseCase findHistoryUseCase;

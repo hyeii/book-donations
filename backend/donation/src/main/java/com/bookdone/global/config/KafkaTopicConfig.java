@@ -35,10 +35,16 @@ public class KafkaTopicConfig {
     public KafkaAdmin.NewTopics topicsBuilder() {
         return new KafkaAdmin.NewTopics(
                 TopicBuilder.name(topicName)
+                        .replicas(3)
+                        .partitions(2)
                         .build(),
                 TopicBuilder.name(topicName2)
+                        .replicas(3)
+                        .partitions(2)
                         .build(),
                 TopicBuilder.name(topicName3)
+                        .replicas(3)
+                        .partitions(2)
                         .build());
     }
 

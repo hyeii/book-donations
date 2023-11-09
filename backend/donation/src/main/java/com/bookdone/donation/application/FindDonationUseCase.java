@@ -174,7 +174,10 @@ public class FindDonationUseCase {
             }
 
             History lastHistory = historyRepository.findLastHistoryByDonationId(donation.getId());
-            log.info("bookResponseMap {}",bookResponseMap.get(donation.getIsbn()));
+            BookDto bookDto = bookResponseMap.get(donation.getIsbn());
+            log.info("bookResponseMap {}",bookDto);
+            log.info("title {}",bookDto.getTitle());
+            log.info("titleUrl {}",bookDto.getTitleUrl());
             return DonationMyPageResponse.builder()
                     .donationStatus(donation.getStatus())
                     .id(donation.getId())

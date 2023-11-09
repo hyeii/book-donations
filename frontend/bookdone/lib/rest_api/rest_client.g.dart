@@ -402,7 +402,7 @@ class _RestClient implements RestClient {
     return value;
   }
 
-@override
+  @override
   Future<MyBookData> getMyBook() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -428,7 +428,6 @@ class _RestClient implements RestClient {
     final value = MyBookData.fromJson(_result.data!);
     return value;
   }
-
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&

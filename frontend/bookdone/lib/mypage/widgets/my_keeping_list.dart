@@ -1,27 +1,19 @@
+import 'package:bookdone/mypage/model/my_book.dart';
 import 'package:bookdone/mypage/widgets/book_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class MyKeepingList extends StatefulWidget {
-  const MyKeepingList({super.key});
+class MyKeepingList extends HookWidget {
+  const MyKeepingList({super.key, required this.keepingList});
+  final List<BookInfo> keepingList;
 
-  @override
-  State<MyKeepingList> createState() => _MyKeepingListState();
-}
-
-class _MyKeepingListState extends State<MyKeepingList> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        BookCard(),
-        BookCard(),
-        BookCard(),
-        BookCard(),
-        BookCard(),
-        BookCard(),
-        BookCard(),
-        BookCard(),
-      ],
+    return ListView.builder(
+      itemCount: keepingList.length,
+      itemBuilder: (context, index) {
+        return BookCard(book: keepingList[index]);
+      },
     );
   }
 }

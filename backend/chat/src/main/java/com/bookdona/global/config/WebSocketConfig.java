@@ -45,6 +45,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 					WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 					String memberId = request.getHeaders().getFirst("member-id");
 					if (memberId != null) {
+						log.info("웹 소켓 세션이 사용자를 인식함: {}", memberId);
 						redisTemplate.opsForValue().set("member:" + memberId, "online"); // redis 에 유저 정보 저장
 						attributes.put("member-id", memberId);
 					}

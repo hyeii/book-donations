@@ -7,20 +7,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class WebSocketEventListener {
 
-	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
+	private final KafkaTemplate<String, String> kafkaTemplate;
 
 	@EventListener
 	public void handleWebSocketConnectListener(SessionConnectedEvent event) {
 		// WebSocket 연결 시 작업
+		log.info("socket connection event - user: {}", event.getUser());
 	}
 
 	@EventListener
 	public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
 		// WebSocket 연결 끊김 시 작업
+		log.info("socket disConnection event - user: {}", event.getUser());
 	}
 
 	public void sendMessageToKafka(String userId, String message) {

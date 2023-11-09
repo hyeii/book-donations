@@ -46,10 +46,19 @@ public class S3Uploader {
             case "jpeg":
                 contentType = "image/jpeg";
                 break;
+            case "JPEG":
+                contentType = "image/jpeg";
+                break;
             case "png":
                 contentType = "image/png";
                 break;
+            case "PNG":
+                contentType = "image/png";
+                break;
             case "jpg":
+                contentType = "image/jpg";
+                break;
+            case "JPG":
                 contentType = "image/jpg";
                 break;
             default:

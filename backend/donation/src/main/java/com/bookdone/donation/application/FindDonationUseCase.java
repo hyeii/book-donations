@@ -177,7 +177,7 @@ public class FindDonationUseCase {
             History lastHistory = historyRepository.findLastHistoryByDonationId(donation.getId());
             ObjectMapper objectMapper = new ObjectMapper();
             BookDto bookDto = objectMapper.convertValue(bookResponseMap.get(donation.getIsbn()), BookDto.class);
-            
+
             return DonationMyPageResponse.builder()
                     .donationStatus(donation.getStatus())
                     .id(donation.getId())

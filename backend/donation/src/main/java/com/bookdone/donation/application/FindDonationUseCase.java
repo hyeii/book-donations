@@ -17,6 +17,7 @@ import com.bookdone.util.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class FindDonationUseCase {
 
     private final DonationRepository donationRepository;
@@ -160,7 +162,6 @@ public class FindDonationUseCase {
 
             try {
                 Map<Long, String> nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
-                System.out.println("여기만 들어오면");
                 historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                         .content(history.getContent())
                         .nickname(nicknameMap.get(history.getMemberId()))
@@ -173,7 +174,7 @@ public class FindDonationUseCase {
             }
 
             History lastHistory = historyRepository.findLastHistoryByDonationId(donation.getId());
-
+            log.info("bookResponseMap {}",bookResponseMap.get(donation.getIsbn()));
             return DonationMyPageResponse.builder()
                     .donationStatus(donation.getStatus())
                     .id(donation.getId())

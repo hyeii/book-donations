@@ -1,14 +1,11 @@
 package com.bookdone.trade.controller;
 
 import com.bookdone.global.dto.BaseResponse;
-<<<<<<< HEAD
 import com.bookdone.trade.application.*;
-=======
 import com.bookdone.trade.application.AddTradeUseCase;
 import com.bookdone.trade.application.ModifyTradeUseCase;
 import com.bookdone.trade.application.RemoveTradeUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
->>>>>>> 8baf3e74b4a77bdf5c1dfa55bc86a1fd06f520ca
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +20,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/trades/donations")
-<<<<<<< HEAD
-=======
 @Slf4j
->>>>>>> 8baf3e74b4a77bdf5c1dfa55bc86a1fd06f520ca
 public class TradeController {
 
     private final ModifyTradeUseCase modifyTradeUseCase;

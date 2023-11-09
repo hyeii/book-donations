@@ -25,6 +25,7 @@ List<RouteBase> get $appRoutes => [
       $registerRoute,
       $registerExistRoute,
       $registerNewRoute,
+      $historyRoute,
     ];
 
 RouteBase get $topPageRoute => GoRouteData.$route(
@@ -442,6 +443,33 @@ extension $RegisterNewRouteExtension on RegisterNewRoute {
 
   String get location => GoRouteData.$location(
         '/registnew',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $historyRoute => GoRouteData.$route(
+      path: '/historymain',
+      factory: $HistoryRouteExtension._fromState,
+    );
+
+extension $HistoryRouteExtension on HistoryRoute {
+  static HistoryRoute _fromState(GoRouterState state) => HistoryRoute(
+        donationId: int.parse(state.uri.queryParameters['donation-id']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/historymain',
+        queryParams: {
+          'donation-id': donationId.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location);

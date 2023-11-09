@@ -31,7 +31,7 @@ _$ArticleDataImpl _$$ArticleDataImplFromJson(Map<String, dynamic> json) =>
       content: json['content'] as String,
       canDelivery: json['canDelivery'] as bool,
       historyResponse: (json['historyResponse'] as List<dynamic>?)
-          ?.map((e) => HistoryResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => HistoryData.fromJson(e as Map<String, dynamic>))
           .toList(),
       imageUrlList: (json['imageUrlList'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -50,18 +50,32 @@ Map<String, dynamic> _$$ArticleDataImplToJson(_$ArticleDataImpl instance) =>
       'imageUrlList': instance.imageUrlList,
     };
 
-_$HistoryResponseImpl _$$HistoryResponseImplFromJson(
-        Map<String, dynamic> json) =>
-    _$HistoryResponseImpl(
+_$HistoryDataImpl _$$HistoryDataImplFromJson(Map<String, dynamic> json) =>
+    _$HistoryDataImpl(
       content: json['content'] as String,
       nickname: json['nickname'] as String,
       createdAt: json['createdAt'] as String,
     );
 
-Map<String, dynamic> _$$HistoryResponseImplToJson(
-        _$HistoryResponseImpl instance) =>
+Map<String, dynamic> _$$HistoryDataImplToJson(_$HistoryDataImpl instance) =>
     <String, dynamic>{
       'content': instance.content,
       'nickname': instance.nickname,
       'createdAt': instance.createdAt,
+    };
+
+_$HistoryRespImpl _$$HistoryRespImplFromJson(Map<String, dynamic> json) =>
+    _$HistoryRespImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => HistoryData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$HistoryRespImplToJson(_$HistoryRespImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
     };

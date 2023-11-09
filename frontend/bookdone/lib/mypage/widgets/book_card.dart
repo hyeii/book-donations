@@ -1,4 +1,5 @@
 import 'package:bookdone/mypage/model/my_book.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -58,6 +59,7 @@ class BookCard extends HookWidget {
                         child: TextButton(
                           onPressed: () {
                             // TODO: 히스토리 작성 팝업? 페이지?
+                            HistoryRoute(donationId: book.id).push(context);
                           },
                           style: TextButton.styleFrom(
                             minimumSize: Size.zero,

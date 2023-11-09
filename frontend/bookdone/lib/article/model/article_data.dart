@@ -24,7 +24,7 @@ class ArticleData with _$ArticleData {
     required String address,
     required String content,
     required bool canDelivery,
-    List<HistoryResponse>? historyResponse,
+    List<HistoryData>? historyResponse,
     List<String>? imageUrlList,
   }) = _ArticleData;
 
@@ -33,13 +33,25 @@ class ArticleData with _$ArticleData {
 }
 
 @freezed
-class HistoryResponse with _$HistoryResponse {
-  const factory HistoryResponse({
+class HistoryData with _$HistoryData {
+  const factory HistoryData({
     required String content,
     required String nickname,
     required String createdAt,
-  }) = _HistoryResponse;
+  }) = _HistoryData;
 
-  factory HistoryResponse.fromJson(Map<String, dynamic> json) =>
-      _$HistoryResponseFromJson(json);
+  factory HistoryData.fromJson(Map<String, dynamic> json) =>
+      _$HistoryDataFromJson(json);
+}
+
+@freezed
+class HistoryResp with _$HistoryResp {
+  const factory HistoryResp({
+    required bool success,
+    required String msg,
+    List<HistoryData>? data,
+  }) = _HistoryResp;
+
+  factory HistoryResp.fromJson(Map<String, dynamic> json) =>
+      _$HistoryRespFromJson(json);
 }

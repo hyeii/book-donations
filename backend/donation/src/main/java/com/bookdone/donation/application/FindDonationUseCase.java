@@ -160,6 +160,7 @@ public class FindDonationUseCase {
 
             try {
                 Map<Long, String> nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
+                System.out.println("여기만 들어오면");
                 historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                         .content(history.getContent())
                         .nickname(nicknameMap.get(history.getMemberId()))
@@ -176,8 +177,8 @@ public class FindDonationUseCase {
             return DonationMyPageResponse.builder()
                     .donationStatus(donation.getStatus())
                     .id(donation.getId())
-                    .title(bookResponseMap.get(donation.getIsbn()).getTitle())
-                    .titleUrl(bookResponseMap.get(donation.getIsbn()).getTitleUrl())
+//                    .title(bookResponseMap.get(donation.getIsbn()).getTitle())
+//                    .titleUrl(bookResponseMap.get(donation.getIsbn()).getTitleUrl())
                     .historyResponseList(historyResponseList)
                     .donatedAt(lastHistory == null ? donation.getCreatedAt() : lastHistory.getDonatedAt())
                     .build();

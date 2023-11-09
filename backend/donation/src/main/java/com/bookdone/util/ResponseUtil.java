@@ -34,6 +34,7 @@ public class ResponseUtil {
         }
 
         Object data = objectMap.get("data");
+        log.info("data {}",data);
         return objectMapper.convertValue(data, clazz);
     }
 }

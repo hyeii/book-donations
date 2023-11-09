@@ -15,7 +15,7 @@ Future<Dio> authDio(BuildContext context) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     // String? accessToken = pref.getString("accessToken");
     String accessToken =
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiaXNzIjoiYm9va2RvbmUuY29tIiwiZXhwIjoxNjk5Mjc4MzIxLCJpYXQiOjE2OTkwOTgzMjF9.zLYgXeapvsaJGpvVFA-5H_6KXNJ2C7tgkwsi3-QyFYG_JnPFfnIhyT0y-b9n9oJzeeqJc_B8VnUrOPXUIn7UMA';
+        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNCIsImlzcyI6ImJvb2tkb25lLmNvbSIsImV4cCI6MTY5OTQzMjEyMiwiaWF0IjoxNjk5MjUyMTIyfQ.4Lzq_wVT1AwcRQOrfRjBKLVj-gakHFi6hH5LddWmNeN6Iyn64xqXzJmyR0xyU0d94k6OPVYrJul3e_OPYmepUg';
 
     // 매 요청마다 헤더에 AccessToken을 포함
     options.headers['Authorization'] = accessToken;

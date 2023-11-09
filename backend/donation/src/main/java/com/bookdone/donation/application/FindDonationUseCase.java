@@ -70,11 +70,15 @@ public class FindDonationUseCase {
     public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, String> nicknameMap) {
         List<DonationListResponse> donationListResponseList = new ArrayList<>();
 
+        ObjectMapper objectMapper = new ObjectMapper();
+
         for (Donation donation : donationList) {
+            String nickname = objectMapper.convertValue(nicknameMap.get(donation.getMemberId()), String.class);
+
             DonationListResponse donationListResponse = DonationListResponse
                     .builder()
                     .id(donation.getId())
-                    .nickname(nicknameMap.get(donation.getMemberId()))
+                    .nickname(nickname)
                     .historyCount(historyRepository.countAllByDonationId(donation.getId()))
                     .address(donation.getAddress())
                     .createdAt(donation.getCreatedAt())

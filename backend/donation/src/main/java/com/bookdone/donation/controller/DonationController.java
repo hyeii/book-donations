@@ -4,16 +4,21 @@ import com.bookdone.donation.application.AddDonationUseCase;
 import com.bookdone.donation.application.FindDonationUseCase;
 import com.bookdone.donation.application.ModifyDonationUseCase;
 import com.bookdone.donation.dto.request.DonationAddRequest;
+import com.bookdone.donation.dto.response.DonationMyPageResponse;
 import com.bookdone.global.dto.BaseResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/donations")
+@Slf4j
 public class DonationController {
 
     private final AddDonationUseCase addDonationUseCase;
@@ -27,7 +32,11 @@ public class DonationController {
 
     @GetMapping("/members/mypage")
     public ResponseEntity<?> donationListByMember(@RequestHeader("member-id") Long memberId) {
-        return BaseResponse.okWithData(HttpStatus.OK, "보유중 목록이 조회되었습니다.", findDonationUseCase.findDonationListByMember(memberId));
+        List<DonationMyPageResponse> donationListByMember = findDonationUseCase.findDonationListByMember(memberId);
+        for (DonationMyPageResponse donationMyPageResponse : donationListByMember) {
+            log.info("done: {}",donationMyPageResponse);
+        }
+        return BaseResponse.okWithData(HttpStatus.OK, "보유중 목록이 조회되었습니다.", donationListByMember);
     }
 
     @GetMapping("/{donationId}")

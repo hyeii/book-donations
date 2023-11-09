@@ -42,4 +42,11 @@ public class TradeRepositoryImpl implements TradeRepository {
         jpaTradeRepository.delete(tradeEntity);
     }
 
+    @Override
+    public TradeStatus findTradeByDonationIdAndMemberId(Long donationId, Long memberId) {
+        TradeEntity tradeEntity = jpaTradeRepository.findByDonationIdAndMemberId(donationId, memberId)
+                .orElseThrow(() -> new IllegalArgumentException("도네이션이 존재하지 않습니다."));
+        return tradeEntity.getTradeStatus();
+    }
+
 }

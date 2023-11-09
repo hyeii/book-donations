@@ -1,9 +1,7 @@
 package com.bookdone.trade.controller;
 
 import com.bookdone.global.dto.BaseResponse;
-import com.bookdone.trade.application.AddTradeUseCase;
-import com.bookdone.trade.application.ModifyTradeUseCase;
-import com.bookdone.trade.application.RemoveTradeUseCase;
+import com.bookdone.trade.application.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,13 +14,21 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/trades/donations")
+@RequestMapping("/api/trades/donations")
 public class TradeController {
 
     private final ModifyTradeUseCase modifyTradeUseCase;
     private final RemoveTradeUseCase removeTradeUseCase;
     private final AddTradeUseCase addTradeUseCase;
     private final KafkaTemplate<String, String> kafkaTemplate;
+    private final FindTradeUseCase findTradeUseCase;
+
+    @GetMapping("/{donationId}/members/{memberId}/reservations/confirm")
+    public ResponseEntity<?> tradeDetails(@PathVariable Long donationId, @PathVariable Long memberId) {
+        TradeStatus tradeStatus = findTradeUseCase.findTradeStatus(donationId, memberId);
+
+        return BaseResponse.okWithData(HttpStatus.OK, "거래 상태가 조회되었습니다.", tradeStatus);
+    }
 
     @PatchMapping("/{donationId}/members/{memberId}/reservations/request")
     public ResponseEntity<?> tradeChangeToDonationRequested(@PathVariable Long donationId, @PathVariable Long memberId) {

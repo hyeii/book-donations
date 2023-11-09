@@ -7,6 +7,7 @@ import com.bookdone.trade.application.RemoveTradeUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/trades/donations")
+@Slf4j
 public class TradeController {
 
     private final ModifyTradeUseCase modifyTradeUseCase;
@@ -31,6 +33,7 @@ public class TradeController {
         map.put("memberId", "33");
         ObjectMapper objectMapper = new ObjectMapper();
         String payload = objectMapper.writeValueAsString(map);
+        log.info("payload = {}", payload);
         kafkaTemplate.send("reservation-request", payload);
         return BaseResponse.ok(HttpStatus.OK, "OK");
     }

@@ -1,4 +1,5 @@
 import 'package:bookdone/regist/service/scan_barcode.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
@@ -36,7 +37,7 @@ class FloatingRegisterBtn extends HookConsumerWidget {
             labelBackgroundColor: Colors.brown.shade400,
             onTap: () async {
               ref.read(getIsbnProvider.notifier).scanBarcodeNormal();
-              await context.pushNamed('registexist');
+              await RegisterExistRoute().push(context);
             }),
         SpeedDialChild(
           shape: CircleBorder(),
@@ -52,7 +53,7 @@ class FloatingRegisterBtn extends HookConsumerWidget {
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
           onTap: () async {
             ref.read(getIsbnProvider.notifier).scanBarcodeNormal();
-            await context.pushNamed('registnew');
+            await RegisterNewRoute().push(context);
           },
         ),
       ],

@@ -1,19 +1,47 @@
+import 'package:bookdone/article/model/article_data.dart';
+import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ArticleMain extends HookWidget {
-  const ArticleMain({super.key});
+class ArticleMain extends HookConsumerWidget {
+  const ArticleMain({super.key, required this.isbn, required this.id});
+  final String isbn;
+  final int id;
 
   @override
-  Widget build(BuildContext context) {
-    final title = useState('바다가 들리는 편의점');
-    final historyCount = useState(0);
-    final donatorComment = useState('책 깨끗해용 재미써용');
-    final author = useState('저자이름');
-    final publisher = useState('출판사');
+  Widget build(BuildContext context, WidgetRef ref) {
     final pubDate = useState('2028년 13월 32일');
     final discription = useState('기타 책 관련 설명');
+    final restClient = ref.read(restApiClientProvider);
+    final articleData = useState<ArticleData?>(null);
+    final bookData = useState<BookData?>(null);
+
+    Future<ArticleData> getArticleInfo() async {
+      ArticleRespByid data = await restClient.getArticleById(id);
+      ArticleData articleInfo = data.data;
+      return articleInfo;
+    }
+
+    Future<BookData> getBookInfo() async {
+      BookDetail data = await restClient.getDetailBook(isbn);
+      BookData bookInfo = data.data;
+      return bookInfo;
+    }
+
+    useEffect(() {
+      getArticleInfo().then((articleInfo) {
+        articleData.value = articleInfo;
+      }).catchError((error) {
+        print(error);
+      });
+      getBookInfo().then((bookInfo) {
+        bookData.value = bookInfo;
+      });
+      return null;
+    }, []);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,21 +63,15 @@ class ArticleMain extends HookWidget {
               children: [
                 CachedNetworkImage(
                   width: 200,
-                  imageUrl:
-                      "https://image.aladin.co.kr/product/32129/40/cover500/8954695051_1.jpg",
+                  imageUrl: bookData.value!.titleUrl,
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
-
-                // Image(
-                //   image: AssetImage("assets/images/samplebookcover.jpg"),
-                //   width: 200,
-                // ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
-                  title.value,
+                  bookData.value!.title,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Padding(
@@ -61,9 +83,11 @@ class ArticleMain extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        '${historyCount.value}개의 히스토리',
-                      ),
+                      articleData.value!.historyResponse != null
+                          ? Text(
+                              '${articleData.value!.historyResponse!.length}개의 히스토리',
+                            )
+                          : Text('히스토리가 없습니다'),
                       SizedBox(
                         height: 20,
                       ),
@@ -76,7 +100,7 @@ class ArticleMain extends HookWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        donatorComment.value,
+                        articleData.value!.content,
                       ),
                       SizedBox(
                         height: 20,
@@ -90,10 +114,10 @@ class ArticleMain extends HookWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '${author.value} 지음',
+                        bookData.value!.author,
                       ),
                       Text(
-                        publisher.value,
+                        bookData.value!.publisher,
                       ),
                       Text(
                         pubDate.value,

@@ -1,3 +1,4 @@
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,8 +11,8 @@ class AutocompleteList extends HookWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: 55,
-      right: 20,
-      left: 20,
+      right: 0,
+      left: 0,
       child: Container(
         decoration: BoxDecoration(color: Colors.white),
         child: Column(
@@ -20,16 +21,18 @@ class AutocompleteList extends HookWidget {
             return GestureDetector(
               onTap: () {
                 // TODO: 검색으로 isbn 넘기기
-                print('잘 눌려용');
+                BookinfoMainRoute(isbn: item.isbn).push(context);
+                // print('잘 눌려용');
               },
               child: Container(
                 decoration: BoxDecoration(color: Colors.white),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Text(
                     item.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
               ),

@@ -8,8 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentInput extends HookConsumerWidget {
-  const CommentInput({super.key, required this.isbn});
+  const CommentInput({super.key, required this.isbn, required this.nickname});
   final String isbn;
+  final String nickname;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,12 +21,19 @@ class CommentInput extends HookConsumerWidget {
     var commentController = useTextEditingController();
     // final getUserData = ref.read(userDataRepositoryProvider).restoreNickname();
 
-    Future<void> getUser() async {
+    Future<String> getUser() async {
       SharedPreferences pref = await SharedPreferences.getInstance();
-      userNickname.value = pref.getString('nickname') ?? '';
-      print(userNickname.value);
-      print(isbn);
+      return pref.getString('nickname') ?? '';
     }
+
+    useEffect(() {
+      getUser().then((name) {
+        userNickname.value = name;
+      }).catchError((error) {
+        print(error);
+      });
+      return null;
+    }, []);
 
     // void _tryValidation() {
     //   final isValid = _formKey.currentState!.validate();
@@ -60,14 +68,14 @@ class CommentInput extends HookConsumerWidget {
         ),
         if (commentValidate.value == -1) Text('댓글을 입력해주세요'),
         ElevatedButton(
-          onPressed: () async {
+          onPressed: () {
             if (comment.value == '') {
               commentValidate.value = -1;
               return;
             } else {
-              getUser();
               // _tryValidation();
-              await ref.read(restApiClientProvider).postComment({
+              // print(nickname);
+              ref.read(restApiClientProvider).postComment({
                 "isbn": isbn,
                 "writer": userNickname.value,
                 "review": comment.value,

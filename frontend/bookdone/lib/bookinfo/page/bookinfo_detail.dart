@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bookdone/bookinfo/model/donation.dart';
 import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/bookinfo/widgets/donating_list.dart';
 import 'package:bookdone/bookinfo/widgets/keeping_list.dart';
@@ -47,6 +48,8 @@ class BookinfoDetail extends HookConsumerWidget {
     var regionList = useState<List<RegionInfo>>([]);
     var selectedRegionIndex = useState(0);
     var selectedRegionCode = useState('');
+    var donatingList = useState<List<DonationByRegion>>([]);
+    var keepingList = useState<List<KeepingBookData>>([]);
 
     Future<void> readJson() async {
       final jsonString =
@@ -58,105 +61,129 @@ class BookinfoDetail extends HookConsumerWidget {
       // regionList.value = List<Region>.from(data['region']);
     }
 
-    void selectAddress(context) {
+    Future<List<DonationByRegion>?> getDonationList() async {
+      DonationByRegionData data =
+          await restClient.getDonationByRegion(isbn, selectedRegionCode.value);
+      return data.data;
+    }
+
+    Future<List<KeepingBookData>?> getKeepingCnt() async {
+      KeepingBookByRegion data = await restClient.getKeepingCntByRegion(
+          isbn, selectedRegionCode.value);
+      return data.data;
+    }
+
+    useEffect(() {
+      getDonationList().then((data) {
+        donatingList.value = data!;
+      }).catchError((error) {
+        print(error);
+      });
+      getKeepingCnt().then((data) {
+        keepingList.value = data!;
+      });
+      return null;
+    }, []);
+
+    Future<void> selectAddress(context) async {
       showDialog(
         context: context,
         builder: (context) {
-          // readJson();
-          return StatefulBuilder(builder: (context, setState) {
-            return Dialog(
-              child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        "지역을 선택해주세요",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: regionList.value.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                selectedRegionIndex.value = index;
-                                selectedRegionCode.value =
-                                    regionList.value[index].first;
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Container(
-                                  decoration: selectedRegionIndex.value == index
-                                      ? BoxDecoration(
-                                          color: Colors.brown.shade300,
-                                          borderRadius:
-                                              BorderRadius.circular(10))
-                                      : BoxDecoration(color: Colors.white),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 4.0, bottom: 4.0),
-                                    child: Center(
-                                      child: Text(
-                                        regionList.value[index].first,
-                                        style: TextStyle(
-                                            color: selectedRegionIndex.value ==
-                                                    index
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight:
-                                                selectedRegionIndex.value ==
-                                                        index
-                                                    ? FontWeight.bold
-                                                    : FontWeight.normal),
-                                      ),
+          return Dialog(
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      "지역을 선택해주세요",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: regionList.value.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              selectedRegionIndex.value = index;
+                              selectedRegionCode.value =
+                                  regionList.value[index].first;
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Container(
+                                decoration: selectedRegionIndex.value == index
+                                    ? BoxDecoration(
+                                        color: Colors.brown.shade300,
+                                        borderRadius: BorderRadius.circular(10))
+                                    : BoxDecoration(color: Colors.white),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 4.0, bottom: 4.0),
+                                  child: Center(
+                                    child: Text(
+                                      regionList.value[index].first,
+                                      style: TextStyle(
+                                          color:
+                                              selectedRegionIndex.value == index
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                          fontWeight:
+                                              selectedRegionIndex.value == index
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal),
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // TODO: 지역코드 서버로 보내기
-                            selectedRegionCode.value = regionNow;
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          // TODO: 지역코드 서버로 보내기
+                          // ref
+                          //     .read(regionStateProvider.notifier)
+                          //     .setRegion(selectedRegionCode.value);
+                          // selectedRegionCode.value = regionNow;
+                          // DonationByRegionData data = await restClient
+                          //     .getDonationByRegion(isbn, "1100");
 
-                            Navigator.of(context).pop();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            backgroundColor: Colors.brown.shade200,
-                            foregroundColor: Colors.white,
-                          ),
-                          child: Text(
-                            "완료",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                          // Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          backgroundColor: Colors.brown.shade200,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          "완료",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            );
-          });
+            ),
+          );
         },
       );
     }
@@ -295,68 +322,6 @@ class BookinfoDetail extends HookConsumerWidget {
                             ),
                           );
                         }),
-                    // Container(
-                    //   width: double.infinity,
-                    //   height: 120,
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.grey.shade200,
-                    //     borderRadius: BorderRadius.circular(20.0),
-                    //   ),
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                    //     child: Row(
-                    //       children: [
-                    //         SizedBox(
-                    //           width: 20,
-                    //         ),
-                    //         ClipRRect(
-                    //           borderRadius: BorderRadius.circular(15.0),
-                    //           child: CachedNetworkImage(
-                    //             width: 80,
-                    //             height: 80,
-                    //             fit: BoxFit.cover,
-                    //             alignment: Alignment.topCenter,
-                    //             imageUrl:
-                    //                 "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg",
-                    //             placeholder: (context, url) =>
-                    //                 CircularProgressIndicator(),
-                    //             errorWidget: (context, url, error) =>
-                    //                 Icon(Icons.error),
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           width: 20,
-                    //         ),
-                    //         Flexible(
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.only(
-                    //                 top: 10.0, bottom: 10.0),
-                    //             child: Column(
-                    //               crossAxisAlignment: CrossAxisAlignment.start,
-                    //               mainAxisAlignment:
-                    //                   MainAxisAlignment.spaceBetween,
-                    //               children: [
-                    //                 Text(
-                    //                   "방금 떠나온 세계",
-                    //                   style: TextStyle(
-                    //                       fontWeight: FontWeight.bold),
-                    //                 ),
-                    //                 Text(
-                    //                   "김초엽 지음",
-                    //                   style: TextStyle(
-                    //                       color: Colors.grey.shade600),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         SizedBox(
-                    //           width: 20,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 10,
                     ),
@@ -382,12 +347,19 @@ class BookinfoDetail extends HookConsumerWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width / 12),
-                      child: DonatingList(),
+                      child: DonatingList(
+                        isbn: isbn,
+                        donateList: donatingList.value,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width / 12),
-                      child: KeepingList(),
+                      child: KeepingList(
+                          isbn: isbn,
+                          regionIndex: selectedRegionIndex.value,
+                          keepingList: keepingList.value,
+                          regionList: regionList.value),
                     ),
                   ],
                 ),

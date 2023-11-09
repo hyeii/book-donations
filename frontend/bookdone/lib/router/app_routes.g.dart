@@ -336,11 +336,17 @@ RouteBase get $articleMainRoute => GoRouteData.$route(
     );
 
 extension $ArticleMainRouteExtension on ArticleMainRoute {
-  static ArticleMainRoute _fromState(GoRouterState state) =>
-      const ArticleMainRoute();
+  static ArticleMainRoute _fromState(GoRouterState state) => ArticleMainRoute(
+        isbn: state.uri.queryParameters['isbn']!,
+        id: int.parse(state.uri.queryParameters['id']!),
+      );
 
   String get location => GoRouteData.$location(
         '/articlemain',
+        queryParams: {
+          'isbn': isbn,
+          'id': id.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -381,10 +387,15 @@ RouteBase get $registerRoute => GoRouteData.$route(
     );
 
 extension $RegisterRouteExtension on RegisterRoute {
-  static RegisterRoute _fromState(GoRouterState state) => const RegisterRoute();
+  static RegisterRoute _fromState(GoRouterState state) => RegisterRoute(
+        isbn: state.uri.queryParameters['isbn']!,
+      );
 
   String get location => GoRouteData.$location(
         '/regist',
+        queryParams: {
+          'isbn': isbn,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

@@ -231,6 +231,178 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<DonationByRegionData> getDonationByRegion(
+    String isbn,
+    String address,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'isbn': isbn,
+      r'address': address,
+    };
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DonationByRegionData>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/donations',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = DonationByRegionData.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ArticleRespByid> getArticleById(int donationId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ArticleRespByid>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/donations/${donationId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ArticleRespByid.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<KeepingBookByRegion> getKeepingCntByRegion(
+    String isbn,
+    String address,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'isbn': isbn,
+      r'address': address,
+    };
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<KeepingBookByRegion>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/donations/address',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = KeepingBookByRegion.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BooksLikeResp> setBooksLikes(Map<String, dynamic> map) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(map);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BooksLikeResp>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/books/likes',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = BooksLikeResp.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<RegisterResponse> registArticle({
+    required String isbn,
+    required String address,
+    required String content,
+    required bool canDelivery,
+    required List<MultipartFile> images,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'isbn',
+      isbn,
+    ));
+    _data.fields.add(MapEntry(
+      'address',
+      address,
+    ));
+    _data.fields.add(MapEntry(
+      'content',
+      content,
+    ));
+    _data.fields.add(MapEntry(
+      'canDelivery',
+      canDelivery.toString(),
+    ));
+    _data.files.addAll(images.map((i) => MapEntry('images', i)));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<RegisterResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+            .compose(
+              _dio.options,
+              '/api/donations',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RegisterResponse.fromJson(_result.data!);
+    return value;
+  }
+
+@override
   Future<MyBookData> getMyBook() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -256,6 +428,7 @@ class _RestClient implements RestClient {
     final value = MyBookData.fromJson(_result.data!);
     return value;
   }
+
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&

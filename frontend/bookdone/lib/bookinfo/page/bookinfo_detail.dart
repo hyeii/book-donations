@@ -24,8 +24,32 @@ class RegionNotifier extends StateNotifier<String> {
   }
 }
 
+class RegionCodeNotifier extends StateNotifier<String> {
+  RegionCodeNotifier(this.ref) : super('유저정보주소');
+
+  final Ref ref;
+  Future<void> setRegionCode(String region) async {
+    state = region;
+  }
+}
+
+class RegionIndexNotifier extends StateNotifier<int> {
+  RegionIndexNotifier(this.ref) : super(0);
+
+  final Ref ref;
+  Future<void> setIndex(int index) async {
+    state = index;
+  }
+}
+
+final regionIndexStateProvider =
+    StateNotifierProvider<RegionIndexNotifier, int>(
+        (ref) => RegionIndexNotifier(ref));
 final regionStateProvider =
     StateNotifierProvider<RegionNotifier, String>((ref) => RegionNotifier(ref));
+final regionCodeStateProvider =
+    StateNotifierProvider<RegionCodeNotifier, String>(
+        (ref) => RegionCodeNotifier(ref));
 
 class BookinfoDetail extends HookConsumerWidget {
   BookinfoDetail({super.key, required this.isbn});
@@ -51,14 +75,16 @@ class BookinfoDetail extends HookConsumerWidget {
     var donatingList = useState<List<DonationByRegion>>([]);
     var keepingList = useState<List<KeepingBookData>>([]);
 
-    Future<void> readJson() async {
+    var regionName = useState('');
+    var regionCode = useState('');
+
+    Future<List<RegionInfo>> readJson() async {
       final jsonString =
           await rootBundle.loadString("assets/json/localcode.json");
       final response = await json.decode(jsonString) as Map<String, dynamic>;
       final result = Region.fromJson(response);
-      // print('테스트 : ${result.region[0].first}');
-      regionList.value = result.region;
-      // regionList.value = List<Region>.from(data['region']);
+      print('데이터 확인 : ${result.region[0].first}');
+      return result.region;
     }
 
     Future<List<DonationByRegion>?> getDonationList() async {
@@ -73,16 +99,60 @@ class BookinfoDetail extends HookConsumerWidget {
       return data.data;
     }
 
+    Future<String> getAddressName() async {
+      var addressName = '';
+      print('지역확인 : ${regionCode.value}');
+      bool stop = false;
+      for (int i = 0; i < regionList.value.length; i++) {
+        if (!stop) {
+          for (int j = 0; j < regionList.value[i].secondList.length; j++) {
+            if (regionList.value[i].secondList[j].code == regionCode.value) {
+              addressName = regionList.value[i].first;
+              ref
+                  .watch(regionStateProvider.notifier)
+                  .setRegion(regionList.value[i].first);
+              ref.watch(regionIndexStateProvider.notifier).setIndex(i);
+              stop = true;
+              break;
+            }
+          }
+        }
+      }
+      return addressName;
+    }
+
+    Future<String> getAddress() async {
+      var code = await ref.read(userDataRepositoryProvider).restoreAddress();
+      return code;
+    }
+
     useEffect(() {
-      getDonationList().then((data) {
-        donatingList.value = data!;
-      }).catchError((error) {
-        print(error);
-      });
-      getKeepingCnt().then((data) {
-        keepingList.value = data!;
-      });
-      return null;
+      void fetchData() async {
+        try {
+          final json = await readJson();
+          regionList.value = json;
+
+          final address = await getAddress();
+          regionCode.value = address;
+
+          final addressName = await getAddressName();
+          regionName.value = addressName;
+          ref.watch(regionStateProvider.notifier).setRegion(addressName);
+
+          getDonationList().then((data) {
+            donatingList.value = data!;
+          }).catchError((error) {
+            print(error);
+          });
+          getKeepingCnt().then((data) {
+            keepingList.value = data!;
+          });
+        } catch (error) {
+          print(error);
+        }
+      }
+
+      fetchData();
     }, []);
 
     Future<void> selectAddress(context) async {
@@ -115,17 +185,22 @@ class BookinfoDetail extends HookConsumerWidget {
                           return GestureDetector(
                             onTap: () {
                               selectedRegionIndex.value = index;
+                              ref
+                                  .watch(regionIndexStateProvider.notifier)
+                                  .setIndex(index);
                               selectedRegionCode.value =
-                                  regionList.value[index].first;
+                                  regionList.value[index].secondList[0].code;
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(3.0),
                               child: Container(
-                                decoration: selectedRegionIndex.value == index
-                                    ? BoxDecoration(
-                                        color: Colors.brown.shade300,
-                                        borderRadius: BorderRadius.circular(10))
-                                    : BoxDecoration(color: Colors.white),
+                                decoration:
+                                    ref.watch(regionIndexStateProvider) == index
+                                        ? BoxDecoration(
+                                            color: Colors.brown.shade300,
+                                            borderRadius:
+                                                BorderRadius.circular(10))
+                                        : BoxDecoration(color: Colors.white),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       top: 4.0, bottom: 4.0),
@@ -158,14 +233,26 @@ class BookinfoDetail extends HookConsumerWidget {
                       child: ElevatedButton(
                         onPressed: () async {
                           // TODO: 지역코드 서버로 보내기
-                          // ref
-                          //     .read(regionStateProvider.notifier)
-                          //     .setRegion(selectedRegionCode.value);
-                          // selectedRegionCode.value = regionNow;
-                          // DonationByRegionData data = await restClient
-                          //     .getDonationByRegion(isbn, "1100");
+                          ref.watch(regionStateProvider.notifier).setRegion(
+                              regionList
+                                  .value[selectedRegionIndex.value].first);
 
-                          // Navigator.of(context).pop();
+                          ref
+                              .watch(regionCodeStateProvider.notifier)
+                              .setRegionCode(regionList
+                                  .value[selectedRegionIndex.value]
+                                  .secondList[0]
+                                  .code);
+                          ref
+                              .read(regionStateProvider.notifier)
+                              .setRegion(selectedRegionCode.value);
+                          selectedRegionCode.value = regionNow;
+                          print('지역 : ${ref.watch(regionStateProvider)}');
+                          DonationByRegionData data =
+                              await restClient.getDonationByRegion(
+                                  isbn, selectedRegionCode.value);
+
+                          context.pop();
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

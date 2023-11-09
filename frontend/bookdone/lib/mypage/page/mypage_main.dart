@@ -32,8 +32,8 @@ class MyPageMain extends HookConsumerWidget {
     final restClient = ref.read(restApiClientProvider);
     var nickname = useState('');
     var point = useState(0);
-    var donatingBook = useState<List<MyBookData>>([]);
-    var keepingBook = useState<List<MyBookData>>([]);
+    var donatingBook = useState<List<BookInfo>>([]);
+    var keepingBook = useState<List<BookInfo>>([]);
     // ref.read(userDataRepositoryProvider).restoreNickname().then((value) => {nickname=value});
 
     // Future<String> getUser() async {
@@ -56,14 +56,13 @@ class MyPageMain extends HookConsumerWidget {
       restClient.getMyBook().then((bookData) {
         for (var book in bookData.data) {
           if (book.donationStatus == 'keeping') {
-            keepingBook.value.add(book as MyBookData);
+            keepingBook.value.add(book);
           } else {
             if (book.historyResponseList.isNotEmpty) {
-              keepingBook.value.add(book as MyBookData);
+              keepingBook.value.add(book);
             }
-            donatingBook.value.add(book as MyBookData);
+            donatingBook.value.add(book);
           }
-          print(book.id);
         }
       });
       return null;
@@ -166,7 +165,9 @@ class MyPageMain extends HookConsumerWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
-                  child: MyDonatingList(),
+                  child: MyDonatingList(
+
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(

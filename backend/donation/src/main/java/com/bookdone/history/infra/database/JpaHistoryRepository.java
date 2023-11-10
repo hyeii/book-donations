@@ -25,6 +25,9 @@ public interface JpaHistoryRepository extends JpaRepository<HistoryEntity, Long>
             "ORDER BY h.donatedAt DESC")
     List<HistoryEntity> findAllByDonationIdAndStatusIsWritten(Long donationId);
 
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM HistoryEntity h " +
+            "WHERE h.donationId = :donationId AND h.status = com.bookdone.history.application.HistoryStatus.WRITTEN")
     Long countAllByDonationId(Long donationId);
 
     Optional<HistoryEntity> findTopByDonationIdOrderByDonatedAtDesc(Long donationId);

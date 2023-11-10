@@ -25,4 +25,14 @@ public class ModifyDonationUseCase {
 
         return id;
     }
+
+    public Long changeStatusToDonating(Long id) {
+        //todo 예외처리
+        Donation donation = donationRepository.findById(id);
+
+        donation.changeStatusToDonating();
+        id = donationRepository.save(donation);
+
+        return id;
+    }
 }

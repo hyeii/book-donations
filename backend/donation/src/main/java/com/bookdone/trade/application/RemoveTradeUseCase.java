@@ -17,7 +17,7 @@ public class RemoveTradeUseCase {
     public void removeTrade(Long donationId, Long memberId) {
         tradeRepository.deleteTrade(donationId, memberId);
         Donation donation = donationRepository.findById(donationId);
-        donation.changeStatusToKeeping();
+        donation.changeStatusToDonating();
         donationRepository.save(donation);
     }
 }

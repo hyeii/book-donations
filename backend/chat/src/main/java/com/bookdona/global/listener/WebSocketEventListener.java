@@ -35,7 +35,6 @@ public class WebSocketEventListener {
 			userNickname = (String)sessionAttributes.get("usernickname");
 			log.info("User Nickname: {}", userNickname);
 		}
-
 		redisTemplate.opsForValue().set("member:" + userNickname, "online");
 	}
 
@@ -54,8 +53,5 @@ public class WebSocketEventListener {
 		} else {
 			log.info("user 가 이미 연결을 종료함.");
 		}
-
 	}
-
-
 }

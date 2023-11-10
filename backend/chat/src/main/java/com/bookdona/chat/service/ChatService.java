@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bookdona.chat.document.ChatMessage;
 import com.bookdona.chat.document.ChatRoom;
-import com.bookdona.chat.dto.Member;
 import com.bookdona.chat.dto.request.ChatMessageWriteRequest;
 import com.bookdona.chat.dto.request.ChatRoomCreateRequest;
 import com.bookdona.chat.dto.response.ChatMessageResponse;
-import com.bookdona.chat.dto.response.ChatOpponentResponse;
 import com.bookdona.chat.dto.response.ChatRoomResponse;
 import com.bookdona.chat.repository.ChatMessageRepository;
 import com.bookdona.chat.repository.ChatRoomRepository;

@@ -2,8 +2,6 @@ package com.bookdona.chat.dto.response;
 
 import java.time.LocalDateTime;
 
-import com.bookdona.chat.dto.Member;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

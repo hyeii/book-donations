@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bookdona.chat.dto.request.ChatMessageWriteRequest;
 import com.bookdona.chat.dto.request.ChatRoomCreateRequest;
 import com.bookdona.chat.dto.response.ChatMessageResponse;
-import com.bookdona.chat.dto.response.ChatOpponentResponse;
 import com.bookdona.chat.dto.response.ChatRoomResponse;
 import com.bookdona.chat.service.ChatService;
 import com.bookdona.global.response.BaseResponse;

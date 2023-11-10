@@ -15,6 +15,12 @@ public interface JpaHistoryRepository extends JpaRepository<HistoryEntity, Long>
 
     @Query(value = "SELECT h " +
             "FROM HistoryEntity h " +
+            "WHERE h.memberId = :memberId AND h.status = com.bookdone.history.application.HistoryStatus.WRITTEN " +
+            "ORDER BY h.donatedAt DESC")
+    List<HistoryEntity> findAllByMemberIdAndStatusIsWritten(Long memberId);
+
+    @Query(value = "SELECT h " +
+            "FROM HistoryEntity h " +
             "WHERE h.donationId = :donationId AND h.status = com.bookdone.history.application.HistoryStatus.WRITTEN " +
             "ORDER BY h.donatedAt DESC")
     List<HistoryEntity> findAllByDonationIdAndStatusIsWritten(Long donationId);

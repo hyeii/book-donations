@@ -53,6 +53,12 @@ public class HistoryRepositoryImpl implements HistoryRepository {
     }
 
     @Override
+    public List<History> findAllByMemberId(Long memberId) {
+        List<HistoryEntity> historyEntityList = jpaHistoryRepository.findAllByMemberIdAndStatusIsWritten(memberId);
+        return historyEntityList.stream().map(History::createHistory).collect(Collectors.toList());
+    }
+
+    @Override
     public History findLastHistoryByDonationId(Long donationId) {
         Optional<HistoryEntity> historyEntity = jpaHistoryRepository.findTopByDonationIdOrderByDonatedAtDesc(donationId);
         return historyEntity.map(History::createHistory).orElse(null);

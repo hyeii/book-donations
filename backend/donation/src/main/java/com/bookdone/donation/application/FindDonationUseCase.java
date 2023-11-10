@@ -2,7 +2,7 @@ package com.bookdone.donation.application;
 
 import com.bookdone.client.api.BookClient;
 import com.bookdone.client.api.MemberClient;
-import com.bookdone.client.dto.BookDto;
+import com.bookdone.client.dto.BookResponse;
 import com.bookdone.donation.application.repository.DonationImageRepository;
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
@@ -15,7 +15,6 @@ import com.bookdone.history.domain.History;
 import com.bookdone.history.dto.response.HistoryResponse;
 import com.bookdone.util.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -121,12 +120,19 @@ public class FindDonationUseCase {
             List<String> imageUrlList,
             Map<String, String> nicknameMap,
             List<History> historyList,
-            String nickname) {
+            String nickname) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        BookResponse bookResponse = responseUtil.extractDataFromResponse(
+                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
 
         List<HistoryResponse> historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                 .content(history.getContent())
                 .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
                 .createdAt(history.getCreatedAt())
+                .titileUrl(bookResponse.getTitleUrl())
+                .title(bookResponse.getTitle())
                 .build()).collect(Collectors.toList());
 
         return DonationDetailsResponse.builder()
@@ -144,7 +150,7 @@ public class FindDonationUseCase {
     public List<DonationMyPageResponse> findDonationListByMember(Long memberId) {
         List<Donation> donationList = donationRepository.findAllByMemberId(memberId);
 
-        Map<String, BookDto> bookResponseMap = null;
+        Map<String, BookResponse> bookResponseMap = null;
 
         List<String> isbnList = donationList.stream().map(donation -> donation.getIsbn())
                 .collect(Collectors.toList());
@@ -160,7 +166,8 @@ public class FindDonationUseCase {
         return createDonationMyPageResponse(donationList, bookResponseMap);
     }
 
-    public List<DonationMyPageResponse> createDonationMyPageResponse(List<Donation> donationList, Map<String, BookDto> bookResponseMap) {
+    public List<DonationMyPageResponse> createDonationMyPageResponse(
+            List<Donation> donationList, Map<String, BookResponse> bookResponseMap) {
         List<DonationMyPageResponse> donationMyPageResponseList = donationList.stream().map(donation -> {
 
             List<History> historyList = historyRepository.findAllByDonationId(donation.getId());
@@ -170,11 +177,16 @@ public class FindDonationUseCase {
             List<HistoryResponse> historyResponseList = null;
 
             try {
-                Map<String, String> nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
+                Map<String, String> nicknameMap = responseUtil.extractDataFromResponse
+                        (memberClient.getNicknameList(memberIdList), Map.class);
+                BookResponse bookResponse = responseUtil.extractDataFromResponse(
+                        bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
                 historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                         .content(history.getContent())
                         .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
                         .createdAt(history.getCreatedAt())
+                        .title(bookResponse.getTitle())
+                        .titileUrl(bookResponse.getTitleUrl())
                         .build()).collect(Collectors.toList());
             } catch (FeignException.NotFound e) {
                 throw e;
@@ -184,13 +196,14 @@ public class FindDonationUseCase {
 
             History lastHistory = historyRepository.findLastHistoryByDonationId(donation.getId());
             ObjectMapper objectMapper = new ObjectMapper();
-            BookDto bookDto = objectMapper.convertValue(bookResponseMap.get(donation.getIsbn()), BookDto.class);
+            BookResponse bookResponse = objectMapper.convertValue(
+                    bookResponseMap.get(donation.getIsbn()), BookResponse.class);
 
             return DonationMyPageResponse.builder()
                     .donationStatus(donation.getStatus())
                     .id(donation.getId())
-                    .title(bookDto.getTitle())
-                    .titleUrl(bookDto.getTitleUrl())
+                    .title(bookResponse.getTitle())
+                    .titleUrl(bookResponse.getTitleUrl())
                     .historyResponseList(historyResponseList)
                     .donatedAt(lastHistory == null ? donation.getCreatedAt() : lastHistory.getDonatedAt())
                     .build();

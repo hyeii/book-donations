@@ -22,9 +22,17 @@ public class HistoryController {
         return BaseResponse.okWithData(HttpStatus.OK, "히스토리 목록 조회 완료", findHistoryUseCase.findAll(donationId));
     }
 
+    @GetMapping("/members/me")
+    public ResponseEntity<?> historyMyListByDonationId(@RequestHeader("member-id") Long memberId) throws JsonProcessingException {
+        return BaseResponse.okWithData(
+                HttpStatus.OK, "내 히스토리 목록 조회 완료", findHistoryUseCase.findMyHistories(memberId));
+    }
+
     @GetMapping("/donations/{donationId}/members")
-    public ResponseEntity<?> historyDetailsByDonationIdAndMemberId(@PathVariable Long donationId, @RequestHeader("member-id") Long memberId) {
-        return BaseResponse.okWithData(HttpStatus.OK, "히스토리 조회 완료", findHistoryUseCase.findHistoryByDonationIdAndMemberId(donationId, memberId));
+    public ResponseEntity<?> historyDetailsByDonationIdAndMemberId(
+            @PathVariable Long donationId, @RequestHeader("member-id") Long memberId) throws JsonProcessingException {
+        return BaseResponse.okWithData(
+                HttpStatus.OK, "히스토리 조회 완료", findHistoryUseCase.findHistoryByDonationIdAndMemberId(donationId, memberId));
     }
 
     @GetMapping("/{historyId}")

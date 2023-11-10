@@ -1,17 +1,23 @@
 package com.bookdone.history.application;
 
+import com.bookdone.client.api.BookClient;
 import com.bookdone.client.api.MemberClient;
+import com.bookdone.client.dto.BookResponse;
+import com.bookdone.donation.application.repository.DonationRepository;
+import com.bookdone.donation.domain.Donation;
 import com.bookdone.history.application.repository.HistoryRepository;
 import com.bookdone.history.domain.History;
 import com.bookdone.history.dto.response.HistoryResponse;
 import com.bookdone.util.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,9 +29,15 @@ public class FindHistoryUseCase {
     private final HistoryRepository historyRepository;
     private final MemberClient memberClient;
     private final ResponseUtil responseUtil;
+    private final DonationRepository donationRepository;
+    private final BookClient bookClient;
+
 
     public HistoryResponse findHistoryById(Long id) throws JsonProcessingException {
         History history = historyRepository.findById(id);
+        Donation donation = donationRepository.findById(history.getDonationId());
+        BookResponse bookResponse = responseUtil.extractDataFromResponse(
+                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
 
         String nickname = null;
 
@@ -38,13 +50,53 @@ public class FindHistoryUseCase {
 
         return HistoryResponse.builder()
                 .content(history.getContent())
+                .titileUrl(bookResponse.getTitleUrl())
+                .title(bookResponse.getTitle())
                 .createdAt(history.getCreatedAt())
                 .nickname(nickname)
                 .build();
     }
 
-    public HistoryResponse findHistoryByDonationIdAndMemberId(Long donationId, Long memberId) {
+    public List<HistoryResponse> findMyHistories(Long memberId) throws JsonProcessingException {
+        List<History> historyList = historyRepository.findAllByMemberId(memberId);
+        String nickname = responseUtil.extractDataFromResponse(memberClient.getNickname(memberId), String.class);
+        List<String> isbnList = historyList.stream()
+                .map(history -> donationRepository.findById(history.getDonationId()).getIsbn())
+                .collect(Collectors.toList());
+
+        Map<String, BookResponse> bookResponseMap = responseUtil
+                .extractDataFromResponse(bookClient.getBookInfoList(isbnList), Map.class);
+
+        Map<Long, String> donationMap = new HashMap<>();
+
+        for(int idx = 0; idx < isbnList.size(); idx++) {
+            donationMap.put(historyList.get(idx).getDonationId(), isbnList.get(idx));
+        }
+
+        List<HistoryResponse> historyResponseList = historyList.stream().map(history -> {
+            String isbn = donationMap.get(history.getDonationId());
+            ObjectMapper objectMapper = new ObjectMapper();
+            BookResponse bookResponse = objectMapper.convertValue(
+                    bookResponseMap.get(isbn), BookResponse.class);
+
+            return HistoryResponse.builder()
+                    .content(history.getContent())
+                    .createdAt(history.getCreatedAt())
+                    .nickname(nickname)
+                    .title(bookResponse.getTitle())
+                    .titileUrl(bookResponse.getTitleUrl())
+                    .build();
+        }).collect(Collectors.toList());
+
+        return historyResponseList;
+    }
+
+    public HistoryResponse findHistoryByDonationIdAndMemberId(
+            Long donationId, Long memberId) throws JsonProcessingException {
         History history = historyRepository.findByDonationIdAndMemberId(donationId, memberId);
+        Donation donation = donationRepository.findById(donationId);
+        BookResponse bookResponse = responseUtil.extractDataFromResponse(
+                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
 
         String nickname = null;
 
@@ -61,6 +113,8 @@ public class FindHistoryUseCase {
                 .content(history.getContent())
                 .createdAt(history.getCreatedAt())
                 .nickname(nickname)
+                .title(bookResponse.getTitle())
+                .titileUrl(bookResponse.getTitleUrl())
                 .build();
     }
 
@@ -70,22 +124,25 @@ public class FindHistoryUseCase {
         List<Long> memberIdList = historyList.stream()
                 .map(history -> history.getMemberId())
                 .collect(Collectors.toList());
-
+        Donation donation = donationRepository.findById(donationId);
+        BookResponse bookResponse = null;
         Map<Long, String> nicknameMap = null;
         try {
             nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
+            bookResponse = responseUtil.extractDataFromResponse(
+                    bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
         } catch (FeignException.NotFound e) {
             throw e;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        List<HistoryResponse> historyResponseList = createHistoryResponseList(historyList, nicknameMap);
+        List<HistoryResponse> historyResponseList = createHistoryResponseList(historyList, nicknameMap, bookResponse);
         return historyResponseList;
     }
 
     public List<HistoryResponse> createHistoryResponseList(
-            List<History> historyList, Map<Long, String> nicknameMap) {
+            List<History> historyList, Map<Long, String> nicknameMap, BookResponse bookResponse) {
         List<HistoryResponse> historyResponseList = new ArrayList<>();
 
         for(History history : historyList) {
@@ -93,6 +150,8 @@ public class FindHistoryUseCase {
                     .content(history.getContent())
                     .createdAt(history.getCreatedAt())
                     .nickname(nicknameMap.get(history.getMemberId()))
+                    .titileUrl(bookResponse.getTitleUrl())
+                    .title(bookResponse.getTitle())
                     .build();
             historyResponseList.add(historyResponse);
         }

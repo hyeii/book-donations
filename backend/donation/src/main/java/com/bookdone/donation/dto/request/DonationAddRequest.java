@@ -21,7 +21,6 @@ public class DonationAddRequest {
     private String address;
     private String content;
     private boolean canDelivery;
-    private LocalDateTime createdAt;
     private List<MultipartFile> images = new ArrayList<>();
 
     public Donation toDomain() {

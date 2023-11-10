@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.*;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -73,6 +74,10 @@ public class DonationEntity {
 			.canDelivery(donation.isCanDelivery())
 			.createdAt(donation.getCreatedAt())
 			.build();
+	}
+
+	public void updateCreatedAt(LocalDateTime localDateTime) {
+		this.createdAt = localDateTime;
 	}
 
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ public class DonationRepositoryImpl implements DonationRepository {
     public Long update(Donation donation) {
         DonationEntity donationEntity = donation.createEntity();
         log.info("donationEntity={}", donationEntity.toString());
+        donationEntity.updateCreatedAt(LocalDateTime.now());
         jpaDonationRepository.findById(donationEntity.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도네이션이 없습니다."));
         return jpaDonationRepository.save(donationEntity).getId();

@@ -29,7 +29,6 @@ public class Donation {
                 .content(donationAddRequest.getContent())
                 .status(DonationStatus.DONATING)
                 .canDelivery(donationAddRequest.isCanDelivery())
-                .createdAt(donationAddRequest.getCreatedAt())
                 .build();
     }
 

@@ -129,7 +129,7 @@ public class FindHistoryUseCase {
                 .collect(Collectors.toList());
         Donation donation = donationRepository.findById(donationId);
         BookResponse bookResponse = null;
-        Map<Long, String> nicknameMap = null;
+        Map<String, String> nicknameMap = null;
         try {
             nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
             bookResponse = responseUtil.extractDataFromResponse(
@@ -145,14 +145,14 @@ public class FindHistoryUseCase {
     }
 
     public List<HistoryResponse> createHistoryResponseList(
-            List<History> historyList, Map<Long, String> nicknameMap, BookResponse bookResponse) {
+            List<History> historyList, Map<String, String> nicknameMap, BookResponse bookResponse) {
         List<HistoryResponse> historyResponseList = new ArrayList<>();
 
         for(History history : historyList) {
             HistoryResponse historyResponse = HistoryResponse.builder()
                     .content(history.getContent())
                     .createdAt(history.getCreatedAt())
-                    .nickname(nicknameMap.get(history.getMemberId()))
+                    .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
                     .titleUrl(bookResponse.getTitleUrl())
                     .title(bookResponse.getTitle())
                     .build();

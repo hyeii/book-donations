@@ -36,9 +36,10 @@ public class ModifyTradeUseCase {
 
         Donation donation = donationRepository.findById(donationId);
         donation.changeStatusToKeeping();
+        Long donorId = donation.getMemberId();
         donation.changeMemberId(memberId);
         donationRepository.save(donation);
         historyRepository.saveDummyHistory(donationId, memberId);
-        return donation.getMemberId();
+        return donorId;
     }
 }

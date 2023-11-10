@@ -50,7 +50,7 @@ public class FindHistoryUseCase {
 
         return HistoryResponse.builder()
                 .content(history.getContent())
-                .titileUrl(bookResponse.getTitleUrl())
+                .titleUrl(bookResponse.getTitleUrl())
                 .title(bookResponse.getTitle())
                 .createdAt(history.getCreatedAt())
                 .nickname(nickname)
@@ -86,7 +86,7 @@ public class FindHistoryUseCase {
                     .createdAt(history.getCreatedAt())
                     .nickname(nickname)
                     .title(bookResponse.getTitle())
-                    .titileUrl(bookResponse.getTitleUrl())
+                    .titleUrl(bookResponse.getTitleUrl())
                     .build();
         }).collect(Collectors.toList());
 
@@ -116,7 +116,7 @@ public class FindHistoryUseCase {
                 .createdAt(history.getCreatedAt())
                 .nickname(nickname)
                 .title(bookResponse.getTitle())
-                .titileUrl(bookResponse.getTitleUrl())
+                .titleUrl(bookResponse.getTitleUrl())
                 .build();
     }
 
@@ -153,7 +153,7 @@ public class FindHistoryUseCase {
                     .content(history.getContent())
                     .createdAt(history.getCreatedAt())
                     .nickname(nicknameMap.get(history.getMemberId()))
-                    .titileUrl(bookResponse.getTitleUrl())
+                    .titleUrl(bookResponse.getTitleUrl())
                     .title(bookResponse.getTitle())
                     .build();
             historyResponseList.add(historyResponse);

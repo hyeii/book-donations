@@ -55,7 +55,7 @@ public class DonationController {
         return BaseResponse.okWithData(HttpStatus.CREATED,"게시글이 등록되었습니다.", addDonationUseCase.addDonation(donationAddRequest));
     }
 
-    @PutMapping("/{donationId}")
+    @PostMapping("/{donationId}")
     public ResponseEntity<?> donationReadd(@PathVariable Long donationId, @RequestHeader("member-id") Long memberId, @RequestBody DonationAddRequest donationAddRequest){
         donationAddRequest.setId(donationId);
         donationAddRequest.setMemberId(memberId);

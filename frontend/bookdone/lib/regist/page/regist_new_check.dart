@@ -22,7 +22,9 @@ class RegistNewCheck extends HookConsumerWidget {
         centerTitle: false,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            MyPageRoute().push(context);
+          },
         ),
       ),
       body: Center(
@@ -98,7 +100,7 @@ class RegistNewCheck extends HookConsumerWidget {
               width: 170,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: alert 확인창x
+                  MyPageRoute().push(context);
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -8,7 +8,6 @@ import 'package:bookdone/top/page/top_navigation_bar.dart';
 import 'package:bookdone/widgets/floating_register_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MyPageMain extends HookConsumerWidget {
@@ -35,6 +34,10 @@ class MyPageMain extends HookConsumerWidget {
     var point = useState(0);
     var donatingBook = useState<List<BookInfo>>([]);
     var keepingBook = useState<List<BookInfo>>([]);
+    var keepingList =
+        useState<MyKeepingList>(MyKeepingList(keepingList: keepingBook.value));
+    var donatingList = useState<MyDonatingList>(
+        MyDonatingList(donatingList: donatingBook.value));
     // ref.read(userDataRepositoryProvider).restoreNickname().then((value) => {nickname=value});
 
     // Future<String> getUser() async {
@@ -56,17 +59,24 @@ class MyPageMain extends HookConsumerWidget {
           }).catchError((error) {
             print(error);
           });
+          List<BookInfo> donating =[];
+          List<BookInfo> keeping = [];
           restClient.getMyBook().then((bookData) {
             for (var book in bookData.data) {
-              if (book.donationStatus == 'keeping') {
+              if (book.donationStatus == 'KEEPING') {
                 keepingBook.value.add(book);
+                keeping.add(book);
               } else {
                 if (book.historyResponseList.isNotEmpty) {
+                  keeping.add(book);
                   keepingBook.value.add(book);
                 }
+                donating.add(book);
                 donatingBook.value.add(book);
               }
             }
+            keepingList.value = MyKeepingList(keepingList: keeping);
+            donatingList.value = MyDonatingList(donatingList: donating);
           });
         } catch (error) {
           print(error);
@@ -175,16 +185,12 @@ class MyPageMain extends HookConsumerWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
-                  child: MyDonatingList(
-                    donatingList: donatingBook.value,
-                  ),
+                  child: donatingList.value,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
-                  child: MyKeepingList(
-                    keepingList: keepingBook.value,
-                  ),
+                  child: keepingList.value,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(

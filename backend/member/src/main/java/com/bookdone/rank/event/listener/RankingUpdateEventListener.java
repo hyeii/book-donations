@@ -26,7 +26,7 @@ public class RankingUpdateEventListener {
     private final MemberService memberService;
     private final String RANKING_KEY = "rank";
 
-//    @KafkaListener(topics = "donation-finish")
+    @KafkaListener(topics = "dona-com")
     public void updateRanking(String message) {
         try {
             Map<String, Long> map = objectMapper.readValue(message, new TypeReference<Map<String, Long>>() {

@@ -43,12 +43,13 @@ public class FindDonationUseCase {
 
     public List<DonationListResponse> findDonationList(String isbn, String address) throws JsonProcessingException {
         List<Donation> donationList = null;
+
         if(address.substring(2, 4).equals("00"))
             donationList = donationRepository.findAllAddressByIsbnAndAddress(isbn, address);
         else
             donationList = donationRepository.findAllByIsbnAndAddress(isbn, address);
 
-        if (donationList.isEmpty()) return null;
+        if (donationList.isEmpty()) return new ArrayList<DonationListResponse>();
 
         List<Long> memberIdList = donationList.stream()
                 .map(donation -> donation.getMemberId())
@@ -149,6 +150,8 @@ public class FindDonationUseCase {
 
     public List<DonationMyPageResponse> findDonationListByMember(Long memberId) {
         List<Donation> donationList = donationRepository.findAllByMemberId(memberId);
+
+        if(donationList.isEmpty()) return new ArrayList<DonationMyPageResponse>();
 
         Map<String, BookResponse> bookResponseMap = null;
 

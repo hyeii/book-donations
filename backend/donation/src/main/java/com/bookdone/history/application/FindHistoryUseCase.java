@@ -59,6 +59,8 @@ public class FindHistoryUseCase {
 
     public List<HistoryResponse> findMyHistories(Long memberId) throws JsonProcessingException {
         List<History> historyList = historyRepository.findAllByMemberId(memberId);
+        if(historyList.isEmpty()) return new ArrayList<HistoryResponse>();
+
         String nickname = responseUtil.extractDataFromResponse(memberClient.getNickname(memberId), String.class);
         List<String> isbnList = historyList.stream()
                 .map(history -> donationRepository.findById(history.getDonationId()).getIsbn())
@@ -120,6 +122,7 @@ public class FindHistoryUseCase {
 
     public List<HistoryResponse> findAll(Long donationId) {
         List<History> historyList = historyRepository.findAllByDonationId(donationId);
+        if(historyList.isEmpty()) return new ArrayList<HistoryResponse>();
 
         List<Long> memberIdList = historyList.stream()
                 .map(history -> history.getMemberId())

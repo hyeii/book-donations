@@ -24,7 +24,7 @@ public class History {
                 .donationId(historyAddRequest.getDonationId())
                 .memberId(historyAddRequest.getMemberId())
                 .content(historyAddRequest.getContent())
-                .historyStatus(historyAddRequest.getStatus())
+                .historyStatus(HistoryStatus.WRITTEN)
                 .build();
     }
 

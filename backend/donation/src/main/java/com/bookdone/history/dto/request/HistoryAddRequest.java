@@ -13,5 +13,4 @@ public class HistoryAddRequest {
     private Long donationId;
     private Long memberId;
     private String content;
-    private HistoryStatus status;
 }

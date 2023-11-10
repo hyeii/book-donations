@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 public class HistoryResponse {
 
+    private String title;
+    private String titileUrl;
     private String content;
     private String nickname;
     private LocalDateTime createdAt;

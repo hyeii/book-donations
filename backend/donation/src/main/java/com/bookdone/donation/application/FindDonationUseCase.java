@@ -63,8 +63,6 @@ public class FindDonationUseCase {
             throw e;
         }
 
-        log.info("nicknameMap type = {}", nicknameMap.getClass());
-
         List<DonationListResponse> donationListResponseList = createDonationListResponse(
                 donationList, nicknameMap);
 
@@ -74,19 +72,8 @@ public class FindDonationUseCase {
     public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<String, String> nicknameMap) {
         List<DonationListResponse> donationListResponseList = new ArrayList<>();
 
-        log.info("nicknameMap={}", nicknameMap);
-        log.info("map values = {}", nicknameMap.values());
-        log.info("map keys = {}", nicknameMap.keySet());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-
         for (Donation donation : donationList) {
-//            String nickname = objectMapper.convertValue(nicknameMap.get(donation.getMemberId()), String.class);
             String nickname = nicknameMap.get(String.valueOf(donation.getMemberId()));
-            log.info("id={}", donation.getMemberId());
-            log.info("nickname={}", nickname);
-            log.info("nickname2={}", nicknameMap.get(donation.getMemberId()));
 
             DonationListResponse donationListResponse = DonationListResponse
                     .builder()
@@ -119,7 +106,7 @@ public class FindDonationUseCase {
         List<Long> memberIdList = historyList.stream()
                 .map(history -> history.getMemberId()).collect(Collectors.toList());
 
-        Map<Long, String> nicknameMap = null;
+        Map<String, String> nicknameMap = null;
         try {
             nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
         } catch (FeignException.NotFound e) {
@@ -132,13 +119,13 @@ public class FindDonationUseCase {
     public DonationDetailsResponse createDonationResponse(
             Donation donation,
             List<String> imageUrlList,
-            Map<Long, String> nicknameMap,
+            Map<String, String> nicknameMap,
             List<History> historyList,
             String nickname) {
 
         List<HistoryResponse> historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                 .content(history.getContent())
-                .nickname(nicknameMap.get(history.getMemberId()))
+                .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
                 .createdAt(history.getCreatedAt())
                 .build()).collect(Collectors.toList());
 
@@ -183,10 +170,10 @@ public class FindDonationUseCase {
             List<HistoryResponse> historyResponseList = null;
 
             try {
-                Map<Long, String> nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
+                Map<String, String> nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
                 historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                         .content(history.getContent())
-                        .nickname(nicknameMap.get(history.getMemberId()))
+                        .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
                         .createdAt(history.getCreatedAt())
                         .build()).collect(Collectors.toList());
             } catch (FeignException.NotFound e) {

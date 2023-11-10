@@ -28,6 +28,7 @@ public class RankingUpdateEventListener {
 
     @KafkaListener(topics = "dona-com")
     public void updateRanking(String message) {
+        log.info("dona-com ranking Event Catch!!!");
         try {
             Map<String, Long> map = objectMapper.readValue(message, new TypeReference<Map<String, Long>>() {
             });

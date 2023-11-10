@@ -29,7 +29,7 @@ public class TradeController {
     private final String cancelTopicName = "cancel-donation";
     private final String completeTopicName = "complete-donation";
 
-    @GetMapping("/{donationId}/members/{memberId}/reservations/confirm")
+    @GetMapping("/{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeDetails(@PathVariable Long donationId, @PathVariable Long memberId) {
         TradeStatus tradeStatus = findTradeUseCase.findTradeStatus(donationId, memberId);
 

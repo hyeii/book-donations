@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class DonationAddRequest {
     private String address;
     private String content;
     private boolean canDelivery;
+    private LocalDateTime createdAt;
     private List<MultipartFile> images = new ArrayList<>();
 
     public Donation toDomain() {

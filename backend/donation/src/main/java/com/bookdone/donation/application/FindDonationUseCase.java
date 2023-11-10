@@ -132,7 +132,7 @@ public class FindDonationUseCase {
                 .content(history.getContent())
                 .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
                 .createdAt(history.getCreatedAt())
-                .titileUrl(bookResponse.getTitleUrl())
+                .titleUrl(bookResponse.getTitleUrl())
                 .title(bookResponse.getTitle())
                 .build()).collect(Collectors.toList());
 
@@ -189,7 +189,7 @@ public class FindDonationUseCase {
                         .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
                         .createdAt(history.getCreatedAt())
                         .title(bookResponse.getTitle())
-                        .titileUrl(bookResponse.getTitleUrl())
+                        .titleUrl(bookResponse.getTitleUrl())
                         .build()).collect(Collectors.toList());
             } catch (FeignException.NotFound e) {
                 throw e;

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class HistoryResponse {
 
     private String title;
-    private String titileUrl;
+    private String titleUrl;
     private String content;
     private String nickname;
     private LocalDateTime createdAt;

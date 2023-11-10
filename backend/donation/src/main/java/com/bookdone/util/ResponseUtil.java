@@ -1,5 +1,6 @@
 package com.bookdone.util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,4 +37,5 @@ public class ResponseUtil {
         Object data = objectMap.get("data");
         return objectMapper.convertValue(data, clazz);
     }
+
 }

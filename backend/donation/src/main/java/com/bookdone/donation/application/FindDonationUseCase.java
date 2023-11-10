@@ -55,7 +55,7 @@ public class FindDonationUseCase {
                 .map(donation -> donation.getMemberId())
                 .collect(Collectors.toList());
 
-        Map<Long, String> nicknameMap = null;
+        Map<String, String> nicknameMap = null;
 
         try {
             nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), HashMap.class);
@@ -64,9 +64,6 @@ public class FindDonationUseCase {
         }
 
         log.info("nicknameMap type = {}", nicknameMap.getClass());
-        for (Map.Entry<Long, String> entry : nicknameMap.entrySet()) {
-            log.info("key type = {}, value type = {}", entry.getKey().getClass(), entry.getValue().getClass());
-        }
 
         List<DonationListResponse> donationListResponseList = createDonationListResponse(
                 donationList, nicknameMap);
@@ -74,7 +71,7 @@ public class FindDonationUseCase {
         return donationListResponseList;
     }
 
-    public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<Long, String> nicknameMap) {
+    public List<DonationListResponse> createDonationListResponse(List<Donation> donationList, Map<String, String> nicknameMap) {
         List<DonationListResponse> donationListResponseList = new ArrayList<>();
 
         log.info("nicknameMap={}", nicknameMap);
@@ -86,7 +83,7 @@ public class FindDonationUseCase {
 
         for (Donation donation : donationList) {
 //            String nickname = objectMapper.convertValue(nicknameMap.get(donation.getMemberId()), String.class);
-            String nickname = nicknameMap.get(donation.getMemberId());
+            String nickname = nicknameMap.get(String.valueOf(donation.getMemberId()));
             log.info("id={}", donation.getMemberId());
             log.info("nickname={}", nickname);
             log.info("nickname2={}", nicknameMap.get(donation.getMemberId()));

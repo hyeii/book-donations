@@ -42,7 +42,7 @@ public class HistoryController {
 
     @PatchMapping("/donations/{donationId}")
     public ResponseEntity<?> addHistory(
-            @RequestHeader("member-id") Long memberId, @PathVariable Long donationId, @RequestBody HistoryAddRequest historyAddRequest) {
+            @RequestHeader("member-id") Long memberId, @PathVariable Long donationId, HistoryAddRequest historyAddRequest) {
         historyAddRequest.setMemberId(memberId);
         historyAddRequest.setDonationId(donationId);
         return BaseResponse.okWithData(HttpStatus.CREATED, "히스토리 작성 완료", addHistoryUseCase.updateHistory(historyAddRequest));

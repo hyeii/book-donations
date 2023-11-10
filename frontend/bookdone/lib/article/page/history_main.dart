@@ -11,11 +11,11 @@ class HistoryMain extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 238, 236, 233),
+      // backgroundColor: Color.fromARGB(255, 238, 236, 233),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            leading: Icon(Icons.menu),
+            // leading: Icon(Icons.menu),
             // title: Text('책제목이얌'),
             expandedHeight: 300,
             floating: false,
@@ -23,7 +23,16 @@ class HistoryMain extends HookConsumerWidget {
             flexibleSpace: FlexibleSpaceBar(
               title: Text('책제목'),
               background: Container(
-                color: Color(0xff928C85),
+                // color: Color(0xff928C85),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        'http://www.nl.go.kr/seoji/fu/ecip/dbfiles/CIP_FILES_TBL/5642796_3.jpg'),
+                    fit: BoxFit.cover,
+                    opacity: 0.5,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
               ),
             ),
           ),
@@ -31,21 +40,30 @@ class HistoryMain extends HookConsumerWidget {
             future: restClient.getHistoriesByDonation(donationId),
             builder: (_, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return SliverToBoxAdapter(
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               }
               if (snapshot.data == null) {
                 // return SizedBox.shrink();
-                return SizedBox(
-                  height: 10,
+                return SliverToBoxAdapter(
+                  child: Text('아직 작성된 히스토리가 없습니다'),
                 );
               }
 
               if (snapshot.data!.data != null && snapshot.data!.data!.isEmpty) {
                 // return SizedBox.shrink();
-                return SizedBox(
-                  height: 10,
+                return SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 30,
+                      left: 30,
+                      right: 30,
+                    ),
+                    child: Text('아직 작성된 히스토리가 없습니다'),
+                  ),
                 );
               }
 
@@ -72,13 +90,13 @@ class HistoryMain extends HookConsumerWidget {
                             children: [
                               Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text('테스트')),
+                                  child: Text(history.content)),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('김싸피'),
-                                  Text('2099-99-99'),
+                                  Text(history.nickname),
+                                  Text('작성시간 ${history.createdAt}'),
                                 ],
                               ),
                             ],
@@ -121,86 +139,6 @@ class HistoryMain extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                left: 30,
-                right: 30,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  color: Color.fromARGB(255, 159, 157, 154),
-                  height: 200,
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                left: 30,
-                right: 30,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  color: Color.fromARGB(255, 159, 157, 154),
-                  height: 200,
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                left: 30,
-                right: 30,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  color: Color.fromARGB(255, 159, 157, 154),
-                  height: 200,
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                left: 30,
-                right: 30,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  color: Color.fromARGB(255, 159, 157, 154),
-                  height: 200,
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                left: 30,
-                right: 30,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  color: Color.fromARGB(255, 159, 157, 154),
-                  height: 200,
                 ),
               ),
             ),

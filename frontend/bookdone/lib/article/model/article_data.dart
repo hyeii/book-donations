@@ -24,8 +24,8 @@ class ArticleData with _$ArticleData {
     required String address,
     required String content,
     required bool canDelivery,
-    List<HistoryData>? historyResponse,
-    List<String>? imageUrlList,
+    required List<HistoryData> historyResponseList,
+    required List<String> imageUrlList,
   }) = _ArticleData;
 
   factory ArticleData.fromJson(Map<String, dynamic> json) =>
@@ -35,6 +35,8 @@ class ArticleData with _$ArticleData {
 @freezed
 class HistoryData with _$HistoryData {
   const factory HistoryData({
+    required String title,
+    required String titleUrl,
     required String content,
     required String nickname,
     required String createdAt,

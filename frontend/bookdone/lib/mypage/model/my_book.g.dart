@@ -30,7 +30,7 @@ _$BookInfoImpl _$$BookInfoImplFromJson(Map<String, dynamic> json) =>
       donationStatus: json['donationStatus'] as String,
       donatedAt: json['donatedAt'] as String,
       historyResponseList: (json['historyResponseList'] as List<dynamic>)
-          .map((e) => HistoryResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) => HistoryData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -59,7 +59,9 @@ class BookCard extends HookWidget {
                         child: TextButton(
                           onPressed: () {
                             // TODO: 히스토리 작성 팝업? 페이지?
-                            HistoryRoute(donationId: book.id).push(context);
+                            HistoryRoute(
+                              donationId: book.id,
+                            ).push(context);
                           },
                           style: TextButton.styleFrom(
                             minimumSize: Size.zero,

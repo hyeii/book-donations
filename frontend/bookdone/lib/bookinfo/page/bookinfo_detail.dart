@@ -75,6 +75,7 @@ class BookinfoDetail extends HookConsumerWidget {
     var donatingList = useState<List<DonationByRegion>>([]);
     var keepingList = useState<List<KeepingBookData>>([]);
 
+    var regionCur = useState('');
     var regionName = useState('');
     var regionCode = useState('');
 
@@ -185,22 +186,18 @@ class BookinfoDetail extends HookConsumerWidget {
                           return GestureDetector(
                             onTap: () {
                               selectedRegionIndex.value = index;
-                              ref
-                                  .watch(regionIndexStateProvider.notifier)
-                                  .setIndex(index);
+                              regionCur.value = regionList.value[index].first;
                               selectedRegionCode.value =
                                   regionList.value[index].secondList[0].code;
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(3.0),
                               child: Container(
-                                decoration:
-                                    ref.watch(regionIndexStateProvider) == index
-                                        ? BoxDecoration(
-                                            color: Colors.brown.shade300,
-                                            borderRadius:
-                                                BorderRadius.circular(10))
-                                        : BoxDecoration(color: Colors.white),
+                                decoration: selectedRegionIndex.value == index
+                                    ? BoxDecoration(
+                                        color: Colors.brown.shade300,
+                                        borderRadius: BorderRadius.circular(10))
+                                    : BoxDecoration(color: Colors.white),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       top: 4.0, bottom: 4.0),
@@ -232,25 +229,12 @@ class BookinfoDetail extends HookConsumerWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
+                          regionName.value = regionCur.value;
                           // TODO: 지역코드 서버로 보내기
-                          ref.watch(regionStateProvider.notifier).setRegion(
-                              regionList
-                                  .value[selectedRegionIndex.value].first);
-
-                          ref
-                              .watch(regionCodeStateProvider.notifier)
-                              .setRegionCode(regionList
-                                  .value[selectedRegionIndex.value]
-                                  .secondList[0]
-                                  .code);
-                          ref
-                              .read(regionStateProvider.notifier)
-                              .setRegion(selectedRegionCode.value);
-                          selectedRegionCode.value = regionNow;
-                          print('지역 : ${ref.watch(regionStateProvider)}');
                           DonationByRegionData data =
                               await restClient.getDonationByRegion(
                                   isbn, selectedRegionCode.value);
+                          donatingList.value = data.data!;
 
                           context.pop();
                         },
@@ -320,7 +304,7 @@ class BookinfoDetail extends HookConsumerWidget {
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text(regionNow),
+                            Text(regionName.value),
                           ],
                         ),
                       ),

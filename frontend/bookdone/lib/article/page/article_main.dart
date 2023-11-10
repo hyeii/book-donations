@@ -1,5 +1,6 @@
 import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +23,14 @@ class ArticleMain extends HookConsumerWidget {
     Future<ArticleData> getArticleInfo() async {
       ArticleRespByid data = await restClient.getArticleById(id);
       ArticleData articleInfo = data.data;
+      print('아티클인포여기얌여기############ ${articleInfo}');
       return articleInfo;
     }
 
     Future<BookData> getBookInfo() async {
       BookDetail data = await restClient.getDetailBook(isbn);
       BookData bookInfo = data.data;
+      print('북인포여기얌여기############ ${bookInfo}');
       return bookInfo;
     }
 
@@ -39,6 +42,8 @@ class ArticleMain extends HookConsumerWidget {
       });
       getBookInfo().then((bookInfo) {
         bookData.value = bookInfo;
+      }).catchError((error) {
+        print(error);
       });
       return null;
     }, []);
@@ -63,7 +68,8 @@ class ArticleMain extends HookConsumerWidget {
               children: [
                 CachedNetworkImage(
                   width: 200,
-                  imageUrl: bookData.value!.titleUrl,
+                  imageUrl:
+                      bookData.value != null ? bookData.value!.titleUrl : '',
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
@@ -71,7 +77,7 @@ class ArticleMain extends HookConsumerWidget {
                   height: 15,
                 ),
                 Text(
-                  bookData.value!.title,
+                  bookData.value != null ? bookData.value!.title : '',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Padding(
@@ -83,11 +89,19 @@ class ArticleMain extends HookConsumerWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      articleData.value!.historyResponse != null
-                          ? Text(
-                              '${articleData.value!.historyResponse!.length}개의 히스토리',
-                            )
-                          : Text('히스토리가 없습니다'),
+                      if (articleData.value != null)
+                        articleData.value!.historyResponseList.isNotEmpty
+                            ? GestureDetector(
+                                onTap: () {
+                                  HistoryRoute(
+                                    donationId: id,
+                                  ).push(context);
+                                },
+                                child: Text(
+                                  '${articleData.value!.historyResponseList.length}개의 히스토리',
+                                ),
+                              )
+                            : Text('히스토리가 없습니다'),
                       SizedBox(
                         height: 20,
                       ),
@@ -99,9 +113,10 @@ class ArticleMain extends HookConsumerWidget {
                         "기부자의 글",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        articleData.value!.content,
-                      ),
+                      if (articleData.value != null)
+                        Text(
+                          articleData.value!.content,
+                        ),
                       SizedBox(
                         height: 20,
                       ),
@@ -113,14 +128,15 @@ class ArticleMain extends HookConsumerWidget {
                         "책 정보",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
+                      if (bookData.value != null)
+                        Text(
+                          bookData.value!.author,
+                        ),
                       Text(
-                        bookData.value!.author,
+                        bookData.value != null ? bookData.value!.publisher : '',
                       ),
                       Text(
-                        bookData.value!.publisher,
-                      ),
-                      Text(
-                        pubDate.value,
+                        bookData.value != null ? bookData.value!.isbn : '',
                       ),
                       Text(
                         discription.value,

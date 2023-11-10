@@ -30,11 +30,11 @@ _$ArticleDataImpl _$$ArticleDataImplFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String,
       content: json['content'] as String,
       canDelivery: json['canDelivery'] as bool,
-      historyResponse: (json['historyResponse'] as List<dynamic>?)
-          ?.map((e) => HistoryData.fromJson(e as Map<String, dynamic>))
+      historyResponseList: (json['historyResponseList'] as List<dynamic>)
+          .map((e) => HistoryData.fromJson(e as Map<String, dynamic>))
           .toList(),
-      imageUrlList: (json['imageUrlList'] as List<dynamic>?)
-          ?.map((e) => e as String)
+      imageUrlList: (json['imageUrlList'] as List<dynamic>)
+          .map((e) => e as String)
           .toList(),
     );
 
@@ -46,12 +46,14 @@ Map<String, dynamic> _$$ArticleDataImplToJson(_$ArticleDataImpl instance) =>
       'address': instance.address,
       'content': instance.content,
       'canDelivery': instance.canDelivery,
-      'historyResponse': instance.historyResponse,
+      'historyResponseList': instance.historyResponseList,
       'imageUrlList': instance.imageUrlList,
     };
 
 _$HistoryDataImpl _$$HistoryDataImplFromJson(Map<String, dynamic> json) =>
     _$HistoryDataImpl(
+      title: json['title'] as String,
+      titleUrl: json['titleUrl'] as String,
       content: json['content'] as String,
       nickname: json['nickname'] as String,
       createdAt: json['createdAt'] as String,
@@ -59,6 +61,8 @@ _$HistoryDataImpl _$$HistoryDataImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$HistoryDataImplToJson(_$HistoryDataImpl instance) =>
     <String, dynamic>{
+      'title': instance.title,
+      'titleUrl': instance.titleUrl,
       'content': instance.content,
       'nickname': instance.nickname,
       'createdAt': instance.createdAt,

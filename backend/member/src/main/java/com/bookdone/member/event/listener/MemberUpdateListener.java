@@ -1,6 +1,7 @@
 package com.bookdone.member.event.listener;
 
 import com.bookdone.member.service.MemberService;
+import com.bookdone.rank.event.listener.RankingUpdateEventListener;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Map;
 @Slf4j
 public class MemberUpdateListener {
     private final MemberService memberService;
+    private final RankingUpdateEventListener rankingUpdateEventListener;
     private final ObjectMapper objectMapper;
 
     @KafkaListener(topics = "dona-req")
@@ -53,6 +55,7 @@ public class MemberUpdateListener {
             });
             Long memberId = map.get("donor");
             memberService.updateMembersPointById(memberId, true);
+            rankingUpdateEventListener.updateRanking(map);
         } catch (IOException e) {
             throw new InvalidParameterException("잘못된 Event 데이터 입니다.");
         }

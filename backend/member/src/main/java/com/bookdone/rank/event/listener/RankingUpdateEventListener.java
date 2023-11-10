@@ -1,20 +1,18 @@
 package com.bookdone.rank.event.listener;
 
-import com.bookdone.member.entity.Member;
-import com.bookdone.member.repository.MemberRepository;
 import com.bookdone.member.service.MemberService;
 import com.bookdone.rank.dto.MemberScoreDto;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -26,21 +24,14 @@ public class RankingUpdateEventListener {
     private final MemberService memberService;
     private final String RANKING_KEY = "rank";
 
-    @KafkaListener(topics = "dona-com")
-    public void updateRanking(String message) {
+    //    @KafkaListener(topics = "dona-com")
+    public void updateRanking(Map<String, Long> map) {
         log.info("dona-com ranking Event Catch!!!");
-        try {
-            Map<String, Long> map = objectMapper.readValue(message, new TypeReference<Map<String, Long>>() {
-            });
 
-            map.values()
-                    .stream()
-                    .map(memberService::getMemberOrThrow)
-                    .forEach(member -> updateScore(member.getNickname()));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        map.values()
+                .stream()
+                .map(memberService::getMemberOrThrow)
+                .forEach(member -> updateScore(member.getNickname()));
     }
 
     @Transactional

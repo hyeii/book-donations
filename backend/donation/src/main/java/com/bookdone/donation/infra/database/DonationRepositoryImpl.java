@@ -5,6 +5,7 @@ import com.bookdone.donation.domain.Donation;
 import com.bookdone.donation.dto.response.DonationCountResponse;
 import com.bookdone.donation.infra.entity.DonationEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class DonationRepositoryImpl implements DonationRepository {
     private final JpaDonationRepository jpaDonationRepository;
 
@@ -24,6 +26,7 @@ public class DonationRepositoryImpl implements DonationRepository {
     @Override
     public Long update(Donation donation) {
         DonationEntity donationEntity = donation.createEntity();
+        log.info("donationEntity={}", donationEntity.toString());
         jpaDonationRepository.findById(donationEntity.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도네이션이 없습니다."));
         return jpaDonationRepository.save(donationEntity).getId();

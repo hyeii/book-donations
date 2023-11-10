@@ -60,19 +60,28 @@ class KeepingCard extends HookConsumerWidget {
                   color: Colors.white,
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: 10,
+                    ),
                     likes.value
                         ? Text('알림설정을 해제할까요?')
                         : Text('${area.value}의 책들을 알림설정할까요?'),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
+                        TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                           child: Text('취소'),
                         ),
-                        ElevatedButton(
+                        TextButton(
                           onPressed: () {
                             likes.value = !likes.value;
                             setBooksLikesOnOff();
@@ -80,7 +89,10 @@ class KeepingCard extends HookConsumerWidget {
                           child: Text('확인'),
                         ),
                       ],
-                    )
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                   ],
                 ),
               ),
@@ -96,10 +108,7 @@ class KeepingCard extends HookConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '${area.value}에 ${keeping.bookCount}권의 책이 있어요',
-              style: TextStyle(fontSize: 17),
-            ),
+            Text('${area.value}에 ${keeping.bookCount}권의 책이 있어요'),
             IconButton(
               isSelected: likes.value,
               selectedIcon: const Icon(Icons.notifications_active_sharp),

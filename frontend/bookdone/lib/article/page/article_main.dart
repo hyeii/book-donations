@@ -93,8 +93,15 @@ class ArticleMain extends HookConsumerWidget {
                         articleData.value!.historyResponseList.isNotEmpty
                             ? GestureDetector(
                                 onTap: () {
+                                  print(id);
                                   HistoryRoute(
                                     donationId: id,
+                                    title: bookData.value != null
+                                        ? bookData.value!.title
+                                        : '',
+                                    titleUrl: bookData.value != null
+                                        ? bookData.value!.titleUrl
+                                        : '',
                                   ).push(context);
                                 },
                                 child: Text(

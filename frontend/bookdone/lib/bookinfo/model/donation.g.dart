@@ -11,8 +11,8 @@ _$DonationByRegionDataImpl _$$DonationByRegionDataImplFromJson(
     _$DonationByRegionDataImpl(
       success: json['success'] as bool,
       msg: json['msg'] as String,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => DonationByRegion.fromJson(e as Map<String, dynamic>))
+      data: (json['data'] as List<dynamic>)
+          .map((e) => DonationByRegion.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

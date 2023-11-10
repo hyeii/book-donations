@@ -219,11 +219,16 @@ class RegisterNewRoute extends GoRouteData {
   path: RouterPath.historyMain,
 )
 class HistoryRoute extends GoRouteData {
-  const HistoryRoute({required this.donationId});
+  const HistoryRoute(
+      {required this.title, required this.titleUrl, required this.donationId});
   final int donationId;
+  final String title;
+  final String titleUrl;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => HistoryMain(
         donationId: donationId,
+        title: title,
+        titleUrl: titleUrl,
       );
 }

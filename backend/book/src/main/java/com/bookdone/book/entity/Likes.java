@@ -26,6 +26,6 @@ public class Likes {
 	private Long memberId;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Book book;
-	private int localCode;
+	private String localCode;
 
 }

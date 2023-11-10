@@ -2,9 +2,6 @@ package com.bookdone.trade.controller;
 
 import com.bookdone.global.dto.BaseResponse;
 import com.bookdone.trade.application.*;
-import com.bookdone.trade.application.AddTradeUseCase;
-import com.bookdone.trade.application.ModifyTradeUseCase;
-import com.bookdone.trade.application.RemoveTradeUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +25,9 @@ public class TradeController {
     private final AddTradeUseCase addTradeUseCase;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final FindTradeUseCase findTradeUseCase;
+    private final String requestTopicName = "request-donation";
+    private final String cancelTopicName = "cancel-donation";
+    private final String completeTopicName = "complete-donation";
 
     @GetMapping("/{donationId}/members/{memberId}/reservations/confirm")
     public ResponseEntity<?> tradeDetails(@PathVariable Long donationId, @PathVariable Long memberId) {
@@ -43,7 +43,7 @@ public class TradeController {
         ObjectMapper objectMapper = new ObjectMapper();
         String payload = objectMapper.writeValueAsString(map);
         log.info("payload = {}", payload);
-        kafkaTemplate.send("reservation-request", payload);
+        kafkaTemplate.send(requestTopicName, payload);
         return BaseResponse.ok(HttpStatus.OK, "OK");
     }
 
@@ -58,7 +58,7 @@ public class TradeController {
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);
         }
-        kafkaTemplate.send("reservation-request", payload);
+        kafkaTemplate.send(requestTopicName, payload);
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
@@ -86,7 +86,7 @@ public class TradeController {
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);
         }
-        kafkaTemplate.send("donation-finish", payload);
+        kafkaTemplate.send(completeTopicName, payload);
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
@@ -102,7 +102,7 @@ public class TradeController {
         } catch (Exception e) {
             return BaseResponse.fail("json 변환 실패", 400);
         }
-        kafkaTemplate.send("donation-cancel", payload);
+        kafkaTemplate.send(cancelTopicName, payload);
         return BaseResponse.ok(HttpStatus.OK, "거래가 취소되었습니다.");
     }
 

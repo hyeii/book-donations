@@ -1,6 +1,8 @@
+import 'package:bookdone/mypage/model/like_book.dart';
 import 'package:bookdone/mypage/model/my_book.dart';
 import 'package:bookdone/mypage/widgets/my_donating_list.dart';
 import 'package:bookdone/mypage/widgets/my_keeping_list.dart';
+import 'package:bookdone/mypage/widgets/my_like_book_list.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
@@ -32,12 +34,13 @@ class MyPageMain extends HookConsumerWidget {
     final restClient = ref.read(restApiClientProvider);
     var nickname = useState('');
     var point = useState(0);
-    var donatingBook = useState<List<BookInfo>>([]);
-    var keepingBook = useState<List<BookInfo>>([]);
+
     var keepingList =
-        useState<MyKeepingList>(MyKeepingList(keepingList: keepingBook.value));
+        useState<MyKeepingList>(MyKeepingList(keepingList: []));
     var donatingList = useState<MyDonatingList>(
-        MyDonatingList(donatingList: donatingBook.value));
+        MyDonatingList(donatingList: []));
+    var likeBookList = useState<MyLikeBookList>(
+        MyLikeBookList(likeBookList: []));
     // ref.read(userDataRepositoryProvider).restoreNickname().then((value) => {nickname=value});
 
     // Future<String> getUser() async {
@@ -64,19 +67,23 @@ class MyPageMain extends HookConsumerWidget {
           restClient.getMyBook().then((bookData) {
             for (var book in bookData.data) {
               if (book.donationStatus == 'KEEPING') {
-                keepingBook.value.add(book);
                 keeping.add(book);
               } else {
                 if (book.historyResponseList.isNotEmpty) {
                   keeping.add(book);
-                  keepingBook.value.add(book);
                 }
                 donating.add(book);
-                donatingBook.value.add(book);
               }
             }
             keepingList.value = MyKeepingList(keepingList: keeping);
             donatingList.value = MyDonatingList(donatingList: donating);
+          });
+          restClient.getLikeBooks().then((bookInfo) {
+            List<LikeInfo> likeBooks = [];
+            for(var likeInfo in bookInfo.data){
+              likeBooks.add(likeInfo);
+            }
+            likeBookList.value = MyLikeBookList(likeBookList: likeBooks);
           });
         } catch (error) {
           print(error);
@@ -195,9 +202,7 @@ class MyPageMain extends HookConsumerWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
-                  child: MyKeepingList(
-                    keepingList: keepingBook.value,
-                  ),
+                  child: likeBookList.value,
                 ),
               ],
             ),

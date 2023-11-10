@@ -1,6 +1,7 @@
 import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/bookinfo/model/book_comment.dart';
 import 'package:bookdone/bookinfo/model/donation.dart';
+import 'package:bookdone/mypage/model/like_book.dart';
 import 'package:bookdone/mypage/model/my_book.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/regist/model/regist_get_data.dart';
@@ -83,4 +84,7 @@ abstract class RestClient {
 
   @GET('/api/histories/donations/{donationId}')
   Future<HistoryResp> getHistoriesByDonation(@Path() int donationId);
+
+  @GET('/api/books/likes')
+  Future<MyLikeBook> getLikeBooks();
 }

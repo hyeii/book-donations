@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.json.JsonParseException;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ public class MemberUpdateListener {
     private final MemberService memberService;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "donation-request-topic", groupId = "donation-request-group")
+    @KafkaListener(topics = "donation-req", groupId = "donation-req-group")
     public void decreasePointOnReservationRequest(String message) {
         log.info("request-donation Event Catch!");
         try {
@@ -33,7 +32,7 @@ public class MemberUpdateListener {
         }
     }
 
-    @KafkaListener(topics = "donation-cancel-topic", groupId = "donation-cancel-group")
+    @KafkaListener(topics = "donation-can", groupId = "donation-can-group")
     public void increasePointOnDonationCancel(String message) {
         log.info("cancel-donation Event Catch!");
         try {
@@ -46,7 +45,7 @@ public class MemberUpdateListener {
         }
     }
 
-    @KafkaListener(topics = "donation-complete-topic", groupId = "donation-complete-group")
+    @KafkaListener(topics = "donation-com", groupId = "donation-com-group")
     public void increasePointOnDonationFinish(String message) {
         log.info("complete-donation Event Catch!");
         try {

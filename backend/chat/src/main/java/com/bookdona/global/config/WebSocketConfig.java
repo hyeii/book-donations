@@ -1,5 +1,6 @@
 package com.bookdona.global.config;
 
+import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -42,12 +44,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 			.setInterceptors(new HandshakeInterceptor() {
 				@Override
 				public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
-					WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-					String memberId = request.getHeaders().getFirst("member-id");
-					if (memberId != null) {
-						log.info("웹 소켓 세션이 사용자를 인식함: {}", memberId);
-						redisTemplate.opsForValue().set("member:" + memberId, "online"); // redis 에 유저 정보 저장
-						attributes.put("member-id", memberId);
+					WebSocketHandler wsHandler, Map<String, Object> attributes) {
+					// 쿼리 파라미터에서 usernickname 추출
+					String usernickname = request.getURI().getQuery().split("=")[1];
+					if (usernickname != null && !usernickname.isEmpty()) {
+						log.info("웹 소켓 세션이 사용자 닉네임을 인식함: {}", usernickname);
+						// ws header 에 userNickname 저장
+						attributes.put("usernickname", usernickname);
 					}
 					return true;
 				}
@@ -55,6 +58,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 				@Override
 				public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
 					WebSocketHandler wsHandler, Exception exception) {
+					// 핸드셰이크 후 처리
 					if (exception != null) {
 						log.info("웹소켓 핸드셰이크 중 예외 발생!", exception);
 					} else {

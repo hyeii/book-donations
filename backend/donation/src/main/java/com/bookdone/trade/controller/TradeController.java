@@ -25,9 +25,9 @@ public class TradeController {
     private final AddTradeUseCase addTradeUseCase;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final FindTradeUseCase findTradeUseCase;
-    private final String requestTopicName = "donation-request-topic";
-    private final String cancelTopicName = "donation-cancel-topic";
-    private final String completeTopicName = "donation-complete-topic";
+    private final String requestTopicName = "donation-req";
+    private final String cancelTopicName = "donation-can";
+    private final String completeTopicName = "donation-com";
 
     @GetMapping("/{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeDetails(@PathVariable Long donationId, @PathVariable Long memberId) {

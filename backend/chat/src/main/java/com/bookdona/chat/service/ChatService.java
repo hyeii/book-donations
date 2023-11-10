@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookdona.chat.document.ChatMessage;
 import com.bookdona.chat.document.ChatRoom;
@@ -74,7 +75,8 @@ public class ChatService {
 		}
 	}
 
-	public void addChatMessage(Long tradeId, ChatMessageWriteRequest chatMessageWriteRequest) {
+	@Transactional
+	public ChatMessageResponse addChatMessage(Long tradeId, ChatMessageWriteRequest chatMessageWriteRequest) {
 		ChatMessage chatMessage = ChatMessage.builder()
 			.message(chatMessageWriteRequest.getMessage())
 			.tradeId(tradeId)
@@ -90,6 +92,15 @@ public class ChatService {
 		chatMessageRepository.save(chatMessage);
 		chatRoom.updateLastChat(chatMessage.getId());
 		chatRoomRepository.save(chatRoom);
+
+		log.info("chatMessage: {}", chatMessage);
+
+		return ChatMessageResponse.builder()
+			.tradeId(chatMessage.getTradeId())
+			.senderNickname(chatMessage.getSenderNickname())
+			.message(chatMessage.getMessage())
+			.createdAt(chatMessage.getCreatedAt())
+			.build();
 	}
 
 	// TODO: member feign

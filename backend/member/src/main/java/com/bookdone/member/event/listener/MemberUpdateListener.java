@@ -20,9 +20,9 @@ public class MemberUpdateListener {
     private final MemberService memberService;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "reservation-request")
+    @KafkaListener(topics = "request-donation", groupId = "request-donation-group")
     public void decreasePointOnReservationRequest(String message) {
-        log.info("reservation-request Event Catch!");
+        log.info("request-donation Event Catch!");
         try {
             Map<String, Long> map = objectMapper.readValue(message, new TypeReference<Map<String, Long>>() {
             });
@@ -33,9 +33,9 @@ public class MemberUpdateListener {
         }
     }
 
-    @KafkaListener(topics = "donation-cancel")
+    @KafkaListener(topics = "cancel-donation", groupId = "cancel-donation-group")
     public void increasePointOnDonationCancel(String message) {
-        log.info("donation-cancel Event Catch!");
+        log.info("cancel-donation Event Catch!");
         try {
             Map<String, Long> map = objectMapper.readValue(message, new TypeReference<Map<String, Long>>() {
             });
@@ -46,9 +46,9 @@ public class MemberUpdateListener {
         }
     }
 
-    @KafkaListener(topics = "donation-finish")
+    @KafkaListener(topics = "complete-donation", groupId = "complete-donation-group")
     public void increasePointOnDonationFinish(String message) {
-        log.info("donation-finish Event Catch!");
+        log.info("complete-donation Event Catch!");
         try {
             Map<String, Long> map = objectMapper.readValue(message, new TypeReference<Map<String, Long>>() {
             });

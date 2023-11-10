@@ -1,4 +1,5 @@
 import 'package:bookdone/article/page/article_main.dart';
+import 'package:bookdone/article/page/history_main.dart';
 import 'package:bookdone/bookinfo/page/bookinfo_detail.dart';
 import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/chat/page/chat_main.dart';
@@ -212,4 +213,17 @@ class RegisterNewRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => RegistNewCheck();
+}
+
+@TypedGoRoute<HistoryRoute>(
+  path: RouterPath.historyMain,
+)
+class HistoryRoute extends GoRouteData {
+  const HistoryRoute({required this.donationId});
+  final int donationId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => HistoryMain(
+        donationId: donationId,
+      );
 }

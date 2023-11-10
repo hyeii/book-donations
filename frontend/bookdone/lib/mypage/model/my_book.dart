@@ -1,3 +1,4 @@
+import 'package:bookdone/article/model/article_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
@@ -12,7 +13,8 @@ class MyBookData with _$MyBookData {
     required List<BookInfo> data,
   }) = _MyBookData;
 
-  factory MyBookData.fromJson(Map<String, dynamic> json) => _$MyBookDataFromJson(json);
+  factory MyBookData.fromJson(Map<String, dynamic> json) =>
+      _$MyBookDataFromJson(json);
 }
 
 @freezed
@@ -23,10 +25,11 @@ class BookInfo with _$BookInfo {
     required String titleUrl,
     required String donationStatus,
     required String donatedAt,
-    required List<HistoryResponse> historyResponseList,
+    required List<HistoryData> historyResponseList,
   }) = _BookInfo;
 
-  factory BookInfo.fromJson(Map<String, dynamic> json) => _$BookInfoFromJson(json);
+  factory BookInfo.fromJson(Map<String, dynamic> json) =>
+      _$BookInfoFromJson(json);
 }
 
 @freezed
@@ -37,5 +40,6 @@ class HistoryResponse with _$HistoryResponse {
     required String createdAt,
   }) = _HistoryResponse;
 
-  factory HistoryResponse.fromJson(Map<String, dynamic> json) => _$HistoryResponseFromJson(json);
+  factory HistoryResponse.fromJson(Map<String, dynamic> json) =>
+      _$HistoryResponseFromJson(json);
 }

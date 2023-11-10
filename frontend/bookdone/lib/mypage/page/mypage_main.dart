@@ -3,6 +3,7 @@ import 'package:bookdone/mypage/widgets/my_donating_list.dart';
 import 'package:bookdone/mypage/widgets/my_keeping_list.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/top/page/top_navigation_bar.dart';
 import 'package:bookdone/widgets/floating_register_btn.dart';
 import 'package:flutter/material.dart';
@@ -43,28 +44,37 @@ class MyPageMain extends HookConsumerWidget {
     // }
     var repository = ref.read(userDataRepositoryProvider);
     useEffect(() {
-      repository.restoreNickname().then((name) {
-        nickname.value = name;
-      }).catchError((error) {
-        print(error);
-      });
-      repository.restorePoint().then((value) {
-        point.value = value;
-      }).catchError((error) {
-        print(error);
-      });
-      restClient.getMyBook().then((bookData) {
-        for (var book in bookData.data) {
-          if (book.donationStatus == 'keeping') {
-            keepingBook.value.add(book);
-          } else {
-            if (book.historyResponseList.isNotEmpty) {
-              keepingBook.value.add(book);
+      void fetchData() async {
+        try {
+          repository.restoreNickname().then((name) {
+            nickname.value = name;
+          }).catchError((error) {
+            print(error);
+          });
+          repository.restorePoint().then((value) {
+            point.value = value;
+          }).catchError((error) {
+            print(error);
+          });
+          restClient.getMyBook().then((bookData) {
+            for (var book in bookData.data) {
+              if (book.donationStatus == 'keeping') {
+                keepingBook.value.add(book);
+              } else {
+                if (book.historyResponseList.isNotEmpty) {
+                  keepingBook.value.add(book);
+                }
+                donatingBook.value.add(book);
+              }
             }
-            donatingBook.value.add(book);
-          }
+          });
+        } catch (error) {
+          print(error);
         }
-      });
+      }
+
+      fetchData();
+
       return null;
     }, []);
 
@@ -109,7 +119,7 @@ class MyPageMain extends HookConsumerWidget {
                       IconButton(
                         icon: Icon(Icons.notifications),
                         onPressed: () {
-                          context.pushNamed('notification');
+                          NotificationRoute().push(context);
                         },
                       ),
                     ],
@@ -122,7 +132,7 @@ class MyPageMain extends HookConsumerWidget {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                       onPressed: () {
-                        context.pushNamed('addhistory');
+                        AddHistoryRoute().push(context);
                       },
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size.zero,
@@ -166,18 +176,22 @@ class MyPageMain extends HookConsumerWidget {
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
                   child: MyDonatingList(
-
+                    donatingList: donatingBook.value,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
-                  child: MyKeepingList(),
+                  child: MyKeepingList(
+                    keepingList: keepingBook.value,
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 12),
-                  child: MyKeepingList(),
+                  child: MyKeepingList(
+                    keepingList: keepingBook.value,
+                  ),
                 ),
               ],
             ),

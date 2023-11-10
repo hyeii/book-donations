@@ -206,7 +206,7 @@ mixin _$BookInfo {
   String get titleUrl => throw _privateConstructorUsedError;
   String get donationStatus => throw _privateConstructorUsedError;
   String get donatedAt => throw _privateConstructorUsedError;
-  List<HistoryResponse> get historyResponseList =>
+  List<HistoryData> get historyResponseList =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -226,7 +226,7 @@ abstract class $BookInfoCopyWith<$Res> {
       String titleUrl,
       String donationStatus,
       String donatedAt,
-      List<HistoryResponse> historyResponseList});
+      List<HistoryData> historyResponseList});
 }
 
 /// @nodoc
@@ -273,7 +273,7 @@ class _$BookInfoCopyWithImpl<$Res, $Val extends BookInfo>
       historyResponseList: null == historyResponseList
           ? _value.historyResponseList
           : historyResponseList // ignore: cast_nullable_to_non_nullable
-              as List<HistoryResponse>,
+              as List<HistoryData>,
     ) as $Val);
   }
 }
@@ -292,7 +292,7 @@ abstract class _$$BookInfoImplCopyWith<$Res>
       String titleUrl,
       String donationStatus,
       String donatedAt,
-      List<HistoryResponse> historyResponseList});
+      List<HistoryData> historyResponseList});
 }
 
 /// @nodoc
@@ -337,7 +337,7 @@ class __$$BookInfoImplCopyWithImpl<$Res>
       historyResponseList: null == historyResponseList
           ? _value._historyResponseList
           : historyResponseList // ignore: cast_nullable_to_non_nullable
-              as List<HistoryResponse>,
+              as List<HistoryData>,
     ));
   }
 }
@@ -351,7 +351,7 @@ class _$BookInfoImpl implements _BookInfo {
       required this.titleUrl,
       required this.donationStatus,
       required this.donatedAt,
-      required final List<HistoryResponse> historyResponseList})
+      required final List<HistoryData> historyResponseList})
       : _historyResponseList = historyResponseList;
 
   factory _$BookInfoImpl.fromJson(Map<String, dynamic> json) =>
@@ -367,9 +367,9 @@ class _$BookInfoImpl implements _BookInfo {
   final String donationStatus;
   @override
   final String donatedAt;
-  final List<HistoryResponse> _historyResponseList;
+  final List<HistoryData> _historyResponseList;
   @override
-  List<HistoryResponse> get historyResponseList {
+  List<HistoryData> get historyResponseList {
     if (_historyResponseList is EqualUnmodifiableListView)
       return _historyResponseList;
     // ignore: implicit_dynamic_type
@@ -425,13 +425,12 @@ class _$BookInfoImpl implements _BookInfo {
 
 abstract class _BookInfo implements BookInfo {
   const factory _BookInfo(
-          {required final int id,
-          required final String title,
-          required final String titleUrl,
-          required final String donationStatus,
-          required final String donatedAt,
-          required final List<HistoryResponse> historyResponseList}) =
-      _$BookInfoImpl;
+      {required final int id,
+      required final String title,
+      required final String titleUrl,
+      required final String donationStatus,
+      required final String donatedAt,
+      required final List<HistoryData> historyResponseList}) = _$BookInfoImpl;
 
   factory _BookInfo.fromJson(Map<String, dynamic> json) =
       _$BookInfoImpl.fromJson;
@@ -447,7 +446,7 @@ abstract class _BookInfo implements BookInfo {
   @override
   String get donatedAt;
   @override
-  List<HistoryResponse> get historyResponseList;
+  List<HistoryData> get historyResponseList;
   @override
   @JsonKey(ignore: true)
   _$$BookInfoImplCopyWith<_$BookInfoImpl> get copyWith =>

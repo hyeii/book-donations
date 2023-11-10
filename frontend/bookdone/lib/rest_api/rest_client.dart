@@ -80,4 +80,7 @@ abstract class RestClient {
 
   @GET('/api/donations/members/mypage')
   Future<MyBookData> getMyBook();
+
+  @GET('/api/histories/donations/{donationId}')
+  Future<HistoryResp> getHistoriesByDonation(@Path() int donationId);
 }

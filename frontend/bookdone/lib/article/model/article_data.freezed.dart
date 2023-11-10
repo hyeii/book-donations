@@ -212,9 +212,9 @@ mixin _$ArticleData {
   String get address => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   bool get canDelivery => throw _privateConstructorUsedError;
-  List<HistoryResponse>? get historyResponse =>
+  List<HistoryData> get historyResponseList =>
       throw _privateConstructorUsedError;
-  List<String>? get imageUrlList => throw _privateConstructorUsedError;
+  List<String> get imageUrlList => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -235,8 +235,8 @@ abstract class $ArticleDataCopyWith<$Res> {
       String address,
       String content,
       bool canDelivery,
-      List<HistoryResponse>? historyResponse,
-      List<String>? imageUrlList});
+      List<HistoryData> historyResponseList,
+      List<String> imageUrlList});
 }
 
 /// @nodoc
@@ -258,8 +258,8 @@ class _$ArticleDataCopyWithImpl<$Res, $Val extends ArticleData>
     Object? address = null,
     Object? content = null,
     Object? canDelivery = null,
-    Object? historyResponse = freezed,
-    Object? imageUrlList = freezed,
+    Object? historyResponseList = null,
+    Object? imageUrlList = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -286,14 +286,14 @@ class _$ArticleDataCopyWithImpl<$Res, $Val extends ArticleData>
           ? _value.canDelivery
           : canDelivery // ignore: cast_nullable_to_non_nullable
               as bool,
-      historyResponse: freezed == historyResponse
-          ? _value.historyResponse
-          : historyResponse // ignore: cast_nullable_to_non_nullable
-              as List<HistoryResponse>?,
-      imageUrlList: freezed == imageUrlList
+      historyResponseList: null == historyResponseList
+          ? _value.historyResponseList
+          : historyResponseList // ignore: cast_nullable_to_non_nullable
+              as List<HistoryData>,
+      imageUrlList: null == imageUrlList
           ? _value.imageUrlList
           : imageUrlList // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
     ) as $Val);
   }
 }
@@ -313,8 +313,8 @@ abstract class _$$ArticleDataImplCopyWith<$Res>
       String address,
       String content,
       bool canDelivery,
-      List<HistoryResponse>? historyResponse,
-      List<String>? imageUrlList});
+      List<HistoryData> historyResponseList,
+      List<String> imageUrlList});
 }
 
 /// @nodoc
@@ -334,8 +334,8 @@ class __$$ArticleDataImplCopyWithImpl<$Res>
     Object? address = null,
     Object? content = null,
     Object? canDelivery = null,
-    Object? historyResponse = freezed,
-    Object? imageUrlList = freezed,
+    Object? historyResponseList = null,
+    Object? imageUrlList = null,
   }) {
     return _then(_$ArticleDataImpl(
       id: null == id
@@ -362,14 +362,14 @@ class __$$ArticleDataImplCopyWithImpl<$Res>
           ? _value.canDelivery
           : canDelivery // ignore: cast_nullable_to_non_nullable
               as bool,
-      historyResponse: freezed == historyResponse
-          ? _value._historyResponse
-          : historyResponse // ignore: cast_nullable_to_non_nullable
-              as List<HistoryResponse>?,
-      imageUrlList: freezed == imageUrlList
+      historyResponseList: null == historyResponseList
+          ? _value._historyResponseList
+          : historyResponseList // ignore: cast_nullable_to_non_nullable
+              as List<HistoryData>,
+      imageUrlList: null == imageUrlList
           ? _value._imageUrlList
           : imageUrlList // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
     ));
   }
 }
@@ -384,9 +384,9 @@ class _$ArticleDataImpl implements _ArticleData {
       required this.address,
       required this.content,
       required this.canDelivery,
-      final List<HistoryResponse>? historyResponse,
-      final List<String>? imageUrlList})
-      : _historyResponse = historyResponse,
+      required final List<HistoryData> historyResponseList,
+      required final List<String> imageUrlList})
+      : _historyResponseList = historyResponseList,
         _imageUrlList = imageUrlList;
 
   factory _$ArticleDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -404,29 +404,26 @@ class _$ArticleDataImpl implements _ArticleData {
   final String content;
   @override
   final bool canDelivery;
-  final List<HistoryResponse>? _historyResponse;
+  final List<HistoryData> _historyResponseList;
   @override
-  List<HistoryResponse>? get historyResponse {
-    final value = _historyResponse;
-    if (value == null) return null;
-    if (_historyResponse is EqualUnmodifiableListView) return _historyResponse;
+  List<HistoryData> get historyResponseList {
+    if (_historyResponseList is EqualUnmodifiableListView)
+      return _historyResponseList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_historyResponseList);
   }
 
-  final List<String>? _imageUrlList;
+  final List<String> _imageUrlList;
   @override
-  List<String>? get imageUrlList {
-    final value = _imageUrlList;
-    if (value == null) return null;
+  List<String> get imageUrlList {
     if (_imageUrlList is EqualUnmodifiableListView) return _imageUrlList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_imageUrlList);
   }
 
   @override
   String toString() {
-    return 'ArticleData(id: $id, isbn: $isbn, nickname: $nickname, address: $address, content: $content, canDelivery: $canDelivery, historyResponse: $historyResponse, imageUrlList: $imageUrlList)';
+    return 'ArticleData(id: $id, isbn: $isbn, nickname: $nickname, address: $address, content: $content, canDelivery: $canDelivery, historyResponseList: $historyResponseList, imageUrlList: $imageUrlList)';
   }
 
   @override
@@ -443,7 +440,7 @@ class _$ArticleDataImpl implements _ArticleData {
             (identical(other.canDelivery, canDelivery) ||
                 other.canDelivery == canDelivery) &&
             const DeepCollectionEquality()
-                .equals(other._historyResponse, _historyResponse) &&
+                .equals(other._historyResponseList, _historyResponseList) &&
             const DeepCollectionEquality()
                 .equals(other._imageUrlList, _imageUrlList));
   }
@@ -458,7 +455,7 @@ class _$ArticleDataImpl implements _ArticleData {
       address,
       content,
       canDelivery,
-      const DeepCollectionEquality().hash(_historyResponse),
+      const DeepCollectionEquality().hash(_historyResponseList),
       const DeepCollectionEquality().hash(_imageUrlList));
 
   @JsonKey(ignore: true)
@@ -483,8 +480,8 @@ abstract class _ArticleData implements ArticleData {
       required final String address,
       required final String content,
       required final bool canDelivery,
-      final List<HistoryResponse>? historyResponse,
-      final List<String>? imageUrlList}) = _$ArticleDataImpl;
+      required final List<HistoryData> historyResponseList,
+      required final List<String> imageUrlList}) = _$ArticleDataImpl;
 
   factory _ArticleData.fromJson(Map<String, dynamic> json) =
       _$ArticleDataImpl.fromJson;
@@ -502,44 +499,51 @@ abstract class _ArticleData implements ArticleData {
   @override
   bool get canDelivery;
   @override
-  List<HistoryResponse>? get historyResponse;
+  List<HistoryData> get historyResponseList;
   @override
-  List<String>? get imageUrlList;
+  List<String> get imageUrlList;
   @override
   @JsonKey(ignore: true)
   _$$ArticleDataImplCopyWith<_$ArticleDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-HistoryResponse _$HistoryResponseFromJson(Map<String, dynamic> json) {
-  return _HistoryResponse.fromJson(json);
+HistoryData _$HistoryDataFromJson(Map<String, dynamic> json) {
+  return _HistoryData.fromJson(json);
 }
 
 /// @nodoc
-mixin _$HistoryResponse {
+mixin _$HistoryData {
+  String get title => throw _privateConstructorUsedError;
+  String get titleUrl => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $HistoryResponseCopyWith<HistoryResponse> get copyWith =>
+  $HistoryDataCopyWith<HistoryData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HistoryResponseCopyWith<$Res> {
-  factory $HistoryResponseCopyWith(
-          HistoryResponse value, $Res Function(HistoryResponse) then) =
-      _$HistoryResponseCopyWithImpl<$Res, HistoryResponse>;
+abstract class $HistoryDataCopyWith<$Res> {
+  factory $HistoryDataCopyWith(
+          HistoryData value, $Res Function(HistoryData) then) =
+      _$HistoryDataCopyWithImpl<$Res, HistoryData>;
   @useResult
-  $Res call({String content, String nickname, String createdAt});
+  $Res call(
+      {String title,
+      String titleUrl,
+      String content,
+      String nickname,
+      String createdAt});
 }
 
 /// @nodoc
-class _$HistoryResponseCopyWithImpl<$Res, $Val extends HistoryResponse>
-    implements $HistoryResponseCopyWith<$Res> {
-  _$HistoryResponseCopyWithImpl(this._value, this._then);
+class _$HistoryDataCopyWithImpl<$Res, $Val extends HistoryData>
+    implements $HistoryDataCopyWith<$Res> {
+  _$HistoryDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -549,11 +553,21 @@ class _$HistoryResponseCopyWithImpl<$Res, $Val extends HistoryResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? title = null,
+    Object? titleUrl = null,
     Object? content = null,
     Object? nickname = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleUrl: null == titleUrl
+          ? _value.titleUrl
+          : titleUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -571,32 +585,47 @@ class _$HistoryResponseCopyWithImpl<$Res, $Val extends HistoryResponse>
 }
 
 /// @nodoc
-abstract class _$$HistoryResponseImplCopyWith<$Res>
-    implements $HistoryResponseCopyWith<$Res> {
-  factory _$$HistoryResponseImplCopyWith(_$HistoryResponseImpl value,
-          $Res Function(_$HistoryResponseImpl) then) =
-      __$$HistoryResponseImplCopyWithImpl<$Res>;
+abstract class _$$HistoryDataImplCopyWith<$Res>
+    implements $HistoryDataCopyWith<$Res> {
+  factory _$$HistoryDataImplCopyWith(
+          _$HistoryDataImpl value, $Res Function(_$HistoryDataImpl) then) =
+      __$$HistoryDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String content, String nickname, String createdAt});
+  $Res call(
+      {String title,
+      String titleUrl,
+      String content,
+      String nickname,
+      String createdAt});
 }
 
 /// @nodoc
-class __$$HistoryResponseImplCopyWithImpl<$Res>
-    extends _$HistoryResponseCopyWithImpl<$Res, _$HistoryResponseImpl>
-    implements _$$HistoryResponseImplCopyWith<$Res> {
-  __$$HistoryResponseImplCopyWithImpl(
-      _$HistoryResponseImpl _value, $Res Function(_$HistoryResponseImpl) _then)
+class __$$HistoryDataImplCopyWithImpl<$Res>
+    extends _$HistoryDataCopyWithImpl<$Res, _$HistoryDataImpl>
+    implements _$$HistoryDataImplCopyWith<$Res> {
+  __$$HistoryDataImplCopyWithImpl(
+      _$HistoryDataImpl _value, $Res Function(_$HistoryDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? title = null,
+    Object? titleUrl = null,
     Object? content = null,
     Object? nickname = null,
     Object? createdAt = null,
   }) {
-    return _then(_$HistoryResponseImpl(
+    return _then(_$HistoryDataImpl(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleUrl: null == titleUrl
+          ? _value.titleUrl
+          : titleUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -615,13 +644,21 @@ class __$$HistoryResponseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$HistoryResponseImpl implements _HistoryResponse {
-  const _$HistoryResponseImpl(
-      {required this.content, required this.nickname, required this.createdAt});
+class _$HistoryDataImpl implements _HistoryData {
+  const _$HistoryDataImpl(
+      {required this.title,
+      required this.titleUrl,
+      required this.content,
+      required this.nickname,
+      required this.createdAt});
 
-  factory _$HistoryResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$HistoryResponseImplFromJson(json);
+  factory _$HistoryDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HistoryDataImplFromJson(json);
 
+  @override
+  final String title;
+  @override
+  final String titleUrl;
   @override
   final String content;
   @override
@@ -631,14 +668,17 @@ class _$HistoryResponseImpl implements _HistoryResponse {
 
   @override
   String toString() {
-    return 'HistoryResponse(content: $content, nickname: $nickname, createdAt: $createdAt)';
+    return 'HistoryData(title: $title, titleUrl: $titleUrl, content: $content, nickname: $nickname, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HistoryResponseImpl &&
+            other is _$HistoryDataImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.titleUrl, titleUrl) ||
+                other.titleUrl == titleUrl) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
@@ -648,32 +688,38 @@ class _$HistoryResponseImpl implements _HistoryResponse {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, content, nickname, createdAt);
+  int get hashCode =>
+      Object.hash(runtimeType, title, titleUrl, content, nickname, createdAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$HistoryResponseImplCopyWith<_$HistoryResponseImpl> get copyWith =>
-      __$$HistoryResponseImplCopyWithImpl<_$HistoryResponseImpl>(
-          this, _$identity);
+  _$$HistoryDataImplCopyWith<_$HistoryDataImpl> get copyWith =>
+      __$$HistoryDataImplCopyWithImpl<_$HistoryDataImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$HistoryResponseImplToJson(
+    return _$$HistoryDataImplToJson(
       this,
     );
   }
 }
 
-abstract class _HistoryResponse implements HistoryResponse {
-  const factory _HistoryResponse(
-      {required final String content,
+abstract class _HistoryData implements HistoryData {
+  const factory _HistoryData(
+      {required final String title,
+      required final String titleUrl,
+      required final String content,
       required final String nickname,
-      required final String createdAt}) = _$HistoryResponseImpl;
+      required final String createdAt}) = _$HistoryDataImpl;
 
-  factory _HistoryResponse.fromJson(Map<String, dynamic> json) =
-      _$HistoryResponseImpl.fromJson;
+  factory _HistoryData.fromJson(Map<String, dynamic> json) =
+      _$HistoryDataImpl.fromJson;
 
+  @override
+  String get title;
+  @override
+  String get titleUrl;
   @override
   String get content;
   @override
@@ -682,6 +728,187 @@ abstract class _HistoryResponse implements HistoryResponse {
   String get createdAt;
   @override
   @JsonKey(ignore: true)
-  _$$HistoryResponseImplCopyWith<_$HistoryResponseImpl> get copyWith =>
+  _$$HistoryDataImplCopyWith<_$HistoryDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+HistoryResp _$HistoryRespFromJson(Map<String, dynamic> json) {
+  return _HistoryResp.fromJson(json);
+}
+
+/// @nodoc
+mixin _$HistoryResp {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  List<HistoryData>? get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $HistoryRespCopyWith<HistoryResp> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $HistoryRespCopyWith<$Res> {
+  factory $HistoryRespCopyWith(
+          HistoryResp value, $Res Function(HistoryResp) then) =
+      _$HistoryRespCopyWithImpl<$Res, HistoryResp>;
+  @useResult
+  $Res call({bool success, String msg, List<HistoryData>? data});
+}
+
+/// @nodoc
+class _$HistoryRespCopyWithImpl<$Res, $Val extends HistoryResp>
+    implements $HistoryRespCopyWith<$Res> {
+  _$HistoryRespCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<HistoryData>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$HistoryRespImplCopyWith<$Res>
+    implements $HistoryRespCopyWith<$Res> {
+  factory _$$HistoryRespImplCopyWith(
+          _$HistoryRespImpl value, $Res Function(_$HistoryRespImpl) then) =
+      __$$HistoryRespImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, List<HistoryData>? data});
+}
+
+/// @nodoc
+class __$$HistoryRespImplCopyWithImpl<$Res>
+    extends _$HistoryRespCopyWithImpl<$Res, _$HistoryRespImpl>
+    implements _$$HistoryRespImplCopyWith<$Res> {
+  __$$HistoryRespImplCopyWithImpl(
+      _$HistoryRespImpl _value, $Res Function(_$HistoryRespImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_$HistoryRespImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<HistoryData>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$HistoryRespImpl implements _HistoryResp {
+  const _$HistoryRespImpl(
+      {required this.success, required this.msg, final List<HistoryData>? data})
+      : _data = data;
+
+  factory _$HistoryRespImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HistoryRespImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  final List<HistoryData>? _data;
+  @override
+  List<HistoryData>? get data {
+    final value = _data;
+    if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'HistoryResp(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HistoryRespImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, success, msg, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HistoryRespImplCopyWith<_$HistoryRespImpl> get copyWith =>
+      __$$HistoryRespImplCopyWithImpl<_$HistoryRespImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$HistoryRespImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _HistoryResp implements HistoryResp {
+  const factory _HistoryResp(
+      {required final bool success,
+      required final String msg,
+      final List<HistoryData>? data}) = _$HistoryRespImpl;
+
+  factory _HistoryResp.fromJson(Map<String, dynamic> json) =
+      _$HistoryRespImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  List<HistoryData>? get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$HistoryRespImplCopyWith<_$HistoryRespImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

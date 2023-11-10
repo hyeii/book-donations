@@ -37,23 +37,20 @@ class FirstPage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 2 / 3,
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
-                ElevatedButton(
-                  onPressed: () {
+                GestureDetector(
+                  onTap: () {
                     OnboardingRoute().go(context);
                   },
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: Size.zero,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                      // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape: RoundedRectangleBorder(
-                          //모서리를 둥글게
-                          borderRadius: BorderRadius.circular(8)),
-                      backgroundColor: Colors.brown.shade700,
-                      foregroundColor: Colors.white),
-                  child: Text('알아보기'),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 203, 197, 190),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.all(25),
+                    child: Icon(Icons.arrow_forward, color: Colors.white),
+                  ),
                 )
               ],
             ),

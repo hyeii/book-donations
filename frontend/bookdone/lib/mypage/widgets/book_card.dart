@@ -1,17 +1,17 @@
+import 'package:bookdone/mypage/model/my_book.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class BookCard extends HookWidget {
-  const BookCard({super.key});
+  const BookCard({super.key, required this.book});
+  final BookInfo book;
 
   @override
   Widget build(BuildContext context) {
-    final imageUrl = useState(
-        'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg');
-    final title = useState('바다가 들리는 편의점');
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
       child: Container(
         width: double.infinity,
         height: 100,
@@ -33,7 +33,7 @@ class BookCard extends HookWidget {
                   height: 70,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
-                  imageUrl: imageUrl.value,
+                  imageUrl: book.titleUrl,
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
@@ -50,7 +50,7 @@ class BookCard extends HookWidget {
                       Container(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          title.value,
+                          book.title,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -59,6 +59,9 @@ class BookCard extends HookWidget {
                         child: TextButton(
                           onPressed: () {
                             // TODO: 히스토리 작성 팝업? 페이지?
+                            HistoryRoute(
+                              donationId: book.id,
+                            ).push(context);
                           },
                           style: TextButton.styleFrom(
                             minimumSize: Size.zero,

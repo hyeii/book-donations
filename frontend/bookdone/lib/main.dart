@@ -16,11 +16,11 @@ void main() async {
   await dotenv.load(fileName: ".env.dev");
   String kakaoNativeKey = dotenv.get('KAKAO_NATIVE_KEY');
   WidgetsFlutterBinding.ensureInitialized();
-  // String? firebaseToken = await fcmSetting();
-  // SharedPreferences pref = await SharedPreferences.getInstance();
-  // if (firebaseToken != null) {
-  //   await pref.setString('fcmToken', firebaseToken);
-  // }
+  String? firebaseToken = await fcmSetting();
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  if (firebaseToken != null) {
+    await pref.setString('fcmToken', firebaseToken);
+  }
   KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(
     const ProviderScope(child: MyApp()),

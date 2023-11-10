@@ -19,7 +19,7 @@ public class MemberUpdateListener {
     private final MemberService memberService;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "donation-req")
+    @KafkaListener(topics = "dona-req")
     public void decreasePointOnReservationRequest(String message) {
         log.info("request-donation Event Catch!");
         try {
@@ -32,7 +32,7 @@ public class MemberUpdateListener {
         }
     }
 
-    @KafkaListener(topics = "donation-can")
+    @KafkaListener(topics = "dona-can")
     public void increasePointOnDonationCancel(String message) {
         log.info("cancel-donation Event Catch!");
         try {
@@ -45,7 +45,7 @@ public class MemberUpdateListener {
         }
     }
 
-    @KafkaListener(topics = "donation-com")
+    @KafkaListener(topics = "dona-com")
     public void increasePointOnDonationFinish(String message) {
         log.info("complete-donation Event Catch!");
         try {

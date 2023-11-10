@@ -58,9 +58,14 @@ public class FindDonationUseCase {
         Map<Long, String> nicknameMap = null;
 
         try {
-            nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
+            nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), HashMap.class);
         } catch (FeignException.NotFound e) {
             throw e;
+        }
+
+        log.info("nicknameMap type = {}", nicknameMap.getClass());
+        for (Map.Entry<Long, String> entry : nicknameMap.entrySet()) {
+            log.info("key type = {}, value type = {}", entry.getKey().getClass(), entry.getValue().getClass());
         }
 
         List<DonationListResponse> donationListResponseList = createDonationListResponse(
@@ -80,7 +85,8 @@ public class FindDonationUseCase {
 
 
         for (Donation donation : donationList) {
-            String nickname = objectMapper.convertValue(nicknameMap.get(donation.getMemberId()), String.class);
+//            String nickname = objectMapper.convertValue(nicknameMap.get(donation.getMemberId()), String.class);
+            String nickname = nicknameMap.get(donation.getMemberId());
             log.info("id={}", donation.getMemberId());
             log.info("nickname={}", nickname);
             log.info("nickname2={}", nicknameMap.get(donation.getMemberId()));

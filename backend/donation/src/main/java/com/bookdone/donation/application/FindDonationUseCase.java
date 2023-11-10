@@ -15,6 +15,7 @@ import com.bookdone.history.domain.History;
 import com.bookdone.history.dto.response.HistoryResponse;
 import com.bookdone.util.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,6 +73,8 @@ public class FindDonationUseCase {
         List<DonationListResponse> donationListResponseList = new ArrayList<>();
 
         log.info("nicknameMap={}", nicknameMap);
+        log.info("map values = {}", nicknameMap.values());
+        log.info("map keys = {}", nicknameMap.keySet());
 
         ObjectMapper objectMapper = new ObjectMapper();
 

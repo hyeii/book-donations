@@ -35,12 +35,11 @@ class MyPageMain extends HookConsumerWidget {
     var nickname = useState('');
     var point = useState(0);
 
-    var keepingList =
-        useState<MyKeepingList>(MyKeepingList(keepingList: []));
-    var donatingList = useState<MyDonatingList>(
-        MyDonatingList(donatingList: []));
-    var likeBookList = useState<MyLikeBookList>(
-        MyLikeBookList(likeBookList: []));
+    var keepingList = useState<MyKeepingList>(MyKeepingList(keepingList: []));
+    var donatingList =
+        useState<MyDonatingList>(MyDonatingList(donatingList: []));
+    var likeBookList =
+        useState<MyLikeBookList>(MyLikeBookList(likeBookList: []));
     // ref.read(userDataRepositoryProvider).restoreNickname().then((value) => {nickname=value});
 
     // Future<String> getUser() async {
@@ -62,7 +61,7 @@ class MyPageMain extends HookConsumerWidget {
           }).catchError((error) {
             print(error);
           });
-          List<BookInfo> donating =[];
+          List<BookInfo> donating = [];
           List<BookInfo> keeping = [];
           restClient.getMyBook().then((bookData) {
             for (var book in bookData.data) {
@@ -80,7 +79,7 @@ class MyPageMain extends HookConsumerWidget {
           });
           restClient.getLikeBooks().then((bookInfo) {
             List<LikeInfo> likeBooks = [];
-            for(var likeInfo in bookInfo.data){
+            for (var likeInfo in bookInfo.data) {
               likeBooks.add(likeInfo);
             }
             likeBookList.value = MyLikeBookList(likeBookList: likeBooks);

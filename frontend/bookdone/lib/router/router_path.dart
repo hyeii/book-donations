@@ -18,4 +18,5 @@ class RouterPath {
   static const String registerNew = '/registnew';
   static const String topPage = '/toppage';
   static const String historyMain = '/historymain';
+  static const String historyRegister = '/historyregister';
 }

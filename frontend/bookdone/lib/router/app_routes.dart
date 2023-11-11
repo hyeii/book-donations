@@ -7,6 +7,7 @@ import 'package:bookdone/main.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
+import 'package:bookdone/mypage/page/register_history.dart';
 import 'package:bookdone/onboard/page/add_additional_info.dart';
 import 'package:bookdone/onboard/page/add_complete.dart';
 import 'package:bookdone/onboard/page/first_page.dart';
@@ -233,5 +234,18 @@ class HistoryRoute extends GoRouteData {
         donationId: donationId,
         title: title,
         titleUrl: titleUrl,
+      );
+}
+
+@TypedGoRoute<HistoryRegisterRoute>(
+  path: RouterPath.historyRegister,
+)
+class HistoryRegisterRoute extends GoRouteData {
+  const HistoryRegisterRoute({required this.donationId});
+  final int donationId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => RegisterHistory(
+        donationId: donationId,
       );
 }

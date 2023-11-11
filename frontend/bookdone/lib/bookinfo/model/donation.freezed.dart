@@ -22,7 +22,7 @@ DonationByRegionData _$DonationByRegionDataFromJson(Map<String, dynamic> json) {
 mixin _$DonationByRegionData {
   bool get success => throw _privateConstructorUsedError;
   String get msg => throw _privateConstructorUsedError;
-  List<DonationByRegion>? get data => throw _privateConstructorUsedError;
+  List<DonationByRegion> get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $DonationByRegionDataCopyWith<$Res> {
           $Res Function(DonationByRegionData) then) =
       _$DonationByRegionDataCopyWithImpl<$Res, DonationByRegionData>;
   @useResult
-  $Res call({bool success, String msg, List<DonationByRegion>? data});
+  $Res call({bool success, String msg, List<DonationByRegion> data});
 }
 
 /// @nodoc
@@ -55,7 +55,7 @@ class _$DonationByRegionDataCopyWithImpl<$Res,
   $Res call({
     Object? success = null,
     Object? msg = null,
-    Object? data = freezed,
+    Object? data = null,
   }) {
     return _then(_value.copyWith(
       success: null == success
@@ -66,10 +66,10 @@ class _$DonationByRegionDataCopyWithImpl<$Res,
           ? _value.msg
           : msg // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<DonationByRegion>?,
+              as List<DonationByRegion>,
     ) as $Val);
   }
 }
@@ -82,7 +82,7 @@ abstract class _$$DonationByRegionDataImplCopyWith<$Res>
       __$$DonationByRegionDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool success, String msg, List<DonationByRegion>? data});
+  $Res call({bool success, String msg, List<DonationByRegion> data});
 }
 
 /// @nodoc
@@ -98,7 +98,7 @@ class __$$DonationByRegionDataImplCopyWithImpl<$Res>
   $Res call({
     Object? success = null,
     Object? msg = null,
-    Object? data = freezed,
+    Object? data = null,
   }) {
     return _then(_$DonationByRegionDataImpl(
       success: null == success
@@ -109,10 +109,10 @@ class __$$DonationByRegionDataImplCopyWithImpl<$Res>
           ? _value.msg
           : msg // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
+      data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<DonationByRegion>?,
+              as List<DonationByRegion>,
     ));
   }
 }
@@ -125,7 +125,7 @@ class _$DonationByRegionDataImpl
   const _$DonationByRegionDataImpl(
       {required this.success,
       required this.msg,
-      final List<DonationByRegion>? data})
+      required final List<DonationByRegion> data})
       : _data = data;
 
   factory _$DonationByRegionDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -135,14 +135,12 @@ class _$DonationByRegionDataImpl
   final bool success;
   @override
   final String msg;
-  final List<DonationByRegion>? _data;
+  final List<DonationByRegion> _data;
   @override
-  List<DonationByRegion>? get data {
-    final value = _data;
-    if (value == null) return null;
+  List<DonationByRegion> get data {
     if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_data);
   }
 
   @override
@@ -195,7 +193,7 @@ abstract class _DonationByRegionData implements DonationByRegionData {
   const factory _DonationByRegionData(
       {required final bool success,
       required final String msg,
-      final List<DonationByRegion>? data}) = _$DonationByRegionDataImpl;
+      required final List<DonationByRegion> data}) = _$DonationByRegionDataImpl;
 
   factory _DonationByRegionData.fromJson(Map<String, dynamic> json) =
       _$DonationByRegionDataImpl.fromJson;
@@ -205,7 +203,7 @@ abstract class _DonationByRegionData implements DonationByRegionData {
   @override
   String get msg;
   @override
-  List<DonationByRegion>? get data;
+  List<DonationByRegion> get data;
   @override
   @JsonKey(ignore: true)
   _$$DonationByRegionDataImplCopyWith<_$DonationByRegionDataImpl>

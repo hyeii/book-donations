@@ -462,12 +462,16 @@ RouteBase get $historyRoute => GoRouteData.$route(
 
 extension $HistoryRouteExtension on HistoryRoute {
   static HistoryRoute _fromState(GoRouterState state) => HistoryRoute(
+        title: state.uri.queryParameters['title']!,
+        titleUrl: state.uri.queryParameters['title-url']!,
         donationId: int.parse(state.uri.queryParameters['donation-id']!),
       );
 
   String get location => GoRouteData.$location(
         '/historymain',
         queryParams: {
+          'title': title,
+          'title-url': titleUrl,
           'donation-id': donationId.toString(),
         },
       );

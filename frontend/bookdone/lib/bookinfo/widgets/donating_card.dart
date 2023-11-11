@@ -31,13 +31,13 @@ class DonatingCard extends HookWidget {
 
     Future<String> getAddressName() async {
       var addressName = '';
-      print('지역확인 : ${regionCode.value}');
       bool stop = false;
       for (int i = 0; i < regionList.value.length; i++) {
         if (!stop) {
           for (int j = 0; j < regionList.value[i].secondList.length; j++) {
             if (regionList.value[i].secondList[j].code == donation.address) {
               addressName = regionList.value[i].secondList[j].name;
+              print('여기가 지역이얌 : $addressName, ${donation.nickname}');
               stop = true;
               break;
             }

@@ -15,42 +15,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 
-class RegionNotifier extends StateNotifier<String> {
-  RegionNotifier(this.ref) : super('유저정보주소');
-
-  final Ref ref;
-  Future<void> setRegion(String region) async {
-    state = region;
-  }
-}
-
-class RegionCodeNotifier extends StateNotifier<String> {
-  RegionCodeNotifier(this.ref) : super('유저정보주소');
-
-  final Ref ref;
-  Future<void> setRegionCode(String region) async {
-    state = region;
-  }
-}
-
-class RegionIndexNotifier extends StateNotifier<int> {
-  RegionIndexNotifier(this.ref) : super(0);
-
-  final Ref ref;
-  Future<void> setIndex(int index) async {
-    state = index;
-  }
-}
-
-final regionIndexStateProvider =
-    StateNotifierProvider<RegionIndexNotifier, int>(
-        (ref) => RegionIndexNotifier(ref));
-final regionStateProvider =
-    StateNotifierProvider<RegionNotifier, String>((ref) => RegionNotifier(ref));
-final regionCodeStateProvider =
-    StateNotifierProvider<RegionCodeNotifier, String>(
-        (ref) => RegionCodeNotifier(ref));
-
 class BookinfoDetail extends HookConsumerWidget {
   BookinfoDetail({super.key, required this.isbn});
   final String isbn;
@@ -66,17 +30,19 @@ class BookinfoDetail extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
-    final regionNow = ref.watch(regionStateProvider);
     final _tabController =
         useTabController(initialLength: tabs.length, initialIndex: 0);
-    var regionList = useState<List<RegionInfo>>([]);
-    var selectedRegionIndex = useState(0);
-    var selectedRegionCode = useState('');
-    var donatingList = useState<List<DonationByRegion>>([]);
-    var keepingList = useState<List<KeepingBookData>>([]);
 
-    var regionCur = useState('');
+    // 전체 지역 json 목록
+    var regionList = useState<List<RegionInfo>>([]);
+    // 선택 지역 index
+    var selectedRegionIndex = useState(0);
+    // 선택 지역 코드
+    var selectedRegionCode = useState('');
+
+    // 현재 지역 이름
     var regionName = useState('');
+    // 현재 지역 코드
     var regionCode = useState('');
 
     Future<List<RegionInfo>> readJson() async {
@@ -88,18 +54,6 @@ class BookinfoDetail extends HookConsumerWidget {
       return result.region;
     }
 
-    Future<List<DonationByRegion>?> getDonationList() async {
-      DonationByRegionData data =
-          await restClient.getDonationByRegion(isbn, selectedRegionCode.value);
-      return data.data;
-    }
-
-    Future<List<KeepingBookData>?> getKeepingCnt() async {
-      KeepingBookByRegion data = await restClient.getKeepingCntByRegion(
-          isbn, selectedRegionCode.value);
-      return data.data;
-    }
-
     Future<String> getAddressName() async {
       var addressName = '';
       print('지역확인 : ${regionCode.value}');
@@ -109,10 +63,6 @@ class BookinfoDetail extends HookConsumerWidget {
           for (int j = 0; j < regionList.value[i].secondList.length; j++) {
             if (regionList.value[i].secondList[j].code == regionCode.value) {
               addressName = regionList.value[i].first;
-              ref
-                  .watch(regionStateProvider.notifier)
-                  .setRegion(regionList.value[i].first);
-              ref.watch(regionIndexStateProvider.notifier).setIndex(i);
               stop = true;
               break;
             }
@@ -138,22 +88,13 @@ class BookinfoDetail extends HookConsumerWidget {
 
           final addressName = await getAddressName();
           regionName.value = addressName;
-          ref.watch(regionStateProvider.notifier).setRegion(addressName);
-
-          getDonationList().then((data) {
-            donatingList.value = data!;
-          }).catchError((error) {
-            print(error);
-          });
-          getKeepingCnt().then((data) {
-            keepingList.value = data!;
-          });
         } catch (error) {
           print(error);
         }
       }
 
       fetchData();
+      return null;
     }, []);
 
     Future<void> selectAddress(context) async {
@@ -186,7 +127,6 @@ class BookinfoDetail extends HookConsumerWidget {
                           return GestureDetector(
                             onTap: () {
                               selectedRegionIndex.value = index;
-                              regionCur.value = regionList.value[index].first;
                               selectedRegionCode.value =
                                   regionList.value[index].secondList[0].code;
                             },
@@ -229,12 +169,14 @@ class BookinfoDetail extends HookConsumerWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          regionName.value = regionCur.value;
+                          regionName.value =
+                              regionList.value[selectedRegionIndex.value].first;
                           // TODO: 지역코드 서버로 보내기
-                          DonationByRegionData data =
-                              await restClient.getDonationByRegion(
-                                  isbn, selectedRegionCode.value);
-                          donatingList.value = data.data!;
+                          // DonationByRegionData data =
+                          //     await restClient.getDonationByRegion(
+                          //         isbn, selectedRegionCode.value);
+                          // donatingList.value = data.data!;
+                          regionCode.value = selectedRegionCode.value;
 
                           context.pop();
                         },
@@ -420,7 +362,7 @@ class BookinfoDetail extends HookConsumerWidget {
                           horizontal: MediaQuery.of(context).size.width / 12),
                       child: DonatingList(
                         isbn: isbn,
-                        donateList: donatingList.value,
+                        code: regionCode.value,
                       ),
                     ),
                     Padding(
@@ -428,8 +370,8 @@ class BookinfoDetail extends HookConsumerWidget {
                           horizontal: MediaQuery.of(context).size.width / 12),
                       child: KeepingList(
                           isbn: isbn,
+                          code: regionCode.value,
                           regionIndex: selectedRegionIndex.value,
-                          keepingList: keepingList.value,
                           regionList: regionList.value),
                     ),
                   ],

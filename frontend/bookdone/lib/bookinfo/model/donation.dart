@@ -12,7 +12,7 @@ class DonationByRegionData with _$DonationByRegionData {
   const factory DonationByRegionData({
     required bool success,
     required String msg,
-    List<DonationByRegion>? data,
+    required List<DonationByRegion> data,
   }) = _DonationByRegionData;
 
   factory DonationByRegionData.fromJson(Map<String, Object?> json) =>

@@ -1,6 +1,7 @@
 import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HistoryMain extends HookConsumerWidget {
@@ -16,6 +17,26 @@ class HistoryMain extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
+    var histories = useState<List<HistoryData>?>(null);
+
+    Future<HistoryResp> getHistories() async {
+      var data = restClient.getHistoriesByDonation(donationId);
+      return data;
+    }
+
+    useEffect(() {
+      void fetchData() async {
+        try {
+          final data = await getHistories();
+          histories.value = data.data;
+        } catch (error) {
+          print(error);
+        }
+      }
+
+      fetchData();
+      return null;
+    }, []);
 
     return Scaffold(
       // backgroundColor: Color.fromARGB(255, 238, 236, 233),
@@ -44,70 +65,54 @@ class HistoryMain extends HookConsumerWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: FutureBuilder(
-              future: restClient.getHistoriesByDonation(donationId),
-              builder: (_, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                if (snapshot.data == null) {
-                  // print(snapshot.data);
-                  // return SizedBox.shrink();
-                  return Text('히스토리가 null임');
-                }
-
-                if (snapshot.data!.data != null &&
-                    snapshot.data!.data!.isEmpty) {
-                  // return SizedBox.shrink();
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      top: 30,
-                      left: 30,
-                      right: 30,
-                    ),
-                    child: Text('아직 작성된 히스토리가 없습니다'),
-                  );
-                }
-
-                final historyList = snapshot.data!.data!;
-                return Text('test');
-
-                // return Expanded(
-                //   child: ListView.builder(
-                //     itemCount: historyList.length,
-                //     itemBuilder: (context, index) {
-                //       return ClipRRect(
-                //         borderRadius: BorderRadius.circular(10),
-                //         child: Container(
-                //           color: Color.fromARGB(255, 159, 157, 154),
-                //           height: 200,
-                //           child: Padding(
-                //             padding: const EdgeInsets.all(30.0),
-                //             child: Column(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 Align(
-                //                   alignment: Alignment.centerLeft,
-                //                   child: Text('테스트'),
-                //                 ),
-                //                 Row(
-                //                   mainAxisAlignment:
-                //                       MainAxisAlignment.spaceBetween,
-                //                   children: [
-                //                     Text('테스트틍ㅇ'),
-                //                     Text('작성시간 '),
-                //                   ],
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // );
-              },
-            ),
+            child: histories.value == null
+                ? Text('히스토리가 없습니다')
+                : histories.value!.isEmpty
+                    ? Text('히스토리가 없습니다')
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: ListView.builder(
+                          // gridDelegate:
+                          //     SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+                          itemCount: histories.value != null
+                              ? histories.value!.length
+                              : 0,
+                          primary: false,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                color: Color.fromARGB(255, 159, 157, 154),
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(30.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            histories.value![index].content),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                              histories.value![index].nickname),
+                                          Text('작성시간 '),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
           ),
         ],
       ),

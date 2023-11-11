@@ -6,7 +6,6 @@ import 'package:bookdone/mypage/model/my_book.dart';
 import 'package:bookdone/onboard/model/user_res.dart';
 import 'package:bookdone/regist/model/regist_get_data.dart';
 import 'package:bookdone/rest_api/app_dio.dart';
-import 'package:bookdone/rest_api/auth_dio.dart';
 import 'package:bookdone/search/model/book.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -87,4 +86,15 @@ abstract class RestClient {
 
   @GET('/api/books/likes')
   Future<MyLikeBook> getLikeBooks();
+
+  @PUT('/api/donations/{donationId}')
+  @MultiPart()
+  Future<RegisterResponse> updateArticle(
+    @Path() int donationId, {
+    @Part() required String isbn,
+    @Part() required String address,
+    @Part() required String content,
+    @Part() required bool canDelivery,
+    @Part() required List<MultipartFile> images,
+  });
 }

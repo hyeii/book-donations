@@ -16,8 +16,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegistData extends HookConsumerWidget {
-  const RegistData({super.key, required this.isbn});
+  const RegistData({super.key, required this.isbn, required this.donationId});
   final String isbn;
+  final int donationId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -128,39 +129,6 @@ class RegistData extends HookConsumerWidget {
                 color: Colors.white,
               ),
               child: Text('3장이 최대임'),
-            ),
-          );
-        },
-      );
-    }
-
-    void checkRegister(context) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 3,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: Column(children: [
-                Text('기부글을 등록할까요?'),
-                ElevatedButton(
-                  onPressed: () {
-                    context.pop();
-                  },
-                  child: Text('취소'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // createArticle();
-                  },
-                  child: Text('등록'),
-                )
-              ]),
             ),
           );
         },
@@ -587,7 +555,8 @@ class RegistData extends HookConsumerWidget {
                 isbn: isbn,
                 address: regionCode.value,
                 content: content.value,
-                images: images.value),
+                images: images.value,
+                donationId: donationId),
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:bookdone/mypage/model/my_book.dart';
-import 'package:bookdone/mypage/widgets/my_keeping_list.dart';
 import 'package:bookdone/regist/service/scan_barcode.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
@@ -7,7 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class RegistExistList extends HookConsumerWidget {
@@ -28,8 +26,6 @@ class RegistExistList extends HookConsumerWidget {
           for (var book in checkData.data) {
             print(book.donationStatus);
           }
-          print(
-              ' ----------------------------- ${checkData.data.length} -------------------------------');
           List<BookInfo> keeping = [];
           await restClient.getMyBook().then((bookData) {
             for (var book in bookData.data) {

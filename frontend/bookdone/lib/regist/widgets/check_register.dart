@@ -34,6 +34,28 @@ class CheckRegister extends HookConsumerWidget {
       return null;
     }, []);
     final restClient = ref.read(restApiClientProvider);
+    var gotId = useState(0);
+
+    void register() async {
+      var resp = await restClient.registArticle(
+          isbn: isbn,
+          address: address,
+          content: content,
+          canDelivery: false,
+          images: files.value);
+      gotId.value = resp.data;
+    }
+
+    void registerExist() async {
+      var resp = await restClient.updateArticle(donationId,
+          isbn: isbn,
+          address: address,
+          content: content,
+          canDelivery: false,
+          images: files.value);
+      gotId.value = resp.data;
+    }
+
     return ElevatedButton(
       onPressed: () => showDialog<String>(
         context: context,
@@ -49,19 +71,7 @@ class CheckRegister extends HookConsumerWidget {
             ),
             TextButton(
               onPressed: () async {
-                donationId == -1
-                    ? await restClient.registArticle(
-                        isbn: isbn,
-                        address: address,
-                        content: content,
-                        canDelivery: false,
-                        images: files.value)
-                    : await restClient.updateArticle(donationId,
-                        isbn: isbn,
-                        address: address,
-                        content: content,
-                        canDelivery: false,
-                        images: files.value);
+                donationId == -1 ? register() : registerExist();
                 MyPageRoute().go(context);
               },
               child: const Text('등록'),

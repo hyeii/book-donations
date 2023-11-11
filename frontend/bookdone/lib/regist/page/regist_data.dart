@@ -301,7 +301,7 @@ class RegistData extends HookConsumerWidget {
       appBar: AppBar(
         centerTitle: false,
         title: Text(
-          "등록하기 $donationId",
+          "등록하기",
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

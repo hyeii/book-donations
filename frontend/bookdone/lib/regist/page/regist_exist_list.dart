@@ -24,11 +24,21 @@ class RegistExistList extends HookConsumerWidget {
     useEffect(() {
       void fetchData() async {
         try {
+          var checkData = await restClient.getMyBook();
+          for (var book in checkData.data) {
+            print(book.donationStatus);
+          }
+          print(
+              ' ----------------------------- ${checkData.data.length} -------------------------------');
           List<BookInfo> keeping = [];
-          restClient.getMyBook().then((bookData) {
+          await restClient.getMyBook().then((bookData) {
             for (var book in bookData.data) {
               if (book.donationStatus == 'KEEPING') {
                 keeping.add(book);
+              } else {
+                if (book.historyResponseList.isNotEmpty) {
+                  keeping.add(book);
+                }
               }
             }
             keepingList.value = ExistList(info: keeping);
@@ -98,10 +108,31 @@ class RegistExistList extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width * 3 / 7,
               child: ElevatedButton(
                 onPressed: () {
+                  if (ref.read(setDonationIdProvider) == -1) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          child: Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height / 4,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                              ),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text('책을 선택해주세요'))),
+                        );
+                      },
+                    );
+                    return;
+                  }
                   RegisterRoute(
                           isbn: isbn,
                           donationId: ref.read(setDonationIdProvider))
                       .push(context);
+                  ref.watch(setDonationIdProvider.notifier).setId(-1);
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -20,7 +20,7 @@ class GetIsbn extends Notifier<String> {
     } on PlatformException {
       barcodeScanRes = 'ISBN을 조회할 수 없습니다';
     }
-    state = '9788934972204';
+    state = barcodeScanRes;
     // state = '테스트임';
   }
 }

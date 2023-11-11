@@ -13,11 +13,13 @@ class CheckRegister extends HookConsumerWidget {
       required this.isbn,
       required this.address,
       required this.content,
+      required this.donationId,
       this.images});
   final List<XFile>? images;
   final String isbn;
   final String address;
   final String content;
+  final int donationId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,12 +49,19 @@ class CheckRegister extends HookConsumerWidget {
             ),
             TextButton(
               onPressed: () async {
-                await restClient.registArticle(
-                    isbn: isbn,
-                    address: address,
-                    content: content,
-                    canDelivery: false,
-                    images: files.value);
+                donationId == -1
+                    ? await restClient.registArticle(
+                        isbn: isbn,
+                        address: address,
+                        content: content,
+                        canDelivery: false,
+                        images: files.value)
+                    : await restClient.updateArticle(donationId,
+                        isbn: isbn,
+                        address: address,
+                        content: content,
+                        canDelivery: false,
+                        images: files.value);
                 MyPageRoute().go(context);
               },
               child: const Text('등록'),

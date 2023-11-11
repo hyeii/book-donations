@@ -119,7 +119,7 @@ class RegistNewCheck extends HookConsumerWidget {
               width: 170,
               child: ElevatedButton(
                 onPressed: () {
-                  RegisterRoute(isbn: isbn).push(context);
+                  RegisterRoute(isbn: isbn, donationId: -1).push(context);
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

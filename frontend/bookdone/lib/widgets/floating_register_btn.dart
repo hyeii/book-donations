@@ -22,23 +22,29 @@ class FloatingRegisterBtn extends HookConsumerWidget {
       shape: CircleBorder(),
       children: [
         SpeedDialChild(
-            shape: CircleBorder(),
-            child: const Icon(
-              Icons.menu_book_sharp,
-              color: Colors.white,
-              size: 22,
-            ),
-            label: "책도네로 받은 책을 기부할래요",
-            labelStyle: const TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-                fontSize: 13.0),
-            backgroundColor: Colors.brown.shade400,
-            labelBackgroundColor: Colors.brown.shade400,
-            onTap: () async {
-              ref.read(getIsbnProvider.notifier).scanBarcodeNormal();
+          shape: CircleBorder(),
+          child: const Icon(
+            Icons.menu_book_sharp,
+            color: Colors.white,
+            size: 22,
+          ),
+          label: "책도네로 받은 책을 기부할래요",
+          labelStyle: const TextStyle(
+              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
+          backgroundColor: Colors.brown.shade400,
+          labelBackgroundColor: Colors.brown.shade400,
+          onTap: () async {
+            ref.read(getIsbnProvider.notifier).scanBarcodeNormal();
+            if (ref.watch(getIsbnProvider) == 'ISBN을 조회할 수 없습니다') {
+              Dialog(
+                child: Text('조회 안됨'),
+              );
+              return;
+            } else {
               await RegisterExistRoute().push(context);
-            }),
+            }
+          },
+        ),
         SpeedDialChild(
           shape: CircleBorder(),
           child: const Icon(
@@ -53,7 +59,14 @@ class FloatingRegisterBtn extends HookConsumerWidget {
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
           onTap: () async {
             ref.read(getIsbnProvider.notifier).scanBarcodeNormal();
-            await RegisterNewRoute().push(context);
+            if (ref.watch(getIsbnProvider) == 'ISBN을 조회할 수 없습니다') {
+              Dialog(
+                child: Text('조회 안됨'),
+              );
+              return;
+            } else {
+              await RegisterNewRoute().push(context);
+            }
           },
         ),
       ],

@@ -390,12 +390,14 @@ RouteBase get $registerRoute => GoRouteData.$route(
 extension $RegisterRouteExtension on RegisterRoute {
   static RegisterRoute _fromState(GoRouterState state) => RegisterRoute(
         isbn: state.uri.queryParameters['isbn']!,
+        donationId: int.parse(state.uri.queryParameters['donation-id']!),
       );
 
   String get location => GoRouteData.$location(
         '/regist',
         queryParams: {
           'isbn': isbn,
+          'donation-id': donationId.toString(),
         },
       );
 

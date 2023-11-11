@@ -1,42 +1,28 @@
 import 'package:bookdone/chat/widgets/chatroom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // env 사용
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
+import '../../top/page/top_navigation_bar.dart';
+import '../service/stomp_service.dart';
 
 class ChatMain extends HookWidget {
   const ChatMain({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // String? wsUrl = DotEnv().env['WS_URL'];
-    String wsUrl = dotenv.get('WS_URL');
-    final stompClient = useState<StompClient?>(null);
+    final StompService stompService = StompService();
 
-    // useEffect(() {
-    //   void onConnect(StompFrame frame) {
-    //     stompClient.value?.subscribe(
-    //         destination: '/sub',
-    //         callback: (StompFrame frame) {
-    //           print('Received: ${frame.body}');
-    //         });
-    //   }
+    useEffect(() {
+      stompService.initStompClient();
 
-    //   stompClient.value = StompClient(
-    //       config: StompConfig(
-    //           url: '$wsUrl',
-    //           onConnect: onConnect,
-    //           onWebSocketError: (dynamic error) => print(error),
-    //           stompConnectHeaders: {}));
-
-    //   stompClient.value?.activate();
-
-    //   return () {
-    //     stompClient.value?.deactivate();
-    //   };
-    // }, const []);
+      return () {
+        stompService.deactivateStompClient();
+      };
+    }, const []);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,15 +30,15 @@ class ChatMain extends HookWidget {
         title: Text("채팅"),
       ),
       body: Center(
-          child: ListView.separated(
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return ChatRoomCard();
-        },
-        separatorBuilder: (context, index) {
-          return Divider();
-        },
-      )),
+        child: ListView.separated(
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return ChatRoomCard();
+          },
+          separatorBuilder: (context, index) => Divider(),
+        ),
+      ),
+      bottomNavigationBar: const TopNavigationBar(),
     );
   }
 }

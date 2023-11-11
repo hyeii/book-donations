@@ -1,20 +1,15 @@
 import 'dart:convert';
 
 import 'package:bookdone/bookinfo/model/region.dart';
-import 'package:bookdone/onboard/model/user_res.dart';
-import 'package:bookdone/onboard/page/add_complete.dart';
-import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/onboard/service/set_user_api.dart';
+import 'package:bookdone/regist/page/regist_data.dart';
+import 'package:bookdone/regist/widgets/register_region_dialog.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
-import 'package:bookdone/util/repository/region_repository.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddAdditionalInfo extends HookConsumerWidget {
@@ -55,7 +50,7 @@ class AddAdditionalInfo extends HookConsumerWidget {
     Future<void> sendInfo() async {
       await restClient.postAdditionalInfo({
         'nickname': nickName.value,
-        'address': regionCode.value,
+        'address': ref.watch(registerRegionCodeStateProvider),
         'fcmToken': fcmToken.value
       });
     }
@@ -161,169 +156,7 @@ class AddAdditionalInfo extends HookConsumerWidget {
       showDialog(
         context: context,
         builder: (context) {
-          // readJson();
-          return StatefulBuilder(builder: (context, setState) {
-            return Dialog(
-              child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        "지역을 선택해주세요",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: regionList.value.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      secondRegionList.value =
-                                          regionList.value[index].secondList;
-                                      // _secondRegionListIndex = index;
-                                      selectedRegionIndex.value = 0;
-                                      firstRegionIndex.value = index;
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Container(
-                                        decoration: firstRegionIndex.value ==
-                                                index
-                                            ? BoxDecoration(
-                                                color: Colors.brown.shade300,
-                                                borderRadius:
-                                                    BorderRadius.circular(10))
-                                            : BoxDecoration(
-                                                color: Colors.white),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 4.0, bottom: 4.0),
-                                          child: Center(
-                                            child: Text(
-                                              regionList.value[index].first,
-                                              style: TextStyle(
-                                                  color:
-                                                      firstRegionIndex.value ==
-                                                              index
-                                                          ? Colors.white
-                                                          : Colors.black,
-                                                  fontWeight:
-                                                      firstRegionIndex.value ==
-                                                              index
-                                                          ? FontWeight.bold
-                                                          : FontWeight.normal),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            // if (_secondRegionList.isNotEmpty)
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: secondRegionList.value.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      selectedRegionCode.value =
-                                          secondRegionList.value[index].code;
-                                      selectedRegionIndex.value = index;
-                                      // _selectedRegion = _secondRegionList[
-                                      //     _selectedRegionIndex]["name"];
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Container(
-                                        decoration: selectedRegionIndex.value ==
-                                                index
-                                            ? BoxDecoration(
-                                                color: Colors.brown.shade300,
-                                                borderRadius:
-                                                    BorderRadius.circular(10))
-                                            : BoxDecoration(
-                                                color: Colors.white),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 4.0, bottom: 4.0),
-                                          child: Center(
-                                            child: Text(
-                                              secondRegionList
-                                                  .value[index].second,
-                                              style: TextStyle(
-                                                  color: selectedRegionIndex
-                                                              .value ==
-                                                          index
-                                                      ? Colors.white
-                                                      : Colors.black,
-                                                  fontWeight:
-                                                      selectedRegionIndex
-                                                                  .value ==
-                                                              index
-                                                          ? FontWeight.bold
-                                                          : FontWeight.normal),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            // if (_secondRegionList.isEmpty) Text("선택 ㄱㄱ")
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // TODO: 지역코드 서버로 보내기
-                            regionCode.value = secondRegionList
-                                .value[selectedRegionIndex.value].code;
-
-                            regionName.value = secondRegionList
-                                .value[selectedRegionIndex.value].name;
-
-                            Navigator.of(context).pop();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            backgroundColor: Colors.brown.shade200,
-                            foregroundColor: Colors.white,
-                          ),
-                          child: Text(
-                            "완료",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          });
+          return RegisterRegionDialog(regionList: regionList.value);
         },
       );
     }
@@ -414,6 +247,8 @@ class AddAdditionalInfo extends HookConsumerWidget {
                           sendInfo();
                           // complete.value = true;
                           SetUserApi.updateMyInfo(ref);
+                          ref.invalidate(registerRegionStateProvider);
+                          ref.invalidate(registerRegionCodeStateProvider);
                           AddCompleteRoute().push(context);
                         },
                         child: Text('확인'),
@@ -552,7 +387,7 @@ class AddAdditionalInfo extends HookConsumerWidget {
                       SizedBox(
                         width: 5.0,
                       ),
-                      Text(regionName.value),
+                      Text(ref.watch(registerRegionStateProvider)),
                     ],
                   ),
                 ),

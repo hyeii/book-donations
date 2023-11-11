@@ -73,15 +73,6 @@ class BookinfoDetail extends HookConsumerWidget {
 
     // 전체 지역 json 목록
     var regionList = useState<List<RegionInfo>>([]);
-    // 선택 지역 index
-    var selectedRegionIndex = useState(0);
-    // 선택 지역 코드
-    var selectedRegionCode = useState('');
-
-    // 현재 지역 이름
-    var regionName = useState('');
-    // 현재 지역 코드
-    var regionCode = useState('');
 
     Future<List<RegionInfo>> readJson() async {
       final jsonString =
@@ -99,8 +90,9 @@ class BookinfoDetail extends HookConsumerWidget {
         if (!stop) {
           for (int j = 0; j < regionList.value[i].secondList.length; j++) {
             if (regionList.value[i].secondList[j].code ==
-                ref.read(regionStateProvider)) {
+                await ref.read(userDataRepositoryProvider).restoreAddress()) {
               addressName = regionList.value[i].first;
+              print('addressName : $addressName');
               ref
                   .read(regionStateProvider.notifier)
                   .setRegion(regionList.value[i].secondList[0].code);
@@ -121,8 +113,11 @@ class BookinfoDetail extends HookConsumerWidget {
     useEffect(() {
       void fetchData() async {
         try {
+          // ref.invalidate(regionNameStateProvider);
+          // ref.invalidate(regionStateProvider);
           final json = await readJson();
           regionList.value = json;
+          print('-----------------------???-----------------');
 
           final addressName = await getAddressName();
           ref.read(regionNameStateProvider.notifier).setRegion(addressName);

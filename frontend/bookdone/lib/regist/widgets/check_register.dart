@@ -1,3 +1,4 @@
+import 'package:bookdone/regist/page/regist_data.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:dio/dio.dart';
@@ -72,6 +73,8 @@ class CheckRegister extends HookConsumerWidget {
             TextButton(
               onPressed: () async {
                 donationId == -1 ? register() : registerExist();
+                ref.invalidate(registerRegionStateProvider);
+                ref.invalidate(registerRegionCodeStateProvider);
                 MyPageRoute().go(context);
               },
               child: const Text('등록'),

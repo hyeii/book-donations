@@ -1,6 +1,7 @@
 import 'package:bookdone/chat/page/chat_main.dart';
 import 'package:bookdone/fcm_setting.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
+import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/top/page/top_navigation_bar.dart';
@@ -60,6 +61,7 @@ class MyHomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var carouselIndex = useState(0);
+    final restClient = ref.read(restApiClientProvider);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xff928C85),
@@ -215,6 +217,33 @@ class MyHomePage extends HookConsumerWidget {
                           Text('이잉'),
                         ],
                       ),
+                      FutureBuilder(
+                        future: restClient.getRanking(),
+                        builder: (_, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapshot.data == null) {
+                            return SizedBox.shrink();
+                          }
+                          final rankings = snapshot.data!.data;
+
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  child: Row(
+                                children: [
+                                  Text(rankings[index].nickname),
+                                  Text('${rankings[index].score}'),
+                                ],
+                              ));
+                            },
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),

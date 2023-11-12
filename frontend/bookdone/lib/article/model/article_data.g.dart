@@ -83,3 +83,31 @@ Map<String, dynamic> _$$HistoryRespImplToJson(_$HistoryRespImpl instance) =>
       'msg': instance.msg,
       'data': instance.data,
     };
+
+_$RankRespImpl _$$RankRespImplFromJson(Map<String, dynamic> json) =>
+    _$RankRespImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: (json['data'] as List<dynamic>)
+          .map((e) => RankData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$RankRespImplToJson(_$RankRespImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+_$RankDataImpl _$$RankDataImplFromJson(Map<String, dynamic> json) =>
+    _$RankDataImpl(
+      nickname: json['nickname'] as String,
+      score: (json['score'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$$RankDataImplToJson(_$RankDataImpl instance) =>
+    <String, dynamic>{
+      'nickname': instance.nickname,
+      'score': instance.score,
+    };

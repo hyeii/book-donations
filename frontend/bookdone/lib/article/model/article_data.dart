@@ -57,3 +57,26 @@ class HistoryResp with _$HistoryResp {
   factory HistoryResp.fromJson(Map<String, dynamic> json) =>
       _$HistoryRespFromJson(json);
 }
+
+@freezed
+class RankResp with _$RankResp {
+  const factory RankResp({
+    required bool success,
+    required String msg,
+    required List<RankData> data,
+  }) = _RankResp;
+
+  factory RankResp.fromJson(Map<String, dynamic> json) =>
+      _$RankRespFromJson(json);
+}
+
+@freezed
+class RankData with _$RankData {
+  const factory RankData({
+    required String nickname,
+    required double score,
+  }) = _RankData;
+
+  factory RankData.fromJson(Map<String, dynamic> json) =>
+      _$RankDataFromJson(json);
+}

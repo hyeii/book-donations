@@ -104,4 +104,7 @@ abstract class RestClient {
 
   @GET('/api/histories/members/me')
   Future<HistoryResp> getMyHistories();
+
+  @GET('/api/ranks')
+  Future<RankResp> getRanking();
 }

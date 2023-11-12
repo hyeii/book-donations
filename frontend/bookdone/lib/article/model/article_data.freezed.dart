@@ -912,3 +912,337 @@ abstract class _HistoryResp implements HistoryResp {
   _$$HistoryRespImplCopyWith<_$HistoryRespImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RankResp _$RankRespFromJson(Map<String, dynamic> json) {
+  return _RankResp.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RankResp {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  List<RankData> get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RankRespCopyWith<RankResp> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RankRespCopyWith<$Res> {
+  factory $RankRespCopyWith(RankResp value, $Res Function(RankResp) then) =
+      _$RankRespCopyWithImpl<$Res, RankResp>;
+  @useResult
+  $Res call({bool success, String msg, List<RankData> data});
+}
+
+/// @nodoc
+class _$RankRespCopyWithImpl<$Res, $Val extends RankResp>
+    implements $RankRespCopyWith<$Res> {
+  _$RankRespCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<RankData>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RankRespImplCopyWith<$Res>
+    implements $RankRespCopyWith<$Res> {
+  factory _$$RankRespImplCopyWith(
+          _$RankRespImpl value, $Res Function(_$RankRespImpl) then) =
+      __$$RankRespImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, List<RankData> data});
+}
+
+/// @nodoc
+class __$$RankRespImplCopyWithImpl<$Res>
+    extends _$RankRespCopyWithImpl<$Res, _$RankRespImpl>
+    implements _$$RankRespImplCopyWith<$Res> {
+  __$$RankRespImplCopyWithImpl(
+      _$RankRespImpl _value, $Res Function(_$RankRespImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$RankRespImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<RankData>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RankRespImpl implements _RankResp {
+  const _$RankRespImpl(
+      {required this.success,
+      required this.msg,
+      required final List<RankData> data})
+      : _data = data;
+
+  factory _$RankRespImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RankRespImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  final List<RankData> _data;
+  @override
+  List<RankData> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'RankResp(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RankRespImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, success, msg, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RankRespImplCopyWith<_$RankRespImpl> get copyWith =>
+      __$$RankRespImplCopyWithImpl<_$RankRespImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RankRespImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RankResp implements RankResp {
+  const factory _RankResp(
+      {required final bool success,
+      required final String msg,
+      required final List<RankData> data}) = _$RankRespImpl;
+
+  factory _RankResp.fromJson(Map<String, dynamic> json) =
+      _$RankRespImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  List<RankData> get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$RankRespImplCopyWith<_$RankRespImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+RankData _$RankDataFromJson(Map<String, dynamic> json) {
+  return _RankData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RankData {
+  String get nickname => throw _privateConstructorUsedError;
+  double get score => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RankDataCopyWith<RankData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RankDataCopyWith<$Res> {
+  factory $RankDataCopyWith(RankData value, $Res Function(RankData) then) =
+      _$RankDataCopyWithImpl<$Res, RankData>;
+  @useResult
+  $Res call({String nickname, double score});
+}
+
+/// @nodoc
+class _$RankDataCopyWithImpl<$Res, $Val extends RankData>
+    implements $RankDataCopyWith<$Res> {
+  _$RankDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? nickname = null,
+    Object? score = null,
+  }) {
+    return _then(_value.copyWith(
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RankDataImplCopyWith<$Res>
+    implements $RankDataCopyWith<$Res> {
+  factory _$$RankDataImplCopyWith(
+          _$RankDataImpl value, $Res Function(_$RankDataImpl) then) =
+      __$$RankDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String nickname, double score});
+}
+
+/// @nodoc
+class __$$RankDataImplCopyWithImpl<$Res>
+    extends _$RankDataCopyWithImpl<$Res, _$RankDataImpl>
+    implements _$$RankDataImplCopyWith<$Res> {
+  __$$RankDataImplCopyWithImpl(
+      _$RankDataImpl _value, $Res Function(_$RankDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? nickname = null,
+    Object? score = null,
+  }) {
+    return _then(_$RankDataImpl(
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RankDataImpl implements _RankData {
+  const _$RankDataImpl({required this.nickname, required this.score});
+
+  factory _$RankDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RankDataImplFromJson(json);
+
+  @override
+  final String nickname;
+  @override
+  final double score;
+
+  @override
+  String toString() {
+    return 'RankData(nickname: $nickname, score: $score)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RankDataImpl &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname) &&
+            (identical(other.score, score) || other.score == score));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, nickname, score);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RankDataImplCopyWith<_$RankDataImpl> get copyWith =>
+      __$$RankDataImplCopyWithImpl<_$RankDataImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RankDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RankData implements RankData {
+  const factory _RankData(
+      {required final String nickname,
+      required final double score}) = _$RankDataImpl;
+
+  factory _RankData.fromJson(Map<String, dynamic> json) =
+      _$RankDataImpl.fromJson;
+
+  @override
+  String get nickname;
+  @override
+  double get score;
+  @override
+  @JsonKey(ignore: true)
+  _$$RankDataImplCopyWith<_$RankDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

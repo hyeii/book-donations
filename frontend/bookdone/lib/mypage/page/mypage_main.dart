@@ -144,27 +144,54 @@ class MyPageMain extends HookConsumerWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        AddHistoryRoute().push(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 5.0),
-                          // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          shape: RoundedRectangleBorder(
-                              //모서리를 둥글게
-                              borderRadius: BorderRadius.circular(8)),
-                          textStyle: const TextStyle(fontSize: 12),
-                          backgroundColor: Colors.brown,
-                          foregroundColor: Colors.white),
-                      child: Text(
-                        "히스토리 작성",
-                        style: TextStyle(fontFamily: "SCDream4"),
-                      )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      // alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            MyHistoriesRoute().push(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 5.0),
+                              // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                  //모서리를 둥글게
+                                  borderRadius: BorderRadius.circular(8)),
+                              textStyle: const TextStyle(fontSize: 12),
+                              backgroundColor: Colors.brown,
+                              foregroundColor: Colors.white),
+                          child: Text(
+                            "나의 히스토리",
+                            style: TextStyle(fontFamily: "SCDream4"),
+                          )),
+                    ),
+                    Container(
+                      // alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            AddHistoryRoute().push(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 5.0),
+                              // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                  //모서리를 둥글게
+                                  borderRadius: BorderRadius.circular(8)),
+                              textStyle: const TextStyle(fontSize: 12),
+                              backgroundColor: Colors.brown,
+                              foregroundColor: Colors.white),
+                          child: Text(
+                            "히스토리 작성",
+                            style: TextStyle(fontFamily: "SCDream4"),
+                          )),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 10,

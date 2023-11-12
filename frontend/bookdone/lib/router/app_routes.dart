@@ -4,6 +4,7 @@ import 'package:bookdone/bookinfo/page/bookinfo_detail.dart';
 import 'package:bookdone/bookinfo/page/bookinfo_main.dart';
 import 'package:bookdone/chat/page/chat_main.dart';
 import 'package:bookdone/main.dart';
+import 'package:bookdone/mypage/page/my_histories.dart';
 import 'package:bookdone/mypage/page/mypage_add_history.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
 import 'package:bookdone/mypage/page/mypage_notifications.dart';
@@ -253,4 +254,15 @@ class HistoryRegisterRoute extends GoRouteData {
         title: title,
         titleUrl: titleUrl,
       );
+}
+
+@TypedGoRoute<MyHistoriesRoute>(
+  path: RouterPath.myHistories,
+)
+class MyHistoriesRoute extends GoRouteData {
+  const MyHistoriesRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const MyHistories();
 }

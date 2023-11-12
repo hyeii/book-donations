@@ -27,6 +27,7 @@ List<RouteBase> get $appRoutes => [
       $registerNewRoute,
       $historyRoute,
       $historyRegisterRoute,
+      $myHistoriesRoute,
     ];
 
 RouteBase get $topPageRoute => GoRouteData.$route(
@@ -509,6 +510,29 @@ extension $HistoryRegisterRouteExtension on HistoryRegisterRoute {
           'title': title,
           'title-url': titleUrl,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $myHistoriesRoute => GoRouteData.$route(
+      path: '/myhistory',
+      factory: $MyHistoriesRouteExtension._fromState,
+    );
+
+extension $MyHistoriesRouteExtension on MyHistoriesRoute {
+  static MyHistoriesRoute _fromState(GoRouterState state) =>
+      const MyHistoriesRoute();
+
+  String get location => GoRouteData.$location(
+        '/myhistory',
       );
 
   void go(BuildContext context) => context.go(location);

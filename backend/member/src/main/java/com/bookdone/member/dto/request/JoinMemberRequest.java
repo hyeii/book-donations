@@ -1,6 +1,8 @@
 package com.bookdone.member.dto.request;
 
 import com.bookdone.member.entity.Member;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class JoinMemberRequest {
     private String oauthId;
     private String nickname;

@@ -3,7 +3,7 @@ package com.bookdone.rank.controller;
 import com.bookdone.global.response.BaseResponse;
 import com.bookdone.rank.dto.MemberScoreDto;
 import com.bookdone.rank.dto.UpdateRankingDto;
-import com.bookdone.rank.event.RankingUpdateEventListener;
+import com.bookdone.rank.event.listener.RankingUpdateEventListener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +36,7 @@ public class RankController {
             return BaseResponse.fail("json 변환 실패", 400);
         }
         kafkaTemplate.send("ranking-update", payload);
+
         return BaseResponse.ok(HttpStatus.OK, "producing complete");
     }
 

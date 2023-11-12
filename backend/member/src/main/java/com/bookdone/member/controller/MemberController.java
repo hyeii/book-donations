@@ -4,6 +4,7 @@ import com.bookdone.global.response.BaseResponse;
 import com.bookdone.global.response.MemberResponse;
 import com.bookdone.member.dto.request.AdditionalInfo;
 import com.bookdone.member.dto.request.JoinMemberRequest;
+import com.bookdone.member.repository.MemberRepository;
 import com.bookdone.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -23,6 +24,7 @@ public class MemberController {
 
     private final Environment env;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/health_check")
     public String status(@RequestHeader("member-id") String memberId) {
@@ -46,11 +48,24 @@ public class MemberController {
         return BaseResponse.okWithData(HttpStatus.OK, "멤버 리스트 조회 완료", members);
     }
 
+    @GetMapping("/nicknames")
+    public ResponseEntity<?> getNicknames(@RequestParam List<Long> memberIds) {
+        Map<Long, String> nicknames = memberService.findNicknamesByMemberIds(memberIds);
+        return BaseResponse.okWithData(HttpStatus.OK, "멤버 리스트 조회 완료", nicknames);
+    }
+
     @GetMapping("/{member-id}")
     public ResponseEntity<?> getMemberByMemberId(@PathVariable("member-id") Long memberId) {
         MemberResponse member = memberService.findById(memberId);
         return BaseResponse.okWithData(HttpStatus.OK, "멤버 조회 완료", member);
     }
+
+    @GetMapping("/nicknames/{member-id}")
+    public ResponseEntity<?> getNicknameByMemberId(@PathVariable("member-id") Long memberId) {
+        String nickname = memberService.findById(memberId).getNickname();
+        return BaseResponse.okWithData(HttpStatus.OK, "닉네임 조회 완료", nickname);
+    }
+
 
     @GetMapping("/oauth-id/{oauthId}")
     public ResponseEntity<?> getMemberByOAuthId(@PathVariable String oauthId) {

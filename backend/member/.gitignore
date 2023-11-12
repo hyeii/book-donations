@@ -1,9 +1,17 @@
 HELP.md
 .gradle
+.yml
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+!.gitkeep
+
+Auth/**
+discovery/**
+donation/**
+gateway/**
+frontend/**
 
 ### STS ###
 .apt_generated

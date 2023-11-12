@@ -1,18 +1,17 @@
-package com.bookdone.rank.event;
+package com.bookdone.rank.event.listener;
 
+import com.bookdone.member.service.MemberService;
 import com.bookdone.rank.dto.MemberScoreDto;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -21,19 +20,18 @@ import java.util.Set;
 public class RankingUpdateEventListener {
 
     private final RedisTemplate<String, String> redisTemplate;
+    private final ObjectMapper objectMapper;
+    private final MemberService memberService;
     private final String RANKING_KEY = "rank";
 
-    @KafkaListener(topics = "ranking-update", groupId = "ranking-group")
-    public void updateRanking(String message) {
-        log.info("event catch!!!!!!!!!!!!!!!!!!! = {}", message);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            List<String> nicknames = objectMapper.readValue(message, new TypeReference<List<String>>() {
-            });
-            nicknames.forEach(nickname -> updateScore(nickname));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    //    @KafkaListener(topics = "dona-com")
+    public void updateRanking(Map<String, Long> map) {
+        log.info("dona-com ranking Event Catch!!!");
+
+        map.values()
+                .stream()
+                .map(memberService::getMemberOrThrow)
+                .forEach(member -> updateScore(member.getNickname()));
     }
 
     @Transactional
@@ -65,7 +63,6 @@ public class RankingUpdateEventListener {
                 }
             });
         }
-
         return topMemberScores;
     }
 }

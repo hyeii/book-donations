@@ -97,4 +97,11 @@ abstract class RestClient {
     @Part() required bool canDelivery,
     @Part() required List<MultipartFile> images,
   });
+
+  @PATCH('/api/histories/donations/{donationId}')
+  Future<RegisterResponse> postHistory(
+      @Path() int donationId, @Body() Map<String, dynamic> map);
+
+  @GET('/api/histories/members/me')
+  Future<HistoryResp> getMyHistories();
 }

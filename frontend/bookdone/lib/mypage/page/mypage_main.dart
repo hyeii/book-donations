@@ -35,12 +35,11 @@ class MyPageMain extends HookConsumerWidget {
     var nickname = useState('');
     var point = useState(0);
 
-    var keepingList =
-        useState<MyKeepingList>(MyKeepingList(keepingList: []));
-    var donatingList = useState<MyDonatingList>(
-        MyDonatingList(donatingList: []));
-    var likeBookList = useState<MyLikeBookList>(
-        MyLikeBookList(likeBookList: []));
+    var keepingList = useState<MyKeepingList>(MyKeepingList(keepingList: []));
+    var donatingList =
+        useState<MyDonatingList>(MyDonatingList(donatingList: []));
+    var likeBookList =
+        useState<MyLikeBookList>(MyLikeBookList(likeBookList: []));
     // ref.read(userDataRepositoryProvider).restoreNickname().then((value) => {nickname=value});
 
     // Future<String> getUser() async {
@@ -62,7 +61,7 @@ class MyPageMain extends HookConsumerWidget {
           }).catchError((error) {
             print(error);
           });
-          List<BookInfo> donating =[];
+          List<BookInfo> donating = [];
           List<BookInfo> keeping = [];
           restClient.getMyBook().then((bookData) {
             for (var book in bookData.data) {
@@ -80,7 +79,7 @@ class MyPageMain extends HookConsumerWidget {
           });
           restClient.getLikeBooks().then((bookInfo) {
             List<LikeInfo> likeBooks = [];
-            for(var likeInfo in bookInfo.data){
+            for (var likeInfo in bookInfo.data) {
               likeBooks.add(likeInfo);
             }
             likeBookList.value = MyLikeBookList(likeBookList: likeBooks);
@@ -145,27 +144,54 @@ class MyPageMain extends HookConsumerWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        AddHistoryRoute().push(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 5.0),
-                          // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          shape: RoundedRectangleBorder(
-                              //모서리를 둥글게
-                              borderRadius: BorderRadius.circular(8)),
-                          textStyle: const TextStyle(fontSize: 12),
-                          backgroundColor: Colors.brown,
-                          foregroundColor: Colors.white),
-                      child: Text(
-                        "히스토리 작성",
-                        style: TextStyle(fontFamily: "SCDream4"),
-                      )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      // alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            MyHistoriesRoute().push(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 5.0),
+                              // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                  //모서리를 둥글게
+                                  borderRadius: BorderRadius.circular(8)),
+                              textStyle: const TextStyle(fontSize: 12),
+                              backgroundColor: Colors.brown,
+                              foregroundColor: Colors.white),
+                          child: Text(
+                            "나의 히스토리",
+                            style: TextStyle(fontFamily: "SCDream4"),
+                          )),
+                    ),
+                    Container(
+                      // alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            AddHistoryRoute().push(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 5.0),
+                              // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                  //모서리를 둥글게
+                                  borderRadius: BorderRadius.circular(8)),
+                              textStyle: const TextStyle(fontSize: 12),
+                              backgroundColor: Colors.brown,
+                              foregroundColor: Colors.white),
+                          child: Text(
+                            "히스토리 작성",
+                            style: TextStyle(fontFamily: "SCDream4"),
+                          )),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 10,
@@ -209,7 +235,7 @@ class MyPageMain extends HookConsumerWidget {
           )
         ],
       ),
-      bottomNavigationBar: TopNavigationBar(),
+      // bottomNavigationBar: TopNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: FloatingRegisterBtn(),
     );

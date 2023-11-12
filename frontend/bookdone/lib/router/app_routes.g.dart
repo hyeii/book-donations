@@ -7,15 +7,12 @@ part of 'app_routes.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
+      $mainShellRouteData,
       $topPageRoute,
       $firstPageRoute,
       $onboardingRoute,
       $addAdditionalRoute,
       $addCompleteRoute,
-      $homeRoute,
-      $searchRoute,
-      $chattingRoute,
-      $myPageRoute,
       $addHistoryRoute,
       $notificationRoute,
       $bookinfoMainRoute,
@@ -26,7 +23,120 @@ List<RouteBase> get $appRoutes => [
       $registerExistRoute,
       $registerNewRoute,
       $historyRoute,
+      $historyRegisterRoute,
+      $myHistoriesRoute,
     ];
+
+RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
+      factory: $MainShellRouteDataExtension._fromState,
+      branches: [
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/home',
+              factory: $HomeRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/search',
+              factory: $SearchRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/chat',
+              factory: $ChattingRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/mypage',
+              factory: $MyPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+      ],
+    );
+
+extension $MainShellRouteDataExtension on MainShellRouteData {
+  static MainShellRouteData _fromState(GoRouterState state) =>
+      const MainShellRouteData();
+}
+
+extension $HomeRouteExtension on HomeRoute {
+  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
+
+  String get location => GoRouteData.$location(
+        '/home',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SearchRouteExtension on SearchRoute {
+  static SearchRoute _fromState(GoRouterState state) => const SearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ChattingRouteExtension on ChattingRoute {
+  static ChattingRoute _fromState(GoRouterState state) => const ChattingRoute();
+
+  String get location => GoRouteData.$location(
+        '/chat',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $MyPageRouteExtension on MyPageRoute {
+  static MyPageRoute _fromState(GoRouterState state) => const MyPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/mypage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
 
 RouteBase get $topPageRoute => GoRouteData.$route(
       path: '/toppage',
@@ -130,94 +240,6 @@ extension $AddCompleteRouteExtension on AddCompleteRoute {
 
   String get location => GoRouteData.$location(
         '/addcomplete',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $homeRoute => GoRouteData.$route(
-      path: '/home',
-      factory: $HomeRouteExtension._fromState,
-    );
-
-extension $HomeRouteExtension on HomeRoute {
-  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
-
-  String get location => GoRouteData.$location(
-        '/home',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $searchRoute => GoRouteData.$route(
-      path: '/search',
-      factory: $SearchRouteExtension._fromState,
-    );
-
-extension $SearchRouteExtension on SearchRoute {
-  static SearchRoute _fromState(GoRouterState state) => const SearchRoute();
-
-  String get location => GoRouteData.$location(
-        '/search',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $chattingRoute => GoRouteData.$route(
-      path: '/chat',
-      factory: $ChattingRouteExtension._fromState,
-    );
-
-extension $ChattingRouteExtension on ChattingRoute {
-  static ChattingRoute _fromState(GoRouterState state) => const ChattingRoute();
-
-  String get location => GoRouteData.$location(
-        '/chat',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $myPageRoute => GoRouteData.$route(
-      path: '/mypage',
-      factory: $MyPageRouteExtension._fromState,
-    );
-
-extension $MyPageRouteExtension on MyPageRoute {
-  static MyPageRoute _fromState(GoRouterState state) => const MyPageRoute();
-
-  String get location => GoRouteData.$location(
-        '/mypage',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -476,6 +498,61 @@ extension $HistoryRouteExtension on HistoryRoute {
           'title-url': titleUrl,
           'donation-id': donationId.toString(),
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $historyRegisterRoute => GoRouteData.$route(
+      path: '/historyregister',
+      factory: $HistoryRegisterRouteExtension._fromState,
+    );
+
+extension $HistoryRegisterRouteExtension on HistoryRegisterRoute {
+  static HistoryRegisterRoute _fromState(GoRouterState state) =>
+      HistoryRegisterRoute(
+        donationId: int.parse(state.uri.queryParameters['donation-id']!),
+        title: state.uri.queryParameters['title']!,
+        titleUrl: state.uri.queryParameters['title-url']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/historyregister',
+        queryParams: {
+          'donation-id': donationId.toString(),
+          'title': title,
+          'title-url': titleUrl,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $myHistoriesRoute => GoRouteData.$route(
+      path: '/myhistory',
+      factory: $MyHistoriesRouteExtension._fromState,
+    );
+
+extension $MyHistoriesRouteExtension on MyHistoriesRoute {
+  static MyHistoriesRoute _fromState(GoRouterState state) =>
+      const MyHistoriesRoute();
+
+  String get location => GoRouteData.$location(
+        '/myhistory',
       );
 
   void go(BuildContext context) => context.go(location);

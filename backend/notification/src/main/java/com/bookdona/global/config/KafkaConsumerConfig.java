@@ -14,6 +14,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import com.bookdona.notification.dto.NotificationDto;
+import com.bookdona.notification.dto.NotificationRequestDto;
 
 @Configuration
 public class KafkaConsumerConfig {
@@ -21,20 +22,21 @@ public class KafkaConsumerConfig {
 	private String bootstrapServers;
 
 	@Bean
-	public ConsumerFactory<String, NotificationDto> consumerFactory() {
+	public ConsumerFactory<String, NotificationRequestDto> consumerFactory() {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-		props.put(ConsumerConfig.GROUP_ID_CONFIG, "notification-consumer-group");
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "notification-group");
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 		return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
-			new JsonDeserializer<>(NotificationDto.class, false)); // 사용하지 않는 key 무시
+			new JsonDeserializer<>(NotificationRequestDto.class, false)); // 사용하지 않는 key 무시
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, NotificationDto> kafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, NotificationDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
+	public ConcurrentKafkaListenerContainerFactory<String, NotificationRequestDto> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, NotificationRequestDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(consumerFactory());
+		// factory.setConcurrency(2);
 		return factory;
 	}
 }

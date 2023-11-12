@@ -29,11 +29,17 @@ import lombok.extern.slf4j.Slf4j;
 public class NotificationController {
 
 	private final NotificationService notificationService;
-	private final KafkaTemplate<String, NotificationDto> kafkaTemplate;
+	private final KafkaTemplate<String, NotificationRequestDto> kafkaTemplate;
 
 	@PostMapping("/test")
 	public ResponseEntity<?> sendNotificationByMemberId(@RequestBody NotificationRequestDto requestDto) {
 		notificationService.sendNotificationByToken(requestDto);
+		return BaseResponse.ok(HttpStatus.OK, "알림 전송 성공");
+	}
+
+	@PostMapping("/test/kafka")
+	public ResponseEntity<?> sendKafkaMessage(@RequestBody NotificationRequestDto requestDto) {
+		kafkaTemplate.send("notification-topic", requestDto);
 		return BaseResponse.ok(HttpStatus.OK, "알림 전송 성공");
 	}
 
@@ -57,7 +63,7 @@ public class NotificationController {
 	@PostMapping("/send")
 	public ResponseEntity<?> sendNotification(@RequestBody NotificationDto notificationDto) {
 		log.info("*** {}", notificationDto);
-		kafkaTemplate.send("notification-topic", notificationDto);
+		// kafkaTemplate.send("notification-topic", notificationDto);
 		// 키를 사용하는 경우
 		// kafkaTemplate.send("notification-topic", "key", notificationDto);
 		return BaseResponse.ok(HttpStatus.OK, "알림을 전송하였습니다.");

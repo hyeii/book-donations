@@ -14,6 +14,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.bookdona.notification.dto.NotificationDto;
+import com.bookdona.notification.dto.NotificationRequestDto;
 
 @Configuration
 public class KafkaProducerConfig {
@@ -21,7 +22,7 @@ public class KafkaProducerConfig {
 	private String bootstrapServers;
 
 	@Bean
-	public ProducerFactory<String, NotificationDto> producerFactory() {
+	public ProducerFactory<String, NotificationRequestDto> producerFactory() {
 		Map<String, Object> configProps = new HashMap<>();
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -30,7 +31,7 @@ public class KafkaProducerConfig {
 	}
 
 	@Bean
-	public KafkaTemplate<String, NotificationDto> kafkaTemplate() {
+	public KafkaTemplate<String, NotificationRequestDto> kafkaTemplate() {
 		return new KafkaTemplate<>(producerFactory());
 	}
 }

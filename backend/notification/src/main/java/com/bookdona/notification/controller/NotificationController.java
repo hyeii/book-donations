@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bookdona.global.response.BaseResponse;
 import com.bookdona.notification.dto.NotificationDto;
-import com.bookdona.notification.entity.Notification;
+import com.bookdona.notification.dto.NotificationRequestDto;
+import com.bookdona.notification.entity.NotificationEntity;
 import com.bookdona.notification.service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,12 @@ public class NotificationController {
 	private final NotificationService notificationService;
 	private final KafkaTemplate<String, NotificationDto> kafkaTemplate;
 
+	@PostMapping("/test")
+	public ResponseEntity<?> sendNotificationByMemberId(@RequestBody NotificationRequestDto requestDto) {
+		notificationService.sendNotificationByToken(requestDto);
+		return BaseResponse.ok(HttpStatus.OK, "알림 전송 성공");
+	}
+
 	@GetMapping("/get")
 	public String getNotifications() {
 		return "notifications";
@@ -37,14 +44,14 @@ public class NotificationController {
 
 	@PatchMapping("/{notificationId}")
 	public ResponseEntity<?> markAsRead(@PathVariable Long notificationId) {
-		Notification updatedNotification = notificationService.markAsRead(notificationId);
+		NotificationEntity updatedNotificationEntity = notificationService.markAsRead(notificationId);
 		return BaseResponse.ok(HttpStatus.OK, "알림을 읽음 처리하였습니다.");
 	}
 
 	@GetMapping("/members/{memberId}/unread")
 	public ResponseEntity<?> getUnreadNotificationsByMemberId(@PathVariable long memberId) {
-		List<Notification> notifications = notificationService.unreadNotification(memberId);
-		return BaseResponse.okWithData(HttpStatus.OK, "읽지 않은 알림들을 조회하였습니다.", notifications);
+		List<NotificationEntity> notificationEntities = notificationService.unreadNotification(memberId);
+		return BaseResponse.okWithData(HttpStatus.OK, "읽지 않은 알림들을 조회하였습니다.", notificationEntities);
 	}
 
 	@PostMapping("/send")

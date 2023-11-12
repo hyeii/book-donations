@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Entity;
 
-import org.springframework.data.annotation.CreatedDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +21,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "notification")
-public class Notification {
+public class NotificationEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

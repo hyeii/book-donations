@@ -5,37 +5,32 @@ spring:
     name: notification-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bookdona_notification?serverTimezone=UTC&characterEncoding=UTF-8&collation=utf8mb4_bin
+    url: jdbc:mysql://k9a308.p.ssafy.io:3306/bookdone_notification?serverTimezone=UTC&characterEncoding=UTF-8&collation=utf8mb4_bin
     username: root
-    password: root
+    password: a308a308
 
-  redis:
-    port: 6379
-    host: localhost
-    password: null
+    jpa:
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+      open-in-view: false
+      hibernate:
+        ddl-auto: update
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
 
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in-view: false
-    hibernate:
-      ddl-auto: create-drop
-      show_sql: true
-      format_sql: true
-      use_sql_comments: true
+#  redis:
+#    port: 6379
+#    host: localhost
+#    password: null
 
   kafka:
-    bootstrap-servers: 172.21.225.5:9092
-    producer:
-      bootstrap-servers: 172.21.225.5:9092
-
+    admin:
+      operations-timeout: 30s
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
     consumer:
-      bootstrap-servers: 172.21.225.5:9092
-      group-id: notification-consumer-group
-
-    topics:
-      - name: notification-topic
-        numPartitions: 1
-        replicationFactor: 1
+      auto-offset-reset: earliest
+firebase:
+  sdk-path: firebase/bookdone-3a0d1-firebase-adminsdk-llxqi-754ac11e18.json
 
 eureka:
   instance:

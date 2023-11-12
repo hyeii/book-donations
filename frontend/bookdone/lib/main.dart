@@ -40,7 +40,7 @@ class TopPage extends HookConsumerWidget {
         children: [
           MyHomePage(),
           SearchMain(),
-          ChatMain(), // TODO: floating이랑 navigation 복붙
+          //ChatMain(), // TODO: floating이랑 navigation 복붙 // ws바로 연결시도해서 lazy loading 하려고 제거
           MyPageMain(),
         ],
       ),

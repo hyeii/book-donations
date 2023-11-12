@@ -43,8 +43,8 @@ class MyApp extends HookConsumerWidget {
         useMaterial3: true,
         fontFamily: "SCDream4",
         textTheme: TextTheme(
-          bodyLarge: TextStyle(fontSize: 15),
-          bodyMedium: TextStyle(fontSize: 12),
+          bodyLarge: TextStyle(fontSize: 12),
+          bodyMedium: TextStyle(fontSize: 11),
           // 기본 text fontsize
           bodySmall: TextStyle(fontSize: 12),
           labelLarge: TextStyle(fontSize: 12),

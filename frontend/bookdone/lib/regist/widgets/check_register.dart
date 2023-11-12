@@ -72,6 +72,10 @@ class CheckRegister extends HookConsumerWidget {
             ),
             TextButton(
               onPressed: () async {
+                // print(files.value);
+                files.value = images!
+                    .map((img) => MultipartFile.fromFileSync(img.path))
+                    .toList();
                 donationId == -1 ? register() : registerExist();
                 ref.invalidate(registerRegionStateProvider);
                 ref.invalidate(registerRegionCodeStateProvider);

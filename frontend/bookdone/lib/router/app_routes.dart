@@ -38,8 +38,7 @@ class MyApp extends HookConsumerWidget {
       // routeInformationParser: router.routeInformationParser,
       // routeInformationProvider: router.routeInformationProvider,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        primaryColor: Colors.white,
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xff928C85)),
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
         useMaterial3: true,
         fontFamily: "SCDream4",
@@ -129,6 +128,7 @@ class MainPageView extends StatelessWidget {
       // appBar: AppBar(),
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,

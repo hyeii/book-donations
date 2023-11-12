@@ -44,6 +44,7 @@ public class NotificationService {
 	}
 
 	public void sendNotificationByToken(NotificationRequestDto requestDto) throws HttpMessageNotReadableException {
+		log.info("member Id = {}", requestDto.getTargetUserId());
 		Long userId = requestDto.getTargetUserId();
 		ResponseEntity<?> response = memberClient.getMemberByMemberId(userId);
 		MemberResponse member = null;

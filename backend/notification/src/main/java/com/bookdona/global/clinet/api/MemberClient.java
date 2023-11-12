@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "member-service")
 public interface MemberClient {
 
-	@GetMapping
+	@GetMapping("/api/members")
 	public ResponseEntity<?> getMembers(@RequestBody List<Long> memberIds);
 
-	@GetMapping("/{member-id}")
+	@GetMapping("/api/members/{member-id}")
 	public ResponseEntity<?> getMemberByMemberId(@PathVariable("member-id") Long memberId);
 }

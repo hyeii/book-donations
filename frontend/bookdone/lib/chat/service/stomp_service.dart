@@ -10,22 +10,25 @@ class StompService {
   Future<void> initStompClient() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? nickname = pref.getString('nickname');
-    if (nickname != null) {
-      String wsUrl = dotenv.get('WS_URL') + '?usernickname=$nickname';
+    String? accessToken = pref.getString('accessToken');
+    if (nickname != null && accessToken != null) {
+      String wsUrl = dotenv.get('WS_URL') + '/ws?usernickname=$nickname';
+      print('웹소켓 주소!!: wsUrl: $wsUrl  nickname: $nickname   accessToken: $accessToken');
 
       stompClient = StompClient(
-          config: StompConfig(
-              url: wsUrl,
-              onConnect: (StompFrame frame) {
-                stompClient?.subscribe(
-                    destination: '/sub',
-                    callback: (StompFrame frame) {
-                      print('Received: ${frame.body}');
-                    }
-                );
-              },
-              onWebSocketError: (dynamic error) => print(error),
-              stompConnectHeaders: {}
+          config: StompConfig.SockJS(  // SockJS를 사용하는 StompConfig
+            url: wsUrl,
+            onConnect: (StompFrame frame) {
+              stompClient?.subscribe(
+                destination: '/sub',
+                callback: (StompFrame frame) {
+                  print('Received: ${frame.body}');
+                },
+              );
+            },
+            stompConnectHeaders: {'Authorization': '$accessToken'},
+            webSocketConnectHeaders: {'Authorization': '$accessToken'},
+            onWebSocketError: (dynamic error) => print(error),
           )
       );
 

@@ -33,7 +33,7 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
             ServerHttpResponse response = exchange.getResponse();
 
             log.info("Custom Pre filter: request id -> {}", request.getId());
-
+            log.info("AUTHORIZATION : {}", request.getHeaders().get(HttpHeaders.AUTHORIZATION));
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                 return onError(exchange, "토큰이 존재하지 않습니다.", HttpStatus.UNAUTHORIZED);
             }

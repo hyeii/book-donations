@@ -498,12 +498,16 @@ extension $HistoryRegisterRouteExtension on HistoryRegisterRoute {
   static HistoryRegisterRoute _fromState(GoRouterState state) =>
       HistoryRegisterRoute(
         donationId: int.parse(state.uri.queryParameters['donation-id']!),
+        title: state.uri.queryParameters['title']!,
+        titleUrl: state.uri.queryParameters['title-url']!,
       );
 
   String get location => GoRouteData.$location(
         '/historyregister',
         queryParams: {
           'donation-id': donationId.toString(),
+          'title': title,
+          'title-url': titleUrl,
         },
       );
 

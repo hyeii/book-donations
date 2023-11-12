@@ -143,7 +143,10 @@ class AddHitoryCard extends HookConsumerWidget {
                         alignment: Alignment.bottomRight,
                         child: TextButton(
                           onPressed: () {
-                            HistoryRegisterRoute(donationId: info.id)
+                            HistoryRegisterRoute(
+                                    donationId: info.id,
+                                    title: info.title,
+                                    titleUrl: info.titleUrl)
                                 .push(context);
                           },
                           style: TextButton.styleFrom(

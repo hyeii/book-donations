@@ -1,7 +1,7 @@
-import 'package:bookdone/app.dart';
 import 'package:bookdone/chat/page/chat_main.dart';
 import 'package:bookdone/fcm_setting.dart';
 import 'package:bookdone/mypage/page/mypage_main.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/search/page/search_main.dart';
 import 'package:bookdone/top/page/top_navigation_bar.dart';
 import 'package:bookdone/widgets/floating_register_btn.dart';
@@ -23,7 +23,7 @@ void main() async {
   }
   KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(
-    const ProviderScope(child: MyApp()),
+    ProviderScope(child: MyApp()),
   );
 }
 
@@ -60,7 +60,7 @@ class MyHomePage extends HookConsumerWidget {
       body: Center(
         child: Text('첫번째 페이징'),
       ),
-      bottomNavigationBar: TopNavigationBar(),
+      // bottomNavigationBar: TopNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: FloatingRegisterBtn(),
     );

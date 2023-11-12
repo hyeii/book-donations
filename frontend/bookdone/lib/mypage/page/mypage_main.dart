@@ -235,7 +235,7 @@ class MyPageMain extends HookConsumerWidget {
           )
         ],
       ),
-      bottomNavigationBar: TopNavigationBar(),
+      // bottomNavigationBar: TopNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: FloatingRegisterBtn(),
     );

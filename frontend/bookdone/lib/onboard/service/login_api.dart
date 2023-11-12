@@ -146,7 +146,8 @@ class LoginApi {
       print('테스트');
 
       // 저장했으니 로그인 완료!
-      TopPageRoute().go(context);
+      // TopPageRoute().go(context);
+      HomeRoute().go(context);
       // HomeRoute().go(context);
     } else {
       print('여기이ㅏ너이ㅏㄹ');

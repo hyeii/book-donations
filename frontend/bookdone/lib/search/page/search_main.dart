@@ -139,7 +139,7 @@ class SearchMain extends HookConsumerWidget {
             ),
           ),
         ),
-        bottomNavigationBar: TopNavigationBar(),
+        // bottomNavigationBar: TopNavigationBar(),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
         floatingActionButton: FloatingRegisterBtn(),
       ),

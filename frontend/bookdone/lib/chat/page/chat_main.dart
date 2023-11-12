@@ -38,7 +38,6 @@ class ChatMain extends HookWidget {
           separatorBuilder: (context, index) => Divider(),
         ),
       ),
-      bottomNavigationBar: const TopNavigationBar(),
     );
   }
 }

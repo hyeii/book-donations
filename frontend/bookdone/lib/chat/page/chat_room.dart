@@ -106,7 +106,6 @@ class ChatRoom extends HookWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const TopNavigationBar(),
       bottomSheet: Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,

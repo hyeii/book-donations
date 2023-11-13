@@ -5,6 +5,7 @@ import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/regist/model/regist_get_data.dart';
 import 'package:bookdone/regist/widgets/check_register.dart';
+import 'package:bookdone/regist/widgets/register_input_content.dart';
 import 'package:bookdone/regist/widgets/register_region_dialog.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
@@ -118,11 +119,13 @@ class RegistData extends HookConsumerWidget {
     }
 
     void register() async {
-      print(isbn);
+      var code = ref.watch(registerRegionCodeStateProvider);
+      var input = ref.watch(registerInputProvider);
+      print('-------$code------$input-----$isbn-------${files.value}-----');
       var resp = await restClient.registArticle(
           isbn: isbn,
-          address: ref.watch(registerRegionCodeStateProvider),
-          content: content.value,
+          address: code,
+          content: input,
           canDelivery: false,
           images: files.value);
       gotId.value = resp.data;
@@ -315,25 +318,7 @@ class RegistData extends HookConsumerWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Form(
-                        child: TextFormField(
-                          controller: contentController,
-                          decoration: const InputDecoration(
-                            fillColor: Colors.brown,
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.brown,
-                              ),
-                            ),
-                          ),
-                          onChanged: (text) {
-                            content.value = contentController.text;
-                          },
-                          maxLength: 300,
-                          maxLines: 3,
-                        ),
-                      ),
+                      RegisterInputContent(),
                       SizedBox(
                         height: 10,
                       ),
@@ -473,13 +458,12 @@ class RegistData extends HookConsumerWidget {
                       ),
                       TextButton(
                         onPressed: () {
+                          context.pop();
                           files.value = images.value!
                               .map(
                                   (img) => MultipartFile.fromFileSync(img.path))
                               .toList();
                           donationId == -1 ? register() : registerExist();
-                          print('ddddd');
-                          context.pop();
                         },
                         child: const Text('확인'),
                       ),

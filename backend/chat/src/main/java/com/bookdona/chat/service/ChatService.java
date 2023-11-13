@@ -115,8 +115,6 @@ public class ChatService {
 		List<ChatRoom> chatRoomList = chatRoomRepository.findByUser1OrUser2AndIsLiveTrue(
 			memberNickname, memberNickname);
 
-		log.info("chatRoomList: {}", chatRoomList);
-
 		// 마지막 채팅 메시지 정보를 가져오기
 		Map<Long, ChatMessage> lastChatMessageMap = chatMessageRepository
 			.findByIdIn(chatRoomList.stream()
@@ -126,23 +124,21 @@ public class ChatService {
 			.stream()
 			.collect(Collectors.toMap(ChatMessage::getTradeId, chatMessage -> chatMessage));
 
-		log.info("lastChatMessageMap: {}", lastChatMessageMap);
-
 		// 채팅방 정보와 마지막 메시지를 조합하여 결과 리스트 생성
 		List<ChatRoomResponse> responseList = chatRoomList.stream().map(chatRoom -> {
 			String lastMessageContent = "";
-			LocalDateTime lastMessageCreatedAt = LocalDateTime.now();
-			String userNickname = "";
+			LocalDateTime lastMessageCreatedAt = null;
 
 			if (lastChatMessageMap.containsKey(chatRoom.getTradeId())) {
 				ChatMessage lastMessage = lastChatMessageMap.get(chatRoom.getTradeId());
-				userNickname = lastMessage.getSenderNickname();
 				lastMessageContent = lastMessage.getMessage();
 				lastMessageCreatedAt = lastMessage.getCreatedAt();
 			}
-			return new ChatRoomResponse(chatRoom.getTradeId(), userNickname, lastMessageContent, lastMessageCreatedAt);
+			return new ChatRoomResponse(chatRoom.getTradeId(), memberNickname.equals(chatRoom.getUser1()) ?
+				chatRoom.getUser2() : chatRoom.getUser1(), lastMessageContent, lastMessageCreatedAt);
 		}).collect(Collectors.toList());
 
+		log.info("responseList: {}", responseList);
 		return responseList;
 	}
 
@@ -156,7 +152,7 @@ public class ChatService {
 		// log.info("feignMember: {}", feignMember);
 		// String memberNickname = feignMember.getNickname();
 
-		return chatMessageRepository.findByTradeId(chatRoom.getTradeId())
+		List<ChatMessageResponse> collect = chatMessageRepository.findByTradeId(chatRoom.getTradeId())
 			.stream()
 			.map(chatMessage -> ChatMessageResponse.builder()
 				.senderNickname(chatMessage.getSenderNickname())
@@ -164,6 +160,9 @@ public class ChatService {
 				.createdAt(chatMessage.getCreatedAt())
 				.build())
 			.collect(Collectors.toList());
+
+		log.info("collect: {}", collect);
+		return collect;
 	}
 
 }

@@ -44,3 +44,27 @@ class HistoryResponse with _$HistoryResponse {
   factory HistoryResponse.fromJson(Map<String, dynamic> json) =>
       _$HistoryResponseFromJson(json);
 }
+
+@freezed
+class UnwrittenHistory with _$UnwrittenHistory {
+  const factory UnwrittenHistory({
+    required bool success,
+    required String msg,
+    required List<UnwrittenResponse> data,
+  }) = _UnwrittenHistory;
+
+  factory UnwrittenHistory.fromJson(Map<String, dynamic> json) =>
+      _$UnwrittenHistoryFromJson(json);
+}
+
+@freezed
+class UnwrittenResponse with _$UnwrittenResponse {
+  const factory UnwrittenResponse({
+    required int id,
+    required String title,
+    required String titleUrl,
+  }) = _UnwrittenResponse;
+
+  factory UnwrittenResponse.fromJson(Map<String, dynamic> json) =>
+      _$UnwrittenResponseFromJson(json);
+}

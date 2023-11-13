@@ -648,3 +648,359 @@ abstract class _HistoryResponse implements HistoryResponse {
   _$$HistoryResponseImplCopyWith<_$HistoryResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+UnwrittenHistory _$UnwrittenHistoryFromJson(Map<String, dynamic> json) {
+  return _UnwrittenHistory.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UnwrittenHistory {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  List<UnwrittenResponse> get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UnwrittenHistoryCopyWith<UnwrittenHistory> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UnwrittenHistoryCopyWith<$Res> {
+  factory $UnwrittenHistoryCopyWith(
+          UnwrittenHistory value, $Res Function(UnwrittenHistory) then) =
+      _$UnwrittenHistoryCopyWithImpl<$Res, UnwrittenHistory>;
+  @useResult
+  $Res call({bool success, String msg, List<UnwrittenResponse> data});
+}
+
+/// @nodoc
+class _$UnwrittenHistoryCopyWithImpl<$Res, $Val extends UnwrittenHistory>
+    implements $UnwrittenHistoryCopyWith<$Res> {
+  _$UnwrittenHistoryCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<UnwrittenResponse>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UnwrittenHistoryImplCopyWith<$Res>
+    implements $UnwrittenHistoryCopyWith<$Res> {
+  factory _$$UnwrittenHistoryImplCopyWith(_$UnwrittenHistoryImpl value,
+          $Res Function(_$UnwrittenHistoryImpl) then) =
+      __$$UnwrittenHistoryImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, List<UnwrittenResponse> data});
+}
+
+/// @nodoc
+class __$$UnwrittenHistoryImplCopyWithImpl<$Res>
+    extends _$UnwrittenHistoryCopyWithImpl<$Res, _$UnwrittenHistoryImpl>
+    implements _$$UnwrittenHistoryImplCopyWith<$Res> {
+  __$$UnwrittenHistoryImplCopyWithImpl(_$UnwrittenHistoryImpl _value,
+      $Res Function(_$UnwrittenHistoryImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$UnwrittenHistoryImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<UnwrittenResponse>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UnwrittenHistoryImpl implements _UnwrittenHistory {
+  const _$UnwrittenHistoryImpl(
+      {required this.success,
+      required this.msg,
+      required final List<UnwrittenResponse> data})
+      : _data = data;
+
+  factory _$UnwrittenHistoryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UnwrittenHistoryImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  final List<UnwrittenResponse> _data;
+  @override
+  List<UnwrittenResponse> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'UnwrittenHistory(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UnwrittenHistoryImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, success, msg, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UnwrittenHistoryImplCopyWith<_$UnwrittenHistoryImpl> get copyWith =>
+      __$$UnwrittenHistoryImplCopyWithImpl<_$UnwrittenHistoryImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UnwrittenHistoryImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UnwrittenHistory implements UnwrittenHistory {
+  const factory _UnwrittenHistory(
+      {required final bool success,
+      required final String msg,
+      required final List<UnwrittenResponse> data}) = _$UnwrittenHistoryImpl;
+
+  factory _UnwrittenHistory.fromJson(Map<String, dynamic> json) =
+      _$UnwrittenHistoryImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  List<UnwrittenResponse> get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$UnwrittenHistoryImplCopyWith<_$UnwrittenHistoryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+UnwrittenResponse _$UnwrittenResponseFromJson(Map<String, dynamic> json) {
+  return _UnwrittenResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UnwrittenResponse {
+  int get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get titleUrl => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UnwrittenResponseCopyWith<UnwrittenResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UnwrittenResponseCopyWith<$Res> {
+  factory $UnwrittenResponseCopyWith(
+          UnwrittenResponse value, $Res Function(UnwrittenResponse) then) =
+      _$UnwrittenResponseCopyWithImpl<$Res, UnwrittenResponse>;
+  @useResult
+  $Res call({int id, String title, String titleUrl});
+}
+
+/// @nodoc
+class _$UnwrittenResponseCopyWithImpl<$Res, $Val extends UnwrittenResponse>
+    implements $UnwrittenResponseCopyWith<$Res> {
+  _$UnwrittenResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? titleUrl = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleUrl: null == titleUrl
+          ? _value.titleUrl
+          : titleUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UnwrittenResponseImplCopyWith<$Res>
+    implements $UnwrittenResponseCopyWith<$Res> {
+  factory _$$UnwrittenResponseImplCopyWith(_$UnwrittenResponseImpl value,
+          $Res Function(_$UnwrittenResponseImpl) then) =
+      __$$UnwrittenResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id, String title, String titleUrl});
+}
+
+/// @nodoc
+class __$$UnwrittenResponseImplCopyWithImpl<$Res>
+    extends _$UnwrittenResponseCopyWithImpl<$Res, _$UnwrittenResponseImpl>
+    implements _$$UnwrittenResponseImplCopyWith<$Res> {
+  __$$UnwrittenResponseImplCopyWithImpl(_$UnwrittenResponseImpl _value,
+      $Res Function(_$UnwrittenResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? titleUrl = null,
+  }) {
+    return _then(_$UnwrittenResponseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleUrl: null == titleUrl
+          ? _value.titleUrl
+          : titleUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UnwrittenResponseImpl implements _UnwrittenResponse {
+  const _$UnwrittenResponseImpl(
+      {required this.id, required this.title, required this.titleUrl});
+
+  factory _$UnwrittenResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UnwrittenResponseImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String title;
+  @override
+  final String titleUrl;
+
+  @override
+  String toString() {
+    return 'UnwrittenResponse(id: $id, title: $title, titleUrl: $titleUrl)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UnwrittenResponseImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.titleUrl, titleUrl) ||
+                other.titleUrl == titleUrl));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, title, titleUrl);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UnwrittenResponseImplCopyWith<_$UnwrittenResponseImpl> get copyWith =>
+      __$$UnwrittenResponseImplCopyWithImpl<_$UnwrittenResponseImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UnwrittenResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UnwrittenResponse implements UnwrittenResponse {
+  const factory _UnwrittenResponse(
+      {required final int id,
+      required final String title,
+      required final String titleUrl}) = _$UnwrittenResponseImpl;
+
+  factory _UnwrittenResponse.fromJson(Map<String, dynamic> json) =
+      _$UnwrittenResponseImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get title;
+  @override
+  String get titleUrl;
+  @override
+  @JsonKey(ignore: true)
+  _$$UnwrittenResponseImplCopyWith<_$UnwrittenResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

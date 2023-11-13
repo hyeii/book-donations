@@ -61,3 +61,37 @@ Map<String, dynamic> _$$HistoryResponseImplToJson(
       'nickname': instance.nickname,
       'createdAt': instance.createdAt,
     };
+
+_$UnwrittenHistoryImpl _$$UnwrittenHistoryImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UnwrittenHistoryImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: (json['data'] as List<dynamic>)
+          .map((e) => UnwrittenResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$UnwrittenHistoryImplToJson(
+        _$UnwrittenHistoryImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+_$UnwrittenResponseImpl _$$UnwrittenResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UnwrittenResponseImpl(
+      id: json['id'] as int,
+      title: json['title'] as String,
+      titleUrl: json['titleUrl'] as String,
+    );
+
+Map<String, dynamic> _$$UnwrittenResponseImplToJson(
+        _$UnwrittenResponseImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'titleUrl': instance.titleUrl,
+    };

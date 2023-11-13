@@ -24,7 +24,7 @@ class RegisterHistory extends HookConsumerWidget {
     Future<bool> tryPostHistory() async {
       var resp = await restClient.postHistory(
         donationId,
-        {'content': content.value, 'status': " WRITTEN"},
+        {'content': content.value, 'status': 'WRITTEN'},
       );
       if (resp.success == true) {
         return true;

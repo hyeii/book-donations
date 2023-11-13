@@ -71,58 +71,107 @@ class MyHistories extends HookConsumerWidget {
                                 histories.value![index].createdAt.split('T');
                             var day = date[0];
                             var time = date[1];
-                            return CachedNetworkImage(
-                              imageUrl: histories.value![index].titleUrl,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromARGB(255, 196, 196, 196)
-                                          .withOpacity(0.5),
-                                      spreadRadius: 3,
-                                      blurRadius: 3,
-                                      offset: Offset(0, 0),
-                                    ),
-                                  ],
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                    opacity: 0.5,
-                                    alignment: Alignment.topCenter,
-                                  ),
-                                ),
-                                height: 200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(30.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          histories.value![index].content!,
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(histories.value![index].title),
-                                          Text('$day $time'),
-                                        ],
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              child: CachedNetworkImage(
+                                imageUrl: histories.value![index].titleUrl,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:
+                                            Color.fromARGB(255, 196, 196, 196)
+                                                .withOpacity(0.5),
+                                        spreadRadius: 3,
+                                        blurRadius: 3,
+                                        offset: Offset(0, 0),
                                       ),
                                     ],
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                      opacity: 0.5,
+                                      alignment: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  height: 200,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(30.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            histories.value![index].content!,
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(histories.value![index].title),
+                                            Text('$day $time'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:
+                                            Color.fromARGB(255, 196, 196, 196)
+                                                .withOpacity(0.5),
+                                        spreadRadius: 3,
+                                        blurRadius: 3,
+                                        offset: Offset(0, 0),
+                                      ),
+                                    ],
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/samplebookcover.jpg'),
+                                      fit: BoxFit.cover,
+                                      opacity: 0.5,
+                                      alignment: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  height: 200,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(30.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            histories.value![index].content!,
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(histories.value![index].title),
+                                            Text('$day $time'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
                             );
                           },
                         ),

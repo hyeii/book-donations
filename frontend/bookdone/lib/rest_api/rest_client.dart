@@ -110,4 +110,7 @@ abstract class RestClient {
 
   @GET('/api/ranks')
   Future<RankResp> getRanking();
+
+  @GET('/api/donations/members/mypage/unwritten')
+  Future<UnwrittenHistory> getUnwrittenHistoryDonations();
 }

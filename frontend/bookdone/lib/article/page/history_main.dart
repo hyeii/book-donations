@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +20,18 @@ class HistoryMain extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
     var histories = useState<List<HistoryData>?>(null);
-
     Future<HistoryResp> getHistories() async {
       var data = restClient.getHistoriesByDonation(donationId);
       return data;
     }
+
+    final List<Color> lowSaturationColors = [
+      const Color.fromARGB(255, 200, 211, 215),
+      Color.fromARGB(255, 241, 232, 232),
+      Color.fromARGB(255, 237, 241, 243),
+      const Color.fromARGB(255, 215, 218, 235),
+      Color.fromARGB(255, 227, 235, 234),
+    ];
 
     useEffect(() {
       void fetchData() async {
@@ -47,9 +56,20 @@ class HistoryMain extends HookConsumerWidget {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
               title: Text(
                 title,
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey.shade800,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 7.0, // shadow blur
+                      color: Color.fromARGB(255, 86, 86, 86), // shadow color
+                      offset: Offset(0.0, 0.0), // how much shadow will be shown
+                    ),
+                  ],
+                ),
               ),
               background: Container(
                 // color: Color(0xff928C85),
@@ -66,7 +86,7 @@ class HistoryMain extends HookConsumerWidget {
           ),
           SliverToBoxAdapter(
             child: histories.value == null
-                ? Text('히스토리가 없습니다')
+                ? Text(' ')
                 : histories.value!.isEmpty
                     ? Text('히스토리가 없습니다')
                     : Padding(
@@ -80,33 +100,51 @@ class HistoryMain extends HookConsumerWidget {
                           primary: false,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Container(
-                                color: Color.fromARGB(255, 159, 157, 154),
-                                height: 200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(30.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                            histories.value![index].content),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                              histories.value![index].nickname),
-                                          Text('작성시간 '),
-                                        ],
-                                      ),
-                                    ],
+                            var date =
+                                histories.value![index].createdAt.split('T');
+                            var day = date[0];
+                            var time = date[1];
+                            final randomColorIndex =
+                                Random().nextInt(lowSaturationColors.length);
+                            final randomColor =
+                                lowSaturationColors[randomColorIndex];
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: randomColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 196, 196, 196)
+                                        .withOpacity(0.5),
+                                    spreadRadius: 3,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 0),
                                   ),
+                                ],
+                              ),
+                              height: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(30.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        histories.value![index].content,
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(histories.value![index].nickname),
+                                        Text('$day $time'),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             );

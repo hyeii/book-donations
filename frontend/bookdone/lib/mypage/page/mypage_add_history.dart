@@ -1,8 +1,10 @@
 import 'package:bookdone/mypage/model/my_book.dart';
+import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MyPageAddHistory extends HookConsumerWidget {
@@ -11,6 +13,25 @@ class MyPageAddHistory extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
+    final userData = ref.read(userDataRepositoryProvider);
+    var nickname = useState('');
+
+    useEffect(() {
+      void fetchData() async {
+        try {
+          userData.restoreNickname().then((name) {
+            nickname.value = name;
+          }).catchError((error) {
+            print(error);
+          });
+        } catch (error) {
+          print(error);
+        }
+      }
+
+      fetchData();
+      return null;
+    }, []);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,39 +61,33 @@ class MyPageAddHistory extends HookConsumerWidget {
                     return SizedBox.shrink();
                   }
 
-                  List<BookInfo> donating = [];
                   List<BookInfo> keeping = [];
                   for (var book in snapshot.data!.data) {
-                    if (book.donationStatus == 'KEEPING') {
-                      keeping.add(book);
-                    } else {
-                      if (book.historyResponseList.isNotEmpty) {
-                        keeping.add(book);
+                    // book의 히스토리들 확인하기
+
+                    for (var history in book.historyResponseList) {
+                      if (history.nickname == nickname.value) {
+                        if (history.content == '') {
+                          keeping.add(book);
+                        }
                       }
-                      donating.add(book);
                     }
                   }
 
                   return Column(
                     children: [
-                      Text("보유중인 책"),
                       SizedBox(
                         height: 10,
                       ),
-                      Column(
-                        children: donating.map((book) {
-                          return AddHitoryCard(
-                            info: book,
-                          );
-                        }).toList(),
-                      ),
-                      Text("나를 거쳐간 책"),
+                      keeping.isEmpty
+                          ? Text('히스토리를 작성하지 않은 책이 없어요')
+                          : Text("히스토리를 아직 작성하지 않았어요"),
                       SizedBox(
                         height: 10,
                       ),
                       Column(
                         children: keeping.map((book) {
-                          return CompleteHistoryCard(
+                          return AddHitoryCard(
                             info: book,
                           );
                         }).toList(),

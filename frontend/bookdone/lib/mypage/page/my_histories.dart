@@ -34,30 +34,25 @@ class MyHistories extends HookConsumerWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 150,
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
               title: Text(
                 '히스토리 모아보기',
                 style: TextStyle(fontSize: 15),
               ),
               background: Container(
-                  // color: Color(0xff928C85),
-                  // decoration: BoxDecoration(
-                  //   image: DecorationImage(
-                  //     image: NetworkImage(titleUrl),
-                  //     fit: BoxFit.cover,
-                  //     opacity: 0.5,
-                  //     alignment: Alignment.topCenter,
-                  //   ),
-                  // ),
-                  ),
+                decoration: BoxDecoration(
+                  color: Color(0xff928C85),
+                ),
+              ),
             ),
           ),
           SliverToBoxAdapter(
             child: histories.value == null
-                ? Text('히스토리가 없습니다')
+                ? Text(' ')
                 : histories.value!.isEmpty
                     ? Text('히스토리가 없습니다')
                     : Padding(
@@ -71,41 +66,53 @@ class MyHistories extends HookConsumerWidget {
                           primary: false,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Container(
-                                // color: Color.fromARGB(255, 159, 157, 154),
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        histories.value![index].titleUrl),
-                                    fit: BoxFit.cover,
-                                    opacity: 0.5,
-                                    alignment: Alignment.topCenter,
+                            var date =
+                                histories.value![index].createdAt.split('T');
+                            var day = date[0];
+                            var time = date[1];
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 196, 196, 196)
+                                        .withOpacity(0.5),
+                                    spreadRadius: 3,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 0),
                                   ),
+                                ],
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      histories.value![index].titleUrl),
+                                  fit: BoxFit.cover,
+                                  opacity: 0.5,
+                                  alignment: Alignment.topCenter,
                                 ),
-                                height: 200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(30.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                            histories.value![index].content),
+                              ),
+                              height: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(30.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        histories.value![index].content,
+                                        style: TextStyle(fontSize: 15),
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(histories.value![index].title),
-                                          Text('작성시간 '),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(histories.value![index].title),
+                                        Text('$day $time'),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             );

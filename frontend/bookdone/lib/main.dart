@@ -296,102 +296,6 @@ class MyHomePage extends HookConsumerWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Text('1등!'),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text('닉네임'),
-                                ],
-                              ),
-                              Text('3점~'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Text('1등!'),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text('닉네임'),
-                                ],
-                              ),
-                              Text('3점~'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Text('1등!'),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text('닉네임'),
-                                ],
-                              ),
-                              Text('3점~'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Text('1등!'),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text('닉네임'),
-                                ],
-                              ),
-                              Text('3점~'),
-                            ],
-                          ),
-                        ),
-                      ),
                       FutureBuilder(
                         future: restClient.getRanking(),
                         builder: (_, snapshot) {
@@ -406,42 +310,48 @@ class MyHomePage extends HookConsumerWidget {
                           }
                           final rankings = snapshot.data!.data;
 
-                          return ListView.builder(
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 7),
-                                child: Container(
-                                  padding: EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text('${index + 1}'),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Text(rankings[index].nickname),
-                                        ],
-                                      ),
-                                      Text('${rankings[index].score}'),
-                                    ],
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: Column(
+                              children: rankings.map((ranking) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 7),
+                                  child: Container(
+                                    padding: EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                                '${rankings.indexOf(ranking) + 1}등'),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Text(ranking.nickname),
+                                            // Text('dd'),
+                                          ],
+                                        ),
+                                        Text('${ranking.score.floor()}점'),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              }).toList(),
+                            ),
                           );
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

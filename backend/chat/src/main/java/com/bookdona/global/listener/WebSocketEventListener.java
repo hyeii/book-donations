@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class WebSocketEventListener {
+public class WebSocketEventListener  {
 
 	//private final KafkaTemplate<String, String> kafkaTemplate;
 	private final RedisTemplate<String, String> redisTemplate;
@@ -27,15 +27,15 @@ public class WebSocketEventListener {
 	@EventListener
 	public void handleWebSocketConnectListener(SessionConnectedEvent event) {
 		// WebSocket 연결 시 작업
-		String userNickname = "";
-		GenericMessage<?> connectMessage = (GenericMessage<?>)event.getMessage().getHeaders().get("simpConnectMessage");
-		Map<String, Object> sessionAttributes = (Map<String, Object>)connectMessage.getHeaders()
-			.get("simpSessionAttributes");
-		if (sessionAttributes != null) {
-			userNickname = (String)sessionAttributes.get("usernickname");
-			log.info("User Nickname: {}", userNickname);
-		}
-		redisTemplate.opsForValue().set("member:" + userNickname, "online");
+		// String userNickname = "";
+		// GenericMessage<?> connectMessage = (GenericMessage<?>)event.getMessage().getHeaders().get("simpConnectMessage");
+		// Map<String, Object> sessionAttributes = (Map<String, Object>)connectMessage.getHeaders()
+		// 	.get("simpSessionAttributes");
+		// if (sessionAttributes != null) {
+		// 	userNickname = (String)sessionAttributes.get("usernickname");
+		// 	log.info("User Nickname: {}", userNickname);
+		// }
+		// redisTemplate.opsForValue().set("member:" + userNickname, "online");
 	}
 
 	// TODO: 일정 시간 동안 heartbeat 가 수신되지 않으면 끊어진 것으로 간주

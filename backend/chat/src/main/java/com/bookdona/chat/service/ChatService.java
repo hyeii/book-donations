@@ -155,6 +155,7 @@ public class ChatService {
 		List<ChatMessageResponse> collect = chatMessageRepository.findByTradeId(chatRoom.getTradeId())
 			.stream()
 			.map(chatMessage -> ChatMessageResponse.builder()
+				.tradeId(chatMessage.getTradeId())
 				.senderNickname(chatMessage.getSenderNickname())
 				.message(chatMessage.getMessage())
 				.createdAt(chatMessage.getCreatedAt())

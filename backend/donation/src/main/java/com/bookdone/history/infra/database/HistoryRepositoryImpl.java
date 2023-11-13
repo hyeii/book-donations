@@ -53,8 +53,14 @@ public class HistoryRepositoryImpl implements HistoryRepository {
     }
 
     @Override
-    public List<History> findAllByMemberId(Long memberId) {
+    public List<History> findAllWrittenByMemberId(Long memberId) {
         List<HistoryEntity> historyEntityList = jpaHistoryRepository.findAllByMemberIdAndStatusIsWritten(memberId);
+        return historyEntityList.stream().map(History::createHistory).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<History> findAllUnwrittenByMemberId(Long memberId) {
+        List<HistoryEntity> historyEntityList = jpaHistoryRepository.findAllByMemberIdAndStatusIsUnwritten(memberId);
         return historyEntityList.stream().map(History::createHistory).collect(Collectors.toList());
     }
 

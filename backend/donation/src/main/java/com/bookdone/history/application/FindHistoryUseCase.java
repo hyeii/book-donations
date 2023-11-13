@@ -57,8 +57,44 @@ public class FindHistoryUseCase {
                 .build();
     }
 
-    public List<HistoryResponse> findMyHistories(Long memberId) throws JsonProcessingException {
-        List<History> historyList = historyRepository.findAllByMemberId(memberId);
+    public List<HistoryResponse> findMyUnwrittenHistories(Long memberId) throws JsonProcessingException {
+        List<History> historyList = historyRepository.findAllUnwrittenByMemberId(memberId);
+        if(historyList.isEmpty()) return new ArrayList<HistoryResponse>();
+
+        String nickname = responseUtil.extractDataFromResponse(memberClient.getNickname(memberId), String.class);
+        List<String> isbnList = historyList.stream()
+                .map(history -> donationRepository.findById(history.getDonationId()).getIsbn())
+                .collect(Collectors.toList());
+
+        Map<String, BookResponse> bookResponseMap = responseUtil
+                .extractDataFromResponse(bookClient.getBookInfoList(isbnList), Map.class);
+
+        Map<Long, String> donationMap = new HashMap<>();
+
+        for(int idx = 0; idx < isbnList.size(); idx++) {
+            donationMap.put(historyList.get(idx).getDonationId(), isbnList.get(idx));
+        }
+
+        List<HistoryResponse> historyResponseList = historyList.stream().map(history -> {
+            String isbn = donationMap.get(history.getDonationId());
+            ObjectMapper objectMapper = new ObjectMapper();
+            BookResponse bookResponse = objectMapper.convertValue(
+                    bookResponseMap.get(isbn), BookResponse.class);
+
+            return HistoryResponse.builder()
+                    .content(history.getContent())
+                    .createdAt(history.getCreatedAt())
+                    .nickname(nickname)
+                    .title(bookResponse.getTitle())
+                    .titleUrl(bookResponse.getTitleUrl())
+                    .build();
+        }).collect(Collectors.toList());
+
+        return historyResponseList;
+    }
+
+    public List<HistoryResponse> findMyWrittenHistories(Long memberId) throws JsonProcessingException {
+        List<History> historyList = historyRepository.findAllWrittenByMemberId(memberId);
         if(historyList.isEmpty()) return new ArrayList<HistoryResponse>();
 
         String nickname = responseUtil.extractDataFromResponse(memberClient.getNickname(memberId), String.class);

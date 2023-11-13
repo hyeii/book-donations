@@ -20,13 +20,16 @@ public class AddDonationUseCase {
 
     private final DonationRepository donationRepository;
     private final DonationImageRepository donationImageRepository;
-    private final TradeRepository tradeRepository;
 
     public Long addDonation(DonationAddRequest donationAddRequest) {
         Donation donation = donationAddRequest.toDomain();
         Long id = donationRepository.save(donation);
 
         donationImageRepository.saveImageList(id, donationAddRequest.getImages());
+
+
+
+
         return id;
     }
 

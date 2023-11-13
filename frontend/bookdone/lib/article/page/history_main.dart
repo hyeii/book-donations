@@ -129,13 +129,13 @@ class HistoryMain extends HookConsumerWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        histories.value![index].content,
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                    ),
+                                    // Align(
+                                    //   alignment: Alignment.centerLeft,
+                                    //   child: Text(
+                                    //     histories.value![index].content,
+                                    //     style: TextStyle(fontSize: 15),
+                                    //   ),
+                                    // ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,

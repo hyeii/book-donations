@@ -49,16 +49,7 @@ class ArticleMain extends HookConsumerWidget {
     }, []);
 
     return Scaffold(
-      appBar: AppBar(
-          // backgroundColor: Colors.transparent,
-          // elevation: 0,
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back),
-          //   onPressed: () {
-          //     // TODO: 뒤로가기 처리
-          //   },
-          // ),
-          ),
+      appBar: AppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width / 10),

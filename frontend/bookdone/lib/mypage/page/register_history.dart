@@ -90,7 +90,7 @@ class RegisterHistory extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    maxLength: 300,
+                    maxLength: 250,
                     maxLines: 13,
                     onChanged: (text) {
                       content.value = contentController.text;

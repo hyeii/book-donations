@@ -67,7 +67,7 @@ class MyPageAddHistory extends HookConsumerWidget {
 
                     for (var history in book.historyResponseList) {
                       if (history.nickname == nickname.value) {
-                        if (history.content == '') {
+                        if (history.content == null) {
                           keeping.add(book);
                         }
                       }

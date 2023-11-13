@@ -18,24 +18,24 @@ class RegistExistList extends HookConsumerWidget {
     final restClient = ref.read(restApiClientProvider);
 
     var keepingList = useState<ExistList>(ExistList(info: []));
+    var infoText = useState('');
+    var isHaving = useState(false);
 
     useEffect(() {
       void fetchData() async {
         try {
-          var checkData = await restClient.getMyBook();
-          for (var book in checkData.data) {
-            print(book.donationStatus);
-          }
           List<BookInfo> keeping = [];
           await restClient.getMyBook().then((bookData) {
             for (var book in bookData.data) {
-              if (book.donationStatus == 'KEEPING') {
+              if (book.isbn == ref.watch(getIsbnProvider)) {
                 keeping.add(book);
-              } else {
-                if (book.historyResponseList.isNotEmpty) {
-                  keeping.add(book);
-                }
               }
+            }
+            if (keeping.isEmpty) {
+              infoText.value = '해당하는 책을 보유하고 있지 않습니다';
+            } else {
+              isHaving.value = true;
+              infoText.value = '책을 선택해 등록을 진행해주세요';
             }
             keepingList.value = ExistList(info: keeping);
           });
@@ -66,7 +66,7 @@ class RegistExistList extends HookConsumerWidget {
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("책을 선택해 등록을 진행해주세요"),
+                child: Text(infoText.value),
               ),
               SizedBox(
                 height: 10,
@@ -159,111 +159,122 @@ class ExistList extends HookConsumerWidget {
         itemCount: info.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              curId.value = info[index].id;
-              ref.watch(setDonationIdProvider.notifier).setId(info[index].id);
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                width: double.infinity,
-                height: 110,
-                decoration: BoxDecoration(
-                  color: curId.value == info[index].id
-                      ? Color.fromARGB(255, 211, 205, 199)
-                      : Colors.white,
-                  border: Border.all(
-                    color: curId.value == info[index].id
-                        ? Color.fromARGB(255, 211, 205, 199)
-                        : Colors.black12,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 8.0),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15.0),
-                        child: CachedNetworkImage(
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topCenter,
-                          imageUrl: info[index].titleUrl,
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+          return info.isEmpty
+              ? Text('해당하는 책을 보유하고 있지 않습니다')
+              : GestureDetector(
+                  onTap: () {
+                    curId.value = info[index].id;
+                    ref
+                        .watch(setDonationIdProvider.notifier)
+                        .setId(info[index].id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 110,
+                      decoration: BoxDecoration(
+                        color: curId.value == info[index].id
+                            ? Color.fromARGB(255, 211, 205, 199)
+                            : Colors.white,
+                        border: Border.all(
+                          color: curId.value == info[index].id
+                              ? Color.fromARGB(255, 211, 205, 199)
+                              : Colors.black12,
+                          width: 2,
                         ),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    info[index].title,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text("마치다 소노코 지음"),
-                                ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 8.0),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: CachedNetworkImage(
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.topCenter,
+                                imageUrl: info[index].titleUrl,
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      '${info[index].historyResponseList.length}개의 히스토리'),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.bottomRight,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        HistoryRoute(
-                                                title: info[index].title,
-                                                titleUrl: info[index].titleUrl,
-                                                donationId: info[index].id)
-                                            .push(context);
-                                      },
-                                      style: TextButton.styleFrom(
-                                        minimumSize: Size.zero,
-                                        padding: EdgeInsets.zero,
-                                        tapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        foregroundColor: Colors.brown.shade600,
-                                      ),
-                                      child: Text(
-                                        "히스토리 보기",
-                                      ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8.0, bottom: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          info[index].title,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(info[index].isbn),
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            '${info[index].historyResponseList.length}개의 히스토리'),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          alignment: Alignment.bottomRight,
+                                          child: TextButton(
+                                            onPressed: () {
+                                              HistoryRoute(
+                                                      title: info[index].title,
+                                                      titleUrl:
+                                                          info[index].titleUrl,
+                                                      donationId:
+                                                          info[index].id)
+                                                  .push(context);
+                                            },
+                                            style: TextButton.styleFrom(
+                                              minimumSize: Size.zero,
+                                              padding: EdgeInsets.zero,
+                                              tapTargetSize:
+                                                  MaterialTapTargetSize
+                                                      .shrinkWrap,
+                                              foregroundColor:
+                                                  Colors.brown.shade600,
+                                            ),
+                                            child: Text(
+                                              "히스토리 보기",
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          );
+                );
         },
       ),
     );

@@ -202,6 +202,7 @@ BookInfo _$BookInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$BookInfo {
   int get id => throw _privateConstructorUsedError;
+  String get isbn => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get titleUrl => throw _privateConstructorUsedError;
   String get donationStatus => throw _privateConstructorUsedError;
@@ -222,6 +223,7 @@ abstract class $BookInfoCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
+      String isbn,
       String title,
       String titleUrl,
       String donationStatus,
@@ -243,6 +245,7 @@ class _$BookInfoCopyWithImpl<$Res, $Val extends BookInfo>
   @override
   $Res call({
     Object? id = null,
+    Object? isbn = null,
     Object? title = null,
     Object? titleUrl = null,
     Object? donationStatus = null,
@@ -254,6 +257,10 @@ class _$BookInfoCopyWithImpl<$Res, $Val extends BookInfo>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      isbn: null == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -288,6 +295,7 @@ abstract class _$$BookInfoImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
+      String isbn,
       String title,
       String titleUrl,
       String donationStatus,
@@ -307,6 +315,7 @@ class __$$BookInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? isbn = null,
     Object? title = null,
     Object? titleUrl = null,
     Object? donationStatus = null,
@@ -318,6 +327,10 @@ class __$$BookInfoImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      isbn: null == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -347,6 +360,7 @@ class __$$BookInfoImplCopyWithImpl<$Res>
 class _$BookInfoImpl implements _BookInfo {
   const _$BookInfoImpl(
       {required this.id,
+      required this.isbn,
       required this.title,
       required this.titleUrl,
       required this.donationStatus,
@@ -359,6 +373,8 @@ class _$BookInfoImpl implements _BookInfo {
 
   @override
   final int id;
+  @override
+  final String isbn;
   @override
   final String title;
   @override
@@ -378,7 +394,7 @@ class _$BookInfoImpl implements _BookInfo {
 
   @override
   String toString() {
-    return 'BookInfo(id: $id, title: $title, titleUrl: $titleUrl, donationStatus: $donationStatus, donatedAt: $donatedAt, historyResponseList: $historyResponseList)';
+    return 'BookInfo(id: $id, isbn: $isbn, title: $title, titleUrl: $titleUrl, donationStatus: $donationStatus, donatedAt: $donatedAt, historyResponseList: $historyResponseList)';
   }
 
   @override
@@ -387,6 +403,7 @@ class _$BookInfoImpl implements _BookInfo {
         (other.runtimeType == runtimeType &&
             other is _$BookInfoImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.isbn, isbn) || other.isbn == isbn) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.titleUrl, titleUrl) ||
                 other.titleUrl == titleUrl) &&
@@ -403,6 +420,7 @@ class _$BookInfoImpl implements _BookInfo {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      isbn,
       title,
       titleUrl,
       donationStatus,
@@ -426,6 +444,7 @@ class _$BookInfoImpl implements _BookInfo {
 abstract class _BookInfo implements BookInfo {
   const factory _BookInfo(
       {required final int id,
+      required final String isbn,
       required final String title,
       required final String titleUrl,
       required final String donationStatus,
@@ -437,6 +456,8 @@ abstract class _BookInfo implements BookInfo {
 
   @override
   int get id;
+  @override
+  String get isbn;
   @override
   String get title;
   @override

@@ -13,7 +13,7 @@ class MyHistories extends HookConsumerWidget {
     var histories = useState<List<HistoryData>?>(null);
 
     Future<HistoryResp> getHistories() async {
-      var data = restClient.getMyHistories();
+      var data = restClient.getMyHistoryWritten();
       return data;
     }
 
@@ -100,7 +100,7 @@ class MyHistories extends HookConsumerWidget {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        histories.value![index].content,
+                                        histories.value![index].content!,
                                         style: TextStyle(fontSize: 15),
                                       ),
                                     ),

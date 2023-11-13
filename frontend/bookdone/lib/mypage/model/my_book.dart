@@ -21,6 +21,7 @@ class MyBookData with _$MyBookData {
 class BookInfo with _$BookInfo {
   const factory BookInfo({
     required int id,
+    required String isbn,
     required String title,
     required String titleUrl,
     required String donationStatus,

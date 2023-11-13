@@ -19,8 +19,10 @@ class ChatMain extends HookWidget {
     useEffect(() {
       stompService.initStompClient();
 
+
       return () {
         stompService.deactivateStompClient();
+
       };
     }, const []);
 

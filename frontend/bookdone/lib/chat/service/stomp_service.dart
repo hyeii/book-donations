@@ -12,7 +12,8 @@ class StompService {
     String? nickname = pref.getString('nickname');
     String? accessToken = pref.getString('accessToken');
     if (nickname != null && accessToken != null) {
-      String wsUrl = dotenv.get('WS_URL') + '/ws?usernickname=$nickname';
+      String wsUrl = dotenv.get('API_URL') + '/ws?usernickname=$nickname';
+      print("웹 소켓 연결 동작");
       print('웹소켓 주소!!: wsUrl: $wsUrl  nickname: $nickname   accessToken: $accessToken');
 
       stompClient = StompClient(
@@ -26,8 +27,8 @@ class StompService {
                 },
               );
             },
-            stompConnectHeaders: {'Authorization': '$accessToken'},
-            webSocketConnectHeaders: {'Authorization': '$accessToken'},
+            stompConnectHeaders: {'Authorization': 'Bearer $accessToken'},
+            webSocketConnectHeaders: {'Authorization': 'Bearer $accessToken'},
             onWebSocketError: (dynamic error) => print(error),
           )
       );
@@ -38,5 +39,6 @@ class StompService {
 
   void deactivateStompClient() {
     stompClient?.deactivate();
+    print("웹 소켓 연결 끊김");
   }
 }

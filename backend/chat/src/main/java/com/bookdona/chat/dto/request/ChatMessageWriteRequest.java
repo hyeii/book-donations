@@ -18,7 +18,7 @@ import lombok.ToString;
 public class ChatMessageWriteRequest {
 
 	@NotBlank
-	String message;
-	Long tradeId;
-	String senderNickname;
+	private String message;
+	private Long tradeId;
+	private String senderNickname;
 }

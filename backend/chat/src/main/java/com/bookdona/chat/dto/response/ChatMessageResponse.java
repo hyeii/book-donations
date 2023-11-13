@@ -17,8 +17,8 @@ import lombok.ToString;
 @ToString
 public class ChatMessageResponse {
 
-	Long tradeId;
-	String senderNickname;
-	String message;
-	LocalDateTime createdAt;
+	private Long tradeId;
+	private String senderNickname;
+	private String message;
+	private LocalDateTime createdAt;
 }

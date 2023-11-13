@@ -1,14 +1,12 @@
 package com.bookdona.notification.repository;
 
-import java.util.List;
-
+import com.bookdona.notification.entity.NotificationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bookdona.notification.entity.NotificationEntity;
-import com.bookdona.notification.entity.NotificationStatus;
+import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<NotificationEntity, Long> {
-	List<NotificationEntity> findByMemberIdAndStatus(long memberId, NotificationStatus status);
+    List<NotificationEntity> findByMemberId(Long memberId);
 }

@@ -1,46 +1,37 @@
 package com.bookdona.notification.entity;
 
+import com.bookdona.notification.dto.NotificationResponseDto;
+import lombok.*;
+import org.springframework.data.redis.core.index.Indexed;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Entity;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
+@Builder
 @Getter
 @Table(name = "notification")
 public class NotificationEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Enumerated(javax.persistence.EnumType.STRING)
-	private NotificationType type;
+    @Indexed
+    private Long memberId;
 
-	@Enumerated(javax.persistence.EnumType.STRING)
-	private NotificationStatus status;
+    private String message;
 
-	private long memberId;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
 
-	private String title;
-
-	private String message;
-
-	@Column(columnDefinition = "TEXT")
-	private String payload;
-
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private LocalDateTime createdAt;
+    public NotificationResponseDto toResponseDto() {
+        return NotificationResponseDto.builder()
+                .id(this.id)
+                .memberId(this.memberId)
+                .message(this.message)
+                .createdAt(this.createdAt)
+                .build();
+    }
 }

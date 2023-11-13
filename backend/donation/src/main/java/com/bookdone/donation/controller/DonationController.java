@@ -50,13 +50,14 @@ public class DonationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> donationAdd(@RequestHeader("member-id") Long memberId, DonationAddRequest donationAddRequest) {
+    public ResponseEntity<?> donationAdd(@RequestHeader("member-id") Long memberId, DonationAddRequest donationAddRequest) throws JsonProcessingException {
         donationAddRequest.setMemberId(memberId);
         return BaseResponse.okWithData(HttpStatus.CREATED,"게시글이 등록되었습니다.", addDonationUseCase.addDonation(donationAddRequest));
     }
 
     @PostMapping("/{donationId}")
-    public ResponseEntity<?> donationReadd(@PathVariable Long donationId, @RequestHeader("member-id") Long memberId, DonationAddRequest donationAddRequest){
+    public ResponseEntity<?> donationReadd(
+            @PathVariable Long donationId, @RequestHeader("member-id") Long memberId, DonationAddRequest donationAddRequest) throws JsonProcessingException {
         donationAddRequest.setId(donationId);
         donationAddRequest.setMemberId(memberId);
         return BaseResponse.okWithData(HttpStatus.CREATED, "게시글이 등록되었습니다.", addDonationUseCase.readdDonation(donationAddRequest));

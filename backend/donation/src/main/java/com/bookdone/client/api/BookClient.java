@@ -13,6 +13,9 @@ public interface BookClient {
     @GetMapping("/api/books/detail/{isbn}")
     ResponseEntity<?> getBookInfo(@PathVariable String isbn);
 
+    @GetMapping("/api/books/likes")
+    ResponseEntity<?> getBookLikesList(@PathVariable String isbn);
+
     @GetMapping("/api/books/details")
     ResponseEntity<?> getBookInfoList(@RequestParam List<String> isbns);
 }

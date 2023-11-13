@@ -22,19 +22,18 @@ public class FeignResponse {
 
 		log.info("responseEntity: {}", responseEntity);
 
-		if (responseEntity.getBody() instanceof SuccessResponse) {
-			SuccessResponse successResponse = (SuccessResponse) responseEntity.getBody();
-			log.info("SuccessResponse: {}", successResponse);
+		Object responseBody = responseEntity.getBody();
 
-			if (!successResponse.isSuccess()) {
-				String msg = successResponse.getMsg();
+		if (responseBody instanceof Map) {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> responseBodyMap = (Map<String, Object>) responseBody;
+			if (!(boolean) responseBodyMap.get("success")) {
+				String msg = (String) responseBodyMap.get("msg");
 				throw new IllegalArgumentException("API 호출 실패: " + msg);
 			}
 
-			T data = objectMapper.convertValue(successResponse.getData(), clazz);
-
+			T data = objectMapper.convertValue(responseBodyMap.get("data"), clazz);
 			log.info("data: {}", data);
-
 			return data;
 		} else {
 			throw new IllegalArgumentException("응답이 SuccessResponse 타입이 아닙니다.");

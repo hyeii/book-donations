@@ -20,6 +20,8 @@ public class FeignResponse {
 		IllegalArgumentException,
 		JsonProcessingException {
 
+		log.info("responseEntity: {}", responseEntity);
+
 		if (responseEntity.getBody() instanceof SuccessResponse) {
 			SuccessResponse successResponse = (SuccessResponse) responseEntity.getBody();
 			log.info("SuccessResponse: {}", successResponse);
@@ -30,6 +32,9 @@ public class FeignResponse {
 			}
 
 			T data = objectMapper.convertValue(successResponse.getData(), clazz);
+
+			log.info("data: {}", data);
+
 			return data;
 		} else {
 			throw new IllegalArgumentException("응답이 SuccessResponse 타입이 아닙니다.");

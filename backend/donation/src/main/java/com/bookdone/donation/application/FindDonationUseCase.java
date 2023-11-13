@@ -208,6 +208,7 @@ public class FindDonationUseCase {
                     .title(bookResponse.getTitle())
                     .titleUrl(bookResponse.getTitleUrl())
                     .historyResponseList(historyResponseList)
+                    .isbn(bookResponse.getIsbn())
                     .donatedAt(lastHistory == null ? donation.getCreatedAt() : lastHistory.getDonatedAt())
                     .build();
         }).collect(Collectors.toList());

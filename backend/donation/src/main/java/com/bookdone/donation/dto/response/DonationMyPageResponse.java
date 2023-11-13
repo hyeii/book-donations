@@ -17,6 +17,7 @@ public class DonationMyPageResponse {
     private Long id;
     private String title;
     private String titleUrl;
+    private String isbn;
     private DonationStatus donationStatus;
     private LocalDateTime donatedAt;
     private List<HistoryResponse> historyResponseList;

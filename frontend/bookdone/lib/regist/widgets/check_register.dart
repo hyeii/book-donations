@@ -38,6 +38,7 @@ class CheckRegister extends HookConsumerWidget {
     var gotId = useState(0);
 
     void register() async {
+      print(isbn);
       var resp = await restClient.registArticle(
           isbn: isbn,
           address: address,
@@ -72,6 +73,7 @@ class CheckRegister extends HookConsumerWidget {
             ),
             TextButton(
               onPressed: () async {
+                print('dd');
                 // print(files.value);
                 files.value = images!
                     .map((img) => MultipartFile.fromFileSync(img.path))

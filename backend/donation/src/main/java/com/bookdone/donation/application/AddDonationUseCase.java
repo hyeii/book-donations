@@ -7,10 +7,7 @@ import com.bookdone.donation.application.repository.DonationImageRepository;
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
 import com.bookdone.donation.dto.request.DonationAddRequest;
-import com.bookdone.global.dto.BaseResponse;
-import com.bookdone.trade.application.repository.TradeRepository;
 import com.bookdone.util.ResponseUtil;
-import com.bookdone.util.S3Uploader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

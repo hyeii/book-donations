@@ -4,6 +4,7 @@ import com.bookdone.donation.application.AddDonationUseCase;
 import com.bookdone.donation.application.FindDonationUseCase;
 import com.bookdone.donation.application.ModifyDonationUseCase;
 import com.bookdone.donation.dto.request.DonationAddRequest;
+import com.bookdone.donation.dto.response.DonationListNoHistoryResponse;
 import com.bookdone.donation.dto.response.DonationMyPageResponse;
 import com.bookdone.global.dto.BaseResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,6 +38,13 @@ public class DonationController {
             log.info("done: {}",donationMyPageResponse);
         }
         return BaseResponse.okWithData(HttpStatus.OK, "보유중 목록이 조회되었습니다.", donationListByMember);
+    }
+
+    @GetMapping("/members/mypage/unwritten")
+    public ResponseEntity<?> donationListByMemberAndUnwritten(@RequestHeader("member-id") Long memberId) {
+
+        return BaseResponse.okWithData(
+                HttpStatus.OK, "보유중 목록이 조회되었습니다.", findDonationUseCase.findDonationListByMemberAndUnWritten(memberId));
     }
 
     @GetMapping("/{donationId}")

@@ -6,10 +6,7 @@ import com.bookdone.client.dto.BookResponse;
 import com.bookdone.donation.application.repository.DonationImageRepository;
 import com.bookdone.donation.application.repository.DonationRepository;
 import com.bookdone.donation.domain.Donation;
-import com.bookdone.donation.dto.response.DonationCountResponse;
-import com.bookdone.donation.dto.response.DonationDetailsResponse;
-import com.bookdone.donation.dto.response.DonationListResponse;
-import com.bookdone.donation.dto.response.DonationMyPageResponse;
+import com.bookdone.donation.dto.response.*;
 import com.bookdone.history.application.repository.HistoryRepository;
 import com.bookdone.history.domain.History;
 import com.bookdone.history.dto.response.HistoryResponse;
@@ -218,5 +215,33 @@ public class FindDonationUseCase {
 
     public List<DonationCountResponse> countDonationCount(String isbn, String address) {
         return donationRepository.countAllByIsbnAndAddress(isbn, address);
+    }
+
+    public List<DonationListNoHistoryResponse> findDonationListByMemberAndUnWritten(Long memberId) {
+        List<Donation> donationList = donationRepository.findAllByMemberId(memberId);
+
+        Map<Long, Donation> donationMap = donationList
+                .stream().collect(Collectors.toMap(Donation::getId, donation -> donation));
+
+        List<History> historyList = historyRepository.findAllUnwrittenByMemberId(memberId);
+
+        List<DonationListNoHistoryResponse> donationListNoHistoryResponseList = historyList.stream()
+                .map(history -> {
+                    Donation donation = donationMap.get(history.getDonationId());
+                    BookResponse bookResponse = null;
+                    try {
+                        bookResponse = responseUtil.extractDataFromResponse(
+                                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return DonationListNoHistoryResponse.builder()
+                            .title(bookResponse.getTitle())
+                            .titleUrl(bookResponse.getTitleUrl())
+                            .id(donation.getId())
+                            .build();
+                }).collect(Collectors.toList());
+
+        return donationListNoHistoryResponseList;
     }
 }

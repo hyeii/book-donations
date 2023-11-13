@@ -20,4 +20,5 @@ public interface DonationRepository {
     public List<DonationCountResponse> countAllByIsbnAndAddress(String isbn, String address);
 
     public List<Donation> findAllAddressByIsbnAndAddress(String isbn, String address);
+
 }

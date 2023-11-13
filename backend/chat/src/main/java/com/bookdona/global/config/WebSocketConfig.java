@@ -43,14 +43,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 			.setHeartbeatValue(new long[] {20000, 20000}); // 서버 -> 클라이언트, 클라이언트 -> 서버 하트비트 시간 설정 20초
 	}
 
-	// 세션 유지 시간 3시간
-	@Bean
-	public ServletServerContainerFactoryBean createWebSocketContainer() {
-		var container = new ServletServerContainerFactoryBean();
-		container.setMaxSessionIdleTimeout(10800000L);
-		return container;
-	}
-
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		// STOMP 연결 엔드포인트

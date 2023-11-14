@@ -36,18 +36,24 @@ class ChatRoom extends HookConsumerWidget {
     final accessToken = useState<String>("");
     final stompClient = useState<StompClient?>(null);
 
+    final scrollController = ScrollController();
+
     useEffect(() {
       Future<void> init() async {
+        // nickname, accessToken 가져오기
         SharedPreferences pref = await SharedPreferences.getInstance();
         userNickname.value = pref.getString('nickname')!;
         accessToken.value = pref.getString('accessToken')!;
-
         if (userNickname.value != null && accessToken.value != null) {
           String apiUrl = dotenv.get('API_URL');
           String wsUrl = '$apiUrl/ws?usernickname=${userNickname.value}';
 
-          print(wsUrl);
-
+          // 불필요한 재연결 시도 방지
+          if (stompClient.value?.isActive == true) {
+            print("WebSocket이 이미 연결된 상태입니다.");
+            return;
+          }
+          // ws 연결, 구독
           stompClient.value = StompClient(
             config: StompConfig.SockJS(
               url: wsUrl,
@@ -83,30 +89,46 @@ class ChatRoom extends HookConsumerWidget {
 
       init();
 
-      // 사용자 닉네임 및 초기 채팅 목록 가져오기
-      if (chatMessages.value.isEmpty) {
-        fetchChatRooms() async {
-          try {
-            final response = await restClient.chatMessageList(tradeId);
-            chatMessages.value = response.data.cast<Message>();
-          } catch (e) {
-            print('Error fetching messages: $e');
-          }
+      // 기존 채팅 목록 가져오기
+      fetchChatRooms() async {
+        try {
+          final response = await restClient.chatMessageList(tradeId);
+          chatMessages.value = response.data.cast<Message>();
+        } catch (e) {
+          print('Error fetching messages: $e');
         }
+      }
 
+      if (chatMessages.value.isEmpty) {
         fetchChatRooms();
       }
 
-      return () => stompClient.value?.deactivate();
+      return () => {
+            stompClient.value?.deactivate(),
+          };
     }, []);
+
+    // 새로운 채팅 감지, 스크롤 최하단으로 이동
+    useEffect(() {
+      if (chatMessages.value.isNotEmpty) {
+        Future.microtask(() =>
+            scrollController.animateTo(
+              scrollController.position.maxScrollExtent,
+              duration: Duration(milliseconds: 100),
+              curve: Curves.easeOut,
+            )
+        );
+      }
+      // chatMessages의 길이가 변경될 때만 useEffect가 실행되도록 설정
+    }, [chatMessages.value.length]);
 
     // 메시지 전송 로직
     void sendMessage() {
       String messageText = messageController.text;
       if (messageText.isNotEmpty) {
-        print("메시지 보내기");
+        print("채팅 보내기");
 
-        // ChatMessageWriteRequest 인스턴스 생성
+        // 보낼 데이터 생성
         ChatMessageWriteRequest chatMessageWriteRequestDto =
             ChatMessageWriteRequest(
           tradeId: tradeId,
@@ -117,7 +139,6 @@ class ChatRoom extends HookConsumerWidget {
         // JSON으로 변환
         String chatMessageWriteRequest =
             jsonEncode(chatMessageWriteRequestDto.toJson());
-        print("chatMessageWriteRequest: $chatMessageWriteRequest");
 
         String sendUrl = "/app/chat/$tradeId";
         print(sendUrl);
@@ -164,6 +185,10 @@ class ChatRoom extends HookConsumerWidget {
           // 채팅 목록을 표시하는 부분
           Expanded(
             child: ListView.builder(
+              // shrinkWrap: true,
+              // reverse: true,
+              padding: EdgeInsets.only(bottom: 50),
+              controller: scrollController,
               itemCount: chatMessages.value.length,
               itemBuilder: (context, index) {
                 final chat = chatMessages.value[index];
@@ -171,7 +196,8 @@ class ChatRoom extends HookConsumerWidget {
                   senderNickname: chat.senderNickname,
                   message: chat.message,
                   createdAt: chat.createdAt.toString(),
-                  isMine: chat.senderNickname == userNickname.value ? true : false,
+                  isMine:
+                      chat.senderNickname == userNickname.value ? true : false,
                 );
               },
             ),
@@ -193,6 +219,12 @@ class ChatRoom extends HookConsumerWidget {
                     hintText: "메시지 입력...",
                     border: InputBorder.none,
                   ),
+                  maxLines: null,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: (value) {
+                    sendMessage(); // 여기를 수정
+                  },
                 ),
               ),
             ),

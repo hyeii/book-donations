@@ -67,7 +67,7 @@ public class FindHistoryUseCase {
                 .collect(Collectors.toList());
 
         Map<String, BookResponse> bookResponseMap = responseUtil
-                .extractDataFromResponse(bookClient.getBookInfoList(isbnList), Map.class);
+                .extractDataFromResponse(bookClient.getBookInfoList(memberId, isbnList), Map.class);
 
         Map<Long, String> donationMap = new HashMap<>();
 
@@ -103,7 +103,7 @@ public class FindHistoryUseCase {
                 .collect(Collectors.toList());
 
         Map<String, BookResponse> bookResponseMap = responseUtil
-                .extractDataFromResponse(bookClient.getBookInfoList(isbnList), Map.class);
+                .extractDataFromResponse(bookClient.getBookInfoList(memberId, isbnList), Map.class);
 
         Map<Long, String> donationMap = new HashMap<>();
 

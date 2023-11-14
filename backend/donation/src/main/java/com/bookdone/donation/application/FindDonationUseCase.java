@@ -154,9 +154,8 @@ public class FindDonationUseCase {
 
         List<String> isbnList = donationList.stream().map(donation -> donation.getIsbn())
                 .collect(Collectors.toList());
-
         try {
-            bookResponseMap = responseUtil.extractDataFromResponse(bookClient.getBookInfoList(isbnList), Map.class);
+            bookResponseMap = responseUtil.extractDataFromResponse(bookClient.getBookInfoList(memberId,isbnList), Map.class);
         } catch (FeignException.NotFound e) {
             throw e;
         } catch (JsonProcessingException e) {

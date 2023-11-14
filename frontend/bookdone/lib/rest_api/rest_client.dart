@@ -116,4 +116,7 @@ abstract class RestClient {
 
   @GET('/api/notifications')
   Future<NotificationsResp> getNotifications();
+
+  @DELETE('/api/notifications/{notificationsid}')
+  Future<BooksLikeResp> deleteNotifications(@Path() int notificationsid);
 }

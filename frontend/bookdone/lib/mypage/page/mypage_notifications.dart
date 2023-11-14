@@ -19,7 +19,7 @@ class MyPageNotifications extends HookConsumerWidget {
         //   onPressed: () {},
         // ),
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width / 10),
@@ -43,6 +43,7 @@ class MyPageNotifications extends HookConsumerWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Notifications(
+                    id: notificationData[index].id,
                     message: notificationData[index].message,
                     createdAt: notificationData[index].createdAt,
                   );

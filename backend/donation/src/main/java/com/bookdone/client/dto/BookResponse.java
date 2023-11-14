@@ -30,5 +30,6 @@ public class BookResponse {
     private String publisherUrl;
     private String inputDate;
     private String updateDate;
+    private boolean likeStatus;
 }
 

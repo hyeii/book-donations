@@ -15,7 +15,10 @@ class MyDonatingList extends HookWidget {
     return ListView.builder(
       itemCount: donatingList.length,
       itemBuilder: (context, index) {
-        return BookCard(book: donatingList[index]);
+        return BookCard(
+          book: donatingList[index],
+          isLike: false,
+        );
       },
     );
   }

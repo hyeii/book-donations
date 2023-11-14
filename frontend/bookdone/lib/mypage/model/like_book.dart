@@ -31,3 +31,26 @@ class LikeInfo with _$LikeInfo {
       _$LikeInfoFromJson(json);
 }
 
+@freezed
+class NotificationsResp with _$NotificationsResp {
+  const factory NotificationsResp({
+    required bool success,
+    required String msg,
+    required List<NotificationsData> data,
+  }) = _NotificationsResp;
+
+  factory NotificationsResp.fromJson(Map<String, dynamic> json) =>
+      _$NotificationsRespFromJson(json);
+}
+
+@freezed
+class NotificationsData with _$NotificationsData {
+  const factory NotificationsData({
+    required int id,
+    required String message,
+    required DateTime createdAt,
+  }) = _NotificationsData;
+
+  factory NotificationsData.fromJson(Map<String, dynamic> json) =>
+      _$NotificationsDataFromJson(json);
+}

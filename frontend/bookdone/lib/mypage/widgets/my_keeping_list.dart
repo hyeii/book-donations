@@ -12,7 +12,10 @@ class MyKeepingList extends HookWidget {
     return ListView.builder(
       itemCount: keepingList.length,
       itemBuilder: (context, index) {
-        return BookCard(book: keepingList[index]);
+        return BookCard(
+          book: keepingList[index],
+          isLike: false,
+        );
       },
     );
   }

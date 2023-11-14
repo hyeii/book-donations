@@ -97,32 +97,34 @@ class SearchMain extends HookConsumerWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    FutureBuilder(
-                      future: restClient.searchBook(searchText.value),
-                      builder: (_, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (snapshot.data == null) {
-                          return SizedBox.shrink();
-                        }
+                    searchText.value != ''
+                        ? FutureBuilder(
+                            future: restClient.searchBook(searchText.value),
+                            builder: (_, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (snapshot.data == null) {
+                                return SizedBox.shrink();
+                              }
 
-                        final searchedList = snapshot.data!.data;
+                              final searchedList = snapshot.data!.data;
 
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: searchedList.length,
-                            itemBuilder: (_, index) {
-                              BookData book = searchedList[index];
-                              return SearchResultCard(book: book);
+                              return Expanded(
+                                child: ListView.builder(
+                                  itemCount: searchedList.length,
+                                  itemBuilder: (_, index) {
+                                    BookData book = searchedList[index];
+                                    return SearchResultCard(book: book);
+                                  },
+                                ),
+                              );
                             },
-                          ),
-                        );
-                      },
-                    )
+                          )
+                        : SizedBox.shrink()
                   ],
                 ),
                 if (viewAutoComplete.value)

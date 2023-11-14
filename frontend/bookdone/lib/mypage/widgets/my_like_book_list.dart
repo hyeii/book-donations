@@ -14,14 +14,16 @@ class MyLikeBookList extends HookWidget {
       itemCount: likeBookList.length,
       itemBuilder: (context, index) {
         return BookCard(
-            book: BookInfo(
-                id: likeBookList[index].book.id,
-                isbn: likeBookList[index].book.isbn,
-                title: likeBookList[index].book.title,
-                titleUrl: likeBookList[index].book.titleUrl,
-                donationStatus: "NONE",
-                donatedAt: "NONE",
-                historyResponseList: []));
+          book: BookInfo(
+              id: likeBookList[index].book.id,
+              isbn: likeBookList[index].book.isbn,
+              title: likeBookList[index].book.title,
+              titleUrl: likeBookList[index].book.titleUrl,
+              donationStatus: "NONE",
+              donatedAt: "NONE",
+              historyResponseList: []),
+          isLike: true,
+        );
       },
     );
   }

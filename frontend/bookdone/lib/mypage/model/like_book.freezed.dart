@@ -399,3 +399,359 @@ abstract class _LikeInfo implements LikeInfo {
   _$$LikeInfoImplCopyWith<_$LikeInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+NotificationsResp _$NotificationsRespFromJson(Map<String, dynamic> json) {
+  return _NotificationsResp.fromJson(json);
+}
+
+/// @nodoc
+mixin _$NotificationsResp {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  List<NotificationsData> get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $NotificationsRespCopyWith<NotificationsResp> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NotificationsRespCopyWith<$Res> {
+  factory $NotificationsRespCopyWith(
+          NotificationsResp value, $Res Function(NotificationsResp) then) =
+      _$NotificationsRespCopyWithImpl<$Res, NotificationsResp>;
+  @useResult
+  $Res call({bool success, String msg, List<NotificationsData> data});
+}
+
+/// @nodoc
+class _$NotificationsRespCopyWithImpl<$Res, $Val extends NotificationsResp>
+    implements $NotificationsRespCopyWith<$Res> {
+  _$NotificationsRespCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<NotificationsData>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NotificationsRespImplCopyWith<$Res>
+    implements $NotificationsRespCopyWith<$Res> {
+  factory _$$NotificationsRespImplCopyWith(_$NotificationsRespImpl value,
+          $Res Function(_$NotificationsRespImpl) then) =
+      __$$NotificationsRespImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, List<NotificationsData> data});
+}
+
+/// @nodoc
+class __$$NotificationsRespImplCopyWithImpl<$Res>
+    extends _$NotificationsRespCopyWithImpl<$Res, _$NotificationsRespImpl>
+    implements _$$NotificationsRespImplCopyWith<$Res> {
+  __$$NotificationsRespImplCopyWithImpl(_$NotificationsRespImpl _value,
+      $Res Function(_$NotificationsRespImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$NotificationsRespImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<NotificationsData>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$NotificationsRespImpl implements _NotificationsResp {
+  const _$NotificationsRespImpl(
+      {required this.success,
+      required this.msg,
+      required final List<NotificationsData> data})
+      : _data = data;
+
+  factory _$NotificationsRespImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotificationsRespImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  final List<NotificationsData> _data;
+  @override
+  List<NotificationsData> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'NotificationsResp(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NotificationsRespImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, success, msg, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NotificationsRespImplCopyWith<_$NotificationsRespImpl> get copyWith =>
+      __$$NotificationsRespImplCopyWithImpl<_$NotificationsRespImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NotificationsRespImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _NotificationsResp implements NotificationsResp {
+  const factory _NotificationsResp(
+      {required final bool success,
+      required final String msg,
+      required final List<NotificationsData> data}) = _$NotificationsRespImpl;
+
+  factory _NotificationsResp.fromJson(Map<String, dynamic> json) =
+      _$NotificationsRespImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  List<NotificationsData> get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$NotificationsRespImplCopyWith<_$NotificationsRespImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+NotificationsData _$NotificationsDataFromJson(Map<String, dynamic> json) {
+  return _NotificationsData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$NotificationsData {
+  int get id => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $NotificationsDataCopyWith<NotificationsData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NotificationsDataCopyWith<$Res> {
+  factory $NotificationsDataCopyWith(
+          NotificationsData value, $Res Function(NotificationsData) then) =
+      _$NotificationsDataCopyWithImpl<$Res, NotificationsData>;
+  @useResult
+  $Res call({int id, String message, DateTime createdAt});
+}
+
+/// @nodoc
+class _$NotificationsDataCopyWithImpl<$Res, $Val extends NotificationsData>
+    implements $NotificationsDataCopyWith<$Res> {
+  _$NotificationsDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? message = null,
+    Object? createdAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NotificationsDataImplCopyWith<$Res>
+    implements $NotificationsDataCopyWith<$Res> {
+  factory _$$NotificationsDataImplCopyWith(_$NotificationsDataImpl value,
+          $Res Function(_$NotificationsDataImpl) then) =
+      __$$NotificationsDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id, String message, DateTime createdAt});
+}
+
+/// @nodoc
+class __$$NotificationsDataImplCopyWithImpl<$Res>
+    extends _$NotificationsDataCopyWithImpl<$Res, _$NotificationsDataImpl>
+    implements _$$NotificationsDataImplCopyWith<$Res> {
+  __$$NotificationsDataImplCopyWithImpl(_$NotificationsDataImpl _value,
+      $Res Function(_$NotificationsDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? message = null,
+    Object? createdAt = null,
+  }) {
+    return _then(_$NotificationsDataImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$NotificationsDataImpl implements _NotificationsData {
+  const _$NotificationsDataImpl(
+      {required this.id, required this.message, required this.createdAt});
+
+  factory _$NotificationsDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotificationsDataImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String message;
+  @override
+  final DateTime createdAt;
+
+  @override
+  String toString() {
+    return 'NotificationsData(id: $id, message: $message, createdAt: $createdAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NotificationsDataImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, message, createdAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NotificationsDataImplCopyWith<_$NotificationsDataImpl> get copyWith =>
+      __$$NotificationsDataImplCopyWithImpl<_$NotificationsDataImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NotificationsDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _NotificationsData implements NotificationsData {
+  const factory _NotificationsData(
+      {required final int id,
+      required final String message,
+      required final DateTime createdAt}) = _$NotificationsDataImpl;
+
+  factory _NotificationsData.fromJson(Map<String, dynamic> json) =
+      _$NotificationsDataImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get message;
+  @override
+  DateTime get createdAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$NotificationsDataImplCopyWith<_$NotificationsDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

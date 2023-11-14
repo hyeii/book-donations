@@ -113,4 +113,10 @@ abstract class RestClient {
 
   @GET('/api/donations/members/mypage/unwritten')
   Future<UnwrittenHistory> getUnwrittenHistoryDonations();
+
+  @GET('/api/notifications')
+  Future<NotificationsResp> getNotifications();
+
+  @DELETE('/api/notifications/{notificationsid}')
+  Future<BooksLikeResp> deleteNotifications(@Path() int notificationsid);
 }

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class Notifications extends HookWidget {
-  const Notifications({super.key});
+  const Notifications(
+      {super.key, required this.message, required this.createdAt});
+  final String message;
+  final DateTime createdAt;
 
   @override
   Widget build(BuildContext context) {
-    final imageUrl = useState(
-        'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg');
-    final notifiText = useState('바다가 들리는 편의점의 기부를 기다리는 이용자가 있습니다.');
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
@@ -26,18 +26,18 @@ class Notifications extends HookWidget {
           padding: const EdgeInsets.all(10.0),
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: CachedNetworkImage(
-                  width: 70,
-                  height: 70,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                  imageUrl: imageUrl.value,
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(15.0),
+              //   child: CachedNetworkImage(
+              //     width: 70,
+              //     height: 70,
+              //     fit: BoxFit.cover,
+              //     alignment: Alignment.topCenter,
+              //     imageUrl: imageUrl.value,
+              //     placeholder: (context, url) => CircularProgressIndicator(),
+              //     errorWidget: (context, url, error) => Icon(Icons.error),
+              //   ),
+              // ),
               SizedBox(
                 width: 10,
               ),
@@ -49,7 +49,7 @@ class Notifications extends HookWidget {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(notifiText.value),
+                        child: Text(message),
                       ),
                       Container(
                         alignment: Alignment.bottomRight,

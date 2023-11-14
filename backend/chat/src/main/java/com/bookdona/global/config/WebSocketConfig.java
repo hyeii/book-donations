@@ -31,8 +31,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	private final RedisTemplate<String, String> redisTemplate;
 
-
-
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
 		config.setApplicationDestinationPrefixes("/app");
@@ -43,9 +41,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 		// heart beat 설정
 		config.enableSimpleBroker("/sub");
-			// .setHeartbeatValue(new long[] {20000, 20000}).setTaskScheduler(taskScheduler()); // 서버 -> 클라이언트, 클라이언트 -> 서버 하트비트 시간 설정 20초
+		// .setHeartbeatValue(new long[] {20000, 20000}).setTaskScheduler(taskScheduler()); // 서버 -> 클라이언트, 클라이언트 -> 서버 하트비트 시간 설정 20초
 	}
-
 
 	// @Bean
 	// public TaskScheduler taskScheduler() {
@@ -79,16 +76,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 						return false;
 
 					log.info("웹 소켓 세션이 사용자 닉네임을 인식함: {}", userNickname);
-					if (redisTemplate.opsForValue().get("member:" + userNickname).equals("online")) {
-						log.info("ws 이미 연결된 유저");
-						return false;
 
-					} else {
+					if (redisTemplate.opsForValue().get("member:" + userNickname) == null) {
 						redisTemplate.opsForValue().set("member:" + userNickname, "online");
 						// ws header 에 userNickname 저장
 						attributes.put("usernickname", userNickname);
 						log.info("ws 새로 연결한 유저");
 						return true;
+					} else {
+						log.info("ws 이미 연결된 유저");
+						return false;
 					}
 				}
 

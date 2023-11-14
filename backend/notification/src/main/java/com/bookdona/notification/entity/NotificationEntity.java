@@ -18,7 +18,6 @@ public class NotificationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Indexed
     private Long memberId;
 
     private String message;

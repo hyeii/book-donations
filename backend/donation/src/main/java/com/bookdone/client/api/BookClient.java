@@ -13,7 +13,7 @@ public interface BookClient {
     @GetMapping("/api/books/detail/{isbn}")
     ResponseEntity<?> getBookInfo(@PathVariable String isbn);
 
-    @GetMapping("/api/books/likes")
+    @GetMapping("/api/books/likes/{isbn}")
     ResponseEntity<?> getBookLikesList(@PathVariable String isbn);
 
     @GetMapping("/api/books/details")

@@ -57,6 +57,63 @@ class TopPage extends HookConsumerWidget {
   }
 }
 
+class StartingPage extends HookConsumerWidget {
+  const StartingPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pageController = usePageController();
+    var currentIndex = useState(0);
+    return Scaffold(
+      body: PageView(
+        controller: pageController,
+        children: [
+          MyHomePage(),
+          SearchMain(),
+          ChatMain(),
+          MyPageMain(),
+          // Text('11'),
+          // Text('22'),
+          // Text('33')
+        ],
+        onPageChanged: (index) {
+          currentIndex.value = index;
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButton: FloatingRegisterBtn(),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.auto_awesome_rounded),
+            label: 'home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search_rounded),
+            label: 'search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_rounded),
+            label: 'chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'mypage',
+          ),
+        ],
+        currentIndex: currentIndex.value,
+        onTap: (index) {
+          pageController.jumpToPage(index);
+        },
+      ),
+    );
+  }
+}
+
 class MyHomePage extends HookConsumerWidget {
   const MyHomePage({super.key});
 
@@ -109,7 +166,7 @@ class MyHomePage extends HookConsumerWidget {
                       child: Row(
                         children: [
                           Icon(Icons.search),
-                          Text('search'),
+                          Text('searcdddlldash'),
                         ],
                       ),
                     ),
@@ -149,8 +206,8 @@ class MyHomePage extends HookConsumerWidget {
           ),
         ),
         // bottomNavigationBar: TopNavigationBar(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-        floatingActionButton: FloatingRegisterBtn(),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        // floatingActionButton: FloatingRegisterBtn(),
       ),
     );
   }

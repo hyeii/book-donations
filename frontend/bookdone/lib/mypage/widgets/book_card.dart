@@ -28,7 +28,7 @@ class BookCard extends HookConsumerWidget {
     void likeAlert(context) {
       showDialog<String>(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
+        builder: (BuildContext contextAlert) => AlertDialog(
           title: const Text(
             '관심도서 해제',
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
@@ -37,7 +37,9 @@ class BookCard extends HookConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                context.pop();
+                contextAlert.pop();
+                // MyPageRoute().push(context);
+                StartPageRoute().pushReplacement(context);
               },
               child: const Text('확인'),
             ),

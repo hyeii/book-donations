@@ -60,7 +60,7 @@ class BookinfoMain extends HookConsumerWidget {
               onPressed: () {
                 setLikesNotification();
                 context.pop();
-                BookinfoMainRoute(isbn: isbn).location;
+                BookinfoMainRoute(isbn: isbn).pushReplacement(context);
               },
               child: const Text('확인'),
             ),

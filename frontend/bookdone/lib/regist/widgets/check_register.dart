@@ -79,8 +79,8 @@ class CheckRegister extends HookConsumerWidget {
                     .map((img) => MultipartFile.fromFileSync(img.path))
                     .toList();
                 donationId == -1 ? register() : registerExist();
-                ref.invalidate(registerRegionStateProvider);
-                ref.invalidate(registerRegionCodeStateProvider);
+                // ref.invalidate(registerRegionStateProvider);
+                // ref.invalidate(registerRegionCodeStateProvider);
                 MyPageRoute().go(context);
               },
               child: const Text('등록'),

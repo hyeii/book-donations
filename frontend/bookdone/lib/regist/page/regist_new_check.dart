@@ -91,50 +91,24 @@ class RegistNewCheck extends HookConsumerWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 170,
-              child: ElevatedButton(
-                onPressed: () {
-                  MyPageRoute().push(context);
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    fixedSize: Size(20, 100),
-                    textStyle: const TextStyle(fontSize: 15),
-                    backgroundColor: Colors.grey.shade300,
-                    foregroundColor: Colors.grey.shade600),
-                child: Text(
-                  "돌아가기",
-                  style: TextStyle(fontFamily: "SCDream4"),
-                ),
-              ),
+      bottomSheet: SafeArea(
+        child: Container(
+          width: double.infinity,
+          color: Colors.brown.shade200,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 17),
+                backgroundColor: Colors.brown.shade200,
+                foregroundColor: Colors.white,
+                shape: BeveledRectangleBorder()),
+            onPressed: () {
+              RegisterRoute(isbn: isbn, donationId: -1).push(context);
+            },
+            child: Text(
+              '계속하기',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
-            SizedBox(
-              width: 170,
-              child: ElevatedButton(
-                onPressed: () {
-                  RegisterRoute(isbn: isbn, donationId: -1).push(context);
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    fixedSize: Size(20, 100),
-                    textStyle: const TextStyle(fontSize: 15),
-                    backgroundColor: Colors.brown[300],
-                    foregroundColor: Colors.white),
-                child: Text(
-                  "계속하기",
-                  style: TextStyle(fontFamily: "SCDream4"),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

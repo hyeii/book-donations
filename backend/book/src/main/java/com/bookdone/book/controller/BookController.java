@@ -66,8 +66,8 @@ public class BookController {
 			  자동완성 클릭하면 이곳을 사용 or 책 리스트에서 클릭하면 이곳으로 옴
 			  */
 	@GetMapping("/detail/{isbn}")
-	public ResponseEntity<?> getBookDetail(@PathVariable String isbn) {
-		BookDto book = bookService.getBookDetail(isbn);
+	public ResponseEntity<?> getBookDetail(@PathVariable String isbn, @RequestHeader("member-id") long memberId) {
+		BookDto book = bookService.getBookDetail(isbn,memberId);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 상세 조회 완료", book);
 	}
 

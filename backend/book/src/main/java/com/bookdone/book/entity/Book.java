@@ -71,7 +71,7 @@ public class Book {
 	@Column(length = 100)
 	private String updateDate;
 
-	public BookDto toDto() {
+	public BookDto toDto(boolean likeStatus) {
 		BookDto bookDto = new BookDto();
 		bookDto.setId(this.id);
 		bookDto.setTitle(this.title);
@@ -91,6 +91,7 @@ public class Book {
 		bookDto.setBookSize(this.bookSize);
 		bookDto.setPage(this.page);
 		bookDto.setPublisher(this.publisher);
+		bookDto.setLikeStatus(likeStatus);
 		return bookDto;
 	}
 }

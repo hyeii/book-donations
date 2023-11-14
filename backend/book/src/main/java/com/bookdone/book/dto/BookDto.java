@@ -34,5 +34,6 @@ public class BookDto {
 	private String publisherUrl;
 	private String inputDate;
 	private String updateDate;
+	private boolean likeStatus;
 
 }

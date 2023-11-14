@@ -40,7 +40,7 @@ public class LikesService {
 		return likes.stream()
 			.map(like -> {
 				LikesResponseDto dto = new LikesResponseDto();
-				dto.setBook(like.getBook().toDto());
+				dto.setBook(like.getBook().toDto(true));
 				dto.setLocalCode(like.getLocalCode());
 				dto.setCount(1); // article 서버에게 요청해서 개수를 받아와야 함
 				dto.setLikes(true);

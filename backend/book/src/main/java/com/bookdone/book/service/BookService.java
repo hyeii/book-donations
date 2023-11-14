@@ -1,9 +1,9 @@
 package com.bookdone.book.service;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bookdone.book.dto.BookDto;
 import com.bookdone.book.dto.BookTitleUrlDto;
 import com.bookdone.book.entity.Book;
+import com.bookdone.book.entity.Likes;
 import com.bookdone.book.repository.BookRepository;
+import com.bookdone.book.repository.LikesRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class BookService {
 
 	private final BookRepository bookRepository;
+	private final LikesRepository likesRepository;
 
 	@Transactional
 	public void addTitleImage(List<BookTitleUrlDto> bookTitleUrlDtoList) {
@@ -33,9 +36,16 @@ public class BookService {
 		return bookRepository.findByTitleContaining(title);
 	}
 
-	public BookDto getBookDetail(String isbn) {
+	public BookDto getBookDetail(String isbn, long memberId) {
+
 		return bookRepository.findByIsbn(isbn)
-			.map(Book::toDto)
+			.map(book -> {
+				Optional<Likes> byMemberIdAndBook = likesRepository.findByMemberIdAndBook(memberId, book);
+				if (byMemberIdAndBook.isPresent()) {
+					return book.toDto(true);
+				}
+				return book.toDto(false);
+	})
 			.orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다"));
 	}
 
@@ -44,7 +54,7 @@ public class BookService {
 			.stream()
 			.collect(Collectors.toMap(
 				Book::getIsbn, // ISBN을 키로 사용
-				Book::toDto    // Book 객체를 BookDto로 변환하는 함수를 값으로 사용
+				book -> book.toDto(false)    // Book 객체를 BookDto로 변환하는 함수를 값으로 사용
 			));
 	}
 
@@ -53,7 +63,7 @@ public class BookService {
 		Map<String, BookDto> booksMap = new HashMap<>();
 		for (String isbn : isbnList) {
 			bookRepository.findByIsbn(isbn)
-				.ifPresent(book -> booksMap.put(isbn, book.toDto()));
+				.ifPresent(book -> booksMap.put(isbn, book.toDto(false)));
 		}
 		return booksMap;
 	}

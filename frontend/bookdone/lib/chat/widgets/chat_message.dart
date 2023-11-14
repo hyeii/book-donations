@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ChatMessage extends HookWidget {
-  final String nickname;
+  final String senderNickname;
   final String message;
-  final String time;
+  final String createdAt;
   final bool isMine;
 
   const ChatMessage({
     Key? key,
-    required this.nickname,
+    required this.senderNickname,
     required this.message,
-    required this.time,
+    required this.createdAt,
     this.isMine = false,
   }) : super(key: key);
 
@@ -36,7 +36,7 @@ class ChatMessage extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  nickname,
+                  senderNickname,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: isMine ? Colors.black : Colors.white,
@@ -51,7 +51,7 @@ class ChatMessage extends HookWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Text(
-                    time,
+                    createdAt,
                     style: TextStyle(
                       fontSize: 10,
                       color: isMine ? Colors.black : Colors.white,

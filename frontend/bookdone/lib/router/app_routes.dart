@@ -24,6 +24,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../chat/service/stomp_service.dart';
+
 part 'app_routes.g.dart';
 
 class MyApp extends HookConsumerWidget {

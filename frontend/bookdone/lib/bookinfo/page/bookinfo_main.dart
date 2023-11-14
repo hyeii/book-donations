@@ -1,8 +1,10 @@
+import 'package:bookdone/bookinfo/model/donation.dart';
 import 'package:bookdone/bookinfo/widgets/comment_card.dart';
 import 'package:bookdone/bookinfo/widgets/comment_input.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
+import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -19,6 +21,8 @@ class BookinfoMain extends HookConsumerWidget {
     // final userNickname =
     //     ref.watch(userDataRepositoryProvider).restoreNickname();
     var username = useState('');
+    var like = useState(false);
+    var curBook = useState<BookData?>(null);
 
     void getNickname() async {
       final userNickname =
@@ -27,18 +31,82 @@ class BookinfoMain extends HookConsumerWidget {
       debugPrint('여기얌 ${username.value}');
     }
 
-    useEffect(() => getNickname);
+    Future<void> setLikesNotification() async {
+      BooksLikeResp bookslikes = await restClient.setBooksLikes({
+        'localCode': '9999',
+        'isbn': isbn,
+      });
+      print(bookslikes.data);
+    }
+
+    void likeAlert(context) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text(
+            '관심도서 설정',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          content:
+              like.value ? Text('관심도서에서 해제할까요?') : Text('기부글이 등록되면 알림을 보낼까요?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: const Text('취소'),
+            ),
+            TextButton(
+              onPressed: () {
+                setLikesNotification();
+                context.pop();
+                BookinfoMainRoute(isbn: isbn).location;
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    useEffect(() {
+      void getBookinfo() async {
+        try {
+          var data = await restClient.getDetailBook(isbn);
+          curBook.value = data.data;
+          like.value = curBook.value!.likeStatus;
+        } catch (error) {
+          print(error);
+        }
+      }
+
+      getBookinfo();
+      return null;
+    }, []);
 
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            context.pop();
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     context.pop();
+        //   },
+        // ),
+        actions: [
+          IconButton(
+            isSelected: like.value,
+            selectedIcon: const Icon(Icons.notifications_active_sharp),
+            onPressed: () {
+              likeAlert(context);
+            },
+            icon: Icon(
+              Icons.notifications_none_outlined,
+              size: 20,
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -64,6 +132,8 @@ class BookinfoMain extends HookConsumerWidget {
 
                   final book = snapshot.data!.data;
 
+                  // like.value = book.likeStatus;
+
                   return Column(
                     children: [
                       CachedNetworkImage(
@@ -78,7 +148,8 @@ class BookinfoMain extends HookConsumerWidget {
                       ),
                       Text(
                         book.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       SizedBox(
                         height: 20,
@@ -168,12 +239,10 @@ class BookinfoMain extends HookConsumerWidget {
 
                   final commentlist = snapshot.data!.data;
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: commentlist.length,
-                    itemBuilder: (_, index) {
-                      return CommentCard(comment: commentlist[index]);
-                    },
+                  return Column(
+                    children: commentlist.map((comment) {
+                      return CommentCard(comment: comment);
+                    }).toList(),
                   );
                 },
               ),

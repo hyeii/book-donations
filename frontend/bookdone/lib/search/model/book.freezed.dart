@@ -204,6 +204,7 @@ mixin _$BookData {
   String get isbn => throw _privateConstructorUsedError;
   String get titleUrl => throw _privateConstructorUsedError;
   String get publisher => throw _privateConstructorUsedError;
+  bool get likeStatus => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -224,7 +225,8 @@ abstract class $BookDataCopyWith<$Res> {
       String author,
       String isbn,
       String titleUrl,
-      String publisher});
+      String publisher,
+      bool likeStatus});
 }
 
 /// @nodoc
@@ -248,6 +250,7 @@ class _$BookDataCopyWithImpl<$Res, $Val extends BookData>
     Object? isbn = null,
     Object? titleUrl = null,
     Object? publisher = null,
+    Object? likeStatus = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -282,6 +285,10 @@ class _$BookDataCopyWithImpl<$Res, $Val extends BookData>
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
               as String,
+      likeStatus: null == likeStatus
+          ? _value.likeStatus
+          : likeStatus // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -302,7 +309,8 @@ abstract class _$$BookDataImplCopyWith<$Res>
       String author,
       String isbn,
       String titleUrl,
-      String publisher});
+      String publisher,
+      bool likeStatus});
 }
 
 /// @nodoc
@@ -324,6 +332,7 @@ class __$$BookDataImplCopyWithImpl<$Res>
     Object? isbn = null,
     Object? titleUrl = null,
     Object? publisher = null,
+    Object? likeStatus = null,
   }) {
     return _then(_$BookDataImpl(
       id: null == id
@@ -358,6 +367,10 @@ class __$$BookDataImplCopyWithImpl<$Res>
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
               as String,
+      likeStatus: null == likeStatus
+          ? _value.likeStatus
+          : likeStatus // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -373,7 +386,8 @@ class _$BookDataImpl implements _BookData {
       required this.author,
       required this.isbn,
       required this.titleUrl,
-      required this.publisher});
+      required this.publisher,
+      required this.likeStatus});
 
   factory _$BookDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookDataImplFromJson(json);
@@ -394,10 +408,12 @@ class _$BookDataImpl implements _BookData {
   final String titleUrl;
   @override
   final String publisher;
+  @override
+  final bool likeStatus;
 
   @override
   String toString() {
-    return 'BookData(id: $id, title: $title, seriesTitle: $seriesTitle, seriesNo: $seriesNo, author: $author, isbn: $isbn, titleUrl: $titleUrl, publisher: $publisher)';
+    return 'BookData(id: $id, title: $title, seriesTitle: $seriesTitle, seriesNo: $seriesNo, author: $author, isbn: $isbn, titleUrl: $titleUrl, publisher: $publisher, likeStatus: $likeStatus)';
   }
 
   @override
@@ -416,13 +432,15 @@ class _$BookDataImpl implements _BookData {
             (identical(other.titleUrl, titleUrl) ||
                 other.titleUrl == titleUrl) &&
             (identical(other.publisher, publisher) ||
-                other.publisher == publisher));
+                other.publisher == publisher) &&
+            (identical(other.likeStatus, likeStatus) ||
+                other.likeStatus == likeStatus));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, seriesTitle, seriesNo,
-      author, isbn, titleUrl, publisher);
+      author, isbn, titleUrl, publisher, likeStatus);
 
   @JsonKey(ignore: true)
   @override
@@ -447,7 +465,8 @@ abstract class _BookData implements BookData {
       required final String author,
       required final String isbn,
       required final String titleUrl,
-      required final String publisher}) = _$BookDataImpl;
+      required final String publisher,
+      required final bool likeStatus}) = _$BookDataImpl;
 
   factory _BookData.fromJson(Map<String, dynamic> json) =
       _$BookDataImpl.fromJson;
@@ -468,6 +487,8 @@ abstract class _BookData implements BookData {
   String get titleUrl;
   @override
   String get publisher;
+  @override
+  bool get likeStatus;
   @override
   @JsonKey(ignore: true)
   _$$BookDataImplCopyWith<_$BookDataImpl> get copyWith =>

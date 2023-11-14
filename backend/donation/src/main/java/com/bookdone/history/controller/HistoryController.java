@@ -18,8 +18,8 @@ public class HistoryController {
     private final FindHistoryUseCase findHistoryUseCase;
 
     @GetMapping("/donations/{donationId}")
-    public ResponseEntity<?> historyList(@PathVariable Long donationId) {
-        return BaseResponse.okWithData(HttpStatus.OK, "히스토리 목록 조회 완료", findHistoryUseCase.findAll(donationId));
+    public ResponseEntity<?> historyList(@RequestHeader("member-id") long memberId, @PathVariable Long donationId) {
+        return BaseResponse.okWithData(HttpStatus.OK, "히스토리 목록 조회 완료", findHistoryUseCase.findAll(memberId,donationId));
     }
 
     @GetMapping("/members/me/written")
@@ -42,8 +42,8 @@ public class HistoryController {
     }
 
     @GetMapping("/{historyId}")
-    public ResponseEntity<?> historyDetailsById(@PathVariable Long historyId) throws JsonProcessingException {
-        return BaseResponse.okWithData(HttpStatus.OK, "히스토리 조회 완료", findHistoryUseCase.findHistoryById(historyId));
+    public ResponseEntity<?> historyDetailsById(@RequestHeader("member-id") long memberId,@PathVariable Long historyId) throws JsonProcessingException {
+        return BaseResponse.okWithData(HttpStatus.OK, "히스토리 조회 완료", findHistoryUseCase.findHistoryById(memberId,historyId));
     }
 
     @PatchMapping("/donations/{donationId}")

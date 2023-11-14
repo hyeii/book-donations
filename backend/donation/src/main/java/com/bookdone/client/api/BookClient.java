@@ -12,7 +12,7 @@ import java.util.List;
 @FeignClient(name = "book-service")
 public interface BookClient {
     @GetMapping("/api/books/detail/{isbn}")
-    ResponseEntity<?> getBookInfo(@PathVariable String isbn);
+    ResponseEntity<?> getBookInfo(@RequestHeader("member-id") Long memberId, @PathVariable String isbn);
 
     @GetMapping("/api/books/likes/{isbn}")
     ResponseEntity<?> getBookLikesList(@PathVariable String isbn);

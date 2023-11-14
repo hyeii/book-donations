@@ -86,7 +86,7 @@ public class FindDonationUseCase {
         return donationListResponseList;
     }
 
-    public DonationDetailsResponse findDonation(Long id) throws JsonProcessingException {
+    public DonationDetailsResponse findDonation(long memberId,Long id) throws JsonProcessingException {
         Donation donation = donationRepository.findById(id);
 
         String nickname = null;
@@ -110,11 +110,11 @@ public class FindDonationUseCase {
             throw e;
         }
 
-        return createDonationResponse(donation, imageUrlList, nicknameMap, historyList, nickname);
+        return createDonationResponse(memberId,donation, imageUrlList, nicknameMap, historyList, nickname);
     }
 
     public DonationDetailsResponse createDonationResponse(
-            Donation donation,
+        long memberId, Donation donation,
             List<String> imageUrlList,
             Map<String, String> nicknameMap,
             List<History> historyList,
@@ -123,7 +123,7 @@ public class FindDonationUseCase {
         ObjectMapper objectMapper = new ObjectMapper();
 
         BookResponse bookResponse = responseUtil.extractDataFromResponse(
-                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
+                bookClient.getBookInfo(memberId, donation.getIsbn()), BookResponse.class);
 
         List<HistoryResponse> historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                 .content(history.getContent())
@@ -162,11 +162,11 @@ public class FindDonationUseCase {
             throw new RuntimeException(e);
         }
 
-        return createDonationMyPageResponse(donationList, bookResponseMap);
+        return createDonationMyPageResponse(memberId,donationList, bookResponseMap);
     }
 
     public List<DonationMyPageResponse> createDonationMyPageResponse(
-            List<Donation> donationList, Map<String, BookResponse> bookResponseMap) {
+        Long memberId, List<Donation> donationList, Map<String, BookResponse> bookResponseMap) {
         List<DonationMyPageResponse> donationMyPageResponseList = donationList.stream().map(donation -> {
 
             List<History> historyList = historyRepository.findAllByDonationId(donation.getId());
@@ -179,7 +179,7 @@ public class FindDonationUseCase {
                 Map<String, String> nicknameMap = responseUtil.extractDataFromResponse
                         (memberClient.getNicknameList(memberIdList), Map.class);
                 BookResponse bookResponse = responseUtil.extractDataFromResponse(
-                        bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
+                        bookClient.getBookInfo(memberId,donation.getIsbn()), BookResponse.class);
                 historyResponseList = historyList.stream().map(history -> HistoryResponse.builder()
                         .content(history.getContent())
                         .nickname(nicknameMap.get(String.valueOf(history.getMemberId())))
@@ -230,7 +230,7 @@ public class FindDonationUseCase {
                     BookResponse bookResponse = null;
                     try {
                         bookResponse = responseUtil.extractDataFromResponse(
-                                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
+                                bookClient.getBookInfo(memberId, donation.getIsbn()), BookResponse.class);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }

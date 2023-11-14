@@ -33,11 +33,11 @@ public class FindHistoryUseCase {
     private final BookClient bookClient;
 
 
-    public HistoryResponse findHistoryById(Long id) throws JsonProcessingException {
+    public HistoryResponse findHistoryById(long memberId,Long id) throws JsonProcessingException {
         History history = historyRepository.findById(id);
         Donation donation = donationRepository.findById(history.getDonationId());
         BookResponse bookResponse = responseUtil.extractDataFromResponse(
-                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
+                bookClient.getBookInfo(memberId, donation.getIsbn()), BookResponse.class);
 
         String nickname = null;
 
@@ -134,7 +134,7 @@ public class FindHistoryUseCase {
         History history = historyRepository.findByDonationIdAndMemberId(donationId, memberId);
         Donation donation = donationRepository.findById(donationId);
         BookResponse bookResponse = responseUtil.extractDataFromResponse(
-                bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
+                bookClient.getBookInfo(memberId, donation.getIsbn()), BookResponse.class);
 
         String nickname = null;
 
@@ -156,7 +156,7 @@ public class FindHistoryUseCase {
                 .build();
     }
 
-    public List<HistoryResponse> findAll(Long donationId) {
+    public List<HistoryResponse> findAll(long memberId, Long donationId) {
         List<History> historyList = historyRepository.findAllByDonationId(donationId);
         if(historyList.isEmpty()) return new ArrayList<HistoryResponse>();
 
@@ -169,7 +169,7 @@ public class FindHistoryUseCase {
         try {
             nicknameMap = responseUtil.extractDataFromResponse(memberClient.getNicknameList(memberIdList), Map.class);
             bookResponse = responseUtil.extractDataFromResponse(
-                    bookClient.getBookInfo(donation.getIsbn()), BookResponse.class);
+                    bookClient.getBookInfo(memberId, donation.getIsbn()), BookResponse.class);
         } catch (FeignException.NotFound e) {
             throw e;
         } catch (JsonProcessingException e) {

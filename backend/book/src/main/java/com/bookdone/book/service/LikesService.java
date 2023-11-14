@@ -2,14 +2,12 @@ package com.bookdone.book.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bookdone.book.dto.BookDto;
 import com.bookdone.book.dto.LikesRequestDto;
 import com.bookdone.book.dto.LikesResponseDto;
 import com.bookdone.book.entity.Book;
@@ -70,6 +68,21 @@ public class LikesService {
 				.build();
 			likesRepository.save(newLikes);
 			return true;
+		}
+	}
+
+	public List<String> getMemberList(String isbn) {
+		try {
+			Book book = bookRepository.findByIsbn(isbn)
+				.orElseThrow(() -> new IllegalArgumentException("책이 없습니다."));
+			return likesRepository.findAllByBookId(book.getId())
+				.stream()
+				.map(Likes::getMemberId)
+				.map(String::valueOf)
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			log.info("[ERROR] {}", e.getMessage());
+			return new ArrayList<>();
 		}
 	}
 }

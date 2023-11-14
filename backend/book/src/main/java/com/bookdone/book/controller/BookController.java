@@ -129,4 +129,8 @@ public class BookController {
 		bookService.addTitleImage(bookTitleUrlDtoList);
 		return BaseResponse.ok(HttpStatus.OK, "title-url 등록 완료");
 	}
+	@GetMapping("/likes/{isbn}")
+	public ResponseEntity<?> getBookLikesList(@PathVariable String isbn){
+		return BaseResponse.okWithData(HttpStatus.OK, "좋아요 한 사람들 반환", likesService.getMemberList(isbn));
+	}
 }

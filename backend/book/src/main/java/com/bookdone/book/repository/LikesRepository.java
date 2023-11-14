@@ -11,4 +11,6 @@ import com.bookdone.book.entity.Likes;
 public interface LikesRepository extends JpaRepository<Likes, Long> {
 	List<Likes> findByMemberId(Long memberId);
 	Optional<Likes> findByMemberIdAndBookAndLocalCode(long memberId, Book isbn, String localCode);
+
+	List<Likes> findAllByBookId(Long bookId);
 }

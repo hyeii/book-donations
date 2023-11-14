@@ -37,7 +37,7 @@ class HistoryData with _$HistoryData {
   const factory HistoryData({
     required String title,
     required String titleUrl,
-    required String content,
+    String? content,
     required String nickname,
     required String createdAt,
   }) = _HistoryData;
@@ -51,7 +51,7 @@ class HistoryResp with _$HistoryResp {
   const factory HistoryResp({
     required bool success,
     required String msg,
-    List<HistoryData>? data,
+    required List<HistoryData> data,
   }) = _HistoryResp;
 
   factory HistoryResp.fromJson(Map<String, dynamic> json) =>

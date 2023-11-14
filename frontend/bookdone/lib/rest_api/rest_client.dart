@@ -102,9 +102,15 @@ abstract class RestClient {
   Future<RegisterResponse> postHistory(
       @Path() int donationId, @Body() Map<String, dynamic> map);
 
-  @GET('/api/histories/members/me')
-  Future<HistoryResp> getMyHistories();
+  @GET('/api/histories/members/me/unwritten')
+  Future<HistoryResp> getMyHistoryUnwriteen();
+
+  @GET('/api/histories/members/me/written')
+  Future<HistoryResp> getMyHistoryWritten();
 
   @GET('/api/ranks')
   Future<RankResp> getRanking();
+
+  @GET('/api/donations/members/mypage/unwritten')
+  Future<UnwrittenHistory> getUnwrittenHistoryDonations();
 }

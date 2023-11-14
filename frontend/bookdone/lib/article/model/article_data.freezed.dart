@@ -516,7 +516,7 @@ HistoryData _$HistoryDataFromJson(Map<String, dynamic> json) {
 mixin _$HistoryData {
   String get title => throw _privateConstructorUsedError;
   String get titleUrl => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
+  String? get content => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
 
@@ -535,7 +535,7 @@ abstract class $HistoryDataCopyWith<$Res> {
   $Res call(
       {String title,
       String titleUrl,
-      String content,
+      String? content,
       String nickname,
       String createdAt});
 }
@@ -555,7 +555,7 @@ class _$HistoryDataCopyWithImpl<$Res, $Val extends HistoryData>
   $Res call({
     Object? title = null,
     Object? titleUrl = null,
-    Object? content = null,
+    Object? content = freezed,
     Object? nickname = null,
     Object? createdAt = null,
   }) {
@@ -568,10 +568,10 @@ class _$HistoryDataCopyWithImpl<$Res, $Val extends HistoryData>
           ? _value.titleUrl
           : titleUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      content: null == content
+      content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
@@ -595,7 +595,7 @@ abstract class _$$HistoryDataImplCopyWith<$Res>
   $Res call(
       {String title,
       String titleUrl,
-      String content,
+      String? content,
       String nickname,
       String createdAt});
 }
@@ -613,7 +613,7 @@ class __$$HistoryDataImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? titleUrl = null,
-    Object? content = null,
+    Object? content = freezed,
     Object? nickname = null,
     Object? createdAt = null,
   }) {
@@ -626,10 +626,10 @@ class __$$HistoryDataImplCopyWithImpl<$Res>
           ? _value.titleUrl
           : titleUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      content: null == content
+      content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
@@ -648,7 +648,7 @@ class _$HistoryDataImpl implements _HistoryData {
   const _$HistoryDataImpl(
       {required this.title,
       required this.titleUrl,
-      required this.content,
+      this.content,
       required this.nickname,
       required this.createdAt});
 
@@ -660,7 +660,7 @@ class _$HistoryDataImpl implements _HistoryData {
   @override
   final String titleUrl;
   @override
-  final String content;
+  final String? content;
   @override
   final String nickname;
   @override
@@ -709,7 +709,7 @@ abstract class _HistoryData implements HistoryData {
   const factory _HistoryData(
       {required final String title,
       required final String titleUrl,
-      required final String content,
+      final String? content,
       required final String nickname,
       required final String createdAt}) = _$HistoryDataImpl;
 
@@ -721,7 +721,7 @@ abstract class _HistoryData implements HistoryData {
   @override
   String get titleUrl;
   @override
-  String get content;
+  String? get content;
   @override
   String get nickname;
   @override
@@ -740,7 +740,7 @@ HistoryResp _$HistoryRespFromJson(Map<String, dynamic> json) {
 mixin _$HistoryResp {
   bool get success => throw _privateConstructorUsedError;
   String get msg => throw _privateConstructorUsedError;
-  List<HistoryData>? get data => throw _privateConstructorUsedError;
+  List<HistoryData> get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -754,7 +754,7 @@ abstract class $HistoryRespCopyWith<$Res> {
           HistoryResp value, $Res Function(HistoryResp) then) =
       _$HistoryRespCopyWithImpl<$Res, HistoryResp>;
   @useResult
-  $Res call({bool success, String msg, List<HistoryData>? data});
+  $Res call({bool success, String msg, List<HistoryData> data});
 }
 
 /// @nodoc
@@ -772,7 +772,7 @@ class _$HistoryRespCopyWithImpl<$Res, $Val extends HistoryResp>
   $Res call({
     Object? success = null,
     Object? msg = null,
-    Object? data = freezed,
+    Object? data = null,
   }) {
     return _then(_value.copyWith(
       success: null == success
@@ -783,10 +783,10 @@ class _$HistoryRespCopyWithImpl<$Res, $Val extends HistoryResp>
           ? _value.msg
           : msg // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<HistoryData>?,
+              as List<HistoryData>,
     ) as $Val);
   }
 }
@@ -799,7 +799,7 @@ abstract class _$$HistoryRespImplCopyWith<$Res>
       __$$HistoryRespImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool success, String msg, List<HistoryData>? data});
+  $Res call({bool success, String msg, List<HistoryData> data});
 }
 
 /// @nodoc
@@ -815,7 +815,7 @@ class __$$HistoryRespImplCopyWithImpl<$Res>
   $Res call({
     Object? success = null,
     Object? msg = null,
-    Object? data = freezed,
+    Object? data = null,
   }) {
     return _then(_$HistoryRespImpl(
       success: null == success
@@ -826,10 +826,10 @@ class __$$HistoryRespImplCopyWithImpl<$Res>
           ? _value.msg
           : msg // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
+      data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<HistoryData>?,
+              as List<HistoryData>,
     ));
   }
 }
@@ -838,7 +838,9 @@ class __$$HistoryRespImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HistoryRespImpl implements _HistoryResp {
   const _$HistoryRespImpl(
-      {required this.success, required this.msg, final List<HistoryData>? data})
+      {required this.success,
+      required this.msg,
+      required final List<HistoryData> data})
       : _data = data;
 
   factory _$HistoryRespImpl.fromJson(Map<String, dynamic> json) =>
@@ -848,14 +850,12 @@ class _$HistoryRespImpl implements _HistoryResp {
   final bool success;
   @override
   final String msg;
-  final List<HistoryData>? _data;
+  final List<HistoryData> _data;
   @override
-  List<HistoryData>? get data {
-    final value = _data;
-    if (value == null) return null;
+  List<HistoryData> get data {
     if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_data);
   }
 
   @override
@@ -896,7 +896,7 @@ abstract class _HistoryResp implements HistoryResp {
   const factory _HistoryResp(
       {required final bool success,
       required final String msg,
-      final List<HistoryData>? data}) = _$HistoryRespImpl;
+      required final List<HistoryData> data}) = _$HistoryRespImpl;
 
   factory _HistoryResp.fromJson(Map<String, dynamic> json) =
       _$HistoryRespImpl.fromJson;
@@ -906,7 +906,7 @@ abstract class _HistoryResp implements HistoryResp {
   @override
   String get msg;
   @override
-  List<HistoryData>? get data;
+  List<HistoryData> get data;
   @override
   @JsonKey(ignore: true)
   _$$HistoryRespImplCopyWith<_$HistoryRespImpl> get copyWith =>

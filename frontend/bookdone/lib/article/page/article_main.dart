@@ -5,6 +5,7 @@ import 'package:bookdone/search/model/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ArticleMain extends HookConsumerWidget {
@@ -49,16 +50,7 @@ class ArticleMain extends HookConsumerWidget {
     }, []);
 
     return Scaffold(
-      appBar: AppBar(
-          // backgroundColor: Colors.transparent,
-          // elevation: 0,
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back),
-          //   onPressed: () {
-          //     // TODO: 뒤로가기 처리
-          //   },
-          // ),
-          ),
+      appBar: AppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width / 10),
@@ -143,6 +135,8 @@ class ArticleMain extends HookConsumerWidget {
                                   crossAxisSpacing: 10, //수직 Padding
                                 ),
                                 itemBuilder: (BuildContext context, int index) {
+                                  // print(
+                                  //     '${articleData.value!.imageUrlList[index]}');
                                   return Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
@@ -183,7 +177,7 @@ class ArticleMain extends HookConsumerWidget {
                         discription.value,
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 50,
                       )
                     ],
                   ),
@@ -193,28 +187,45 @@ class ArticleMain extends HookConsumerWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: SizedBox(
-            width: 200,
-            child: ElevatedButton(
-              onPressed: () {
-                // TODO: alert 확인창x
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      //모서리를 둥글게
-                      borderRadius: BorderRadius.circular(15)),
-                  fixedSize: Size(20, 100),
-                  textStyle: const TextStyle(fontSize: 18),
-                  backgroundColor: Colors.brown[300],
-                  foregroundColor: Colors.white),
-              child: Text(
-                "나눔 요청하기",
-                style: TextStyle(fontFamily: "SCDream4"),
-              ),
+      bottomSheet: SafeArea(
+        child: Container(
+          width: double.infinity,
+          color: Colors.brown.shade200,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 17),
+                backgroundColor: Colors.brown.shade200,
+                foregroundColor: Colors.white,
+                shape: BeveledRectangleBorder()),
+            onPressed: () {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text(
+                    '나눔 신청',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  content: const Text('나눔을 신청할까요?\n기부자와의 채팅이 시작됩니다'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      child: const Text('취소'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      child: const Text('확인'),
+                    ),
+                  ],
+                ),
+              );
+            },
+            child: Text(
+              '나눔 요청하기',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ),
         ),

@@ -567,7 +567,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<HistoryResp> getMyHistories() async {
+  Future<HistoryResp> getMyHistoryUnwriteen() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -580,7 +580,34 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              '/api/histories/members/me',
+              '/api/histories/members/me/unwritten',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = HistoryResp.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<HistoryResp> getMyHistoryWritten() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<HistoryResp>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/histories/members/me/written',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -617,6 +644,33 @@ class _RestClient implements RestClient {
               baseUrl,
             ))));
     final value = RankResp.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UnwrittenHistory> getUnwrittenHistoryDonations() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<UnwrittenHistory>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/donations/members/mypage/unwritten',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = UnwrittenHistory.fromJson(_result.data!);
     return value;
   }
 

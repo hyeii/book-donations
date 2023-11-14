@@ -5,8 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SetUserApi {
   static Future<void> updateMyInfo(ref) async {
     UserInfoRes user = await ref.read(restApiClientProvider).getMyInfo();
-
-    // print(user);
+    print(user);
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     await pref.setString('nickname', user.data.nickname);

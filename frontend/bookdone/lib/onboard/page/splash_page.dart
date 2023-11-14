@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bookdone/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,8 +15,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 2000), () {
-      context.pushNamed('home');
+    Timer(Duration(milliseconds: 1000), () {
+      HomeRoute().go(context);
     });
   }
 

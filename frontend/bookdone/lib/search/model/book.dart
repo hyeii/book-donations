@@ -26,6 +26,7 @@ class BookData with _$BookData {
     required String isbn,
     required String titleUrl,
     required String publisher,
+    required bool likeStatus,
   }) = _BookData;
 
   factory BookData.fromJson(Map<String, dynamic> json) =>

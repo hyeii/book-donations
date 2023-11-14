@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/onboard/service/set_user_api.dart';
@@ -9,6 +10,7 @@ import 'package:bookdone/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -167,36 +169,20 @@ class AddAdditionalInfo extends HookConsumerWidget {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return Dialog(
-            child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 5,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        '닉네임 중복확인이 필요해요',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('확인')),
-                ],
-              ),
+          return AlertDialog(
+            title: const Text(
+              '회원 가입',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
+            content: Text('닉네임 중복확인을 해주세요'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  context.pop();
+                },
+                child: const Text('확인'),
+              ),
+            ],
           );
         },
       );
@@ -271,154 +257,237 @@ class AddAdditionalInfo extends HookConsumerWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width / 10),
-          child: Center(
-            child: Column(
-              // TODO: 닉네임 프로필사진 주소선택
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20,
+          child: Column(
+            // TODO: 닉네임 프로필사진 주소선택
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                '안녕하세요!\n추가 정보를 입력해주세요',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              // if (_pickedFile == null)
+              Container(
+                width: imageSize,
+                height: imageSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/defaultimage.png')),
                 ),
-                Text(
-                  '추가 정보를 입력해주세요',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                // if (_pickedFile == null)
-                Container(
-                  width: imageSize,
-                  height: imageSize,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/defaultimage.png')),
-                  ),
-                  // child: GestureDetector(
-                  //   onTap: () {
-                  //     _showBottomSheet();
-                  //   },
-                  // ),
-                ),
-                // else
-                //   Container(
-                //     width: imageSize,
-                //     height: imageSize,
-                //     decoration: BoxDecoration(
-                //       shape: BoxShape.circle,
-                //       image: DecorationImage(
-                //           image: FileImage(File(_pickedFile!.path)),
-                //           fit: BoxFit.cover),
-                //     ),
-                //   ),
-                SizedBox(
-                  height: 15,
-                ),
-                Text('닉네임을 입력해주세요'),
-                SizedBox(
-                  height: 15,
-                ),
-                Form(
-                  // key: _formKey,
-                  child: TextField(
-                    controller: nickNameController,
-                    onTapOutside: (event) =>
-                        FocusManager.instance.primaryFocus?.unfocus(),
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.brown,
+                // child: GestureDetector(
+                //   onTap: () {
+                //     _showBottomSheet();
+                //   },
+                // ),
+              ),
+              // else
+              //   Container(
+              //     width: imageSize,
+              //     height: imageSize,
+              //     decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       image: DecorationImage(
+              //           image: FileImage(File(_pickedFile!.path)),
+              //           fit: BoxFit.cover),
+              //     ),
+              //   ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                '닉네임을 입력해주세요',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 3 / 5,
+                    child: Form(
+                      // key: _formKey,
+                      child: TextField(
+                        style: TextStyle(fontSize: 12),
+                        controller: nickNameController,
+                        onTapOutside: (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.all(10),
+                          hintText: '닉네임을 입력하세요',
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 240, 240, 240),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 240, 240, 240),
+                              )),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 240, 240, 240),
+                            ),
+                          ),
                         ),
+                        maxLength: 8,
+                        maxLines: 1,
+                        onChanged: (text) {
+                          nickName.value = nickNameController.text;
+                          print(nickNameController.text);
+                          validate.value = 0;
+                        },
                       ),
                     ),
-                    onChanged: (text) {
-                      nickName.value = nickNameController.text;
-                      print(nickNameController.text);
-                      validate.value = 0;
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      // textStyle: const TextStyle(
+                      //     fontSize: 15, fontFamily: "SCDream4"),
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    onPressed: () async {
+                      if (nickName.value == '') {
+                        validate.value = 3;
+                        return;
+                      }
+                      final result =
+                          await restClient.checkNickname(nickName.value);
+                      print(result.toString());
+                      if (result.data.available) {
+                        validate.value = 1;
+                      } else {
+                        validate.value = 2;
+                      }
+                      // validate.value = 1;
                     },
-                    maxLength: 8,
-                    maxLines: 1,
+                    child: Text('중복확인'),
                   ),
+                ],
+              ),
+              if (validate.value == 1)
+                Text(
+                  '사용할 수 있는 닉네임입니다',
+                  style: TextStyle(color: Colors.green),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (nickName.value == '') {
-                      validate.value = 3;
-                      return;
-                    }
-                    final result =
-                        await restClient.checkNickname(nickName.value);
-                    print(result.toString());
-                    if (result.data.available) {
-                      validate.value = 1;
-                    } else {
-                      validate.value = 2;
-                    }
-                    // validate.value = 1;
-                  },
-                  child: Text('중복확인'),
+              if (validate.value == 2)
+                Text(
+                  '이미 사용중인 닉네임입니다',
+                  style: TextStyle(color: Colors.red),
                 ),
-                if (validate.value == 1) Text('사용할 수 있는 닉네임입니다'),
-                if (validate.value == 2) Text('이미 사용중인 닉네임입니다'),
-                if (validate.value == 3) Text('닉네임을 입력해주세요'),
-                SizedBox(
-                  height: 10,
+              if (validate.value == 3)
+                Text(
+                  '닉네임을 입력해주세요',
+                  style: TextStyle(color: Colors.red),
                 ),
-                Text('지역을 설정해주세요'),
-                ElevatedButton(
-                  onPressed: () {
-                    readJson();
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                '지역을 설정해주세요',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  readJson();
 
-                    selectAddress(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
-                      textStyle:
-                          const TextStyle(fontSize: 13, fontFamily: "SCDream4"),
-                      backgroundColor: Colors.brown.shade100,
-                      foregroundColor: Colors.black87),
-                  child: Wrap(
-                    children: [
-                      Icon(Icons.location_on, size: 17),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(ref.watch(registerRegionStateProvider)),
-                    ],
-                  ),
+                  selectAddress(context);
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    textStyle:
+                        const TextStyle(fontSize: 13, fontFamily: "SCDream4"),
+                    backgroundColor: Colors.brown.shade100,
+                    foregroundColor: Colors.black87),
+                child: Wrap(
+                  children: [
+                    Icon(Icons.location_on, size: 17),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(ref.watch(registerRegionStateProvider)),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.brown.shade400,
-            foregroundColor: Colors.white,
+      bottomSheet: SafeArea(
+        child: Container(
+          width: double.infinity,
+          color: Colors.brown.shade200,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 17),
+                backgroundColor: Colors.brown.shade200,
+                foregroundColor: Colors.white,
+                shape: BeveledRectangleBorder()),
+            onPressed: () async {
+              // TODO: 로그인 구현
+              if (validate.value != 1) {
+                _checkValidAlert();
+                return;
+              }
+              getFcmToken();
+              // print('토큰토큰 ${fcmToken.value}');
+
+              await showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text(
+                    '회원 가입',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  content: Text('${nickName.value}님\n입력한 정보로 회원가입을 진행할까요?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      child: const Text('취소'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        sendInfo();
+                        // complete.value = true;
+                        SetUserApi.updateMyInfo(ref);
+                        ref.invalidate(registerRegionStateProvider);
+                        ref.invalidate(registerRegionCodeStateProvider);
+                        AddCompleteRoute().go(context);
+                      },
+                      child: const Text('확인'),
+                    ),
+                  ],
+                ),
+              );
+              ;
+
+              // context.goNamed('home');
+              // if (complete.value) {
+              //   AddCompleteRoute().push(context);
+              // }
+            },
+            child: Text(
+              '다음',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
           ),
-          onPressed: () async {
-            // TODO: 로그인 구현
-            if (validate.value != 1) {
-              _checkValidAlert();
-              return;
-            }
-            getFcmToken();
-            // print('토큰토큰 ${fcmToken.value}');
-
-            await _checkAlert();
-
-            // context.goNamed('home');
-            // if (complete.value) {
-            //   AddCompleteRoute().push(context);
-            // }
-          },
-          child: Text('완료'),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -71,16 +72,32 @@ class HistoryMain extends HookConsumerWidget {
                   ],
                 ),
               ),
-              background: Container(
-                // color: Color(0xff928C85),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(titleUrl),
-                    fit: BoxFit.cover,
-                    opacity: 0.5,
-                    alignment: Alignment.topCenter,
+              background: CachedNetworkImage(
+                imageUrl: titleUrl != ''
+                    ? titleUrl
+                    : 'https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            Color.fromARGB(255, 196, 196, 196).withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 3,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                      opacity: 0.5,
+                      alignment: Alignment.topCenter,
+                    ),
                   ),
                 ),
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
           ),
@@ -131,10 +148,13 @@ class HistoryMain extends HookConsumerWidget {
                                   children: [
                                     Align(
                                       alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        histories.value![index].content,
-                                        style: TextStyle(fontSize: 15),
-                                      ),
+                                      child: histories.value![index].content !=
+                                              null
+                                          ? Text(
+                                              histories.value![index].content!,
+                                              style: TextStyle(fontSize: 15),
+                                            )
+                                          : Text('content 없음'),
                                     ),
                                     Row(
                                       mainAxisAlignment:

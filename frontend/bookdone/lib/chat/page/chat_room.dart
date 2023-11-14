@@ -171,7 +171,7 @@ class ChatRoom extends HookConsumerWidget {
                   senderNickname: chat.senderNickname,
                   message: chat.message,
                   createdAt: chat.createdAt.toString(),
-                  isMine: chat.senderNickname == "chacha" ? true : false,
+                  isMine: chat.senderNickname == userNickname.value ? true : false,
                 );
               },
             ),

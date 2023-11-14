@@ -42,27 +42,27 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		 */
 
 		// heart beat 설정
-		config.enableSimpleBroker("/sub")
-			.setHeartbeatValue(new long[] {20000, 20000}).setTaskScheduler(taskScheduler()); // 서버 -> 클라이언트, 클라이언트 -> 서버 하트비트 시간 설정 20초
+		config.enableSimpleBroker("/sub");
+			// .setHeartbeatValue(new long[] {20000, 20000}).setTaskScheduler(taskScheduler()); // 서버 -> 클라이언트, 클라이언트 -> 서버 하트비트 시간 설정 20초
 	}
 
 
-	@Bean
-	public TaskScheduler taskScheduler() {
-		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-		scheduler.setPoolSize(1);
-		scheduler.setThreadNamePrefix("websocket-heartbeat-task-");
-		scheduler.initialize();
-		return scheduler;
-	}
-
-	// 세션 유지 시간 3시간
-	@Bean
-	public ServletServerContainerFactoryBean createWebSocketContainer() {
-		var container = new ServletServerContainerFactoryBean();
-		container.setMaxSessionIdleTimeout(10800000L);
-		return container;
-	}
+	// @Bean
+	// public TaskScheduler taskScheduler() {
+	// 	ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+	// 	scheduler.setPoolSize(1);
+	// 	scheduler.setThreadNamePrefix("websocket-heartbeat-task-");
+	// 	scheduler.initialize();
+	// 	return scheduler;
+	// }
+	//
+	// // 세션 유지 시간 3시간
+	// @Bean
+	// public ServletServerContainerFactoryBean createWebSocketContainer() {
+	// 	var container = new ServletServerContainerFactoryBean();
+	// 	container.setMaxSessionIdleTimeout(10800000L);
+	// 	return container;
+	// }
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {

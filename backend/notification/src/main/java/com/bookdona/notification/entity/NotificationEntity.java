@@ -2,17 +2,16 @@ package com.bookdona.notification.entity;
 
 import com.bookdona.notification.dto.NotificationResponseDto;
 import lombok.*;
-import org.springframework.data.redis.core.index.Indexed;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Getter
-@Table(name = "notification")
+@Table(name = "push_notification")
 public class NotificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

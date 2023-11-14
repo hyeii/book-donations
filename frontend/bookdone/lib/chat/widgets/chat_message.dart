@@ -18,6 +18,13 @@ class ChatMessage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String datePart = createdAt.substring(2, 10); // "YYYY-MM-DD"
+    String timePart = createdAt.substring(10, 16); // "HH:MM"
+
+    // 최종적으로 표시할 문자열 조합
+    String formattedDateTime = '$datePart $timePart';
+
     return Row(
       mainAxisAlignment: isMine ? MainAxisAlignment.start : MainAxisAlignment.end,
       children: [
@@ -51,7 +58,7 @@ class ChatMessage extends HookWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Text(
-                    createdAt,
+                    formattedDateTime,
                     style: TextStyle(
                       fontSize: 10,
                       color: isMine ? Colors.black : Colors.white,

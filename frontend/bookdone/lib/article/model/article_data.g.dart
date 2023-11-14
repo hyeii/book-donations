@@ -54,7 +54,7 @@ _$HistoryDataImpl _$$HistoryDataImplFromJson(Map<String, dynamic> json) =>
     _$HistoryDataImpl(
       title: json['title'] as String,
       titleUrl: json['titleUrl'] as String,
-      content: json['content'] as String,
+      content: json['content'] as String?,
       nickname: json['nickname'] as String,
       createdAt: json['createdAt'] as String,
     );
@@ -72,8 +72,8 @@ _$HistoryRespImpl _$$HistoryRespImplFromJson(Map<String, dynamic> json) =>
     _$HistoryRespImpl(
       success: json['success'] as bool,
       msg: json['msg'] as String,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => HistoryData.fromJson(e as Map<String, dynamic>))
+      data: (json['data'] as List<dynamic>)
+          .map((e) => HistoryData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

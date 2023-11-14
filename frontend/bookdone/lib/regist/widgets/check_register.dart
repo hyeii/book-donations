@@ -38,6 +38,7 @@ class CheckRegister extends HookConsumerWidget {
     var gotId = useState(0);
 
     void register() async {
+      print(isbn);
       var resp = await restClient.registArticle(
           isbn: isbn,
           address: address,
@@ -72,13 +73,14 @@ class CheckRegister extends HookConsumerWidget {
             ),
             TextButton(
               onPressed: () async {
+                print('dd');
                 // print(files.value);
                 files.value = images!
                     .map((img) => MultipartFile.fromFileSync(img.path))
                     .toList();
                 donationId == -1 ? register() : registerExist();
-                ref.invalidate(registerRegionStateProvider);
-                ref.invalidate(registerRegionCodeStateProvider);
+                // ref.invalidate(registerRegionStateProvider);
+                // ref.invalidate(registerRegionCodeStateProvider);
                 MyPageRoute().go(context);
               },
               child: const Text('등록'),

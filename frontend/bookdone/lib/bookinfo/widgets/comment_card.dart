@@ -33,7 +33,7 @@ class CommentCard extends HookWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               comment.review,
-              style: TextStyle(fontSize: 17),
+              style: TextStyle(fontSize: 13),
             )),
         SizedBox(
           height: 20,

@@ -50,7 +50,7 @@ class MyPageAddHistory extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FutureBuilder(
-                future: restClient.getMyBook(),
+                future: restClient.getUnwrittenHistoryDonations(),
                 builder: (_, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -61,34 +61,23 @@ class MyPageAddHistory extends HookConsumerWidget {
                     return SizedBox.shrink();
                   }
 
-                  List<BookInfo> keeping = [];
-                  for (var book in snapshot.data!.data) {
-                    // book의 히스토리들 확인하기
-
-                    for (var history in book.historyResponseList) {
-                      if (history.nickname == nickname.value) {
-                        if (history.content == '') {
-                          keeping.add(book);
-                        }
-                      }
-                    }
-                  }
+                  final donationList = snapshot.data!.data;
 
                   return Column(
                     children: [
                       SizedBox(
                         height: 10,
                       ),
-                      keeping.isEmpty
+                      donationList.isEmpty
                           ? Text('히스토리를 작성하지 않은 책이 없어요')
                           : Text("히스토리를 아직 작성하지 않았어요"),
                       SizedBox(
                         height: 10,
                       ),
                       Column(
-                        children: keeping.map((book) {
+                        children: donationList.map((data) {
                           return AddHitoryCard(
-                            info: book,
+                            info: data,
                           );
                         }).toList(),
                       ),
@@ -106,7 +95,7 @@ class MyPageAddHistory extends HookConsumerWidget {
 
 class AddHitoryCard extends HookConsumerWidget {
   const AddHitoryCard({super.key, required this.info});
-  final BookInfo info;
+  final UnwrittenResponse info;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

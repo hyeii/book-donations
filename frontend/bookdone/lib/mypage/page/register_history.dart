@@ -24,7 +24,7 @@ class RegisterHistory extends HookConsumerWidget {
     Future<bool> tryPostHistory() async {
       var resp = await restClient.postHistory(
         donationId,
-        {'content': content.value, 'status': " WRITTEN"},
+        {'content': content.value, 'status': 'WRITTEN'},
       );
       if (resp.success == true) {
         return true;
@@ -90,7 +90,7 @@ class RegisterHistory extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    maxLength: 300,
+                    maxLength: 250,
                     maxLines: 13,
                     onChanged: (text) {
                       content.value = contentController.text;

@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:bookdone/bookinfo/model/region.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
-import 'package:bookdone/regist/model/regist_get_data.dart';
-import 'package:bookdone/regist/widgets/check_register.dart';
+import 'package:bookdone/regist/widgets/register_input_content.dart';
 import 'package:bookdone/regist/widgets/register_region_dialog.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
+import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +61,8 @@ class RegistData extends HookConsumerWidget {
     var multiImage = useState<List<XFile>?>([]);
     var images = useState<List<XFile>?>([]);
     var content = useState('');
+    var files = useState<List<MultipartFile>>([]);
+    var gotId = useState(0);
 
     Future<void> createArticle(List<MultipartFile> files) async {
       await restClient.registArticle(
@@ -112,6 +114,35 @@ class RegistData extends HookConsumerWidget {
     Future<String> getAddress() async {
       var code = await ref.read(userDataRepositoryProvider).restoreAddress();
       return code;
+    }
+
+    void register() async {
+      var code = ref.watch(registerRegionCodeStateProvider);
+      var input = ref.watch(registerInputProvider);
+      print('-------$code------$input-----$isbn-------${files.value}-----');
+      var resp = await restClient.registArticle(
+          isbn: isbn,
+          address: code,
+          content: input,
+          canDelivery: false,
+          images: files.value);
+      gotId.value = resp.data;
+      ref.invalidate(registerRegionStateProvider);
+      ref.invalidate(registerRegionCodeStateProvider);
+      MyPageRoute().go(context);
+    }
+
+    void registerExist() async {
+      var resp = await restClient.updateArticle(donationId,
+          isbn: isbn,
+          address: ref.watch(registerRegionCodeStateProvider),
+          content: content.value,
+          canDelivery: false,
+          images: files.value);
+      gotId.value = resp.data;
+      ref.invalidate(registerRegionStateProvider);
+      ref.invalidate(registerRegionCodeStateProvider);
+      MyPageRoute().go(context);
     }
 
     useEffect(() {
@@ -285,25 +316,7 @@ class RegistData extends HookConsumerWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Form(
-                      child: TextFormField(
-                        controller: contentController,
-                        decoration: const InputDecoration(
-                          fillColor: Colors.brown,
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.brown,
-                            ),
-                          ),
-                        ),
-                        onChanged: (text) {
-                          content.value = contentController.text;
-                        },
-                        maxLength: 300,
-                        maxLines: 3,
-                      ),
-                    ),
+                    RegisterInputContent(),
                     SizedBox(
                       height: 10,
                     ),
@@ -414,18 +427,50 @@ class RegistData extends HookConsumerWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: SizedBox(
-            width: 170,
-            child: CheckRegister(
-                isbn: isbn,
-                address: ref.watch(registerRegionCodeStateProvider),
-                content: content.value,
-                images: images.value,
-                donationId: donationId),
+      bottomSheet: SafeArea(
+        child: Container(
+          width: double.infinity,
+          color: Colors.brown.shade200,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 17),
+                backgroundColor: Colors.brown.shade200,
+                foregroundColor: Colors.white,
+                shape: BeveledRectangleBorder()),
+            onPressed: () async {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text(
+                    '기부 등록',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  content: const Text('기부글을 등록할까요?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      child: const Text('취소'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                        files.value = images.value!
+                            .map((img) => MultipartFile.fromFileSync(img.path))
+                            .toList();
+                        donationId == -1 ? register() : registerExist();
+                      },
+                      child: const Text('확인'),
+                    ),
+                  ],
+                ),
+              );
+            },
+            child: Text(
+              '등록하기',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
           ),
         ),
       ),

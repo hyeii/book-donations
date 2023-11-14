@@ -13,7 +13,15 @@ class MyLikeBookList extends HookWidget {
     return ListView.builder(
       itemCount: likeBookList.length,
       itemBuilder: (context, index) {
-        return BookCard(book: BookInfo(id: likeBookList[index].book.id, title: likeBookList[index].book.title, titleUrl: likeBookList[index].book.titleUrl, donationStatus: "NONE", donatedAt: "NONE", historyResponseList: []));
+        return BookCard(
+            book: BookInfo(
+                id: likeBookList[index].book.id,
+                isbn: likeBookList[index].book.isbn,
+                title: likeBookList[index].book.title,
+                titleUrl: likeBookList[index].book.titleUrl,
+                donationStatus: "NONE",
+                donatedAt: "NONE",
+                historyResponseList: []));
       },
     );
   }

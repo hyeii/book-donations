@@ -20,7 +20,6 @@ class AutocompleteList extends HookWidget {
           children: autoListData.map((item) {
             return GestureDetector(
               onTap: () {
-                // TODO: 검색으로 isbn 넘기기
                 BookinfoMainRoute(isbn: item.isbn).push(context);
                 // print('잘 눌려용');
               },
@@ -32,7 +31,7 @@ class AutocompleteList extends HookWidget {
                     item.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 15),
+                    // style: TextStyle(fontSize: 15),
                   ),
                 ),
               ),

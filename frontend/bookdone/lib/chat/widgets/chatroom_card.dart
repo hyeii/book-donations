@@ -12,6 +12,12 @@ class ChatRoomCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formattedLastMessageTime = chatRoom.lastMessageTime != null
+        ? "${chatRoom.lastMessageTime?.toString().substring(2, 10)} ${chatRoom.lastMessageTime?.toString().substring(11, 16)}"
+        : '마지막 채팅 시간 정보 없음';
+
+    ThemeData theme = Theme.of(context);
+
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -23,64 +29,48 @@ class ChatRoomCard extends HookWidget {
           ),
         ));
       },
-      child: SizedBox(
-        width: double.infinity,
-        height: 90,
+      child: Card(
+        elevation: 2.0, // Adds a subtle shadow
+        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 10),
+          padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: CachedNetworkImage(
-                  width: 70,
-                  height: 70,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                  imageUrl:
-                  "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg", // 이미지 URL 변경 필요
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+              CircleAvatar(
+                radius: 35,
+                backgroundImage: CachedNetworkImageProvider(
+                  "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg",
+                ),
+                backgroundColor: theme.primaryColorLight, // Fallback color
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${chatRoom.userNickname}님과의 채팅',
+                      style: theme.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      formattedLastMessageTime,
+                      style: theme.textTheme.caption?.copyWith(color: Colors.grey),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      chatRoom.lastMessage != null ? chatRoom.lastMessage.toString() : '채팅 없음',
+                      style: theme.textTheme.bodyText2,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(width: 10),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${chatRoom.userNickname}님과의 채팅',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                chatRoom.lastMessageTime != null
-                                    ? chatRoom.lastMessageTime.toString()
-                                    : '마지막 채팅 시간 정보 없음', // null일 경우 '시간 정보 없음'을 표시
-                              )
-                            ],
-                          ),
-                          // 다른 정보 표시 필요하면 추가
-                        ],
-                      ),
-                      Text(
-                        chatRoom.lastMessage != null
-                            ? chatRoom.lastMessage.toString()
-                            : '채팅 없음',
-                      ),
-                    ],
-                  ),
-                ),
-              )
+              Icon(Icons.keyboard_arrow_right, color: Colors.grey, size: 30),
             ],
           ),
         ),

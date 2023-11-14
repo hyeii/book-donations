@@ -111,13 +111,11 @@ class ChatRoom extends HookConsumerWidget {
     // 새로운 채팅 감지, 스크롤 최하단으로 이동
     useEffect(() {
       if (chatMessages.value.isNotEmpty) {
-        Future.microtask(() =>
-            scrollController.animateTo(
+        Future.microtask(() => scrollController.animateTo(
               scrollController.position.maxScrollExtent,
               duration: Duration(milliseconds: 100),
               curve: Curves.easeOut,
-            )
-        );
+            ));
       }
       // chatMessages의 길이가 변경될 때만 useEffect가 실행되도록 설정
     }, [chatMessages.value.length]);
@@ -152,85 +150,77 @@ class ChatRoom extends HookConsumerWidget {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("채팅방: $tradeId     채팅 상대: $nameWith"),
-      ),
-      body: Column(
-        children: [
-          // 버튼들을 추가하는 부분
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // 버튼 로직
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 40), // 가로 150, 세로 40
-                ),
-                child: Text("버튼 1"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // 버튼 로직
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 40), // 가로 150, 세로 40
-                ),
-                child: Text("버튼 2"),
-              ),
-            ],
-          ),
-          // 채팅 목록을 표시하는 부분
-          Expanded(
-            child: ListView.builder(
-              // shrinkWrap: true,
-              // reverse: true,
-              padding: EdgeInsets.only(bottom: 50),
-              controller: scrollController,
-              itemCount: chatMessages.value.length,
-              itemBuilder: (context, index) {
-                final chat = chatMessages.value[index];
-                return ChatMessage(
-                  senderNickname: chat.senderNickname,
-                  message: chat.message,
-                  createdAt: chat.createdAt.toString(),
-                  isMine:
-                      chat.senderNickname == userNickname.value ? true : false,
-                );
-              },
-            ),
+        title: Text("$nameWith님과의 채팅"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.info_outline),
+            onPressed: () {
+              // TODO: Display chat information or settings
+            },
           ),
         ],
       ),
-      bottomSheet: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Row(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
           children: [
+            // 채팅 목록을 표시하는 부분
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: TextField(
-                  controller: messageController,
-                  decoration: InputDecoration(
-                    hintText: "메시지 입력...",
-                    border: InputBorder.none,
-                  ),
-                  maxLines: null,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.send,
-                  onSubmitted: (value) {
-                    sendMessage(); // 여기를 수정
-                  },
-                ),
+              child: ListView.builder(
+                // 기존 reverse 제거
+                padding: EdgeInsets.only(bottom: 10),
+                controller: scrollController,
+                itemCount: chatMessages.value.length,
+                itemBuilder: (context, index) {
+                  final chat = chatMessages.value[index];
+                  return ChatMessage(
+                    senderNickname: chat.senderNickname,
+                    message: chat.message,
+                    createdAt: chat.createdAt.toString(),
+                    isMine: chat.senderNickname == userNickname.value
+                        ? true
+                        : false,
+                  );
+                },
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.send),
-              onPressed: sendMessage, // 여기에 sendMessage 함수 연결
+            // 메시지 입력란 부분
+            SafeArea(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: messageController,
+                        decoration: InputDecoration(
+                          hintText: "채팅 입력...",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                        ),
+                        textInputAction: TextInputAction.send,
+                        onFieldSubmitted: (_) => sendMessage(),
+                      ),
+                    ),
+                    SizedBox(width: 8.0),
+                    CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: IconButton(
+                        icon: Icon(Icons.send, color: Colors.white),
+                        onPressed: sendMessage,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

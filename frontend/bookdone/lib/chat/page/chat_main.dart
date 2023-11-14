@@ -26,7 +26,7 @@ class ChatMain extends HookConsumerWidget {
 
       fetchChatRooms();
       return null;
-    },[]);
+    }, []);
 
     return Scaffold(
       appBar: AppBar(
@@ -36,13 +36,13 @@ class ChatMain extends HookConsumerWidget {
       body: chatRooms.value.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.separated(
-        itemCount: chatRooms.value.length,
-        itemBuilder: (context, index) {
-          final chatRoom = chatRooms.value[index];
-          return ChatRoomCard(chatRoom: chatRoom); // 수정된 ChatRoomCard 사용
-        },
-        separatorBuilder: (context, index) => Divider(),
-      ),
+              itemCount: chatRooms.value.length,
+              itemBuilder: (context, index) {
+                final chatRoom = chatRooms.value[index];
+                return ChatRoomCard(chatRoom: chatRoom); // 수정된 ChatRoomCard 사용
+              },
+              separatorBuilder: (context, index) => SizedBox.shrink(),
+            ),
     );
   }
 }

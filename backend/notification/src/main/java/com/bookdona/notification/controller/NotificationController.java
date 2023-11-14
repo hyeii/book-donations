@@ -46,13 +46,4 @@ public class NotificationController {
 		return BaseResponse.okWithData(HttpStatus.OK, "알림 리스트 조회 완료", notifications);
 	}
 
-	@PostMapping("/send")
-	public ResponseEntity<?> sendNotification(@RequestBody NotificationDto notificationDto) {
-		log.info("*** {}", notificationDto);
-		// kafkaTemplate.send("notification-topic", notificationDto);
-		// 키를 사용하는 경우
-		// kafkaTemplate.send("notification-topic", "key", notificationDto);
-		return BaseResponse.ok(HttpStatus.OK, "알림을 전송하였습니다.");
-	}
-
 }

@@ -2,6 +2,7 @@ package com.bookdona.notification.entity;
 
 import com.bookdona.notification.dto.NotificationResponseDto;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class NotificationEntity {
 
     private String message;
 
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     public NotificationResponseDto toResponseDto() {

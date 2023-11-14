@@ -5,7 +5,7 @@ spring:
     active: local # local 프로파일 활성화 설정 (test feign client 용도)
 
   application:
-  name: chat-service
+    name: chat-service
 
   data:
     mongodb:

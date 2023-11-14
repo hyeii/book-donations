@@ -10,6 +10,8 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -29,9 +31,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	private final RedisTemplate<String, String> redisTemplate;
 
+
+
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/sub");
 		config.setApplicationDestinationPrefixes("/app");
 		/*
 			"/sub" 로 구독
@@ -40,7 +43,25 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 		// heart beat 설정
 		config.enableSimpleBroker("/sub")
-			.setHeartbeatValue(new long[] {20000, 20000}); // 서버 -> 클라이언트, 클라이언트 -> 서버 하트비트 시간 설정 20초
+			.setHeartbeatValue(new long[] {20000, 20000}).setTaskScheduler(taskScheduler()); // 서버 -> 클라이언트, 클라이언트 -> 서버 하트비트 시간 설정 20초
+	}
+
+
+	@Bean
+	public TaskScheduler taskScheduler() {
+		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+		scheduler.setPoolSize(1);
+		scheduler.setThreadNamePrefix("websocket-heartbeat-task-");
+		scheduler.initialize();
+		return scheduler;
+	}
+
+	// 세션 유지 시간 3시간
+	@Bean
+	public ServletServerContainerFactoryBean createWebSocketContainer() {
+		var container = new ServletServerContainerFactoryBean();
+		container.setMaxSessionIdleTimeout(10800000L);
+		return container;
 	}
 
 	@Override

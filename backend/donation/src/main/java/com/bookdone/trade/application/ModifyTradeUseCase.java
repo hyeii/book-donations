@@ -16,11 +16,12 @@ public class ModifyTradeUseCase {
     private final DonationRepository donationRepository;
     private final HistoryRepository historyRepository;
 
-    public void changeStatusToDonationRequested(Long donationId, Long memberId) {
+    public long changeStatusToDonationRequested(Long donationId, Long memberId) {
         tradeRepository.updateStatus(donationId, memberId, TradeStatus.DONATION_REQUESTED);
         Donation donation = donationRepository.findById(donationId);
         donation.changeStatusToTrading();
         donationRepository.save(donation);
+        return donation.getMemberId();
     }
 
     public void changeStatusToDonationConfirmed(Long donationId, Long memberId) {

@@ -1,5 +1,6 @@
 package com.bookdone.trade.controller;
 
+import com.bookdone.donation.dto.request.NotificationRequest;
 import com.bookdone.global.dto.BaseResponse;
 import com.bookdone.trade.application.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,10 +25,12 @@ public class TradeController {
     private final RemoveTradeUseCase removeTradeUseCase;
     private final AddTradeUseCase addTradeUseCase;
     private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, NotificationRequest> kafkaTemplate2;
     private final FindTradeUseCase findTradeUseCase;
     private final String requestTopicName = "dona-req";
     private final String cancelTopicName = "dona-can";
     private final String completeTopicName = "dona-com";
+    private final String notificationTopicName = "notification-topic";
 
     @GetMapping("/{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeDetails(@PathVariable Long donationId, @PathVariable Long memberId) {
@@ -49,7 +52,7 @@ public class TradeController {
 
     @PatchMapping("/{donationId}/members/{memberId}/reservations/request")
     public ResponseEntity<?> tradeChangeToDonationRequested(@PathVariable Long donationId, @PathVariable Long memberId) {
-        modifyTradeUseCase.changeStatusToDonationRequested(donationId, memberId);
+        long donationMemberId = modifyTradeUseCase.changeStatusToDonationRequested(donationId, memberId);
         String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
         try {
             Map<String, String> map = new HashMap<>();
@@ -59,18 +62,21 @@ public class TradeController {
             return BaseResponse.fail("json 변환 실패", 400);
         }
         kafkaTemplate.send(requestTopicName, payload);
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(donationMemberId, "Book Done", "예약 요청"));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
     @PatchMapping("/{donationId}/members/{memberId}/reservations/confirm")
     public ResponseEntity<?> tradeChangeToDonationConfirmed(@PathVariable Long donationId, @PathVariable Long memberId) {
         modifyTradeUseCase.changeStatusToDonationConfirmed(donationId, memberId);
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(memberId, "Book Done", "예약 완료"));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
     @PatchMapping("/{donationId}/members/{memberId}/completion/request")
     public ResponseEntity<?> tradeChangeToCompletionRequested(@PathVariable Long donationId, @PathVariable Long memberId) {
         modifyTradeUseCase.changeStatusToCompletionRequested(donationId, memberId);
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(memberId, "Book Done", "거래 완료 요청"));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
@@ -87,6 +93,7 @@ public class TradeController {
             return BaseResponse.fail("json 변환 실패", 400);
         }
         kafkaTemplate.send(completeTopicName, payload);
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(id, "Book Done", "예약 요청"));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 

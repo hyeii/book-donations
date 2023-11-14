@@ -48,8 +48,9 @@ public class WebSocketEventListener  {
 		String userNickname = (String) headerAccessor.getSessionAttributes().get("usernickname");
 
 		if (userNickname != null) {
-			log.info("User Nickname: {}", userNickname);
-			redisTemplate.opsForValue().set("member:" + userNickname, "offline");
+			log.info("remove User Nickname: {}", userNickname);
+			// redisTemplate.opsForValue().set("member:" + userNickname, "offline");
+			redisTemplate.delete("member:" + userNickname);
 		} else {
 			log.info("user 가 이미 연결을 종료함.");
 		}

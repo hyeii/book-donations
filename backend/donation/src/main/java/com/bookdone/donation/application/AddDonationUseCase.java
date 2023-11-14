@@ -27,7 +27,7 @@ public class AddDonationUseCase {
 
     private final DonationRepository donationRepository;
     private final DonationImageRepository donationImageRepository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, NotificationRequest> kafkaTemplate;
     private final BookClient bookClient;
     private final ResponseUtil responseUtil;
     private final String REQUEST_TOPIC_NAME = "notification-topic";
@@ -44,8 +44,7 @@ public class AddDonationUseCase {
         NotificationRequest notificationRequest = new NotificationRequest(null,"Book Done","좋아요 한 글이 등록되었습니다.");
         for (String memberId : idList) {
             notificationRequest.setTargetUserId(Long.valueOf(memberId));
-            payload = new ObjectMapper().writeValueAsString(notificationRequest);
-            kafkaTemplate.send(REQUEST_TOPIC_NAME, payload);
+            kafkaTemplate.send(REQUEST_TOPIC_NAME, notificationRequest);
         }
 
 
@@ -62,10 +61,11 @@ public class AddDonationUseCase {
         List<String> idList = responseUtil.extractDataFromResponse(bookClient.getBookLikesList(isbn), List.class);
 
         String payload = null; // Jackson 라이브러리를 사용하여 JSON 변환
-        Map<String, List> map = new HashMap<>();
-        map.put("memberIds", idList);
-        payload = new ObjectMapper().writeValueAsString(map);
-        kafkaTemplate.send(REQUEST_TOPIC_NAME, payload);
+        NotificationRequest notificationRequest = new NotificationRequest(null,"Book Done","좋아요 한 글이 등록되었습니다.");
+        for (String memberId : idList) {
+            notificationRequest.setTargetUserId(Long.valueOf(memberId));
+            kafkaTemplate.send(REQUEST_TOPIC_NAME, notificationRequest);
+        }
 
         donationImageRepository.saveImageList(id, donationAddRequest.getImages());
         return id;

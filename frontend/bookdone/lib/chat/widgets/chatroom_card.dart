@@ -2,26 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../model/chat.dart';
 import '../page/chat_room.dart';
 
 class ChatRoomCard extends HookWidget {
+  final ChatRoomResponse chatRoom;
+
+  ChatRoomCard({Key? key, required this.chatRoom}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // 임시 데이터 설정
-    final bookName = useState('(더미) 바다가 들리는 편의점');
-    final nameWith = useState('(더미) 감자도리');
-    final lastChat = useState('(더미) 마지막 채팅 내용');
-    final tradeId = useState('1'); // 임시 tradeId 설정
-
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ChatRoom(
-            tradeId: tradeId.value,
-            nameWith: nameWith.value,
-            bookName: bookName.value,
-            lastChat: lastChat.value,
+            tradeId: chatRoom.tradeId,
+            nameWith: chatRoom.userNickname,
+            bookName: '(더미) 바다가 들리는 편의점', // 실제 데이터로 변경 필요
+            lastChat: chatRoom.lastMessage == null ? '채팅 없음' : chatRoom.lastMessage.toString(),
           ),
         ));
       },
@@ -41,7 +39,7 @@ class ChatRoomCard extends HookWidget {
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
                   imageUrl:
-                  "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg",
+                  "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg", // 이미지 URL 변경 필요
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
@@ -61,19 +59,24 @@ class ChatRoomCard extends HookWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                bookName.value,
+                                '${chatRoom.userNickname}님과의 채팅',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text('16:15'),
+                              Text(
+                                chatRoom.lastMessageTime != null
+                                    ? chatRoom.lastMessageTime.toString()
+                                    : '마지막 채팅 시간 정보 없음', // null일 경우 '시간 정보 없음'을 표시
+                              )
                             ],
                           ),
-                          Text(
-                            nameWith.value,
-                            style: TextStyle(color: Colors.grey),
-                          ),
+                          // 다른 정보 표시 필요하면 추가
                         ],
                       ),
-                      Text(lastChat.value),
+                      Text(
+                        chatRoom.lastMessage != null
+                            ? chatRoom.lastMessage.toString()
+                            : '채팅 없음',
+                      ),
                     ],
                   ),
                 ),

@@ -10,7 +10,10 @@ import 'package:bookdone/top/page/top_navigation_bar.dart';
 import 'package:bookdone/widgets/floating_register_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPageMain extends HookConsumerWidget {
   MyPageMain({Key? key}) : super(key: key);
@@ -47,6 +50,20 @@ class MyPageMain extends HookConsumerWidget {
     //   String name = pref.getString('nickname') ?? '';
     //   return name;
     // }
+
+    Future<void> logOut() async {
+      print('로그아웃 : 니아러니아런이');
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      await pref.setInt('loginStatus', 0);
+      try {
+        await UserApi.instance.logout();
+        print('로그아웃댐!');
+      } catch (error) {
+        print('로그아웃안댐!');
+      }
+      FirstPageRoute().go(context);
+    }
+
     var repository = ref.read(userDataRepositoryProvider);
     useEffect(() {
       void fetchData() async {
@@ -96,6 +113,52 @@ class MyPageMain extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(),
+      endDrawer: Drawer(
+        child: Container(
+          color: Color.fromARGB(255, 223, 218, 213),
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Center(
+                  child: Text('책도네'),
+                ),
+              ),
+              ListTile(
+                title: Text('나의 히스토리'),
+                onTap: () {
+                  MyHistoriesRoute().push(context);
+                },
+              ),
+              ListTile(
+                title: Text('로그아웃'),
+                onTap: () {
+                  // logOut();
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: const Text('로그아웃 하시겠습니까?'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            context.pop();
+                          },
+                          child: const Text('취소'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            logOut();
+                          },
+                          child: const Text('확인'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
+      ),
       body: Column(
         children: [
           Padding(
@@ -144,54 +207,27 @@ class MyPageMain extends HookConsumerWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      // alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            MyHistoriesRoute().push(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size.zero,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 5.0),
-                              // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              shape: RoundedRectangleBorder(
-                                  //모서리를 둥글게
-                                  borderRadius: BorderRadius.circular(8)),
-                              textStyle: const TextStyle(fontSize: 12),
-                              backgroundColor: Colors.brown,
-                              foregroundColor: Colors.white),
-                          child: Text(
-                            "나의 히스토리",
-                            style: TextStyle(fontFamily: "SCDream4"),
-                          )),
-                    ),
-                    Container(
-                      // alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            AddHistoryRoute().push(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size.zero,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 5.0),
-                              // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              shape: RoundedRectangleBorder(
-                                  //모서리를 둥글게
-                                  borderRadius: BorderRadius.circular(8)),
-                              textStyle: const TextStyle(fontSize: 12),
-                              backgroundColor: Colors.brown,
-                              foregroundColor: Colors.white),
-                          child: Text(
-                            "히스토리 작성",
-                            style: TextStyle(fontFamily: "SCDream4"),
-                          )),
-                    ),
-                  ],
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        AddHistoryRoute().push(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 5.0),
+                          // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          shape: RoundedRectangleBorder(
+                              //모서리를 둥글게
+                              borderRadius: BorderRadius.circular(8)),
+                          textStyle: const TextStyle(fontSize: 12),
+                          backgroundColor: Colors.brown,
+                          foregroundColor: Colors.white),
+                      child: Text(
+                        "히스토리 작성",
+                        style: TextStyle(fontFamily: "SCDream4"),
+                      )),
                 ),
                 SizedBox(
                   height: 10,

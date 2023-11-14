@@ -34,7 +34,12 @@ class LoginApi {
         try {
           await UserApi.instance.loginWithKakaoAccount();
           print('카카오계정으로 로그인 성공');
-          signup(context);
+          if (await checkHasToken()) {
+            var token = await TokenManagerProvider.instance.manager.getToken();
+            debugPrint('토큰냠냠 ${token!.accessToken}');
+            debugPrint('${token.toJson()}');
+            signup(context);
+          }
           // Navigator.push(
           //     context, MaterialPageRoute(builder: (context) => MyHomePage()));
         } catch (error) {
@@ -94,38 +99,14 @@ class LoginApi {
     dio.options.headers['Authorization'] = 'Bearer ${token!.idToken}';
     debugPrint(dio.options.headers.toString());
     debugPrint('여기얌');
-
-    RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
-      if (T != dynamic &&
-          !(requestOptions.responseType == ResponseType.bytes ||
-              requestOptions.responseType == ResponseType.stream)) {
-        if (T == String) {
-          requestOptions.responseType = ResponseType.plain;
-        } else {
-          requestOptions.responseType = ResponseType.json;
-        }
-      }
-      return requestOptions;
+    var data;
+    try {
+      data = await dio.post('$baseURL/api/auth');
+    } catch (error) {
+      print(error);
     }
+    final res = UserRes.fromJson(data.data!);
 
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result =
-        await dio.fetch<Map<String, dynamic>>(_setStreamType<UserRes>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              dio.options,
-              '/api/auth',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseURL)));
-    final res = UserRes.fromJson(_result.data!);
     print(res);
     UserData user = res.data;
     if (res.data.newMember == false) {

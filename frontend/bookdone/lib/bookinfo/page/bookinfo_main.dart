@@ -1,3 +1,4 @@
+import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/bookinfo/model/donation.dart';
 import 'package:bookdone/bookinfo/widgets/comment_card.dart';
 import 'package:bookdone/bookinfo/widgets/comment_input.dart';
@@ -39,16 +40,16 @@ class BookinfoMain extends HookConsumerWidget {
       print(bookslikes.data);
     }
 
-    void getBookinfo() async {
-      try {
-        var data = await restClient.getDetailBook(isbn);
-        curBook.value = data.data;
-        like.value = curBook.value!.likeStatus;
-        print('------------------${like.value}--------');
-      } catch (error) {
-        print(error);
-      }
-    }
+    // void getBookinfo() async {
+    //   try {
+    //     var data = await restClient.getDetailBook(isbn);
+    //     curBook.value = data.data;
+    //     like.value = curBook.value!.likeStatus;
+    //     print('------------------${like.value}--------');
+    //   } catch (error) {
+    //     print(error);
+    //   }
+    // }
 
     useEffect(() {
       void getBookinfo() async {
@@ -117,10 +118,16 @@ class BookinfoMain extends HookConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            book.title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 2 / 3,
+                            child: Text(
+                              book.title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           ),
                           IconButton(
                             // isSelected: like.value,
@@ -191,12 +198,6 @@ class BookinfoMain extends HookConsumerWidget {
                           Text(
                             book.publisher,
                           ),
-                          Text(
-                            "발행일",
-                          ),
-                          Text(
-                            "기타 설명",
-                          ),
                           SizedBox(
                             height: 20,
                           ),
@@ -215,7 +216,7 @@ class BookinfoMain extends HookConsumerWidget {
                                 //모서리를 둥글게
                                 borderRadius: BorderRadius.circular(15)),
                             fixedSize: Size(110, 40),
-                            textStyle: const TextStyle(fontSize: 15),
+                            textStyle: const TextStyle(fontSize: 13),
                             backgroundColor: Colors.brown[300],
                             foregroundColor: Colors.white),
                         child: Text(

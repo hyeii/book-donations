@@ -143,7 +143,7 @@ class RegistData extends HookConsumerWidget {
       gotId.value = resp.data;
       ref.invalidate(registerRegionStateProvider);
       ref.invalidate(registerRegionCodeStateProvider);
-      MyPageRoute().go(context);
+      StartPageRoute().go(context);
     }
 
     useEffect(() {
@@ -166,6 +166,7 @@ class RegistData extends HookConsumerWidget {
       }
 
       fetchData();
+      return () {};
     }, []);
 
     void fullImages(context) {

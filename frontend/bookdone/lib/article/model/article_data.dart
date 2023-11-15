@@ -94,6 +94,20 @@ class TradeResponseDto with _$TradeResponseDto {
 }
 
 @freezed
+class TradeStringResponseDto with _$TradeStringResponseDto {
+  const factory TradeStringResponseDto({
+    required bool success,
+    required String msg,
+    required TradeInfo data,
+  }) = _TradeStringResponseDto;
+
+  factory TradeStringResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$TradeStringResponseDtoFromJson(json);
+}
+
+
+
+@freezed
 class TradeResponse with _$TradeResponse {
   const factory TradeResponse({
     required int id,
@@ -101,4 +115,29 @@ class TradeResponse with _$TradeResponse {
 
   factory TradeResponse.fromJson(Map<String, dynamic> json) =>
       _$TradeResponseFromJson(json);
+}
+
+@freezed
+class DonationIdResponseDto with _$DonationIdResponseDto {
+  const factory DonationIdResponseDto({
+    required bool success,
+    required String msg,
+    required TradeInfo data,
+  }) = _DonationIdResponseDto;
+
+  factory DonationIdResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$DonationIdResponseDtoFromJson(json);
+}
+
+@freezed
+class TradeInfo with _$TradeInfo {
+  const factory TradeInfo({
+    required int id,
+    required int donationId,
+    required int memberId,
+    required String tradeStatus,
+  }) = _TradeInfo;
+
+  factory TradeInfo.fromJson(Map<String, dynamic> json) =>
+      _$TradeInfoFromJson(json);
 }

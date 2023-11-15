@@ -139,19 +139,22 @@ abstract class RestClient {
   Future<ChatMessagesDto> chatMessageList(@Path() int tradeId);
 
   @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservation/request')
-  Future<TradeResponseDto> reservationRequestTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> reservationRequestTrade(@Path() int donationId, @Path() int memberId);
   @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservation/confirm')
-  Future<TradeResponseDto> reservationConfirmTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> reservationConfirmTrade(@Path() int donationId, @Path() int memberId);
   @PATCH('/api/trades/donations/{donationId}/members/{memberId}/completion/request')
-  Future<TradeResponseDto> completionRequestTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> completionRequestTrade(@Path() int donationId, @Path() int memberId);
   @PATCH('/api/trades/donations/{donationId}/members/{memberId}/completion/confirm')
-  Future<TradeResponseDto> completionConfirmTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> completionConfirmTrade(@Path() int donationId, @Path() int memberId);
   @DELETE('/api/trades/donations/{donationId}/members/{memberId}')
-  Future<TradeResponseDto> deleteTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> deleteTrade(@Path() int donationId, @Path() int memberId);
   @GET('/api/trades/donations/{donationId}/members/{memberId}')
-  Future<TradeResponseDto> getTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> getTrade(@Path() int donationId, @Path() int memberId);
 
   @GET('/api/books/details')
   Future<BooksDto> getBooksDetails(@Query('isbns') List<String> isbns);
+
+  @GET('/api/trades/donations/donationId/{tradeId}')
+  Future<DonationIdResponseDto> getDonationIdByTradeId(@Path() int tradeId);
 
 }

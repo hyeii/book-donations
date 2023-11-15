@@ -22,6 +22,8 @@ class ChatMain extends HookConsumerWidget {
         chatRooms.value = chatRoomResponse.data;
         isChatRoomFetched.value = true;
 
+        if(chatRooms.value.isEmpty) return;
+
         // 채팅방에서 ISBN 수집
         List<String> isbnList = chatRooms.value
             .map((chatRoom) => chatRoom.isbn!)
@@ -47,7 +49,6 @@ class ChatMain extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const Text("채팅"), // Using const for text widget
       ),
       body: chatRooms.value.isEmpty && isChatRoomFetched.value
           ? Center(
@@ -70,7 +71,7 @@ class ChatMain extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Text(
-                "채팅을 시작해보세요.",
+                "도서 검색을 통해 책도네를 시작해보세요.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.grey[600],

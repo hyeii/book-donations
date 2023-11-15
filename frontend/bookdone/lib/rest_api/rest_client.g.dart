@@ -866,7 +866,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<TradeResponseDto> reservationRequestTrade(
+  Future<TradeStringResponseDto> reservationRequestTrade(
     int donationId,
     int memberId,
   ) async {
@@ -874,8 +874,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TradeResponseDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TradeStringResponseDto>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -891,12 +891,12 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TradeResponseDto.fromJson(_result.data!);
+    final value = TradeStringResponseDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<TradeResponseDto> reservationConfirmTrade(
+  Future<TradeStringResponseDto> reservationConfirmTrade(
     int donationId,
     int memberId,
   ) async {
@@ -904,8 +904,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TradeResponseDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TradeStringResponseDto>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -921,12 +921,12 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TradeResponseDto.fromJson(_result.data!);
+    final value = TradeStringResponseDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<TradeResponseDto> completionRequestTrade(
+  Future<TradeStringResponseDto> completionRequestTrade(
     int donationId,
     int memberId,
   ) async {
@@ -934,8 +934,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TradeResponseDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TradeStringResponseDto>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -951,12 +951,12 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TradeResponseDto.fromJson(_result.data!);
+    final value = TradeStringResponseDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<TradeResponseDto> completionConfirmTrade(
+  Future<TradeStringResponseDto> completionConfirmTrade(
     int donationId,
     int memberId,
   ) async {
@@ -964,8 +964,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TradeResponseDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TradeStringResponseDto>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -981,12 +981,12 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TradeResponseDto.fromJson(_result.data!);
+    final value = TradeStringResponseDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<TradeResponseDto> deleteTrade(
+  Future<TradeStringResponseDto> deleteTrade(
     int donationId,
     int memberId,
   ) async {
@@ -994,8 +994,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TradeResponseDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TradeStringResponseDto>(Options(
       method: 'DELETE',
       headers: _headers,
       extra: _extra,
@@ -1011,12 +1011,12 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TradeResponseDto.fromJson(_result.data!);
+    final value = TradeStringResponseDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<TradeResponseDto> getTrade(
+  Future<TradeStringResponseDto> getTrade(
     int donationId,
     int memberId,
   ) async {
@@ -1024,8 +1024,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TradeResponseDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TradeStringResponseDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -1041,7 +1041,7 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TradeResponseDto.fromJson(_result.data!);
+    final value = TradeStringResponseDto.fromJson(_result.data!);
     return value;
   }
 
@@ -1069,6 +1069,33 @@ class _RestClient implements RestClient {
               baseUrl,
             ))));
     final value = BooksDto.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DonationIdResponseDto> getDonationIdByTradeId(int tradeId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DonationIdResponseDto>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/trades/donations/donationId/${tradeId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = DonationIdResponseDto.fromJson(_result.data!);
     return value;
   }
 

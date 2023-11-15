@@ -82,3 +82,15 @@ class Message with _$Message {
   factory Message.fromJson(Map<String, dynamic> json) =>
       _$MessageFromJson(json);
 }
+
+@freezed
+class ChatMessageWriteRequest with _$ChatMessageWriteRequest {
+  const factory ChatMessageWriteRequest({
+    required String message,
+    required int tradeId,
+    required String senderNickname,
+  }) = _ChatMessageWriteRequest;
+
+  factory ChatMessageWriteRequest.fromJson(Map<String, dynamic> json) =>
+      _$ChatMessageWriteRequestFromJson(json);
+}

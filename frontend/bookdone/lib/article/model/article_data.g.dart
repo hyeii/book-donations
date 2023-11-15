@@ -128,6 +128,22 @@ Map<String, dynamic> _$$TradeResponseDtoImplToJson(
       'data': instance.data,
     };
 
+_$TradeStringResponseDtoImpl _$$TradeStringResponseDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TradeStringResponseDtoImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: TradeInfo.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$TradeStringResponseDtoImplToJson(
+        _$TradeStringResponseDtoImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
 _$TradeResponseImpl _$$TradeResponseImplFromJson(Map<String, dynamic> json) =>
     _$TradeResponseImpl(
       id: json['id'] as int,
@@ -136,4 +152,36 @@ _$TradeResponseImpl _$$TradeResponseImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$TradeResponseImplToJson(_$TradeResponseImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+    };
+
+_$DonationIdResponseDtoImpl _$$DonationIdResponseDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DonationIdResponseDtoImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: TradeInfo.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$DonationIdResponseDtoImplToJson(
+        _$DonationIdResponseDtoImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+_$TradeInfoImpl _$$TradeInfoImplFromJson(Map<String, dynamic> json) =>
+    _$TradeInfoImpl(
+      id: json['id'] as int,
+      donationId: json['donationId'] as int,
+      memberId: json['memberId'] as int,
+      tradeStatus: json['tradeStatus'] as String,
+    );
+
+Map<String, dynamic> _$$TradeInfoImplToJson(_$TradeInfoImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'donationId': instance.donationId,
+      'memberId': instance.memberId,
+      'tradeStatus': instance.tradeStatus,
     };

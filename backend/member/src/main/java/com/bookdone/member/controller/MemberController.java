@@ -91,7 +91,7 @@ public class MemberController {
     }
 
     @PatchMapping("/me/fcm-token")
-    public ResponseEntity<?> updateFcmToken(@RequestHeader("memher-id") Long memberId, @RequestBody Map<String, String> body) {
+    public ResponseEntity<?> updateFcmToken(@RequestHeader("member-id") Long memberId, @RequestBody Map<String, String> body) {
         String fcmToken = body.get("fcmToken");
         memberService.updateFcmToken(memberId, fcmToken);
         return BaseResponse.ok(HttpStatus.OK, "FCM Token 수정 완료");

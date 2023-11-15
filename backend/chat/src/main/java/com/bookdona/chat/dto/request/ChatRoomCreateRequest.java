@@ -21,4 +21,5 @@ public class ChatRoomCreateRequest {
 	private Long tradeId;
 	private String user1;
 	private String user2;
+	private String isbn;
 }

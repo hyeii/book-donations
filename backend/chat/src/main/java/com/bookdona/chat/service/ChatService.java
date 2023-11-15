@@ -68,6 +68,7 @@ public class ChatService {
 				.user1(chatRoomCreateRequest.getUser1())
 				.user2(chatRoomCreateRequest.getUser2())
 				.isLive(true)
+				.isbn(chatRoomCreateRequest.getIsbn())
 				.build();
 			chatRoomRepository.save(chatRoom);
 		}

@@ -34,6 +34,7 @@ public class ChatRoom {
 	@CreatedDate
 	private LocalDateTime createdAt;
 	private Boolean isLive;
+	private String isbn;
 
 	// public Long getOpponent(Long memberId) {
 	// 	if (donorId == null)

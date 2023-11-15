@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface JpaDonationImageRepository extends JpaRepository<DonationImageEntity, Long> {
-    List<DonationImageEntity> findAllByDonationId(Long donationId);
+    List<DonationImageEntity> findAllByDonationIdAndMemberId(Long donationId, Long memberId);
 
 }

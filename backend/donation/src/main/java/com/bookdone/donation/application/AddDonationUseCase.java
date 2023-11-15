@@ -47,8 +47,7 @@ public class AddDonationUseCase {
             kafkaTemplate.send(REQUEST_TOPIC_NAME, notificationRequest);
         }
 
-
-        donationImageRepository.saveImageList(id, donationAddRequest.getImages());
+        donationImageRepository.saveImageList(id, donation.getMemberId(), donationAddRequest.getImages());
         return id;
     }
 
@@ -67,7 +66,7 @@ public class AddDonationUseCase {
             kafkaTemplate.send(REQUEST_TOPIC_NAME, notificationRequest);
         }
 
-        donationImageRepository.saveImageList(id, donationAddRequest.getImages());
+        donationImageRepository.saveImageList(id, donation.getMemberId(), donationAddRequest.getImages());
         return id;
     }
 

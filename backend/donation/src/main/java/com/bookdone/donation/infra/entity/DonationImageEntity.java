@@ -23,6 +23,9 @@ public class DonationImageEntity {
     @Column(name = "donation_id", nullable = false)
     private Long donationId;
 
+    @Column(name = "member_id")
+    private Long memberId;
+
     @Column(nullable = false)
     private String url;
 

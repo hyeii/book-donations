@@ -19,17 +19,18 @@ public class DonationImageRepositoryImpl implements DonationImageRepository {
     private final S3Uploader s3Uploader;
 
     @Override
-    public List<String> findImageUrlList(Long donationId) {
-        return jpaDonationImageRepository.findAllByDonationId(donationId)
+    public List<String> findImageUrlList(Long donationId, Long memberId) {
+        return jpaDonationImageRepository.findAllByDonationIdAndMemberId(donationId, memberId)
                 .stream().map(donationImageEntity -> donationImageEntity.getUrl())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void saveImageList(Long donationId, List<MultipartFile> imageList) {
+    public void saveImageList(Long donationId, Long memberId, List<MultipartFile> imageList) {
         List<DonationImageEntity> imageEntityList = imageList.stream()
                 .map(multipartFile -> DonationImageEntity.builder()
                                 .donationId(donationId)
+                                .memberId(memberId)
                                 .url(s3Uploader.uploadFile(multipartFile))
                                 .build())
                 .collect(Collectors.toList());

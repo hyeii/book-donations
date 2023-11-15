@@ -86,7 +86,7 @@ public class FindDonationUseCase {
         return donationListResponseList;
     }
 
-    public DonationDetailsResponse findDonation(long memberId,Long id) throws JsonProcessingException {
+    public DonationDetailsResponse findDonation(Long memberId, Long id) throws JsonProcessingException {
         Donation donation = donationRepository.findById(id);
 
         String nickname = null;
@@ -97,7 +97,7 @@ public class FindDonationUseCase {
             throw e;
         }
 
-        List<String> imageUrlList = donationImageRepository.findImageUrlList(id);
+        List<String> imageUrlList = donationImageRepository.findImageUrlList(id, memberId);
 
         List<History> historyList = historyRepository.findAllByDonationId(id);
         List<Long> memberIdList = historyList.stream()

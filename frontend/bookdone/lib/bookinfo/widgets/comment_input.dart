@@ -80,7 +80,7 @@ class CommentInput extends HookConsumerWidget {
                 "writer": userNickname.value,
                 "review": comment.value,
               });
-              BookinfoMainRoute(isbn: isbn).go(context);
+              BookinfoMainRoute(isbn: isbn).pushReplacement(context);
             }
           },
           style: ElevatedButton.styleFrom(

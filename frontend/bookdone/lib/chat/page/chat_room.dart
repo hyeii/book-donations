@@ -165,6 +165,34 @@ class ChatRoom extends HookConsumerWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Column(
           children: [
+            // 버튼 두개 부분
+            Container(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Button 1 action
+                      },
+                      child: Text('Button 1'),
+                    ),
+                  ),
+                  SizedBox(width: 10), // Spacing between the buttons
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // TODO: Button 2 action
+                      },
+                      child: Text('Button 2'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+
             // 채팅 목록을 표시하는 부분
             Expanded(
               child: ListView.builder(

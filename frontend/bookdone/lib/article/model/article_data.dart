@@ -80,3 +80,25 @@ class RankData with _$RankData {
   factory RankData.fromJson(Map<String, dynamic> json) =>
       _$RankDataFromJson(json);
 }
+
+@freezed
+class TradeResponseDto with _$TradeResponseDto {
+  const factory TradeResponseDto({
+    required bool success,
+    required String msg,
+    required int data,
+  }) = _TradeResponseDto;
+
+  factory TradeResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$TradeResponseDtoFromJson(json);
+}
+
+@freezed
+class TradeResponse with _$TradeResponse {
+  const factory TradeResponse({
+    required int id,
+  }) = _TradeResponse;
+
+  factory TradeResponse.fromJson(Map<String, dynamic> json) =>
+      _$TradeResponseFromJson(json);
+}

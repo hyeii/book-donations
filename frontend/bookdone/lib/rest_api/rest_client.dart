@@ -122,4 +122,11 @@ abstract class RestClient {
 
   @PATCH('/api/members/me/fcm-token')
   Future<DefaultReps> updateFcm(@Body() Map<String, dynamic> map);
+
+  @POST('/api/chats')
+  Future<void> createChatRoom(@Body() Map<String, dynamic> map);
+
+  @POST('/api/trades/donations/{donationId}/members/{memberId}')
+  Future<TradeResponseDto> createTrade(@Path() int donationId, @Path() int memberId);
+
 }

@@ -1246,3 +1246,312 @@ abstract class _RankData implements RankData {
   _$$RankDataImplCopyWith<_$RankDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+TradeResponseDto _$TradeResponseDtoFromJson(Map<String, dynamic> json) {
+  return _TradeResponseDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$TradeResponseDto {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  int get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TradeResponseDtoCopyWith<TradeResponseDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TradeResponseDtoCopyWith<$Res> {
+  factory $TradeResponseDtoCopyWith(
+          TradeResponseDto value, $Res Function(TradeResponseDto) then) =
+      _$TradeResponseDtoCopyWithImpl<$Res, TradeResponseDto>;
+  @useResult
+  $Res call({bool success, String msg, int data});
+}
+
+/// @nodoc
+class _$TradeResponseDtoCopyWithImpl<$Res, $Val extends TradeResponseDto>
+    implements $TradeResponseDtoCopyWith<$Res> {
+  _$TradeResponseDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TradeResponseDtoImplCopyWith<$Res>
+    implements $TradeResponseDtoCopyWith<$Res> {
+  factory _$$TradeResponseDtoImplCopyWith(_$TradeResponseDtoImpl value,
+          $Res Function(_$TradeResponseDtoImpl) then) =
+      __$$TradeResponseDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, int data});
+}
+
+/// @nodoc
+class __$$TradeResponseDtoImplCopyWithImpl<$Res>
+    extends _$TradeResponseDtoCopyWithImpl<$Res, _$TradeResponseDtoImpl>
+    implements _$$TradeResponseDtoImplCopyWith<$Res> {
+  __$$TradeResponseDtoImplCopyWithImpl(_$TradeResponseDtoImpl _value,
+      $Res Function(_$TradeResponseDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$TradeResponseDtoImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TradeResponseDtoImpl implements _TradeResponseDto {
+  const _$TradeResponseDtoImpl(
+      {required this.success, required this.msg, required this.data});
+
+  factory _$TradeResponseDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TradeResponseDtoImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  @override
+  final int data;
+
+  @override
+  String toString() {
+    return 'TradeResponseDto(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TradeResponseDtoImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, msg, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TradeResponseDtoImplCopyWith<_$TradeResponseDtoImpl> get copyWith =>
+      __$$TradeResponseDtoImplCopyWithImpl<_$TradeResponseDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TradeResponseDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _TradeResponseDto implements TradeResponseDto {
+  const factory _TradeResponseDto(
+      {required final bool success,
+      required final String msg,
+      required final int data}) = _$TradeResponseDtoImpl;
+
+  factory _TradeResponseDto.fromJson(Map<String, dynamic> json) =
+      _$TradeResponseDtoImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  int get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$TradeResponseDtoImplCopyWith<_$TradeResponseDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+TradeResponse _$TradeResponseFromJson(Map<String, dynamic> json) {
+  return _TradeResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$TradeResponse {
+  int get id => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TradeResponseCopyWith<TradeResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TradeResponseCopyWith<$Res> {
+  factory $TradeResponseCopyWith(
+          TradeResponse value, $Res Function(TradeResponse) then) =
+      _$TradeResponseCopyWithImpl<$Res, TradeResponse>;
+  @useResult
+  $Res call({int id});
+}
+
+/// @nodoc
+class _$TradeResponseCopyWithImpl<$Res, $Val extends TradeResponse>
+    implements $TradeResponseCopyWith<$Res> {
+  _$TradeResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TradeResponseImplCopyWith<$Res>
+    implements $TradeResponseCopyWith<$Res> {
+  factory _$$TradeResponseImplCopyWith(
+          _$TradeResponseImpl value, $Res Function(_$TradeResponseImpl) then) =
+      __$$TradeResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id});
+}
+
+/// @nodoc
+class __$$TradeResponseImplCopyWithImpl<$Res>
+    extends _$TradeResponseCopyWithImpl<$Res, _$TradeResponseImpl>
+    implements _$$TradeResponseImplCopyWith<$Res> {
+  __$$TradeResponseImplCopyWithImpl(
+      _$TradeResponseImpl _value, $Res Function(_$TradeResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$TradeResponseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TradeResponseImpl implements _TradeResponse {
+  const _$TradeResponseImpl({required this.id});
+
+  factory _$TradeResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TradeResponseImplFromJson(json);
+
+  @override
+  final int id;
+
+  @override
+  String toString() {
+    return 'TradeResponse(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TradeResponseImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TradeResponseImplCopyWith<_$TradeResponseImpl> get copyWith =>
+      __$$TradeResponseImplCopyWithImpl<_$TradeResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TradeResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _TradeResponse implements TradeResponse {
+  const factory _TradeResponse({required final int id}) = _$TradeResponseImpl;
+
+  factory _TradeResponse.fromJson(Map<String, dynamic> json) =
+      _$TradeResponseImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  @JsonKey(ignore: true)
+  _$$TradeResponseImplCopyWith<_$TradeResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

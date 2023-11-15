@@ -6,6 +6,22 @@ part of 'chat.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$ChatRoomRequestImpl _$$ChatRoomRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ChatRoomRequestImpl(
+      user1: json['user1'] as String,
+      user2: json['user2'] as String,
+      tradeId: json['tradeId'] as int,
+    );
+
+Map<String, dynamic> _$$ChatRoomRequestImplToJson(
+        _$ChatRoomRequestImpl instance) =>
+    <String, dynamic>{
+      'user1': instance.user1,
+      'user2': instance.user2,
+      'tradeId': instance.tradeId,
+    };
+
 _$ChatListDtoImpl _$$ChatListDtoImplFromJson(Map<String, dynamic> json) =>
     _$ChatListDtoImpl(
       success: json['success'] as bool,
@@ -26,7 +42,7 @@ _$ChatRoomResponseImpl _$$ChatRoomResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$ChatRoomResponseImpl(
       tradeId: json['tradeId'] as int,
-      userNickname: json['userNickname'] as String,
+      userNickname: json['userNickname'] as String?,
       lastMessage: json['lastMessage'] as String?,
       lastMessageTime:
           _dateTimeFromIsoString(json['lastMessageTime'] as String?),

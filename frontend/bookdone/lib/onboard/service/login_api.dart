@@ -114,6 +114,7 @@ class LoginApi {
       // 여기 들어왔다는건 이미 가입된 유저인데 이번에 로그인한 유저
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setInt('loginStatus', 1);
+      await pref.setInt('userId', user.member.id);
       await pref.setString('nickname', user.member.nickname);
       await pref.setInt('bookmarkCnt', user.member.point);
       await pref.setString('address', user.member.address);

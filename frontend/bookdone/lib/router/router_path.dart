@@ -9,6 +9,7 @@ class RouterPath {
   static const String searchMain = '/search';
   static const String addHistory = '/addhistory';
   static const String chatMain = '/chat';
+  static const String chatRoom = '/chatroom';
   static const String notification = '/notification';
   static const String registerPath = '/regist';
   static const String bookinfoDetail = '/bookinfodetail';

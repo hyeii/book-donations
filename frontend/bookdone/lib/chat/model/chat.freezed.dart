@@ -14,6 +14,179 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+ChatRoomRequest _$ChatRoomRequestFromJson(Map<String, dynamic> json) {
+  return _ChatRoomRequest.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ChatRoomRequest {
+  String get user1 => throw _privateConstructorUsedError;
+  String get user2 => throw _privateConstructorUsedError;
+  int get tradeId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ChatRoomRequestCopyWith<ChatRoomRequest> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChatRoomRequestCopyWith<$Res> {
+  factory $ChatRoomRequestCopyWith(
+          ChatRoomRequest value, $Res Function(ChatRoomRequest) then) =
+      _$ChatRoomRequestCopyWithImpl<$Res, ChatRoomRequest>;
+  @useResult
+  $Res call({String user1, String user2, int tradeId});
+}
+
+/// @nodoc
+class _$ChatRoomRequestCopyWithImpl<$Res, $Val extends ChatRoomRequest>
+    implements $ChatRoomRequestCopyWith<$Res> {
+  _$ChatRoomRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user1 = null,
+    Object? user2 = null,
+    Object? tradeId = null,
+  }) {
+    return _then(_value.copyWith(
+      user1: null == user1
+          ? _value.user1
+          : user1 // ignore: cast_nullable_to_non_nullable
+              as String,
+      user2: null == user2
+          ? _value.user2
+          : user2 // ignore: cast_nullable_to_non_nullable
+              as String,
+      tradeId: null == tradeId
+          ? _value.tradeId
+          : tradeId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ChatRoomRequestImplCopyWith<$Res>
+    implements $ChatRoomRequestCopyWith<$Res> {
+  factory _$$ChatRoomRequestImplCopyWith(_$ChatRoomRequestImpl value,
+          $Res Function(_$ChatRoomRequestImpl) then) =
+      __$$ChatRoomRequestImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String user1, String user2, int tradeId});
+}
+
+/// @nodoc
+class __$$ChatRoomRequestImplCopyWithImpl<$Res>
+    extends _$ChatRoomRequestCopyWithImpl<$Res, _$ChatRoomRequestImpl>
+    implements _$$ChatRoomRequestImplCopyWith<$Res> {
+  __$$ChatRoomRequestImplCopyWithImpl(
+      _$ChatRoomRequestImpl _value, $Res Function(_$ChatRoomRequestImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user1 = null,
+    Object? user2 = null,
+    Object? tradeId = null,
+  }) {
+    return _then(_$ChatRoomRequestImpl(
+      user1: null == user1
+          ? _value.user1
+          : user1 // ignore: cast_nullable_to_non_nullable
+              as String,
+      user2: null == user2
+          ? _value.user2
+          : user2 // ignore: cast_nullable_to_non_nullable
+              as String,
+      tradeId: null == tradeId
+          ? _value.tradeId
+          : tradeId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ChatRoomRequestImpl implements _ChatRoomRequest {
+  const _$ChatRoomRequestImpl(
+      {required this.user1, required this.user2, required this.tradeId});
+
+  factory _$ChatRoomRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ChatRoomRequestImplFromJson(json);
+
+  @override
+  final String user1;
+  @override
+  final String user2;
+  @override
+  final int tradeId;
+
+  @override
+  String toString() {
+    return 'ChatRoomRequest(user1: $user1, user2: $user2, tradeId: $tradeId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChatRoomRequestImpl &&
+            (identical(other.user1, user1) || other.user1 == user1) &&
+            (identical(other.user2, user2) || other.user2 == user2) &&
+            (identical(other.tradeId, tradeId) || other.tradeId == tradeId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, user1, user2, tradeId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChatRoomRequestImplCopyWith<_$ChatRoomRequestImpl> get copyWith =>
+      __$$ChatRoomRequestImplCopyWithImpl<_$ChatRoomRequestImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ChatRoomRequestImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ChatRoomRequest implements ChatRoomRequest {
+  const factory _ChatRoomRequest(
+      {required final String user1,
+      required final String user2,
+      required final int tradeId}) = _$ChatRoomRequestImpl;
+
+  factory _ChatRoomRequest.fromJson(Map<String, dynamic> json) =
+      _$ChatRoomRequestImpl.fromJson;
+
+  @override
+  String get user1;
+  @override
+  String get user2;
+  @override
+  int get tradeId;
+  @override
+  @JsonKey(ignore: true)
+  _$$ChatRoomRequestImplCopyWith<_$ChatRoomRequestImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 ChatListDto _$ChatListDtoFromJson(Map<String, dynamic> json) {
   return _ChatListDto.fromJson(json);
 }
@@ -202,7 +375,7 @@ ChatRoomResponse _$ChatRoomResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChatRoomResponse {
   int get tradeId => throw _privateConstructorUsedError;
-  String get userNickname => throw _privateConstructorUsedError;
+  String? get userNickname => throw _privateConstructorUsedError;
   String? get lastMessage => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
   DateTime? get lastMessageTime => throw _privateConstructorUsedError;
@@ -221,7 +394,7 @@ abstract class $ChatRoomResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {int tradeId,
-      String userNickname,
+      String? userNickname,
       String? lastMessage,
       @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
       DateTime? lastMessageTime});
@@ -241,7 +414,7 @@ class _$ChatRoomResponseCopyWithImpl<$Res, $Val extends ChatRoomResponse>
   @override
   $Res call({
     Object? tradeId = null,
-    Object? userNickname = null,
+    Object? userNickname = freezed,
     Object? lastMessage = freezed,
     Object? lastMessageTime = freezed,
   }) {
@@ -250,10 +423,10 @@ class _$ChatRoomResponseCopyWithImpl<$Res, $Val extends ChatRoomResponse>
           ? _value.tradeId
           : tradeId // ignore: cast_nullable_to_non_nullable
               as int,
-      userNickname: null == userNickname
+      userNickname: freezed == userNickname
           ? _value.userNickname
           : userNickname // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
@@ -276,7 +449,7 @@ abstract class _$$ChatRoomResponseImplCopyWith<$Res>
   @useResult
   $Res call(
       {int tradeId,
-      String userNickname,
+      String? userNickname,
       String? lastMessage,
       @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
       DateTime? lastMessageTime});
@@ -294,7 +467,7 @@ class __$$ChatRoomResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? tradeId = null,
-    Object? userNickname = null,
+    Object? userNickname = freezed,
     Object? lastMessage = freezed,
     Object? lastMessageTime = freezed,
   }) {
@@ -303,10 +476,10 @@ class __$$ChatRoomResponseImplCopyWithImpl<$Res>
           ? _value.tradeId
           : tradeId // ignore: cast_nullable_to_non_nullable
               as int,
-      userNickname: null == userNickname
+      userNickname: freezed == userNickname
           ? _value.userNickname
           : userNickname // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
@@ -335,7 +508,7 @@ class _$ChatRoomResponseImpl implements _ChatRoomResponse {
   @override
   final int tradeId;
   @override
-  final String userNickname;
+  final String? userNickname;
   @override
   final String? lastMessage;
   @override
@@ -384,7 +557,7 @@ class _$ChatRoomResponseImpl implements _ChatRoomResponse {
 abstract class _ChatRoomResponse implements ChatRoomResponse {
   const factory _ChatRoomResponse(
       {required final int tradeId,
-      required final String userNickname,
+      required final String? userNickname,
       required final String? lastMessage,
       @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
       required final DateTime? lastMessageTime}) = _$ChatRoomResponseImpl;
@@ -395,7 +568,7 @@ abstract class _ChatRoomResponse implements ChatRoomResponse {
   @override
   int get tradeId;
   @override
-  String get userNickname;
+  String? get userNickname;
   @override
   String? get lastMessage;
   @override

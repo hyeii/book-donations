@@ -136,7 +136,7 @@ public class ChatService {
 				lastMessageCreatedAt = lastMessage.getCreatedAt();
 			}
 			return new ChatRoomResponse(chatRoom.getTradeId(), memberNickname.equals(chatRoom.getUser1()) ?
-				chatRoom.getUser2() : chatRoom.getUser1(), lastMessageContent, lastMessageCreatedAt);
+				chatRoom.getUser2() : chatRoom.getUser1(), lastMessageContent, lastMessageCreatedAt, chatRoom.getIsbn());
 		}).collect(Collectors.toList());
 
 		log.info("responseList: {}", responseList);

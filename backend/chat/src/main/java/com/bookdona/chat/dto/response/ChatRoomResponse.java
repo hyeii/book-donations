@@ -19,4 +19,5 @@ public class ChatRoomResponse {
 	private String userNickname;
 	private String lastMessage;
 	private LocalDateTime lastMessageTime;
+	private String isbn;
 }

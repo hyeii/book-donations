@@ -37,7 +37,6 @@ class ChatRoom extends HookConsumerWidget {
     final restClient = ref.read(restApiClientProvider);
     final userNickname = useState<String>("");
     final accessToken = useState<String>("");
-    final bookTitle = useState<String>("");
     final stompClient = useState<StompClient?>(null);
     final bookData = useState<BookData?>(null);
 
@@ -91,7 +90,6 @@ class ChatRoom extends HookConsumerWidget {
           stompClient.value?.activate();
         }
       }
-
       init();
 
       // 기존 채팅 목록 가져오기
@@ -114,7 +112,6 @@ class ChatRoom extends HookConsumerWidget {
           print('Error fetching messages: $e');
         }
       }
-
       fetchBook();
 
       if (chatMessages.value.isEmpty) {
@@ -142,7 +139,6 @@ class ChatRoom extends HookConsumerWidget {
     void sendMessage() {
       String messageText = messageController.text;
       if (messageText.isNotEmpty) {
-        print("채팅 보내기");
 
         // 보낼 데이터 생성
         ChatMessageWriteRequest chatMessageWriteRequestDto =
@@ -157,8 +153,6 @@ class ChatRoom extends HookConsumerWidget {
             jsonEncode(chatMessageWriteRequestDto.toJson());
 
         String sendUrl = "/app/chat/$tradeId";
-        print(sendUrl);
-
         stompClient.value?.send(
           destination: sendUrl,
           body: chatMessageWriteRequest,
@@ -172,11 +166,12 @@ class ChatRoom extends HookConsumerWidget {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(bookData.value?.titleUrl ?? 'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg'),
+              backgroundImage: NetworkImage(bookData.value?.titleUrl ??
+                  'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg'),
               radius: 20,
             ),
             SizedBox(width: 8),
-            Expanded(
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -209,9 +204,9 @@ class ChatRoom extends HookConsumerWidget {
         child: Column(
           children: [
             // 버튼 두개 부분
-            TradeButton(),
+            TradeButton(tradeId: tradeId),
             // 채팅 목록을 표시하는 부분
-            Expanded(
+            Flexible(
               child: ListView.builder(
                 // 기존 reverse 제거
                 padding: EdgeInsets.only(bottom: 10),
@@ -237,7 +232,7 @@ class ChatRoom extends HookConsumerWidget {
                 color: Colors.white,
                 child: Row(
                   children: [
-                    Expanded(
+                    Flexible(
                       child: TextFormField(
                         controller: messageController,
                         decoration: InputDecoration(
@@ -271,26 +266,5 @@ class ChatRoom extends HookConsumerWidget {
         ),
       ),
     );
-  }
-}
-
-class ChatMessageWriteRequest {
-  final String message;
-  final int tradeId;
-  final String senderNickname;
-
-
-  ChatMessageWriteRequest({
-    required this.message,
-    required this.tradeId,
-    required this.senderNickname,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'message': message,
-      'tradeId': tradeId,
-      'senderNickname': senderNickname,
-    };
   }
 }

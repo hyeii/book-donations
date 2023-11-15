@@ -94,3 +94,19 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'senderNickname': instance.senderNickname,
       'createdAt': instance.createdAt.toIso8601String(),
     };
+
+_$ChatMessageWriteRequestImpl _$$ChatMessageWriteRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ChatMessageWriteRequestImpl(
+      message: json['message'] as String,
+      tradeId: json['tradeId'] as int,
+      senderNickname: json['senderNickname'] as String,
+    );
+
+Map<String, dynamic> _$$ChatMessageWriteRequestImplToJson(
+        _$ChatMessageWriteRequestImpl instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'tradeId': instance.tradeId,
+      'senderNickname': instance.senderNickname,
+    };

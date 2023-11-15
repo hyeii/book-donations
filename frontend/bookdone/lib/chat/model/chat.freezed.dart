@@ -994,3 +994,185 @@ abstract class _Message implements Message {
   _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+ChatMessageWriteRequest _$ChatMessageWriteRequestFromJson(
+    Map<String, dynamic> json) {
+  return _ChatMessageWriteRequest.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ChatMessageWriteRequest {
+  String get message => throw _privateConstructorUsedError;
+  int get tradeId => throw _privateConstructorUsedError;
+  String get senderNickname => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ChatMessageWriteRequestCopyWith<ChatMessageWriteRequest> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChatMessageWriteRequestCopyWith<$Res> {
+  factory $ChatMessageWriteRequestCopyWith(ChatMessageWriteRequest value,
+          $Res Function(ChatMessageWriteRequest) then) =
+      _$ChatMessageWriteRequestCopyWithImpl<$Res, ChatMessageWriteRequest>;
+  @useResult
+  $Res call({String message, int tradeId, String senderNickname});
+}
+
+/// @nodoc
+class _$ChatMessageWriteRequestCopyWithImpl<$Res,
+        $Val extends ChatMessageWriteRequest>
+    implements $ChatMessageWriteRequestCopyWith<$Res> {
+  _$ChatMessageWriteRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+    Object? tradeId = null,
+    Object? senderNickname = null,
+  }) {
+    return _then(_value.copyWith(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      tradeId: null == tradeId
+          ? _value.tradeId
+          : tradeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      senderNickname: null == senderNickname
+          ? _value.senderNickname
+          : senderNickname // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ChatMessageWriteRequestImplCopyWith<$Res>
+    implements $ChatMessageWriteRequestCopyWith<$Res> {
+  factory _$$ChatMessageWriteRequestImplCopyWith(
+          _$ChatMessageWriteRequestImpl value,
+          $Res Function(_$ChatMessageWriteRequestImpl) then) =
+      __$$ChatMessageWriteRequestImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message, int tradeId, String senderNickname});
+}
+
+/// @nodoc
+class __$$ChatMessageWriteRequestImplCopyWithImpl<$Res>
+    extends _$ChatMessageWriteRequestCopyWithImpl<$Res,
+        _$ChatMessageWriteRequestImpl>
+    implements _$$ChatMessageWriteRequestImplCopyWith<$Res> {
+  __$$ChatMessageWriteRequestImplCopyWithImpl(
+      _$ChatMessageWriteRequestImpl _value,
+      $Res Function(_$ChatMessageWriteRequestImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+    Object? tradeId = null,
+    Object? senderNickname = null,
+  }) {
+    return _then(_$ChatMessageWriteRequestImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      tradeId: null == tradeId
+          ? _value.tradeId
+          : tradeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      senderNickname: null == senderNickname
+          ? _value.senderNickname
+          : senderNickname // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ChatMessageWriteRequestImpl implements _ChatMessageWriteRequest {
+  const _$ChatMessageWriteRequestImpl(
+      {required this.message,
+      required this.tradeId,
+      required this.senderNickname});
+
+  factory _$ChatMessageWriteRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ChatMessageWriteRequestImplFromJson(json);
+
+  @override
+  final String message;
+  @override
+  final int tradeId;
+  @override
+  final String senderNickname;
+
+  @override
+  String toString() {
+    return 'ChatMessageWriteRequest(message: $message, tradeId: $tradeId, senderNickname: $senderNickname)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChatMessageWriteRequestImpl &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.tradeId, tradeId) || other.tradeId == tradeId) &&
+            (identical(other.senderNickname, senderNickname) ||
+                other.senderNickname == senderNickname));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, message, tradeId, senderNickname);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChatMessageWriteRequestImplCopyWith<_$ChatMessageWriteRequestImpl>
+      get copyWith => __$$ChatMessageWriteRequestImplCopyWithImpl<
+          _$ChatMessageWriteRequestImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ChatMessageWriteRequestImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ChatMessageWriteRequest implements ChatMessageWriteRequest {
+  const factory _ChatMessageWriteRequest(
+      {required final String message,
+      required final int tradeId,
+      required final String senderNickname}) = _$ChatMessageWriteRequestImpl;
+
+  factory _ChatMessageWriteRequest.fromJson(Map<String, dynamic> json) =
+      _$ChatMessageWriteRequestImpl.fromJson;
+
+  @override
+  String get message;
+  @override
+  int get tradeId;
+  @override
+  String get senderNickname;
+  @override
+  @JsonKey(ignore: true)
+  _$$ChatMessageWriteRequestImplCopyWith<_$ChatMessageWriteRequestImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

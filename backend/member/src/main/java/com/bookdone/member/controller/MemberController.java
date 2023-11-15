@@ -4,7 +4,6 @@ import com.bookdone.global.response.BaseResponse;
 import com.bookdone.global.response.MemberResponse;
 import com.bookdone.member.dto.request.AdditionalInfo;
 import com.bookdone.member.dto.request.JoinMemberRequest;
-import com.bookdone.member.repository.MemberRepository;
 import com.bookdone.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -24,7 +23,6 @@ public class MemberController {
 
     private final Environment env;
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
     @GetMapping("/health_check")
     public String status(@RequestHeader("member-id") String memberId) {
@@ -103,7 +101,7 @@ public class MemberController {
         return BaseResponse.ok(HttpStatus.OK, "프로필 사진 업데이트 완료");
     }
 
-    @GetMapping("check-nickname/{nickname}")
+    @GetMapping("/check-nickname/{nickname}")
     public ResponseEntity<?> checkNickname(@PathVariable String nickname) {
         boolean isAvailable = memberService.isNicknameAvailable(nickname);
         Map<String, Boolean> data = new HashMap<>();

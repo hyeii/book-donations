@@ -1,6 +1,7 @@
 package com.bookdone.trade.application.repository;
 
 import com.bookdone.trade.application.TradeStatus;
+import com.bookdone.trade.infra.entity.TradeEntity;
 
 public interface TradeRepository {
 
@@ -8,5 +9,5 @@ public interface TradeRepository {
     void updateStatus(Long donationId, Long memberId, TradeStatus tradeStatus);
     void deleteTrade(Long donationId, Long memberId);
     TradeStatus findTradeByDonationIdAndMemberId(Long donationId, Long memberId);
-    Long findById(Long tradeId);
+    TradeEntity findById(Long tradeId);
 }

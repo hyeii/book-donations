@@ -3,6 +3,7 @@ package com.bookdone.trade.controller;
 import com.bookdone.donation.dto.request.NotificationRequest;
 import com.bookdone.global.dto.BaseResponse;
 import com.bookdone.trade.application.*;
+import com.bookdone.trade.infra.entity.TradeEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -124,8 +125,8 @@ public class TradeController {
 
     @GetMapping("/donationId/{tradeId}")
     public ResponseEntity<?> giveMeDonationId(@PathVariable Long tradeId) {
-        Long donationIdByTradeId = findTradeUseCase.findDonationIdByTradeId(tradeId);
-        return BaseResponse.okWithData(HttpStatus.OK, "donationId가 조회되었습니다.", donationIdByTradeId);
+        TradeEntity tradeInfo = findTradeUseCase.findDonationIdByTradeId(tradeId);
+        return BaseResponse.okWithData(HttpStatus.OK, "donationId가 조회되었습니다.", tradeInfo);
     }
 
 }

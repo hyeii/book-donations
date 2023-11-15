@@ -20,7 +20,7 @@ public class FindTradeUseCase {
         return tradeRepository.findTradeByDonationIdAndMemberId(donationId, memberId);
     }
 
-	public Long findDonationIdByTradeId(Long tradeId) {
+	public TradeEntity findDonationIdByTradeId(Long tradeId) {
 		return tradeRepository.findById(tradeId);
 	}
 }

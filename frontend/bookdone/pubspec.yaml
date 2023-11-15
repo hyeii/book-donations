@@ -102,6 +102,9 @@ flutter:
     - family: SCDream4
       fonts:
         - asset: assets/fonts/SCDream4.otf
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/Pretendard-Regular.otf
 
   # To add assets to your application, add an assets section, like this:
   assets:

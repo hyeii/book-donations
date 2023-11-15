@@ -23,6 +23,7 @@ class MyLikeBookList extends HookWidget {
               donatedAt: "NONE",
               historyResponseList: []),
           isLike: true,
+          isDonating: false,
         );
       },
     );

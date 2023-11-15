@@ -65,6 +65,7 @@ class DonatingCard extends HookWidget {
     }, []);
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         ArticleMainRoute(isbn: isbn, id: donation.id).push(context);
       },

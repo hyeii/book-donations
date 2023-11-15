@@ -22,8 +22,6 @@ class ArticleMain extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pubDate = useState('2028년 13월 32일');
-    final discription = useState('기타 책 관련 설명');
     final restClient = ref.read(restApiClientProvider);
     final articleData = useState<ArticleData?>(null);
     final bookData = useState<BookData?>(null);
@@ -94,12 +92,12 @@ class ArticleMain extends HookConsumerWidget {
 
         // 페이지 이동
         ChatRoomRoute(
-            tradeId: tradeIdFromServer,
-            nameWith: articleData.value!.nickname,
-            bookName: bookData.value!.title,
-            lastChat: "",
-            isbn: articleData.value!.isbn,
-          ).push(context);
+          tradeId: tradeIdFromServer,
+          nameWith: articleData.value!.nickname,
+          bookName: bookData.value!.title,
+          lastChat: "",
+          isbn: articleData.value!.isbn,
+        ).push(context);
       } catch (error) {
         print('Error on confirmation: $error');
         ScaffoldMessenger.of(currentContext).showSnackBar(
@@ -234,9 +232,6 @@ class ArticleMain extends HookConsumerWidget {
                       Text(
                         bookData.value != null ? bookData.value!.isbn : '',
                       ),
-                      Text(
-                        discription.value,
-                      ),
                       SizedBox(
                         height: 50,
                       )
@@ -253,6 +248,11 @@ class ArticleMain extends HookConsumerWidget {
           width: double.infinity,
           color: Colors.brown.shade200,
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 17),
+                backgroundColor: Colors.brown.shade200,
+                foregroundColor: Colors.white,
+                shape: BeveledRectangleBorder()),
             onPressed: () {
               showDialog<String>(
                 context: context,

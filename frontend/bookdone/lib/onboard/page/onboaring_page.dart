@@ -42,18 +42,18 @@ class OnboardingPage extends HookConsumerWidget {
   List<Items> listOfItems = [
     Items(
       img: "assets/images/Bibliophile-rafiki.svg",
-      title: "책을 읽고?? 또 읽고????",
-      subTitle: "버리기는 아깝고, 그대로 두자니 공간만 차지하는 책들이 있나여",
+      title: "책장에 꽂혀있는 그 책",
+      subTitle: "공간은 차지하는데, 버리기엔 아까울 때",
     ),
     Items(
       img: "assets/images/Charity-rafiki.svg",
-      title: "책도네로 책을 기부해용",
-      subTitle: "나에게 필요없는 책이 \n누군가는 읽고싶을수도있음",
+      title: "책이 가진 그 이상의 가치",
+      subTitle: "나에게 필요없는 책이 \n누군가에게는 작은 희망으로",
     ),
     Items(
       img: "assets/images/Group-rafiki.svg",
       title: "지속 가능한 선순환",
-      subTitle: "책도네로 시작하세용",
+      subTitle: "책도네로 시작하세요",
     ),
   ];
 
@@ -64,6 +64,7 @@ class OnboardingPage extends HookConsumerWidget {
     final pageController = usePageController();
     var currentIndex = useState(0);
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 140, 135, 130),
       body: SizedBox(
         width: size.width,
         height: size.height,
@@ -82,44 +83,61 @@ class OnboardingPage extends HookConsumerWidget {
                   return SizedBox(
                     width: size.width,
                     height: size.height,
-                    child: Column(
-                      children: [
-                        /// IMG
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(15, 40, 15, 10),
-                          width: size.width,
-                          height: size.height / 2.5,
-                          child: animationDo(
-                            index,
-                            100,
-                            SvgPicture.asset(listOfItems[index].img),
-                          ),
-                        ),
-
-                        /// TITLE TEXT
-                        Padding(
-                            padding: const EdgeInsets.only(top: 25, bottom: 15),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width / 10),
+                      child: Column(
+                        children: [
+                          /// IMG
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(15, 40, 15, 10),
+                            width: size.width,
+                            height: size.height / 2.5,
                             child: animationDo(
                               index,
-                              300,
-                              Text(
-                                listOfItems[index].title,
-                                textAlign: TextAlign.center,
-                                style: textTheme.bodyMedium,
-                              ),
-                            )),
-
-                        /// SUBTITLE TEXT
-                        animationDo(
-                          index,
-                          500,
-                          Text(
-                            listOfItems[index].subTitle,
-                            textAlign: TextAlign.center,
-                            style: textTheme.bodyMedium,
+                              100,
+                              SvgPicture.asset(listOfItems[index].img),
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: 80,
+                          ),
+
+                          /// TITLE TEXT
+                          animationDo(
+                            index,
+                            300,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                listOfItems[index].title,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                            ),
+                          ),
+
+                          /// SUBTITLE TEXT
+                          animationDo(
+                            index,
+                            500,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                listOfItems[index].subTitle,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 }),
@@ -150,8 +168,8 @@ class OnboardingPage extends HookConsumerWidget {
                     dotWidth: 10.0,
                     dotHeight: 10.0,
                     expansionFactor: 3.8,
-                    dotColor: Colors.grey,
-                    activeDotColor: Colors.brown,
+                    dotColor: Color.fromARGB(255, 219, 219, 219),
+                    activeDotColor: Color.fromARGB(255, 72, 67, 62),
                   ),
                   onDotClicked: (newIndex) {
                     currentIndex.value = newIndex;

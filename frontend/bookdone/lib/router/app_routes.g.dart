@@ -7,7 +7,6 @@ part of 'app_routes.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $topPageRoute,
       $firstPageRoute,
       $startPageRoute,
       $onboardingRoute,
@@ -31,28 +30,6 @@ List<RouteBase> get $appRoutes => [
       $myHistoriesRoute,
       $chatRoomRoute,
     ];
-
-RouteBase get $topPageRoute => GoRouteData.$route(
-      path: '/toppage',
-      factory: $TopPageRouteExtension._fromState,
-    );
-
-extension $TopPageRouteExtension on TopPageRoute {
-  static TopPageRoute _fromState(GoRouterState state) => const TopPageRoute();
-
-  String get location => GoRouteData.$location(
-        '/toppage',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
 
 RouteBase get $firstPageRoute => GoRouteData.$route(
       path: '/firstpage',

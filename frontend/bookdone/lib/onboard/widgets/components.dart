@@ -24,32 +24,43 @@ class GetStartBtn extends HookConsumerWidget {
       Future.delayed(const Duration(seconds: 1)).then((value) {
         isLoading.value = false;
         LoginApi.kakaoLogin(context);
-        ;
       });
     }
 
-    return GestureDetector(
-      onTap: loadingHandler,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width / 8),
       child: Container(
-        margin: const EdgeInsets.only(top: 60),
-        width: MediaQuery.of(context).size.width / 1.5,
-        height: MediaQuery.of(context).size.height / 13,
-        decoration: BoxDecoration(
-            color: Colors.brown, borderRadius: BorderRadius.circular(15)),
-        child: Center(
-          child: isLoading.value
-              ? const Center(
-                  child: SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              : Text("카카오로 시작하기"),
-        ),
-      ),
+          margin: const EdgeInsets.only(top: 60),
+          child: GestureDetector(
+            onTap: loadingHandler,
+            child: Image(
+                image: AssetImage('assets/images/kakao_login_large_wide.png')),
+          )),
     );
+
+    // return GestureDetector(
+    //   onTap: loadingHandler,
+    //   child: Container(
+    //     margin: const EdgeInsets.only(top: 60),
+    //     width: MediaQuery.of(context).size.width / 1.5,
+    //     height: MediaQuery.of(context).size.height / 13,
+    //     decoration: BoxDecoration(
+    //         color: Colors.brown, borderRadius: BorderRadius.circular(15)),
+    //     child: Center(
+    //       child: isLoading.value
+    //           ? const Center(
+    //               child: SizedBox(
+    //                 width: 30,
+    //                 height: 30,
+    //                 child: CircularProgressIndicator(
+    //                   color: Colors.white,
+    //                 ),
+    //               ),
+    //             )
+    //           : Text("카카오로 시작하기"),
+    //     ),
+    //   ),
+    // );
   }
 }

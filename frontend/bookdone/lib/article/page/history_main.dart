@@ -5,6 +5,7 @@ import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HistoryMain extends HookConsumerWidget {
@@ -79,19 +80,10 @@ class HistoryMain extends HookConsumerWidget {
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Color.fromARGB(255, 196, 196, 196).withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 3,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
-                      opacity: 0.5,
+                      opacity: 0.4,
                       alignment: Alignment.topCenter,
                     ),
                   ),
@@ -105,7 +97,24 @@ class HistoryMain extends HookConsumerWidget {
             child: histories.value == null
                 ? Text(' ')
                 : histories.value!.isEmpty
-                    ? Text('히스토리가 없습니다')
+                    ? Center(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 100,
+                            ),
+                            SvgPicture.asset(
+                              'assets/images/undraw_notify.svg',
+                              height: 150,
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Text('아직 작성된 히스토리가 없습니다',
+                                style: TextStyle(fontSize: 13)),
+                          ],
+                        ),
+                      )
                     : Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: ListView.builder(
@@ -125,46 +134,51 @@ class HistoryMain extends HookConsumerWidget {
                                 Random().nextInt(lowSaturationColors.length);
                             final randomColor =
                                 lowSaturationColors[randomColorIndex];
-                            return Container(
-                              decoration: BoxDecoration(
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
-                                color: randomColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromARGB(255, 196, 196, 196)
-                                        .withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 3,
-                                    offset: Offset(0, 0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: randomColor,
                                   ),
-                                ],
-                              ),
-                              height: 200,
-                              child: Padding(
-                                padding: const EdgeInsets.all(30.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: histories.value![index].content !=
-                                              null
-                                          ? Text(
-                                              histories.value![index].content!,
-                                              style: TextStyle(fontSize: 15),
-                                            )
-                                          : Text('content 없음'),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(histories.value![index].nickname),
-                                        Text('$day $time'),
-                                      ],
-                                    ),
-                                  ],
+                                  height: 200,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(30.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: histories
+                                                      .value![index].content !=
+                                                  null
+                                              ? Text(
+                                                  histories
+                                                      .value![index].content!,
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                )
+                                              : Text('content 없음'),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 30.0, vertical: 15),
+                                        color: Colors.white,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(histories
+                                                .value![index].nickname),
+                                            Text('$day $time'),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );

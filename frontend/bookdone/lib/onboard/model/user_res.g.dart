@@ -95,3 +95,17 @@ Map<String, dynamic> _$$UserInfoResImplToJson(_$UserInfoResImpl instance) =>
       'msg': instance.msg,
       'data': instance.data,
     };
+
+_$DefaultRepsImpl _$$DefaultRepsImplFromJson(Map<String, dynamic> json) =>
+    _$DefaultRepsImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: json['data'] as String?,
+    );
+
+Map<String, dynamic> _$$DefaultRepsImplToJson(_$DefaultRepsImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };

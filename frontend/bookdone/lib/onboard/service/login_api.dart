@@ -120,10 +120,11 @@ class LoginApi {
       await pref.setString('profileImage', user.member.image);
       await pref.setString('accessToken', user.accessToken);
       await pref.setString('oauthId', user.member.oauthId);
+      await pref.setString('getFcmToken', user.member.fcmToken);
       // TODO: accessToken secure storage로 관리하기
       // await ref.watch(userInfoRepositoryProvider).restoreUserData(user);
       // await ref.read(userInfoRepositoryProvider).restoreUserData(user);
-      print(pref.getString('fcmToken'));
+
       print('테스트');
 
       // 저장했으니 로그인 완료!

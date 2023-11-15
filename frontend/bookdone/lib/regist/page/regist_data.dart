@@ -134,10 +134,12 @@ class RegistData extends HookConsumerWidget {
     }
 
     void registerExist() async {
+      var code = ref.watch(registerRegionCodeStateProvider);
+      var input = ref.watch(registerInputProvider);
       var resp = await restClient.updateArticle(donationId,
           isbn: isbn,
-          address: ref.watch(registerRegionCodeStateProvider),
-          content: content.value,
+          address: code,
+          content: input,
           canDelivery: false,
           images: files.value);
       gotId.value = resp.data;

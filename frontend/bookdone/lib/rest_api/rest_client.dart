@@ -87,7 +87,7 @@ abstract class RestClient {
   @GET('/api/books/likes')
   Future<MyLikeBook> getLikeBooks();
 
-  @PUT('/api/donations/{donationId}')
+  @POST('/api/donations/{donationId}')
   @MultiPart()
   Future<RegisterResponse> updateArticle(
     @Path() int donationId, {

@@ -67,3 +67,16 @@ class AutoListData with _$AutoListData {
   factory AutoListData.fromJson(Map<String, dynamic> json) =>
       _$AutoListDataFromJson(json);
 }
+
+@freezed
+class BooksDto with _$BooksDto {
+  const factory BooksDto({
+    required bool success,
+    required String msg,
+    required Map<String, BookData> data,
+  }) = _BooksDto;
+
+  factory BooksDto.fromJson(Map<String, dynamic> json) =>
+      _$BooksDtoFromJson(json);
+}
+

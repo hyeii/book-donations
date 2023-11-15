@@ -1013,3 +1013,183 @@ abstract class _AutoListData implements AutoListData {
   _$$AutoListDataImplCopyWith<_$AutoListDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+BooksDto _$BooksDtoFromJson(Map<String, dynamic> json) {
+  return _BooksDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BooksDto {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  Map<String, BookData> get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BooksDtoCopyWith<BooksDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BooksDtoCopyWith<$Res> {
+  factory $BooksDtoCopyWith(BooksDto value, $Res Function(BooksDto) then) =
+      _$BooksDtoCopyWithImpl<$Res, BooksDto>;
+  @useResult
+  $Res call({bool success, String msg, Map<String, BookData> data});
+}
+
+/// @nodoc
+class _$BooksDtoCopyWithImpl<$Res, $Val extends BooksDto>
+    implements $BooksDtoCopyWith<$Res> {
+  _$BooksDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Map<String, BookData>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$BooksDtoImplCopyWith<$Res>
+    implements $BooksDtoCopyWith<$Res> {
+  factory _$$BooksDtoImplCopyWith(
+          _$BooksDtoImpl value, $Res Function(_$BooksDtoImpl) then) =
+      __$$BooksDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, Map<String, BookData> data});
+}
+
+/// @nodoc
+class __$$BooksDtoImplCopyWithImpl<$Res>
+    extends _$BooksDtoCopyWithImpl<$Res, _$BooksDtoImpl>
+    implements _$$BooksDtoImplCopyWith<$Res> {
+  __$$BooksDtoImplCopyWithImpl(
+      _$BooksDtoImpl _value, $Res Function(_$BooksDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = null,
+  }) {
+    return _then(_$BooksDtoImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Map<String, BookData>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BooksDtoImpl implements _BooksDto {
+  const _$BooksDtoImpl(
+      {required this.success,
+      required this.msg,
+      required final Map<String, BookData> data})
+      : _data = data;
+
+  factory _$BooksDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BooksDtoImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  final Map<String, BookData> _data;
+  @override
+  Map<String, BookData> get data {
+    if (_data is EqualUnmodifiableMapView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'BooksDto(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BooksDtoImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, success, msg, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BooksDtoImplCopyWith<_$BooksDtoImpl> get copyWith =>
+      __$$BooksDtoImplCopyWithImpl<_$BooksDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BooksDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _BooksDto implements BooksDto {
+  const factory _BooksDto(
+      {required final bool success,
+      required final String msg,
+      required final Map<String, BookData> data}) = _$BooksDtoImpl;
+
+  factory _BooksDto.fromJson(Map<String, dynamic> json) =
+      _$BooksDtoImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  Map<String, BookData> get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$BooksDtoImplCopyWith<_$BooksDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

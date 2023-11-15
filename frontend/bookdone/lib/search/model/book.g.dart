@@ -88,3 +88,19 @@ Map<String, dynamic> _$$AutoListDataImplToJson(_$AutoListDataImpl instance) =>
       'title': instance.title,
       'isbn': instance.isbn,
     };
+
+_$BooksDtoImpl _$$BooksDtoImplFromJson(Map<String, dynamic> json) =>
+    _$BooksDtoImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: (json['data'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(k, BookData.fromJson(e as Map<String, dynamic>)),
+      ),
+    );
+
+Map<String, dynamic> _$$BooksDtoImplToJson(_$BooksDtoImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };

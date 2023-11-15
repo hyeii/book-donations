@@ -21,10 +21,10 @@ class RankingList extends HookConsumerWidget {
         }
         final rankings = snapshot.data!.data;
 
-        return SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: rankings.map((ranking) {
+        return ListView.builder(
+            itemCount: rankings.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: Container(
@@ -37,22 +37,56 @@ class RankingList extends HookConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          Text('${rankings.indexOf(ranking) + 1}등'),
+                          Text('${index + 1}등'),
                           SizedBox(
                             width: 20,
                           ),
-                          Text(ranking.nickname),
+                          Text(
+                            rankings[index].nickname,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           // Text('dd'),
                         ],
                       ),
-                      Text('${ranking.score.floor()}점'),
+                      Text('${rankings[index].score.floor()}점'),
                     ],
                   ),
                 ),
               );
-            }).toList(),
-          ),
-        );
+            });
+
+        // return Column(
+        //   children: rankings.map((ranking) {
+        //     return Padding(
+        //       padding: const EdgeInsets.symmetric(vertical: 7),
+        //       child: Container(
+        //         padding: EdgeInsets.all(20),
+        //         decoration: BoxDecoration(
+        //             color: Colors.grey.shade100,
+        //             borderRadius: BorderRadius.circular(10)),
+        //         child: Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             Row(
+        //               children: [
+        //                 Text('${rankings.indexOf(ranking) + 1}등'),
+        //                 SizedBox(
+        //                   width: 20,
+        //                 ),
+        //                 Text(
+        //                   ranking.nickname,
+        //                   style: TextStyle(fontWeight: FontWeight.bold),
+        //                 ),
+        //                 // Text('dd'),
+        //               ],
+        //             ),
+        //             Text('${ranking.score.floor()}점'),
+        //           ],
+        //         ),
+        //       ),
+        //     );
+        //   }).toList(),
+        // );
       },
     );
   }

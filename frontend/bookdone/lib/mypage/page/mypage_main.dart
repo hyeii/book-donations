@@ -6,7 +6,6 @@ import 'package:bookdone/mypage/widgets/my_like_book_list.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
-import 'package:bookdone/top/page/top_navigation_bar.dart';
 import 'package:bookdone/widgets/floating_register_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

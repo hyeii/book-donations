@@ -1,15 +1,10 @@
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/search/model/book.dart';
-import 'package:bookdone/search/service/search_service.dart';
 import 'package:bookdone/search/widgets/autocomplete_list.dart';
 import 'package:bookdone/search/widgets/search_result_card.dart';
-import 'package:bookdone/top/page/top_navigation_bar.dart';
-import 'package:bookdone/widgets/floating_register_btn.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:provider/provider.dart';
 
 class SearchMain extends HookConsumerWidget {
   const SearchMain({super.key});
@@ -134,7 +129,10 @@ class SearchMain extends HookConsumerWidget {
                       if (snapshot.data == null) return Container();
                       final autoCompleteList = snapshot.data!.data;
 
-                      return AutocompleteList(autoListData: autoCompleteList);
+                      return AutocompleteList(
+                        autoListData: autoCompleteList,
+                        searchPage: true,
+                      );
                     },
                   )
               ],

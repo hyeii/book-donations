@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class AutocompleteList extends HookWidget {
-  const AutocompleteList({super.key, required this.autoListData});
+  const AutocompleteList(
+      {super.key, required this.autoListData, required this.searchPage});
   final List<AutoListData> autoListData;
+  final bool searchPage;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 55,
-      right: 0,
-      left: 0,
+      top: searchPage ? 55 : 353,
+      right: searchPage ? 0 : MediaQuery.of(context).size.width / 12,
+      left: searchPage ? 0 : MediaQuery.of(context).size.width / 12,
       child: Container(
         decoration: BoxDecoration(color: Colors.white),
         child: Column(

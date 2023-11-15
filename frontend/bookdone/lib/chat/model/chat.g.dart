@@ -12,6 +12,7 @@ _$ChatRoomRequestImpl _$$ChatRoomRequestImplFromJson(
       user1: json['user1'] as String,
       user2: json['user2'] as String,
       tradeId: json['tradeId'] as int,
+      isbn: json['isbn'] as String,
     );
 
 Map<String, dynamic> _$$ChatRoomRequestImplToJson(
@@ -20,6 +21,7 @@ Map<String, dynamic> _$$ChatRoomRequestImplToJson(
       'user1': instance.user1,
       'user2': instance.user2,
       'tradeId': instance.tradeId,
+      'isbn': instance.isbn,
     };
 
 _$ChatListDtoImpl _$$ChatListDtoImplFromJson(Map<String, dynamic> json) =>
@@ -46,6 +48,7 @@ _$ChatRoomResponseImpl _$$ChatRoomResponseImplFromJson(
       lastMessage: json['lastMessage'] as String?,
       lastMessageTime:
           _dateTimeFromIsoString(json['lastMessageTime'] as String?),
+      isbn: json['isbn'] as String?,
     );
 
 Map<String, dynamic> _$$ChatRoomResponseImplToJson(
@@ -55,6 +58,7 @@ Map<String, dynamic> _$$ChatRoomResponseImplToJson(
       'userNickname': instance.userNickname,
       'lastMessage': instance.lastMessage,
       'lastMessageTime': _dateTimeToIsoString(instance.lastMessageTime),
+      'isbn': instance.isbn,
     };
 
 _$ChatMessagesDtoImpl _$$ChatMessagesDtoImplFromJson(

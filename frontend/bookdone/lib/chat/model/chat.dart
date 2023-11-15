@@ -24,6 +24,7 @@ class ChatRoomRequest with _$ChatRoomRequest {
     required String user1,
     required String user2,
     required int tradeId,
+    required String isbn,
   }) = _ChatRoomRequest;
 
   factory ChatRoomRequest.fromJson(Map<String, dynamic> json) =>
@@ -50,6 +51,7 @@ class ChatRoomResponse with _$ChatRoomResponse {
     required String? lastMessage,
     @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
     required DateTime? lastMessageTime,
+    required String? isbn,
   }) = _ChatRoomResponse;
 
   factory ChatRoomResponse.fromJson(Map<String, dynamic> json) =>

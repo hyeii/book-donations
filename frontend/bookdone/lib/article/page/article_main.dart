@@ -86,6 +86,7 @@ class ArticleMain extends HookConsumerWidget {
           user1: userNickname.value,
           user2: articleData.value!.nickname,
           tradeId: tradeIdFromServer,
+          isbn: articleData.value!.isbn,
         );
 
         // 채팅방 생성 API 호출

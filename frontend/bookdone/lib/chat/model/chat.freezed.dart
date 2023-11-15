@@ -23,6 +23,7 @@ mixin _$ChatRoomRequest {
   String get user1 => throw _privateConstructorUsedError;
   String get user2 => throw _privateConstructorUsedError;
   int get tradeId => throw _privateConstructorUsedError;
+  String get isbn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $ChatRoomRequestCopyWith<$Res> {
           ChatRoomRequest value, $Res Function(ChatRoomRequest) then) =
       _$ChatRoomRequestCopyWithImpl<$Res, ChatRoomRequest>;
   @useResult
-  $Res call({String user1, String user2, int tradeId});
+  $Res call({String user1, String user2, int tradeId, String isbn});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$ChatRoomRequestCopyWithImpl<$Res, $Val extends ChatRoomRequest>
     Object? user1 = null,
     Object? user2 = null,
     Object? tradeId = null,
+    Object? isbn = null,
   }) {
     return _then(_value.copyWith(
       user1: null == user1
@@ -69,6 +71,10 @@ class _$ChatRoomRequestCopyWithImpl<$Res, $Val extends ChatRoomRequest>
           ? _value.tradeId
           : tradeId // ignore: cast_nullable_to_non_nullable
               as int,
+      isbn: null == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$ChatRoomRequestImplCopyWith<$Res>
       __$$ChatRoomRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String user1, String user2, int tradeId});
+  $Res call({String user1, String user2, int tradeId, String isbn});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class __$$ChatRoomRequestImplCopyWithImpl<$Res>
     Object? user1 = null,
     Object? user2 = null,
     Object? tradeId = null,
+    Object? isbn = null,
   }) {
     return _then(_$ChatRoomRequestImpl(
       user1: null == user1
@@ -112,6 +119,10 @@ class __$$ChatRoomRequestImplCopyWithImpl<$Res>
           ? _value.tradeId
           : tradeId // ignore: cast_nullable_to_non_nullable
               as int,
+      isbn: null == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -120,7 +131,10 @@ class __$$ChatRoomRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ChatRoomRequestImpl implements _ChatRoomRequest {
   const _$ChatRoomRequestImpl(
-      {required this.user1, required this.user2, required this.tradeId});
+      {required this.user1,
+      required this.user2,
+      required this.tradeId,
+      required this.isbn});
 
   factory _$ChatRoomRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatRoomRequestImplFromJson(json);
@@ -131,10 +145,12 @@ class _$ChatRoomRequestImpl implements _ChatRoomRequest {
   final String user2;
   @override
   final int tradeId;
+  @override
+  final String isbn;
 
   @override
   String toString() {
-    return 'ChatRoomRequest(user1: $user1, user2: $user2, tradeId: $tradeId)';
+    return 'ChatRoomRequest(user1: $user1, user2: $user2, tradeId: $tradeId, isbn: $isbn)';
   }
 
   @override
@@ -144,12 +160,13 @@ class _$ChatRoomRequestImpl implements _ChatRoomRequest {
             other is _$ChatRoomRequestImpl &&
             (identical(other.user1, user1) || other.user1 == user1) &&
             (identical(other.user2, user2) || other.user2 == user2) &&
-            (identical(other.tradeId, tradeId) || other.tradeId == tradeId));
+            (identical(other.tradeId, tradeId) || other.tradeId == tradeId) &&
+            (identical(other.isbn, isbn) || other.isbn == isbn));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, user1, user2, tradeId);
+  int get hashCode => Object.hash(runtimeType, user1, user2, tradeId, isbn);
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +187,8 @@ abstract class _ChatRoomRequest implements ChatRoomRequest {
   const factory _ChatRoomRequest(
       {required final String user1,
       required final String user2,
-      required final int tradeId}) = _$ChatRoomRequestImpl;
+      required final int tradeId,
+      required final String isbn}) = _$ChatRoomRequestImpl;
 
   factory _ChatRoomRequest.fromJson(Map<String, dynamic> json) =
       _$ChatRoomRequestImpl.fromJson;
@@ -181,6 +199,8 @@ abstract class _ChatRoomRequest implements ChatRoomRequest {
   String get user2;
   @override
   int get tradeId;
+  @override
+  String get isbn;
   @override
   @JsonKey(ignore: true)
   _$$ChatRoomRequestImplCopyWith<_$ChatRoomRequestImpl> get copyWith =>
@@ -379,6 +399,7 @@ mixin _$ChatRoomResponse {
   String? get lastMessage => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
   DateTime? get lastMessageTime => throw _privateConstructorUsedError;
+  String? get isbn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -397,7 +418,8 @@ abstract class $ChatRoomResponseCopyWith<$Res> {
       String? userNickname,
       String? lastMessage,
       @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
-      DateTime? lastMessageTime});
+      DateTime? lastMessageTime,
+      String? isbn});
 }
 
 /// @nodoc
@@ -417,6 +439,7 @@ class _$ChatRoomResponseCopyWithImpl<$Res, $Val extends ChatRoomResponse>
     Object? userNickname = freezed,
     Object? lastMessage = freezed,
     Object? lastMessageTime = freezed,
+    Object? isbn = freezed,
   }) {
     return _then(_value.copyWith(
       tradeId: null == tradeId
@@ -435,6 +458,10 @@ class _$ChatRoomResponseCopyWithImpl<$Res, $Val extends ChatRoomResponse>
           ? _value.lastMessageTime
           : lastMessageTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isbn: freezed == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -452,7 +479,8 @@ abstract class _$$ChatRoomResponseImplCopyWith<$Res>
       String? userNickname,
       String? lastMessage,
       @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
-      DateTime? lastMessageTime});
+      DateTime? lastMessageTime,
+      String? isbn});
 }
 
 /// @nodoc
@@ -470,6 +498,7 @@ class __$$ChatRoomResponseImplCopyWithImpl<$Res>
     Object? userNickname = freezed,
     Object? lastMessage = freezed,
     Object? lastMessageTime = freezed,
+    Object? isbn = freezed,
   }) {
     return _then(_$ChatRoomResponseImpl(
       tradeId: null == tradeId
@@ -488,6 +517,10 @@ class __$$ChatRoomResponseImplCopyWithImpl<$Res>
           ? _value.lastMessageTime
           : lastMessageTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isbn: freezed == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -500,7 +533,8 @@ class _$ChatRoomResponseImpl implements _ChatRoomResponse {
       required this.userNickname,
       required this.lastMessage,
       @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
-      required this.lastMessageTime});
+      required this.lastMessageTime,
+      required this.isbn});
 
   factory _$ChatRoomResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatRoomResponseImplFromJson(json);
@@ -514,10 +548,12 @@ class _$ChatRoomResponseImpl implements _ChatRoomResponse {
   @override
   @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
   final DateTime? lastMessageTime;
+  @override
+  final String? isbn;
 
   @override
   String toString() {
-    return 'ChatRoomResponse(tradeId: $tradeId, userNickname: $userNickname, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime)';
+    return 'ChatRoomResponse(tradeId: $tradeId, userNickname: $userNickname, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, isbn: $isbn)';
   }
 
   @override
@@ -531,13 +567,14 @@ class _$ChatRoomResponseImpl implements _ChatRoomResponse {
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
             (identical(other.lastMessageTime, lastMessageTime) ||
-                other.lastMessageTime == lastMessageTime));
+                other.lastMessageTime == lastMessageTime) &&
+            (identical(other.isbn, isbn) || other.isbn == isbn));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, tradeId, userNickname, lastMessage, lastMessageTime);
+      runtimeType, tradeId, userNickname, lastMessage, lastMessageTime, isbn);
 
   @JsonKey(ignore: true)
   @override
@@ -560,7 +597,8 @@ abstract class _ChatRoomResponse implements ChatRoomResponse {
       required final String? userNickname,
       required final String? lastMessage,
       @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
-      required final DateTime? lastMessageTime}) = _$ChatRoomResponseImpl;
+      required final DateTime? lastMessageTime,
+      required final String? isbn}) = _$ChatRoomResponseImpl;
 
   factory _ChatRoomResponse.fromJson(Map<String, dynamic> json) =
       _$ChatRoomResponseImpl.fromJson;
@@ -574,6 +612,8 @@ abstract class _ChatRoomResponse implements ChatRoomResponse {
   @override
   @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
   DateTime? get lastMessageTime;
+  @override
+  String? get isbn;
   @override
   @JsonKey(ignore: true)
   _$$ChatRoomResponseImplCopyWith<_$ChatRoomResponseImpl> get copyWith =>

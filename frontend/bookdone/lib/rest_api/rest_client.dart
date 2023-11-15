@@ -129,4 +129,20 @@ abstract class RestClient {
   @POST('/api/trades/donations/{donationId}/members/{memberId}')
   Future<TradeResponseDto> createTrade(@Path() int donationId, @Path() int memberId);
 
+  // cky
+
+  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservation/request')
+  Future<TradeResponseDto> reservationRequestTrade(@Path() int donationId, @Path() int memberId);
+  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservation/confirm')
+  Future<TradeResponseDto> reservationConfirmTrade(@Path() int donationId, @Path() int memberId);
+  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/completion/request')
+  Future<TradeResponseDto> completionRequestTrade(@Path() int donationId, @Path() int memberId);
+  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/completion/confirm')
+  Future<TradeResponseDto> completionConfirmTrade(@Path() int donationId, @Path() int memberId);
+  @DELETE('/api/trades/donations/{donationId}/members/{memberId}')
+  Future<TradeResponseDto> deleteTrade(@Path() int donationId, @Path() int memberId);
+  @GET('/api/trades/donations/{donationId}/members/{memberId}')
+  Future<TradeResponseDto> getTrade(@Path() int donationId, @Path() int memberId);
+
+
 }

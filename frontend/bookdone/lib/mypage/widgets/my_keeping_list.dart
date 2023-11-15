@@ -15,6 +15,7 @@ class MyKeepingList extends HookWidget {
         return BookCard(
           book: keepingList[index],
           isLike: false,
+          isDonating: false,
         );
       },
     );

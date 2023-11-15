@@ -120,8 +120,18 @@ class MyPageMain extends HookConsumerWidget {
           child: ListView(
             children: [
               DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 140, 135, 130),
+                ),
                 child: Center(
-                  child: Text('책도네'),
+                  child: Text(
+                    'B O O K D O N E -',
+                    style: TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
                 ),
               ),
               ListTile(
@@ -177,8 +187,8 @@ class MyPageMain extends HookConsumerWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(100.0),
                             child: Image(
-                              image: AssetImage(
-                                  "assets/images/samplebookcover.jpg"),
+                              image:
+                                  AssetImage("assets/images/defaultimage.png"),
                               width: 60,
                               height: 60,
                               fit: BoxFit.cover,
@@ -190,8 +200,30 @@ class MyPageMain extends HookConsumerWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${nickname.value}님의 서재"),
-                              Text("책갈피 ${point.value}개"),
+                              Text(
+                                "${nickname.value}님의 서재",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                              Row(
+                                children: [
+                                  Image(
+                                    image: AssetImage(
+                                        "assets/images/bookmark.png"),
+                                    width: 30,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "${point.value}",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ],

@@ -18,6 +18,7 @@ class MyDonatingList extends HookWidget {
         return BookCard(
           book: donatingList[index],
           isLike: false,
+          isDonating: true,
         );
       },
     );

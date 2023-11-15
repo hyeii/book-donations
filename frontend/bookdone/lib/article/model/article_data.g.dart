@@ -111,3 +111,29 @@ Map<String, dynamic> _$$RankDataImplToJson(_$RankDataImpl instance) =>
       'nickname': instance.nickname,
       'score': instance.score,
     };
+
+_$TradeResponseDtoImpl _$$TradeResponseDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TradeResponseDtoImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: json['data'] as int,
+    );
+
+Map<String, dynamic> _$$TradeResponseDtoImplToJson(
+        _$TradeResponseDtoImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+_$TradeResponseImpl _$$TradeResponseImplFromJson(Map<String, dynamic> json) =>
+    _$TradeResponseImpl(
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$$TradeResponseImplToJson(_$TradeResponseImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };

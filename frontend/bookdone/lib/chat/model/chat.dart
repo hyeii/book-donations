@@ -3,7 +3,6 @@ import 'package:bookdone/search/model/book.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat.freezed.dart';
-
 part 'chat.g.dart';
 
 // DateTime 형식 변환을 위한 헬퍼 함수
@@ -17,6 +16,18 @@ DateTime? _dateTimeFromIsoString(String? isoString) {
 // 수정된 함수
 String? _dateTimeToIsoString(DateTime? dateTime) {
   return dateTime?.toIso8601String();
+}
+
+@freezed
+class ChatRoomRequest with _$ChatRoomRequest {
+  const factory ChatRoomRequest({
+    required String user1,
+    required String user2,
+    required int tradeId,
+  }) = _ChatRoomRequest;
+
+  factory ChatRoomRequest.fromJson(Map<String, dynamic> json) =>
+      _$ChatRoomRequestFromJson(json);
 }
 
 @freezed
@@ -35,7 +46,7 @@ class ChatListDto with _$ChatListDto {
 class ChatRoomResponse with _$ChatRoomResponse {
   const factory ChatRoomResponse({
     required int tradeId,
-    required String userNickname,
+    required String? userNickname,
     required String? lastMessage,
     @JsonKey(fromJson: _dateTimeFromIsoString, toJson: _dateTimeToIsoString)
     required DateTime? lastMessageTime,

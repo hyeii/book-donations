@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:bookdone/article/model/article_data.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
@@ -7,9 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../chat/model/chat.dart';
+import '../../chat/page/chat_room.dart';
 
 class ArticleMain extends HookConsumerWidget {
   const ArticleMain({super.key, required this.isbn, required this.id});
+
   final String isbn;
   final int id;
 
@@ -20,6 +27,11 @@ class ArticleMain extends HookConsumerWidget {
     final restClient = ref.read(restApiClientProvider);
     final articleData = useState<ArticleData?>(null);
     final bookData = useState<BookData?>(null);
+
+    final userNickname = useState<String>("");
+    final userId = useState<int>(0);
+
+    final tradeIdFromServer = useState<int>(0);
 
     Future<ArticleData> getArticleInfo() async {
       ArticleRespByid data = await restClient.getArticleById(id);
@@ -36,6 +48,14 @@ class ArticleMain extends HookConsumerWidget {
     }
 
     useEffect(() {
+      Future<void> init() async {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        userNickname.value = pref.getString('nickname')!;
+        userId.value = pref.getInt('userId')!;
+      }
+
+      init();
+
       getArticleInfo().then((articleInfo) {
         articleData.value = articleInfo;
       }).catchError((error) {
@@ -48,6 +68,45 @@ class ArticleMain extends HookConsumerWidget {
       });
       return null;
     }, []);
+
+    void confirmAndNavigate(BuildContext currentContext) async {
+      final restClient = ref.read(restApiClientProvider);
+
+      try {
+        var tradeResponseDto =
+            await restClient.createTrade(articleData.value!.id, userId.value);
+        int tradeIdFromServer = tradeResponseDto.data;
+        if (tradeResponseDto.data == null) {
+          return;
+        }
+
+        tradeIdFromServer = tradeResponseDto.data!;
+        // 관련 ChatRoomRequest 객체 작성
+        var chatRoomRequest = ChatRoomRequest(
+          user1: userNickname.value,
+          user2: articleData.value!.nickname,
+          tradeId: tradeIdFromServer,
+        );
+
+        // 채팅방 생성 API 호출
+        await restClient.createChatRoom(chatRoomRequest.toJson());
+
+        // 페이지 이동
+        ChatRoomRoute(
+            tradeId: tradeIdFromServer,
+            nameWith: articleData.value!.nickname,
+            bookName: bookData.value!.title,
+            lastChat: "",
+          ).push(context);
+      } catch (error) {
+        print('Error on confirmation: $error');
+        ScaffoldMessenger.of(currentContext).showSnackBar(
+          SnackBar(
+            content: Text('Error when trying to navigate: $error'),
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(),
@@ -192,15 +251,10 @@ class ArticleMain extends HookConsumerWidget {
           width: double.infinity,
           color: Colors.brown.shade200,
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 17),
-                backgroundColor: Colors.brown.shade200,
-                foregroundColor: Colors.white,
-                shape: BeveledRectangleBorder()),
             onPressed: () {
               showDialog<String>(
                 context: context,
-                builder: (BuildContext context) => AlertDialog(
+                builder: (BuildContext dialogContext) => AlertDialog(
                   title: const Text(
                     '나눔 신청',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
@@ -208,14 +262,15 @@ class ArticleMain extends HookConsumerWidget {
                   content: const Text('나눔을 신청할까요?\n기부자와의 채팅이 시작됩니다'),
                   actions: <Widget>[
                     TextButton(
-                      onPressed: () {
-                        context.pop();
-                      },
+                      onPressed: () => Navigator.pop(dialogContext),
                       child: const Text('취소'),
                     ),
                     TextButton(
                       onPressed: () {
-                        context.pop();
+                        Navigator.pop(dialogContext);
+                        // 이 함수를 호출할 때 적절한 context를 전달합니다.
+                        // 비동기 함수가 완료될 때까지 기다릴 필요가 없습니다.
+                        confirmAndNavigate(context);
                       },
                       child: const Text('확인'),
                     ),
@@ -223,7 +278,7 @@ class ArticleMain extends HookConsumerWidget {
                 ),
               );
             },
-            child: Text(
+            child: const Text(
               '나눔 요청하기',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),

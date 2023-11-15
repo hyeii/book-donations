@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../chat/page/chat_room.dart';
 import '../chat/service/stomp_service.dart';
 
 part 'app_routes.g.dart';
@@ -310,6 +311,7 @@ class NotificationRoute extends GoRouteData {
 )
 class BookinfoMainRoute extends GoRouteData {
   const BookinfoMainRoute({required this.isbn});
+
   final String isbn;
 
   @override
@@ -322,6 +324,7 @@ class BookinfoMainRoute extends GoRouteData {
 )
 class BookinfoDetailRoute extends GoRouteData {
   const BookinfoDetailRoute({required this.isbn});
+
   final String isbn;
 
   @override
@@ -334,6 +337,7 @@ class BookinfoDetailRoute extends GoRouteData {
 )
 class ArticleMainRoute extends GoRouteData {
   const ArticleMainRoute({required this.isbn, required this.id});
+
   final String isbn;
   final int id;
 
@@ -359,6 +363,7 @@ class SplashRoute extends GoRouteData {
 )
 class RegisterRoute extends GoRouteData {
   const RegisterRoute({required this.isbn, required this.donationId});
+
   final String isbn;
   final int donationId;
 
@@ -395,6 +400,7 @@ class RegisterNewRoute extends GoRouteData {
 class HistoryRoute extends GoRouteData {
   const HistoryRoute(
       {required this.title, required this.titleUrl, required this.donationId});
+
   final int donationId;
   final String title;
   final String titleUrl;
@@ -413,6 +419,7 @@ class HistoryRoute extends GoRouteData {
 class HistoryRegisterRoute extends GoRouteData {
   const HistoryRegisterRoute(
       {required this.donationId, required this.title, required this.titleUrl});
+
   final int donationId;
   final String title;
   final String titleUrl;
@@ -434,4 +441,28 @@ class MyHistoriesRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const MyHistories();
+}
+
+@TypedGoRoute<ChatRoomRoute>(
+  path: RouterPath.chatRoom,
+)
+class ChatRoomRoute extends GoRouteData {
+  const ChatRoomRoute(
+      {required this.tradeId,
+      required this.nameWith,
+      required this.bookName,
+      required this.lastChat});
+
+  final int tradeId;
+  final String nameWith;
+  final String bookName;
+  final String lastChat;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => ChatRoom(
+        tradeId: tradeId,
+        nameWith: nameWith,
+        bookName: bookName,
+        lastChat: lastChat,
+      );
 }

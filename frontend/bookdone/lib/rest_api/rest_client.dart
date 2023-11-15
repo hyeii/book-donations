@@ -119,4 +119,11 @@ abstract class RestClient {
 
   @DELETE('/api/notifications/{notificationsid}')
   Future<BooksLikeResp> deleteNotifications(@Path() int notificationsid);
+
+  @POST('/api/chats')
+  Future<void> createChatRoom(@Body() Map<String, dynamic> map);
+
+  @POST('/api/trades/donations/{donationId}/members/{memberId}')
+  Future<TradeResponseDto> createTrade(@Path() int donationId, @Path() int memberId);
+
 }

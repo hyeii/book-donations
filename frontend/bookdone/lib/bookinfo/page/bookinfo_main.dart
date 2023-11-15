@@ -39,34 +39,15 @@ class BookinfoMain extends HookConsumerWidget {
       print(bookslikes.data);
     }
 
-    void likeAlert(context) {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text(
-            '관심도서 설정',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          ),
-          content:
-              like.value ? Text('관심도서에서 해제할까요?') : Text('기부글이 등록되면 알림을 보낼까요?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                context.pop();
-              },
-              child: const Text('취소'),
-            ),
-            TextButton(
-              onPressed: () {
-                setLikesNotification();
-                context.pop();
-                BookinfoMainRoute(isbn: isbn).pushReplacement(context);
-              },
-              child: const Text('확인'),
-            ),
-          ],
-        ),
-      );
+    void getBookinfo() async {
+      try {
+        var data = await restClient.getDetailBook(isbn);
+        curBook.value = data.data;
+        like.value = curBook.value!.likeStatus;
+        print('------------------${like.value}--------');
+      } catch (error) {
+        print(error);
+      }
     }
 
     useEffect(() {
@@ -75,13 +56,14 @@ class BookinfoMain extends HookConsumerWidget {
           var data = await restClient.getDetailBook(isbn);
           curBook.value = data.data;
           like.value = curBook.value!.likeStatus;
+          print('------------------${like.value}--------');
         } catch (error) {
           print(error);
         }
       }
 
       getBookinfo();
-      return null;
+      return () {};
     }, []);
 
     return Scaffold(
@@ -93,20 +75,6 @@ class BookinfoMain extends HookConsumerWidget {
         //   onPressed: () {
         //     context.pop();
         //   },
-        // ),
-        actions: [
-          IconButton(
-            isSelected: like.value,
-            selectedIcon: const Icon(Icons.notifications_active_sharp),
-            onPressed: () {
-              likeAlert(context);
-            },
-            icon: Icon(
-              Icons.notifications_none_outlined,
-              size: 20,
-            ),
-          ),
-        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -146,10 +114,62 @@ class BookinfoMain extends HookConsumerWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        book.title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            book.title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
+                          IconButton(
+                            // isSelected: like.value,
+                            // selectedIcon: const Icon(Icons.notifications_active_sharp),
+                            onPressed: () {
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text(
+                                    '관심도서 설정',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  content: book.likeStatus
+                                      ? Text('관심도서에서 해제할까요?')
+                                      : Text('기부글이 등록되면 알림을 보낼까요?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        context.pop();
+                                      },
+                                      child: const Text('취소'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        setLikesNotification();
+                                        // context.pop();
+                                        // getBookinfo();
+                                        BookinfoMainRoute(isbn: isbn)
+                                            .pushReplacement(context);
+                                      },
+                                      child: const Text('확인'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            icon: book.likeStatus
+                                ? Icon(
+                                    Icons.notifications_active_sharp,
+                                    size: 20,
+                                  )
+                                : Icon(
+                                    Icons.notifications_none_outlined,
+                                    size: 20,
+                                  ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 20,

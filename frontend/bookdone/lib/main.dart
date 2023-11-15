@@ -72,9 +72,6 @@ class StartingPage extends HookConsumerWidget {
           SearchMain(),
           ChatMain(),
           MyPageMain(),
-          // Text('11'),
-          // Text('22'),
-          // Text('33')
         ],
         onPageChanged: (index) {
           currentIndex.value = index;

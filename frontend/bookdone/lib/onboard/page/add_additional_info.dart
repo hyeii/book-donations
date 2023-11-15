@@ -30,15 +30,10 @@ class AddAdditionalInfo extends HookConsumerWidget {
 
     var regionList = useState<List<RegionInfo>>([]);
     var secondRegionList = useState<List<SecondList>>([]);
-    var selectedRegionIndex = useState(0);
-    var firstRegionIndex = useState(0);
-    var selectedRegionCode = useState('');
     // XFile? _pickedFile; // XFile
     final imageSize = MediaQuery.of(context).size.width / 5;
 
     var fcmToken = useState('');
-
-    var complete = useState(false);
 
     void getFcmToken() async {
       SharedPreferences pref = await SharedPreferences.getInstance();

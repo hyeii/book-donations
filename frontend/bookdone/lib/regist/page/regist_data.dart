@@ -129,7 +129,8 @@ class RegistData extends HookConsumerWidget {
       gotId.value = resp.data;
       ref.invalidate(registerRegionStateProvider);
       ref.invalidate(registerRegionCodeStateProvider);
-      MyPageRoute().go(context);
+      // MyPageRoute().go(context);
+      StartPageRoute().go(context);
     }
 
     void registerExist() async {

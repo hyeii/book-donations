@@ -1,8 +1,8 @@
-import 'package:bookdone/chat/service/rest_chat.dart';
 import 'package:bookdone/chat/widgets/chatroom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../rest_api/rest_client.dart';
 import '../model/chat.dart';
 
 class ChatMain extends HookConsumerWidget {

@@ -98,6 +98,7 @@ class ArticleMain extends HookConsumerWidget {
             nameWith: articleData.value!.nickname,
             bookName: bookData.value!.title,
             lastChat: "",
+            isbn: articleData.value!.isbn,
           ).push(context);
       } catch (error) {
         print('Error on confirmation: $error');

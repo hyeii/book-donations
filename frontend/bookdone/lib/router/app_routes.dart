@@ -451,12 +451,14 @@ class ChatRoomRoute extends GoRouteData {
       {required this.tradeId,
       required this.nameWith,
       required this.bookName,
-      required this.lastChat});
+      required this.lastChat,
+      required this.isbn});
 
   final int tradeId;
   final String nameWith;
   final String bookName;
   final String lastChat;
+  final String isbn;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => ChatRoom(
@@ -464,5 +466,6 @@ class ChatRoomRoute extends GoRouteData {
         nameWith: nameWith,
         bookName: bookName,
         lastChat: lastChat,
+        isbn: isbn,
       );
 }

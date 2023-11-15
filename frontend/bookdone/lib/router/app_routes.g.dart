@@ -581,6 +581,7 @@ extension $ChatRoomRouteExtension on ChatRoomRoute {
         nameWith: state.uri.queryParameters['name-with']!,
         bookName: state.uri.queryParameters['book-name']!,
         lastChat: state.uri.queryParameters['last-chat']!,
+        isbn: state.uri.queryParameters['isbn']!,
       );
 
   String get location => GoRouteData.$location(
@@ -590,6 +591,7 @@ extension $ChatRoomRouteExtension on ChatRoomRoute {
           'name-with': nameWith,
           'book-name': bookName,
           'last-chat': lastChat,
+          'isbn': isbn,
         },
       );
 

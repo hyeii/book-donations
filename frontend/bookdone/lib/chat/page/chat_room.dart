@@ -8,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
+import '../../rest_api/rest_client.dart';
 import '../model/chat.dart';
-import '../service/rest_chat.dart';
 import '../widgets/chat_message.dart';
 
 class ChatRoom extends HookConsumerWidget {
@@ -17,6 +17,7 @@ class ChatRoom extends HookConsumerWidget {
   final String nameWith;
   final String bookName;
   final String lastChat;
+  final String isbn;
 
   const ChatRoom({
     super.key,
@@ -24,6 +25,7 @@ class ChatRoom extends HookConsumerWidget {
     required this.nameWith,
     required this.bookName,
     required this.lastChat,
+    required this.isbn,
   });
 
   @override
@@ -31,9 +33,9 @@ class ChatRoom extends HookConsumerWidget {
     final TextEditingController messageController = useTextEditingController();
     final chatMessages = useState<List<Message>>([]);
     final restClient = ref.read(restApiClientProvider);
-
     final userNickname = useState<String>("");
     final accessToken = useState<String>("");
+    final bookTitle = useState<String>("");
     final stompClient = useState<StompClient?>(null);
 
     final scrollController = ScrollController();
@@ -99,6 +101,19 @@ class ChatRoom extends HookConsumerWidget {
         }
       }
 
+      // 책 정보 가져오기
+      fetchBook() async {
+        try {
+          final response = await restClient.getDetailBook(isbn);
+          print(response);
+          bookTitle.value = response.data.title;
+        } catch (e) {
+          print('Error fetching messages: $e');
+        }
+      }
+
+      fetchBook();
+
       if (chatMessages.value.isEmpty) {
         fetchChatRooms();
       }
@@ -151,7 +166,7 @@ class ChatRoom extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("$nameWith님과의 채팅"),
+        title: Text("$nameWith님과의 채팅 / 책 제목: ${bookTitle.value}"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info_outline),
@@ -261,6 +276,7 @@ class ChatMessageWriteRequest {
   final String message;
   final int tradeId;
   final String senderNickname;
+
 
   ChatMessageWriteRequest({
     required this.message,

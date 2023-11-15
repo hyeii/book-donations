@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../chat/model/chat.dart';
+
 part 'rest_client.g.dart';
 
 @riverpod
@@ -130,6 +132,11 @@ abstract class RestClient {
   Future<TradeResponseDto> createTrade(@Path() int donationId, @Path() int memberId);
 
   // cky
+
+  @GET('/api/chats')
+  Future<ChatListDto> chatRoomList();
+  @GET('/api/chats/{tradeId}/messages')
+  Future<ChatMessagesDto> chatMessageList(@Path() int tradeId);
 
   @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservation/request')
   Future<TradeResponseDto> reservationRequestTrade(@Path() int donationId, @Path() int memberId);

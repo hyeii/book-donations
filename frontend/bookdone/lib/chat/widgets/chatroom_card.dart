@@ -26,6 +26,7 @@ class ChatRoomCard extends HookWidget {
             nameWith: chatRoom.userNickname == null ? "유저 없음" : chatRoom.userNickname.toString(),
             bookName: '(더미) 바다가 들리는 편의점', // 실제 데이터로 변경 필요
             lastChat: chatRoom.lastMessage == null ? '채팅 없음' : chatRoom.lastMessage.toString(),
+            isbn: chatRoom.isbn?.toString() ?? '1111111111111',
           ),
         ));
       },

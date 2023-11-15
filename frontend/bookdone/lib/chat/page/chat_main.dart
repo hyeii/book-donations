@@ -1,4 +1,5 @@
 import 'package:bookdone/chat/widgets/chatroom_card.dart';
+import 'package:bookdone/search/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,14 +14,25 @@ class ChatMain extends HookConsumerWidget {
     final chatRooms = useState<List<ChatRoomResponse>>([]);
     final restClient = ref.read(restApiClientProvider);
     final isChatRoomFetched = useState(false);
+    final booksData = useState<Map<String, BookData>>({});
 
     fetchChatRooms() async {
       try {
-        final response = await restClient.chatRoomList();
-        chatRooms.value = response.data;
+        final chatRoomResponse = await restClient.chatRoomList();
+        chatRooms.value = chatRoomResponse.data;
         isChatRoomFetched.value = true;
+
+        // 채팅방에서 ISBN 수집
+        List<String> isbnList = chatRooms.value
+            .map((chatRoom) => chatRoom.isbn!)
+            .toList();
+
+        // 책 정보 요청
+        BooksDto booksDto = await restClient.getBooksDetails(isbnList);
+        booksData.value = booksDto.data;
+
       } catch (e) {
-        print('Error fetching chat rooms: $e');
+        print('채팅방 또는 책 정보 가져오기 오류: $e');
       }
     }
 
@@ -73,7 +85,13 @@ class ChatMain extends HookConsumerWidget {
         itemCount: chatRooms.value.length,
         itemBuilder: (context, index) {
           final chatRoom = chatRooms.value[index];
-          return ChatRoomCard(chatRoom: chatRoom);
+          final isbn = chatRoom.isbn;
+
+          // 해당 ISBN에 대한 책 정보 찾기
+          final bookData = booksData.value[isbn];
+
+          // ChatRoomCard에 채팅방 정보와 책 정보 전달
+          return ChatRoomCard(chatRoom: chatRoom, bookData: bookData);
         },
         separatorBuilder: (context, index) => const SizedBox.shrink(),
       ),

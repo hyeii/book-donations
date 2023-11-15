@@ -151,5 +151,7 @@ abstract class RestClient {
   @GET('/api/trades/donations/{donationId}/members/{memberId}')
   Future<TradeResponseDto> getTrade(@Path() int donationId, @Path() int memberId);
 
+  @GET('/api/books/details')
+  Future<BooksDto> getBooksDetails(@Query('isbns') List<String> isbns);
 
 }

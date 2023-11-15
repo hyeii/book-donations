@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bookdone/chat/widgets/trade_button.dart';
+import 'package:bookdone/search/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -38,6 +39,7 @@ class ChatRoom extends HookConsumerWidget {
     final accessToken = useState<String>("");
     final bookTitle = useState<String>("");
     final stompClient = useState<StompClient?>(null);
+    final bookData = useState<BookData?>(null);
 
     final scrollController = ScrollController();
 
@@ -107,7 +109,7 @@ class ChatRoom extends HookConsumerWidget {
         try {
           final response = await restClient.getDetailBook(isbn);
           print(response);
-          bookTitle.value = response.data.title;
+          bookData.value = response.data;
         } catch (e) {
           print('Error fetching messages: $e');
         }
@@ -167,7 +169,32 @@ class ChatRoom extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("$nameWith님과의 채팅 / 책 제목: ${bookTitle.value}"),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(bookData.value?.titleUrl ?? 'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg'),
+              radius: 20,
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "$nameWith님과의 채팅",
+                    style: TextStyle(fontSize: 16),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    bookName,
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info_outline),

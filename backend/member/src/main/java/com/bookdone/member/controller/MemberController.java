@@ -90,6 +90,13 @@ public class MemberController {
         return BaseResponse.ok(HttpStatus.OK, "추가 정보 삽입 완료");
     }
 
+    @PatchMapping("/me/fcm-token")
+    public ResponseEntity<?> updateFcmToken(@RequestHeader("memher-id") Long memberId, @RequestBody Map<String, String> body) {
+        String fcmToken = body.get("fcmToken");
+        memberService.updateFcmToken(memberId, fcmToken);
+        return BaseResponse.ok(HttpStatus.OK, "FCM Token 수정 완료");
+    }
+
     @PatchMapping("/me/image")
     public ResponseEntity<?> updateImage(@RequestHeader("member-id") Long memberId, String image) {
         memberService.updateImage(memberId, image);

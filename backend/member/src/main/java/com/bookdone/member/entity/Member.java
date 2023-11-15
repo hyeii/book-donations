@@ -69,4 +69,8 @@ public class Member {
     public void updateImage(String image) {
         this.image = image;
     }
+
+    public void updateFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
 }

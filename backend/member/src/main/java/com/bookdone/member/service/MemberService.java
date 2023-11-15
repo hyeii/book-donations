@@ -77,6 +77,12 @@ public class MemberService {
         member.updateImage(image);
     }
 
+    @Transactional
+    public void updateFcmToken(Long id, String fcmToken) {
+        Member member = getMemberOrThrow(id);
+        member.updateFcmToken(fcmToken);
+    }
+
     public Member getMemberOrThrow(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("id가 일치하는 회원이 없습니다"));

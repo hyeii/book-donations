@@ -1184,3 +1184,175 @@ abstract class _UserInfoRes implements UserInfoRes {
   _$$UserInfoResImplCopyWith<_$UserInfoResImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+DefaultReps _$DefaultRepsFromJson(Map<String, dynamic> json) {
+  return _DefaultReps.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DefaultReps {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  String? get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DefaultRepsCopyWith<DefaultReps> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DefaultRepsCopyWith<$Res> {
+  factory $DefaultRepsCopyWith(
+          DefaultReps value, $Res Function(DefaultReps) then) =
+      _$DefaultRepsCopyWithImpl<$Res, DefaultReps>;
+  @useResult
+  $Res call({bool success, String msg, String? data});
+}
+
+/// @nodoc
+class _$DefaultRepsCopyWithImpl<$Res, $Val extends DefaultReps>
+    implements $DefaultRepsCopyWith<$Res> {
+  _$DefaultRepsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$DefaultRepsImplCopyWith<$Res>
+    implements $DefaultRepsCopyWith<$Res> {
+  factory _$$DefaultRepsImplCopyWith(
+          _$DefaultRepsImpl value, $Res Function(_$DefaultRepsImpl) then) =
+      __$$DefaultRepsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, String? data});
+}
+
+/// @nodoc
+class __$$DefaultRepsImplCopyWithImpl<$Res>
+    extends _$DefaultRepsCopyWithImpl<$Res, _$DefaultRepsImpl>
+    implements _$$DefaultRepsImplCopyWith<$Res> {
+  __$$DefaultRepsImplCopyWithImpl(
+      _$DefaultRepsImpl _value, $Res Function(_$DefaultRepsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_$DefaultRepsImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DefaultRepsImpl implements _DefaultReps {
+  const _$DefaultRepsImpl(
+      {required this.success, required this.msg, this.data});
+
+  factory _$DefaultRepsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DefaultRepsImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  @override
+  final String? data;
+
+  @override
+  String toString() {
+    return 'DefaultReps(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DefaultRepsImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, msg, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DefaultRepsImplCopyWith<_$DefaultRepsImpl> get copyWith =>
+      __$$DefaultRepsImplCopyWithImpl<_$DefaultRepsImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DefaultRepsImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DefaultReps implements DefaultReps {
+  const factory _DefaultReps(
+      {required final bool success,
+      required final String msg,
+      final String? data}) = _$DefaultRepsImpl;
+
+  factory _DefaultReps.fromJson(Map<String, dynamic> json) =
+      _$DefaultRepsImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  String? get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$DefaultRepsImplCopyWith<_$DefaultRepsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

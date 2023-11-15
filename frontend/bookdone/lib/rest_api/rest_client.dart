@@ -120,6 +120,9 @@ abstract class RestClient {
   @DELETE('/api/notifications/{notificationsid}')
   Future<BooksLikeResp> deleteNotifications(@Path() int notificationsid);
 
+  @PATCH('/api/members/me/fcm-token')
+  Future<DefaultReps> updateFcm(@Body() Map<String, dynamic> map);
+
   @POST('/api/chats')
   Future<void> createChatRoom(@Body() Map<String, dynamic> map);
 

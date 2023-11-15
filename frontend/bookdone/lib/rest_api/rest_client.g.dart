@@ -729,6 +729,35 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<DefaultReps> updateFcm(Map<String, dynamic> map) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(map);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<DefaultReps>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/members/me/fcm-token',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = DefaultReps.fromJson(_result.data!);
+    return value;
+  }
+
+
+   @override
   Future<void> createChatRoom(Map<String, dynamic> map) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -782,7 +811,7 @@ class _RestClient implements RestClient {
     final value = TradeResponseDto.fromJson(_result.data!);
     return value;
   }
-
+  
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

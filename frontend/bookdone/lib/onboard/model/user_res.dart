@@ -78,3 +78,15 @@ class UserInfoRes with _$UserInfoRes {
   factory UserInfoRes.fromJson(Map<String, Object?> json) =>
       _$UserInfoResFromJson(json);
 }
+
+@freezed
+class DefaultReps with _$DefaultReps {
+  const factory DefaultReps({
+    required bool success,
+    required String msg,
+    String? data,
+  }) = _DefaultReps;
+
+  factory DefaultReps.fromJson(Map<String, Object?> json) =>
+      _$DefaultRepsFromJson(json);
+}

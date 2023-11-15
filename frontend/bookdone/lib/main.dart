@@ -25,7 +25,11 @@ void main() async {
   String? firebaseToken = await fcmSetting();
   SharedPreferences pref = await SharedPreferences.getInstance();
   if (firebaseToken != null) {
-    await pref.setString('fcmToken', firebaseToken);
+    await pref.setString('curFcmToken', firebaseToken);
+    print('---------------------------------');
+    print(firebaseToken);
+    print(pref.getString('curFcmToken'));
+    print('---------------------------------');
   }
   KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(
@@ -116,6 +120,30 @@ class MyHomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final restClient = ref.read(restApiClientProvider);
+
+    useEffect(() {
+      void checkFcmToken() async {
+        try {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          print('기존꺼 : ${pref.getString('getFcmToken')}');
+          print('지금생긴거 : ${pref.getString('curFcmToken')}');
+          if (pref.getString('getFcmToken') != pref.getString('curFcmToken')) {
+            if (pref.getString('curFcmToken') != null) {
+              await pref.setString(
+                  'getFcmToken', pref.getString('curFcmToken')!);
+            }
+            restClient.updateFcm({'fcmToken': pref.getString('curFcmToken')});
+          }
+        } catch (error) {
+          print(error);
+        }
+      }
+
+      checkFcmToken();
+      return () {};
+    }, []);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xff928C85),

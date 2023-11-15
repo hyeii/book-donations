@@ -1,5 +1,6 @@
 class RouterPath {
   static const String firstPage = '/firstpage';
+  static const String startPage = '/startpage';
   static const String onboarding = '/onboarding';
   static const String addAdditionalInfo = '/addadditionalinfo';
   static const String addComplete = '/addcomplete';

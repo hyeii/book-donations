@@ -16,7 +16,8 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Timer(Duration(milliseconds: 1000), () {
-      HomeRoute().go(context);
+      // HomeRoute().go(context);
+      StartPageRoute().go(context);
     });
   }
 

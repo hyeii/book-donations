@@ -42,7 +42,7 @@ class AddComplete extends HookConsumerWidget {
                 SetUserApi.updateMyInfo(ref);
                 ref.invalidate(registerRegionStateProvider);
                 ref.invalidate(registerRegionCodeStateProvider);
-                HomeRoute().go(context);
+                StartPageRoute().go(context);
               },
               // shape: CircleBorder(),
               child: Container(

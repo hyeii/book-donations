@@ -141,7 +141,7 @@ class RegisterHistory extends HookConsumerWidget {
                 } else {
                   if (await tryPostHistory()) {
                     // TODO: dialog 생성
-                    MyPageRoute().go(context);
+                    StartPageRoute().go(context);
                   }
                 }
               },

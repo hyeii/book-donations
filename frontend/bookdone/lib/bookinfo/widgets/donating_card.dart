@@ -19,6 +19,8 @@ class DonatingCard extends HookWidget {
     var regionList = useState<List<RegionInfo>>([]);
     var regionCode = useState('');
     var regionName = useState('');
+    var dateData = useState(donation.createdAt.split('T')[0]);
+    var timeData = useState(donation.createdAt.split('T')[1]);
 
     Future<List<RegionInfo>> readJson() async {
       final jsonString =
@@ -70,13 +72,13 @@ class DonatingCard extends HookWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 7.0,
+              height: 13,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(donation.nickname),
-                Text(date.value),
+                Text(dateData.value),
               ],
             ),
             SizedBox(
@@ -90,7 +92,7 @@ class DonatingCard extends HookWidget {
               ],
             ),
             SizedBox(
-              height: 7.0,
+              height: 13,
             ),
           ],
         ),

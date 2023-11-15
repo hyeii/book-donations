@@ -515,7 +515,7 @@ class _RestClient implements RestClient {
     _data.files.addAll(images.map((i) => MapEntry('images', i)));
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<RegisterResponse>(Options(
-      method: 'PUT',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
       contentType: 'multipart/form-data',

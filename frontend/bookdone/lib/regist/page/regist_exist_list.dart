@@ -17,46 +17,12 @@ class RegistExistList extends HookConsumerWidget {
 
     final restClient = ref.read(restApiClientProvider);
 
-    var keepingList = useState<ExistList>(ExistList(info: []));
     var infoText = useState('');
-    var isHaving = useState(false);
-
-    useEffect(() {
-      void fetchData() async {
-        try {
-          List<BookInfo> keeping = [];
-          await restClient.getMyBook().then((bookData) {
-            for (var book in bookData.data) {
-              if (book.isbn == ref.watch(getIsbnProvider)) {
-                keeping.add(book);
-              }
-            }
-            if (keeping.isEmpty) {
-              infoText.value = '해당하는 책을 보유하고 있지 않습니다';
-            } else {
-              isHaving.value = true;
-              infoText.value = '책을 선택해 등록을 진행해주세요';
-            }
-            keepingList.value = ExistList(info: keeping);
-          });
-        } catch (error) {
-          print(error);
-        }
-      }
-
-      fetchData();
-
-      return null;
-    }, []);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text("보유 리스트"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
+        title: Text("책을 선택해주세요"),
       ),
       body: Center(
         child: Padding(
@@ -71,76 +37,79 @@ class RegistExistList extends HookConsumerWidget {
               SizedBox(
                 height: 10,
               ),
-              keepingList.value,
+              SizedBox(
+                height: 10,
+              ),
+              FutureBuilder(
+                future: restClient.getMyBook(),
+                builder: (_, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.data == null) {
+                    // return SizedBox.shrink();
+                    return SizedBox(
+                      height: 10,
+                    );
+                  }
+                  final booklist = snapshot.data!.data;
+                  List<BookInfo> equalList = [];
+                  for (var book in booklist) {
+                    if (book.isbn == isbn) {
+                      equalList.add(book);
+                    }
+                  }
+
+                  return ExistList(info: equalList);
+                },
+              )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 3 / 7,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: alert 확인창x
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    fixedSize: Size(20, 100),
-                    textStyle: const TextStyle(fontSize: 15),
-                    backgroundColor: Colors.grey.shade300,
-                    foregroundColor: Colors.grey.shade600),
-                child: Text(
-                  "돌아가기",
-                  style: TextStyle(fontFamily: "SCDream4"),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 3 / 7,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (ref.read(setDonationIdProvider) == -1) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: Container(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.height / 4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                              ),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text('책을 선택해주세요'))),
-                        );
-                      },
+      bottomSheet: SafeArea(
+        child: Container(
+          width: double.infinity,
+          color: Colors.brown.shade200,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 17),
+                backgroundColor: Colors.brown.shade200,
+                foregroundColor: Colors.white,
+                shape: BeveledRectangleBorder()),
+            onPressed: () {
+              if (ref.read(setDonationIdProvider) == -1) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      child: Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height / 4,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                          ),
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Text('책을 선택해주세요'))),
                     );
-                    return;
-                  }
-                  RegisterRoute(
-                          isbn: isbn,
-                          donationId: ref.read(setDonationIdProvider))
-                      .push(context);
-                  ref.watch(setDonationIdProvider.notifier).setId(-1);
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    fixedSize: Size(20, 100),
-                    textStyle: const TextStyle(fontSize: 15),
-                    backgroundColor: Colors.brown.shade300,
-                    foregroundColor: Colors.white),
-                child: Text("등록하기", style: TextStyle(fontFamily: "SCDream4")),
-              ),
+                  },
+                );
+                return;
+              }
+              RegisterRoute(
+                      isbn: isbn, donationId: ref.read(setDonationIdProvider))
+                  .push(context);
+              ref.watch(setDonationIdProvider.notifier).setId(-1);
+            },
+            child: Text(
+              '등록하기',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -154,14 +123,14 @@ class ExistList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var curId = useState(-1);
-    return Expanded(
-      child: ListView.builder(
-        itemCount: info.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return info.isEmpty
-              ? Text('해당하는 책을 보유하고 있지 않습니다')
-              : GestureDetector(
+    return info.isEmpty
+        ? Text('해당하는 책을 보유하고 있지 않습니다')
+        : Expanded(
+            child: ListView.builder(
+              itemCount: info.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return GestureDetector(
                   onTap: () {
                     curId.value = info[index].id;
                     ref
@@ -275,9 +244,9 @@ class ExistList extends HookConsumerWidget {
                     ),
                   ),
                 );
-        },
-      ),
-    );
+              },
+            ),
+          );
   }
 }
 

@@ -67,7 +67,7 @@ Future<String?> fcmSetting() async {
               channel.id,
               channel.name,
               channelDescription: channel.description,
-              icon: "@mipmap/ic_launcher",
+              icon: "@drawable/fcm_push_icon",
             ),
           ));
 

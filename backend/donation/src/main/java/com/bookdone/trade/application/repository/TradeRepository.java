@@ -8,4 +8,5 @@ public interface TradeRepository {
     void updateStatus(Long donationId, Long memberId, TradeStatus tradeStatus);
     void deleteTrade(Long donationId, Long memberId);
     TradeStatus findTradeByDonationIdAndMemberId(Long donationId, Long memberId);
+    Long findById(Long tradeId);
 }

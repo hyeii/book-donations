@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface JpaTradeRepository extends JpaRepository<TradeEntity, Long> {
     Optional<TradeEntity> findByDonationIdAndMemberId(Long donationId, Long memberId);
+
+    Optional<TradeEntity> findById(Long tradeId);
 }

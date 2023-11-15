@@ -49,4 +49,11 @@ public class TradeRepositoryImpl implements TradeRepository {
         return tradeEntity.getTradeStatus();
     }
 
+    @Override
+    public Long findById(Long tradeId) {
+        TradeEntity tradeEntity = jpaTradeRepository.findById(tradeId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 거래가 없습니다."));
+        return tradeEntity.getDonationId();
+    }
+
 }

@@ -121,4 +121,11 @@ public class TradeController {
                 "거래가 등록되었습니다.",
                 id);
     }
+
+    @GetMapping("/donationId/{tradeId}")
+    public ResponseEntity<?> giveMeDonationId(@PathVariable Long tradeId) {
+        Long donationIdByTradeId = findTradeUseCase.findDonationIdByTradeId(tradeId);
+        return BaseResponse.okWithData(HttpStatus.OK, "donationId가 조회되었습니다.", donationIdByTradeId);
+    }
+
 }

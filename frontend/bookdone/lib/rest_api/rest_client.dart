@@ -170,4 +170,12 @@ abstract class RestClient {
 
   @GET('/api/trades/donations/donationId/{tradeId}')
   Future<DonationIdResponseDto> getDonationIdByTradeId(@Path() int tradeId);
+
+  @DELETE('/api/trades/donations/{donationId}/members/{memberId}')
+  Future<TradeServerConfirm> cancelTrade(
+      @Path() int donationId, @Path() int memberId);
+
+  @DELETE('/api/chats/{tradeId}')
+  Future<TradeServerConfirm> cancelChatRoom(@Path() int tradeId);
+
 }

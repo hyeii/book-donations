@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../rest_api/rest_client.dart';
+import '../../router/app_routes.dart';
 
 class TradeButton extends HookConsumerWidget {
   final tradeId;
@@ -78,9 +79,9 @@ class TradeButton extends HookConsumerWidget {
         }
         await fetchTradeInfo();
 
-
         print(tradeStatus.value);
-        print("!!============================================================================================");
+        print(
+            "!!============================================================================================");
       } catch (e) {
         print('Error in updating trade status: $e');
       }
@@ -122,24 +123,40 @@ class TradeButton extends HookConsumerWidget {
       }
     }
 
-    // 취소 버튼 액션 정의
-    cancelTradeAction() async {
-      // 거래 취소 로직 구현
-      print("거래 취소 요청");
-      // TODO: 서버에 거래 취소 요청 보내는 로직 추가
+    Future<void> requestCancelTrade() async {
+      try {
+        // 서버에 거래 취소 요청 보내기
+        // TODO: 적절한 서버 요청 함수를 호출하십시오.
+        await restClient.cancelTrade(donationId.value, receiveUserId.value);
+        await restClient.cancelChatRoom(tradeId);
+
+        print('거래 취소 요청 성공');
+        Navigator.pop(context, 'refreshNeeded');
+        StartPageRoute().push(context).then((value) => ChatMainRoute().push(context));
+
+      } catch (e) {
+        print('거래 취소 요청 실패: $e');
+      }
     }
 
     // 취소 버튼 활성화 조건
     bool isCancelButtonEnabled() {
       bool isTradeCancel = true;
-      if (tradeStatus.value != "COMPLETION_CONFIRMED") {
+      if (tradeStatus.value == "COMPLETION_CONFIRMED") {
         isTradeCancel = false;
       }
 
-      if (tradeStatus.value != "NONE") {
+      if (tradeStatus.value == "NONE") {
         isTradeCancel = false;
       }
       return isTradeCancel;
+    }
+
+    // 취소 버튼 액션
+    cancelTradeAction() async {
+      if (isCancelButtonEnabled()) {
+        await requestCancelTrade();
+      }
     }
 
     return Container(
@@ -166,4 +183,3 @@ class TradeButton extends HookConsumerWidget {
     );
   }
 }
-

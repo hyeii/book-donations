@@ -29,6 +29,7 @@ List<RouteBase> get $appRoutes => [
       $historyRegisterRoute,
       $myHistoriesRoute,
       $chatRoomRoute,
+      $chatMainRoute,
     ];
 
 RouteBase get $firstPageRoute => GoRouteData.$route(
@@ -570,6 +571,28 @@ extension $ChatRoomRouteExtension on ChatRoomRoute {
           'last-chat': lastChat,
           'isbn': isbn,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $chatMainRoute => GoRouteData.$route(
+      path: '/chat',
+      factory: $ChatMainRouteExtension._fromState,
+    );
+
+extension $ChatMainRouteExtension on ChatMainRoute {
+  static ChatMainRoute _fromState(GoRouterState state) => const ChatMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/chat',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -144,8 +144,9 @@ class MyHistories extends HookConsumerWidget {
                                               SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
-                                                        .width /
-                                                    2,
+                                                        .width *
+                                                    2 /
+                                                    5,
                                                 child: Text(
                                                     histories
                                                         .value![index].title,
@@ -211,15 +212,16 @@ class MyHistories extends HookConsumerWidget {
                                               SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
-                                                        .width /
-                                                    2,
+                                                        .width *
+                                                    2 /
+                                                    5,
                                                 child: Text(
                                                     histories
                                                         .value![index].title,
                                                     overflow:
                                                         TextOverflow.ellipsis),
                                               ),
-                                              Text(day),
+                                              // Text(day),
                                             ],
                                           ),
                                         ),

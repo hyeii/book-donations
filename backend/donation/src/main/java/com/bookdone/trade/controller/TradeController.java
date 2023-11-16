@@ -1,5 +1,6 @@
 package com.bookdone.trade.controller;
 
+import com.bookdone.donation.application.FindDonationUseCase;
 import com.bookdone.donation.dto.request.NotificationRequest;
 import com.bookdone.global.dto.BaseResponse;
 import com.bookdone.trade.application.*;
@@ -25,6 +26,7 @@ public class TradeController {
     private final ModifyTradeUseCase modifyTradeUseCase;
     private final RemoveTradeUseCase removeTradeUseCase;
     private final AddTradeUseCase addTradeUseCase;
+    private final FindDonationUseCase findDonationUseCase;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final KafkaTemplate<String, NotificationRequest> kafkaTemplate2;
     private final FindTradeUseCase findTradeUseCase;
@@ -116,7 +118,10 @@ public class TradeController {
 
     @PostMapping("/{donationId}/members/{memberId}")
     public ResponseEntity<?> tradeAdd(@PathVariable Long donationId, @PathVariable Long memberId) {
+        long donationMemberId = findDonationUseCase.findDonationMemberIdByDonationId(donationId);
+
         Long id = addTradeUseCase.tradeAdd(donationId, memberId);
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(donationMemberId, "Book Done", "새로운 채팅방이 생성되었습니다."));
         return BaseResponse.okWithData(
                 HttpStatus.CREATED,
                 "거래가 등록되었습니다.",

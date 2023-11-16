@@ -243,4 +243,9 @@ public class FindDonationUseCase {
 
         return donationListNoHistoryResponseList;
     }
+
+    public long findDonationMemberIdByDonationId(Long id) {
+        Donation donation = donationRepository.findById(id);
+        return donation.getMemberId();
+    }
 }

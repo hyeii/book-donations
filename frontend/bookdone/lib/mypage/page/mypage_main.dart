@@ -170,139 +170,141 @@ class MyPageMain extends HookConsumerWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width / 8),
-            child: Column(
-              children: [
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100.0),
-                            child: Image(
-                              image:
-                                  AssetImage("assets/images/defaultimage.png"),
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 8),
+              child: Column(
+                children: [
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100.0),
+                              child: Image(
+                                image: AssetImage(
+                                    "assets/images/defaultimage.png"),
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${nickname.value}님의 서재",
-                                style: TextStyle(fontSize: 13),
-                              ),
-                              Row(
-                                children: [
-                                  Image(
-                                    image: AssetImage(
-                                        "assets/images/bookmark.png"),
-                                    width: 30,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    "${point.value}",
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.notifications),
-                        onPressed: () {
-                          NotificationRoute().push(context);
-                        },
-                      ),
-                    ],
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${nickname.value}님의 서재",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                                Row(
+                                  children: [
+                                    Image(
+                                      image: AssetImage(
+                                          "assets/images/bookmark.png"),
+                                      width: 30,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "${point.value}",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.notifications),
+                          onPressed: () {
+                            NotificationRoute().push(context);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        AddHistoryRoute().push(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 5.0),
-                          // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          shape: RoundedRectangleBorder(
-                              //모서리를 둥글게
-                              borderRadius: BorderRadius.circular(8)),
-                          textStyle: const TextStyle(fontSize: 12),
-                          backgroundColor: Colors.brown,
-                          foregroundColor: Colors.white),
-                      child: Text(
-                        "히스토리 작성",
-                        style: TextStyle(fontFamily: "SCDream4"),
-                      )),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          AddHistoryRoute().push(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 5.0),
+                            // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            shape: RoundedRectangleBorder(
+                                //모서리를 둥글게
+                                borderRadius: BorderRadius.circular(8)),
+                            textStyle: const TextStyle(fontSize: 12),
+                            backgroundColor: Colors.brown,
+                            foregroundColor: Colors.white),
+                        child: Text(
+                          "히스토리 작성",
+                          style: TextStyle(fontFamily: "SCDream4"),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          TabBar(
-            tabs: tabs,
-            controller: _tabController,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.brown,
-            indicatorSize: TabBarIndicatorSize.tab,
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            labelColor: Colors.black,
-          ),
-          Expanded(
-            child: TabBarView(
+            SizedBox(
+              height: 20,
+            ),
+            TabBar(
+              tabs: tabs,
               controller: _tabController,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 12),
-                  child: donatingList.value,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 12),
-                  child: keepingList.value,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 12),
-                  child: likeBookList.value,
-                ),
-              ],
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Colors.brown,
+              indicatorSize: TabBarIndicatorSize.tab,
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              labelColor: Colors.black,
             ),
-          )
-        ],
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width / 12),
+                    child: donatingList.value,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width / 12),
+                    child: keepingList.value,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width / 12),
+                    child: likeBookList.value,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
       // bottomNavigationBar: TopNavigationBar(),
       // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,

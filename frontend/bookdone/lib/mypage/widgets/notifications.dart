@@ -1,9 +1,6 @@
-import 'package:bookdone/mypage/page/mypage_notifications.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Notifications extends HookConsumerWidget {
@@ -24,15 +21,11 @@ class Notifications extends HookConsumerWidget {
       child: Container(
         width: double.infinity,
         height: 100,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black12,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(20.0),
-        ),
+        color: Color.fromARGB(255, 244, 250, 252),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: MediaQuery.of(context).size.width / 10),
           child: Row(
             children: [
               SizedBox(
@@ -46,7 +39,15 @@ class Notifications extends HookConsumerWidget {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(message),
+                        child: Text(
+                          message,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
                       ),
                       Container(
                         alignment: Alignment.bottomRight,

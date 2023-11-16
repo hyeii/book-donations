@@ -65,125 +65,127 @@ class OnboardingPage extends HookConsumerWidget {
     var currentIndex = useState(0);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 140, 135, 130),
-      body: SizedBox(
-        width: size.width,
-        height: size.height,
-        child: Column(
-          children: [
-            Expanded(
-              flex: 3,
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: listOfItems.length,
-                onPageChanged: (newIndex) {
-                  currentIndex.value = newIndex;
-                },
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: ((context, index) {
-                  return SizedBox(
-                    width: size.width,
-                    height: size.height,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width / 10),
-                      child: Column(
-                        children: [
-                          /// IMG
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(15, 40, 15, 10),
-                            width: size.width,
-                            height: size.height / 2.5,
-                            child: animationDo(
-                              index,
-                              100,
-                              SvgPicture.asset(listOfItems[index].img),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 80,
-                          ),
-
-                          /// TITLE TEXT
-                          animationDo(
-                            index,
-                            300,
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                listOfItems[index].title,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17),
-                              ),
-                            ),
-                          ),
-
-                          /// SUBTITLE TEXT
-                          animationDo(
-                            index,
-                            500,
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                listOfItems[index].subTitle,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 14),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ),
-
-            /// ---------------------------
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                currentIndex.value == 2
-
-                    /// GET STARTED BTN
-                    ? animationDo(
-                        3, 200, GetStartBtn(size: size, textTheme: textTheme))
-
-                    /// SKIP BTN
-                    : SizedBox.shrink(),
-                SizedBox(
-                  height: 30,
-                ),
-                SmoothPageIndicator(
+      body: SafeArea(
+        child: SizedBox(
+          width: size.width,
+          height: size.height,
+          child: Column(
+            children: [
+              Expanded(
+                flex: 3,
+                child: PageView.builder(
                   controller: pageController,
-                  count: listOfItems.length,
-                  effect: const ExpandingDotsEffect(
-                    spacing: 6.0,
-                    radius: 10.0,
-                    dotWidth: 10.0,
-                    dotHeight: 10.0,
-                    expansionFactor: 3.8,
-                    dotColor: Color.fromARGB(255, 219, 219, 219),
-                    activeDotColor: Color.fromARGB(255, 72, 67, 62),
-                  ),
-                  onDotClicked: (newIndex) {
+                  itemCount: listOfItems.length,
+                  onPageChanged: (newIndex) {
                     currentIndex.value = newIndex;
-                    pageController.animateToPage(newIndex,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease);
                   },
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: ((context, index) {
+                    return SizedBox(
+                      width: size.width,
+                      height: size.height,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width / 10),
+                        child: Column(
+                          children: [
+                            /// IMG
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(15, 40, 15, 10),
+                              width: size.width,
+                              height: size.height / 2.5,
+                              child: animationDo(
+                                index,
+                                100,
+                                SvgPicture.asset(listOfItems[index].img),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 80,
+                            ),
+
+                            /// TITLE TEXT
+                            animationDo(
+                              index,
+                              300,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  listOfItems[index].title,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ),
+
+                            /// SUBTITLE TEXT
+                            animationDo(
+                              index,
+                              500,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  listOfItems[index].subTitle,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
                 ),
-                SizedBox(
-                  height: 50,
-                ),
-              ],
-            ),
-          ],
+              ),
+
+              /// ---------------------------
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  currentIndex.value == 2
+
+                      /// GET STARTED BTN
+                      ? animationDo(
+                          3, 200, GetStartBtn(size: size, textTheme: textTheme))
+
+                      /// SKIP BTN
+                      : SizedBox.shrink(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  SmoothPageIndicator(
+                    controller: pageController,
+                    count: listOfItems.length,
+                    effect: const ExpandingDotsEffect(
+                      spacing: 6.0,
+                      radius: 10.0,
+                      dotWidth: 10.0,
+                      dotHeight: 10.0,
+                      expansionFactor: 3.8,
+                      dotColor: Color.fromARGB(255, 219, 219, 219),
+                      activeDotColor: Color.fromARGB(255, 72, 67, 62),
+                    ),
+                    onDotClicked: (newIndex) {
+                      currentIndex.value = newIndex;
+                      pageController.animateToPage(newIndex,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.ease);
+                    },
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

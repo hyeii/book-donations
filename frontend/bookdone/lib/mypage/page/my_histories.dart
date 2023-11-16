@@ -177,37 +177,53 @@ class MyHistories extends HookConsumerWidget {
                                       ],
                                       image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/samplebookcover.jpg'),
+                                            'assets/images/tea-time.jpg'),
                                         fit: BoxFit.cover,
-                                        opacity: 0.5,
+                                        opacity: 0.3,
                                         alignment: Alignment.topCenter,
                                       ),
                                     ),
                                     height: 200,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(30.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Align(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(30.0),
+                                          child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
                                               histories.value![index].content!,
-                                              style: TextStyle(fontSize: 15),
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
                                             ),
                                           ),
-                                          Row(
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30.0, vertical: 15),
+                                          color: Colors.white,
+                                          child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(histories
-                                                  .value![index].title),
-                                              Text('$day $time'),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2,
+                                                child: Text(
+                                                    histories
+                                                        .value![index].title,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                              ),
+                                              Text(day),
                                             ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

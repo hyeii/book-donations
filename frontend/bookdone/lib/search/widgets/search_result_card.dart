@@ -38,7 +38,8 @@ class SearchResultCard extends HookWidget {
                   alignment: Alignment.topCenter,
                   imageUrl: book.titleUrl,
                   placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => Image(
+                      image: AssetImage('assets/images/sample-bookdone.png')),
                 ),
               ),
               SizedBox(

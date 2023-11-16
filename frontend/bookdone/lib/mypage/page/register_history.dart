@@ -42,67 +42,69 @@ class RegisterHistory extends HookConsumerWidget {
           //   onPressed: () {},
           // ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width / 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Text('이 책은 어떠셨나요?'),
-                Text('책의 후기, 책의 상태\n어떤 형태로든 책에 대한 히스토리를 남겨주세요'),
-                SizedBox(
-                  height: 15,
-                ),
-                Form(
-                  // key: _formKey,
-                  child: TextField(
-                    style: TextStyle(fontSize: 12),
-                    controller: contentController,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text('이 책은 어떠셨나요?'),
+                  Text('책의 후기, 책의 상태\n어떤 형태로든 책에 대한 히스토리를 남겨주세요'),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Form(
+                    // key: _formKey,
+                    child: TextField(
+                      style: TextStyle(fontSize: 12),
+                      controller: contentController,
 
-                    // onTapOutside: (event) =>
-                    //     FocusManager.instance.primaryFocus?.unfocus(),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: '히스토리를 남겨주세요',
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 240, 240, 240),
-                      enabledBorder: OutlineInputBorder(
+                      // onTapOutside: (event) =>
+                      //     FocusManager.instance.primaryFocus?.unfocus(),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10),
+                        hintText: '히스토리를 남겨주세요',
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 240, 240, 240),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 240, 240, 240),
+                            )),
+                        focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide(
                             color: Color.fromARGB(255, 240, 240, 240),
-                          )),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 240, 240, 240),
+                          ),
                         ),
                       ),
+                      maxLength: 250,
+                      maxLines: 13,
+                      onChanged: (text) {
+                        content.value = contentController.text;
+                        if (contentController.text != '') {
+                          validate.value = true;
+                        } else {
+                          validate.value = false;
+                        }
+                      },
                     ),
-                    maxLength: 250,
-                    maxLines: 13,
-                    onChanged: (text) {
-                      content.value = contentController.text;
-                      if (contentController.text != '') {
-                        validate.value = true;
-                      } else {
-                        validate.value = false;
-                      }
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

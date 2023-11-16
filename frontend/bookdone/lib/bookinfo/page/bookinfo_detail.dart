@@ -152,173 +152,178 @@ class BookinfoDetail extends HookConsumerWidget {
               },
             ),
           ),
-          body: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width / 12),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // readJson();
+          body: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 12),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // readJson();
 
-                          selectAddress(context);
-                          // ref
-                          //     .read(regionStateProvider.notifier)
-                          //     .setRegion('주소변경값');
-                        },
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            padding: EdgeInsets.symmetric(horizontal: 5.0),
-                            textStyle: const TextStyle(
-                                fontSize: 13, fontFamily: "SCDream4"),
-                            backgroundColor: Colors.brown.shade100,
-                            foregroundColor: Colors.black87),
-                        child: Wrap(
-                          children: [
-                            Icon(Icons.location_on, size: 17),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(ref.watch(regionNameStateProvider)),
-                          ],
+                            selectAddress(context);
+                            // ref
+                            //     .read(regionStateProvider.notifier)
+                            //     .setRegion('주소변경값');
+                          },
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15)),
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              textStyle: const TextStyle(
+                                  fontSize: 13, fontFamily: "SCDream4"),
+                              backgroundColor: Colors.brown.shade100,
+                              foregroundColor: Colors.black87),
+                          child: Wrap(
+                            children: [
+                              Icon(Icons.location_on, size: 17),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(ref.watch(regionNameStateProvider)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    FutureBuilder(
-                        future: restClient.getDetailBook(isbn),
-                        builder: (_, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          if (snapshot.data == null) {
-                            // return SizedBox.shrink();
-                            return SizedBox(
-                              height: 10,
-                            );
-                          }
-                          final book = snapshot.data!.data;
+                      SizedBox(
+                        height: 10,
+                      ),
+                      FutureBuilder(
+                          future: restClient.getDetailBook(isbn),
+                          builder: (_, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (snapshot.data == null) {
+                              // return SizedBox.shrink();
+                              return SizedBox(
+                                height: 10,
+                              );
+                            }
+                            final book = snapshot.data!.data;
 
-                          return Container(
-                            width: double.infinity,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15.0, bottom: 15.0),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: CachedNetworkImage(
-                                      width: 80,
-                                      height: 80,
-                                      fit: BoxFit.cover,
-                                      alignment: Alignment.topCenter,
-                                      imageUrl: book.titleUrl,
-                                      placeholder: (context, url) =>
-                                          CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+                            return Container(
+                              width: double.infinity,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10.0, bottom: 10.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            book.title,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            book.author,
-                                            style: TextStyle(
-                                                color: Colors.grey.shade600),
-                                          ),
-                                        ],
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: CachedNetworkImage(
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.topCenter,
+                                        imageUrl: book.titleUrl != ''
+                                            ? book.titleUrl
+                                            : 'assets/images/sample-bookdone.png',
+                                        placeholder: (context, url) =>
+                                            CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) => Image(
+                                            image: AssetImage(
+                                                'assets/images/sample-bookdone.png')),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10.0, bottom: 10.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              book.title,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              book.author,
+                                              style: TextStyle(
+                                                  color: Colors.grey.shade600),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        }),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-              TabBar(
-                tabs: tabs,
-                controller: _tabController,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: Colors.brown,
-                indicatorSize: TabBarIndicatorSize.tab,
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-                // indicatorWeight: 2,
-                // indicatorPadding:
-                //     EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
-                labelColor: Colors.black,
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width / 12),
-                      child: DonatingList(
-                        isbn: isbn,
-                        // code: regionCode.value,
-                        code: ref.watch(regionStateProvider),
+                            );
+                          }),
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width / 12),
-                      child: KeepingList(
+                    ],
+                  ),
+                ),
+                TabBar(
+                  tabs: tabs,
+                  controller: _tabController,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: Colors.brown,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  // indicatorWeight: 2,
+                  // indicatorPadding:
+                  //     EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
+                  labelColor: Colors.black,
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width / 12),
+                        child: DonatingList(
                           isbn: isbn,
                           // code: regionCode.value,
                           code: ref.watch(regionStateProvider),
-                          // regionIndex: selectedRegionIndex.value,
-                          regionIndex: ref.read(regionIndexStateProvider),
-                          regionList: regionList.value),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width / 12),
+                        child: KeepingList(
+                            isbn: isbn,
+                            // code: regionCode.value,
+                            code: ref.watch(regionStateProvider),
+                            // regionIndex: selectedRegionIndex.value,
+                            regionIndex: ref.read(regionIndexStateProvider),
+                            regionList: regionList.value),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ));
     });
   }

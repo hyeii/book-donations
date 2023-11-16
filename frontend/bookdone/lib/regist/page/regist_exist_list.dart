@@ -5,6 +5,7 @@ import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,49 +24,57 @@ class RegistExistList extends HookConsumerWidget {
       appBar: AppBar(
         centerTitle: false,
         title: Text("책을 선택해주세요"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            StartPageRoute().go(context);
+          },
+        ),
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 12),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(infoText.value),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              FutureBuilder(
-                future: restClient.getMyBook(),
-                builder: (_, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (snapshot.data == null) {
-                    // return SizedBox.shrink();
-                    return SizedBox(
-                      height: 10,
-                    );
-                  }
-                  final booklist = snapshot.data!.data;
-                  List<BookInfo> equalList = [];
-                  for (var book in booklist) {
-                    if (book.isbn == isbn) {
-                      equalList.add(book);
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width / 12),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(infoText.value),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                FutureBuilder(
+                  future: restClient.getMyBook(),
+                  builder: (_, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
-                  }
+                    if (snapshot.data == null) {
+                      // return SizedBox.shrink();
+                      return SizedBox(
+                        height: 10,
+                      );
+                    }
+                    final booklist = snapshot.data!.data;
+                    List<BookInfo> equalList = [];
+                    for (var book in booklist) {
+                      if (book.isbn == isbn) {
+                        equalList.add(book);
+                      }
+                    }
 
-                  return ExistList(info: equalList);
-                },
-              )
-            ],
+                    return ExistList(info: equalList);
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -124,7 +133,23 @@ class ExistList extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var curId = useState(-1);
     return info.isEmpty
-        ? Text('해당하는 책을 보유하고 있지 않습니다')
+        ? Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 100,
+                ),
+                SvgPicture.asset(
+                  'assets/images/undraw_notify.svg',
+                  height: 150,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Text('해당하는 책을 보유하고 있지 않습니다', style: TextStyle(fontSize: 13)),
+              ],
+            ),
+          )
         : Expanded(
             child: ListView.builder(
               itemCount: info.length,

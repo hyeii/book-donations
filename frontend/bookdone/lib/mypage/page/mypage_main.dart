@@ -4,6 +4,7 @@ import 'package:bookdone/mypage/widgets/my_donating_list.dart';
 import 'package:bookdone/mypage/widgets/my_keeping_list.dart';
 import 'package:bookdone/mypage/widgets/my_like_book_list.dart';
 import 'package:bookdone/onboard/repository/user_repository.dart';
+import 'package:bookdone/onboard/service/set_user_api.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/widgets/floating_register_btn.dart';
@@ -66,8 +67,7 @@ class MyPageMain extends HookConsumerWidget {
     var repository = ref.read(userDataRepositoryProvider);
     useEffect(() {
       void fetchData() async {
-        print(
-            '------------------u s e e f f e c t -------------------------------------------');
+        SetUserApi.updateMyInfo(ref);
         try {
           repository.restoreNickname().then((name) {
             nickname.value = name;

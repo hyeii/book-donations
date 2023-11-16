@@ -8,10 +8,12 @@ class SetUserApi {
     print(user);
     SharedPreferences pref = await SharedPreferences.getInstance();
 
+    await pref.setInt('userId', user.data.id);
     await pref.setString('nickname', user.data.nickname);
     await pref.setInt('bookmarkCnt', user.data.point);
     await pref.setString('address', user.data.address);
     await pref.setString('profileImage', user.data.image);
     await pref.setString('oauthId', user.data.oauthId);
+    await pref.setString('getFcmToken', user.data.fcmToken);
   }
 }

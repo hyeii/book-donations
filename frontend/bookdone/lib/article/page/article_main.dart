@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:bookdone/article/model/article_data.dart';
+import 'package:bookdone/onboard/service/set_user_api.dart';
 import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:bookdone/search/model/book.dart';
@@ -45,6 +46,7 @@ class ArticleMain extends HookConsumerWidget {
 
     useEffect(() {
       Future<void> init() async {
+        SetUserApi.updateMyInfo(ref);
         SharedPreferences pref = await SharedPreferences.getInstance();
         userNickname.value = pref.getString('nickname')!;
         userId.value = pref.getInt('userId')!;

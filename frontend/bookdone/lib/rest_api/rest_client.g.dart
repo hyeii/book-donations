@@ -882,7 +882,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              '/api/trades/donations/${donationId}/members/${memberId}/reservation/request',
+              '/api/trades/donations/${donationId}/members/${memberId}/reservations/request',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -912,7 +912,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              '/api/trades/donations/${donationId}/members/${memberId}/reservation/confirm',
+              '/api/trades/donations/${donationId}/members/${memberId}/reservations/confirm',
               queryParameters: queryParameters,
               data: _data,
             )

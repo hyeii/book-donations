@@ -812,6 +812,33 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<DefaultReps> cancelDonation(int donationId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<DefaultReps>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/donations/${donationId}/keeping',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = DefaultReps.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ChatListDto> chatRoomList() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

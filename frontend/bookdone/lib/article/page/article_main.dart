@@ -34,14 +34,12 @@ class ArticleMain extends HookConsumerWidget {
     Future<ArticleData> getArticleInfo() async {
       ArticleRespByid data = await restClient.getArticleById(id);
       ArticleData articleInfo = data.data;
-      print('아티클인포여기얌여기############ ${articleInfo}');
       return articleInfo;
     }
 
     Future<BookData> getBookInfo() async {
       BookDetail data = await restClient.getDetailBook(isbn);
       BookData bookInfo = data.data;
-      print('북인포여기얌여기############ ${bookInfo}');
       return bookInfo;
     }
 
@@ -246,44 +244,81 @@ class ArticleMain extends HookConsumerWidget {
       bottomSheet: SafeArea(
         child: Container(
           width: double.infinity,
-          color: Colors.brown.shade200,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 17),
-                backgroundColor: Colors.brown.shade200,
+                backgroundColor: articleData.value != null &&
+                        userNickname.value == articleData.value!.nickname
+                    ? Color.fromARGB(255, 169, 169, 169)
+                    : Colors.brown.shade200,
                 foregroundColor: Colors.white,
                 shape: BeveledRectangleBorder()),
             onPressed: () {
-              showDialog<String>(
-                context: context,
-                builder: (BuildContext dialogContext) => AlertDialog(
-                  title: const Text(
-                    '나눔 신청',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  content: const Text('나눔을 신청할까요?\n기부자와의 채팅이 시작됩니다'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(dialogContext),
-                      child: const Text('취소'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);
-                        // 이 함수를 호출할 때 적절한 context를 전달합니다.
-                        // 비동기 함수가 완료될 때까지 기다릴 필요가 없습니다.
-                        confirmAndNavigate(context);
-                      },
-                      child: const Text('확인'),
-                    ),
-                  ],
-                ),
-              );
+              articleData.value != null &&
+                      userNickname.value == articleData.value!.nickname
+                  ? showDialog<String>(
+                      context: context,
+                      builder: (BuildContext dialogContext) => AlertDialog(
+                        title: const Text(
+                          '나눔 취소',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                        content: const Text('나눔을 취소할까요?\n기부글이 삭제됩니다'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(dialogContext),
+                            child: const Text('취소'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // 나눔 취소
+                              restClient.cancelDonation(id);
+                              context.pop();
+                              context.pop();
+                            },
+                            child: const Text('확인'),
+                          ),
+                        ],
+                      ),
+                    )
+                  : showDialog<String>(
+                      context: context,
+                      builder: (BuildContext dialogContext) => AlertDialog(
+                        title: const Text(
+                          '나눔 신청',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                        content: const Text('나눔을 신청할까요?\n기부자와의 채팅이 시작됩니다'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(dialogContext),
+                            child: const Text('취소'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(dialogContext);
+                              // 이 함수를 호출할 때 적절한 context를 전달합니다.
+                              // 비동기 함수가 완료될 때까지 기다릴 필요가 없습니다.
+                              confirmAndNavigate(context);
+                            },
+                            child: const Text('확인'),
+                          ),
+                        ],
+                      ),
+                    );
             },
-            child: const Text(
-              '나눔 요청하기',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
+            child: articleData.value != null &&
+                    userNickname.value == articleData.value!.nickname
+                ? Text(
+                    '나눔 취소하기',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  )
+                : Text(
+                    '나눔 요청하기',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
           ),
         ),
       ),

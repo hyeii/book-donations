@@ -43,67 +43,69 @@ class MyPageAddHistory extends HookConsumerWidget {
         //   onPressed: () {},
         // ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FutureBuilder(
-                future: restClient.getUnwrittenHistoryDonations(),
-                builder: (_, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width / 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FutureBuilder(
+                  future: restClient.getUnwrittenHistoryDonations(),
+                  builder: (_, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.data == null) {
+                      return SizedBox.shrink();
+                    }
+
+                    final donationList = snapshot.data!.data;
+
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        donationList.isEmpty
+                            ? Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 100,
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/images/undraw_notify.svg',
+                                      height: 150,
+                                    ),
+                                    SizedBox(
+                                      height: 50,
+                                    ),
+                                    Text('히스토리를 작성하지 않은 책이 없어요',
+                                        style: TextStyle(fontSize: 13)),
+                                  ],
+                                ),
+                              )
+                            : Text("히스토리를 아직 작성하지 않았어요"),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: donationList.map((data) {
+                            return AddHitoryCard(
+                              info: data,
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     );
-                  }
-                  if (snapshot.data == null) {
-                    return SizedBox.shrink();
-                  }
-
-                  final donationList = snapshot.data!.data;
-
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      donationList.isEmpty
-                          ? Center(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 100,
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/images/undraw_notify.svg',
-                                    height: 150,
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                  ),
-                                  Text('히스토리를 작성하지 않은 책이 없어요',
-                                      style: TextStyle(fontSize: 13)),
-                                ],
-                              ),
-                            )
-                          : Text("히스토리를 아직 작성하지 않았어요"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        children: donationList.map((data) {
-                          return AddHitoryCard(
-                            info: data,
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

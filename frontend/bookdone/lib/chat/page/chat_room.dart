@@ -164,16 +164,20 @@ class ChatRoom extends HookConsumerWidget {
       }
     }
 
+    ImageProvider<Object> getAvatarImage(String? url) {
+      if (url != null && url.isNotEmpty && url.startsWith('http')) {
+        return NetworkImage(url);
+      } else {
+        return AssetImage('assets/images/sample-bookdone.png');
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(
-                bookData.value?.titleUrl != null && bookData.value!.titleUrl.isNotEmpty
-                    ? bookData.value!.titleUrl
-                    : 'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg',
-              ),
+              backgroundImage: getAvatarImage(bookData.value?.titleUrl),
               radius: 20,
             ),
             SizedBox(width: 8),

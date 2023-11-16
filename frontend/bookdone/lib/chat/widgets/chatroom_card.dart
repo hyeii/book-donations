@@ -10,7 +10,8 @@ class ChatRoomCard extends HookWidget {
   final ChatRoomResponse chatRoom;
   final BookData? bookData;
 
-  ChatRoomCard({Key? key, required this.chatRoom, required this.bookData}) : super(key: key);
+  ChatRoomCard({Key? key, required this.chatRoom, required this.bookData})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,18 @@ class ChatRoomCard extends HookWidget {
     ThemeData theme = Theme.of(context);
 
     // 이미지 URL 처리
-    String imageUrl = (bookData?.titleUrl != null && bookData!.titleUrl.isNotEmpty)
-        ? bookData!.titleUrl
-        : "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg";
+    String imageUrl =
+        (bookData?.titleUrl != null && bookData!.titleUrl.isNotEmpty)
+            ? bookData!.titleUrl
+            : 'assets/images/sample-bookdone.png';
+
+    ImageProvider<Object> getImage(String url) {
+      if (url.startsWith('http')) {
+        return CachedNetworkImageProvider(url); // 네트워크 이미지
+      } else {
+        return AssetImage(url); // 로컬 에셋 이미지
+      }
+    }
 
     return InkWell(
       onTap: () {
@@ -40,15 +50,16 @@ class ChatRoomCard extends HookWidget {
       child: Card(
         elevation: 2.0,
         margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
               CircleAvatar(
                 radius: 35,
-                backgroundImage: CachedNetworkImageProvider(imageUrl),
-                backgroundColor: theme.primaryColorLight,
+                backgroundImage: getImage(imageUrl), // 로컬 에셋 이미지
+                // backgroundColor: theme.primaryColorLight,
               ),
               SizedBox(width: 16),
               Expanded(
@@ -58,20 +69,23 @@ class ChatRoomCard extends HookWidget {
                   children: [
                     Text(
                       chatRoom.userNickname ?? '유저 없음',
-                      style: theme.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                      style: theme.textTheme.subtitle1
+                          ?.copyWith(fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 4),
                     Text(
                       bookData?.title ?? '책 제목 정보 없음',
-                      style: theme.textTheme.caption?.copyWith(color: Colors.grey, fontSize: 12),
+                      style: theme.textTheme.caption
+                          ?.copyWith(color: Colors.grey, fontSize: 12),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
                     SizedBox(height: 4),
                     Text(
                       formattedLastMessageTime,
-                      style: theme.textTheme.caption?.copyWith(color: Colors.grey),
+                      style:
+                          theme.textTheme.caption?.copyWith(color: Colors.grey),
                     ),
                     SizedBox(height: 8),
                     Text(

@@ -2,6 +2,7 @@ import 'package:bookdone/rest_api/rest_client.dart';
 import 'package:bookdone/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RegisterHistory extends HookConsumerWidget {
@@ -141,10 +142,35 @@ class RegisterHistory extends HookConsumerWidget {
                   );
                   return;
                 } else {
-                  if (await tryPostHistory()) {
-                    // TODO: dialog 생성
-                    StartPageRoute().go(context);
-                  }
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text(
+                          '히스토리',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                        content: Text('히스토리를 등록합니다'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                            child: const Text('취소'),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              if (await tryPostHistory()) {
+                                StartPageRoute().go(context);
+                              }
+                            },
+                            child: const Text('확인'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: Text(

@@ -63,21 +63,21 @@ public class TradeController {
             return BaseResponse.fail("json 변환 실패", 400);
         }
         kafkaTemplate.send(requestTopicName, payload);
-        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(donationMemberId, "Book Done", "예약 요청"));
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(donationMemberId, "Book Done", "거래 예약 요청이 왔습니다."));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
     @PatchMapping("/{donationId}/members/{memberId}/reservations/confirm")
     public ResponseEntity<?> tradeChangeToDonationConfirmed(@PathVariable Long donationId, @PathVariable Long memberId) {
         modifyTradeUseCase.changeStatusToDonationConfirmed(donationId, memberId);
-        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(memberId, "Book Done", "예약 완료"));
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(memberId, "Book Done", "거레 예약이 완료되었습니다."));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
     @PatchMapping("/{donationId}/members/{memberId}/completion/request")
     public ResponseEntity<?> tradeChangeToCompletionRequested(@PathVariable Long donationId, @PathVariable Long memberId) {
         modifyTradeUseCase.changeStatusToCompletionRequested(donationId, memberId);
-        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(memberId, "Book Done", "거래 완료 요청"));
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(memberId, "Book Done", "거래 완료 요청이 왔습니다."));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 
@@ -94,7 +94,7 @@ public class TradeController {
             return BaseResponse.fail("json 변환 실패", 400);
         }
         kafkaTemplate.send(completeTopicName, payload);
-        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(id, "Book Done", "예약 요청"));
+        kafkaTemplate2.send(notificationTopicName, new NotificationRequest(id, "Book Done", "거래가 완료되었습니다."));
         return BaseResponse.ok(HttpStatus.OK, "거래 상태가 변경되었습니다.");
     }
 

@@ -23,8 +23,7 @@ class MyHistories extends HookConsumerWidget {
       void fetchData() async {
         try {
           final data = await getHistories();
-          // histories.value = data.data;
-          histories.value = [];
+          histories.value = data.data;
         } catch (error) {
           print(error);
         }

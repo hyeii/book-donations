@@ -346,3 +346,13 @@ class ChatRoomRoute extends GoRouteData {
         isbn: isbn,
       );
 }
+
+@TypedGoRoute<ChatMainRoute>(
+  path: RouterPath.chatMain,
+)
+class ChatMainRoute extends GoRouteData {
+  const ChatMainRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => ChatMain();
+}

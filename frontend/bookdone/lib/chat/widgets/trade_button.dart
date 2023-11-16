@@ -35,7 +35,7 @@ class TradeButton extends HookConsumerWidget {
 
         if (userId.value != -1) {
           final tradeResponse =
-              await restClient.getDonationIdByTradeId(tradeId);
+          await restClient.getDonationIdByTradeId(tradeId);
           receiveUserId.value = tradeResponse.data.memberId;
           donationId.value = tradeResponse.data.donationId;
           tradeStatus.value = tradeResponse.data.tradeStatus;
@@ -129,8 +129,8 @@ class TradeButton extends HookConsumerWidget {
 
         print('거래 취소 요청 성공');
         Navigator.pop(context, 'refreshNeeded');
-        StartPageRoute().push(context).then((value) => ChatMainRoute().push(context));
-
+        StartPageRoute().push(context).then((value) =>
+            ChatMainRoute().push(context));
       } catch (e) {
         print('거래 취소 요청 실패: $e');
       }
@@ -152,7 +152,29 @@ class TradeButton extends HookConsumerWidget {
     // 취소 버튼 액션
     cancelTradeAction() async {
       if (isCancelButtonEnabled()) {
-        await requestCancelTrade();
+        final confirm = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('채팅 종료'),
+              content: Text('채팅을 종료하면 거래 내역과 채팅 방이 삭제됩니다.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text('취소'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text('확인'),
+                ),
+              ],
+            );
+          },
+        );
+
+        if (confirm) {
+          await requestCancelTrade();
+        }
       }
     }
 
@@ -172,7 +194,8 @@ class TradeButton extends HookConsumerWidget {
             flex: 3,
             child: ElevatedButton(
               onPressed: isCancelButtonEnabled() ? cancelTradeAction : null,
-              child: Text("거래 취소"),
+              // 여기에 cancelTradeAction 함수 연결
+              child: Text("채팅 종료"),
             ),
           ),
         ],

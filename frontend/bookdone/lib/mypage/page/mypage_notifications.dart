@@ -65,7 +65,9 @@ class MyPageNotifications extends HookConsumerWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) =>
-                        Divider(),
+                        SizedBox(
+                      height: 3,
+                    ),
                   );
           },
         ),

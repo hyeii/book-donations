@@ -89,17 +89,13 @@ class MyPageAddHistory extends HookConsumerWidget {
                                   ],
                                 ),
                               )
-                            : Text("히스토리를 아직 작성하지 않았어요"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: donationList.map((data) {
-                            return AddHitoryCard(
-                              info: data,
-                            );
-                          }).toList(),
-                        ),
+                            : Column(
+                                children: donationList.map((data) {
+                                  return AddHitoryCard(
+                                    info: data,
+                                  );
+                                }).toList(),
+                              ),
                       ],
                     );
                   },

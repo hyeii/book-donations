@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "book") // 테이블명을 지정
+@Table(name = "book")
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Lob  // TEXT 타입에는 @Lob 어노테이션을 사용합니다.
+	@Lob
 	private String title;
 
-	@Column(length = 100)  // VARCHAR 타입에는 length 속성을 사용합니다.
+	@Column(length = 100)
 	private String vol;
 
 	@Lob

@@ -49,17 +49,8 @@ public class BookService {
 			.orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다"));
 	}
 
-	public Map<String, BookDto> getBooksDetailMap(List<String> isbnList) {
-		return bookRepository.findByIsbnIn(isbnList)
-			.stream()
-			.collect(Collectors.toMap(
-				Book::getIsbn, // ISBN을 키로 사용
-				book -> book.toDto(false)    // Book 객체를 BookDto로 변환하는 함수를 값으로 사용
-			));
-	}
-
 	@Transactional
-	public Map<String, BookDto> getBooksDetailMap2(List<String> isbnList) {
+	public Map<String, BookDto> getBooksDetailMap(List<String> isbnList) {
 		Map<String, BookDto> booksMap = new HashMap<>();
 		for (String isbn : isbnList) {
 			bookRepository.findByIsbn(isbn)

@@ -26,16 +26,10 @@ public class LikesService {
 	private final LikesRepository likesRepository;
 	private final BookRepository bookRepository;
 
-	/*	TODO: 미완성
-		article server에게 요청해서 특정 지역 특정 책 -> count 계산하고
-		내가 관심도서로 지정한 책이 있다면, 관심도서 표시 o
-		내가 관심도서로 지정한 책이 아니면, 관심도서 표시 x
-	 */
+	//	TODO: 마이페이지에서 사용하는 걸로 대체
 	@Transactional
 	public List<LikesResponseDto> getLikesBooks(long memberId) {
 		List<Likes> likes = likesRepository.findByMemberId(memberId);
-
-		// article server 에게 개수 요청
 
 		return likes.stream()
 			.map(like -> {

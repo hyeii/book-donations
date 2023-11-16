@@ -47,14 +47,14 @@ public class BookController {
 	private final ResponseUtil responseUtil;
 	private final ElasticSearchService elasticSearchService;
 
-	// TODO : 책 제목 자동완성 리스트 반환 // redis 데이터 넣어줘야함
+	// TODO : 책 제목 자동완성 리스트 반환 [elasticSearch]
 	@GetMapping("/auto-completion/{title}")
 	public ResponseEntity<?> autoCompletionBookList(@PathVariable String title) throws IOException {
 		List<BookAutoCompDto> bookAutoCompDto = elasticSearchService.autoCompletion(title);
 		return BaseResponse.okWithData(HttpStatus.OK, "책 제목 자동완성", bookAutoCompDto);
 	}
 
-	// TODO : 엔터 쳤을 때 이동하는 곳
+	// TODO : 엔터 쳤을 때 도서 검색 결과 리스트 [elasticSearch]
 	@GetMapping("/search/{title}")
 	public ResponseEntity<?> searchBookList(@PathVariable String title) throws IOException {
 		List<BookDto> books = elasticSearchService.searchBooks(title);
@@ -71,9 +71,10 @@ public class BookController {
 		return BaseResponse.okWithData(HttpStatus.OK, "책 상세 조회 완료", book);
 	}
 
+	// TODO : 여러 isnb에 대한 책 세부 디테일
 	@GetMapping("/details")
 	public ResponseEntity<?> getBooksDetail(@RequestParam List<String> isbns) {
-		Map<String, BookDto> booksDetailMap = bookService.getBooksDetailMap2(isbns);
+		Map<String, BookDto> booksDetailMap = bookService.getBooksDetailMap(isbns);
 		return BaseResponse.okWithData(HttpStatus.OK, "여러 책 상세 조회 완료", booksDetailMap);
 	}
 
@@ -124,11 +125,13 @@ public class BookController {
 		return BaseResponse.ok(HttpStatus.OK, message);
 	}
 
+	// TODO: 책 title-url DTO 주면, 기존 있는 것도 title-url update
 	@PostMapping("/title-image")
 	public ResponseEntity<?> addTitleImage(@RequestBody List<BookTitleUrlDto> bookTitleUrlDtoList) {
 		bookService.addTitleImage(bookTitleUrlDtoList);
 		return BaseResponse.ok(HttpStatus.OK, "title-url 등록 완료");
 	}
+
 	@GetMapping("/likes/{isbn}")
 	public ResponseEntity<?> getBookLikesList(@PathVariable String isbn){
 		return BaseResponse.okWithData(HttpStatus.OK, "좋아요 한 사람들 반환", likesService.getMemberList(isbn));

@@ -81,9 +81,9 @@ class TradeButton extends HookConsumerWidget {
 
     bool isButtonEnabled() {
       if (userId.value == receiveUserId.value) {
-        return tradeStatus.value == "NONE" || tradeStatus.value == "DONATION_CONFIRMED";
+        return tradeStatus.value == "NONE" || tradeStatus.value == "COMPLETION_REQUESTED";
       } else {
-        return tradeStatus.value == "DONATION_REQUESTED" || tradeStatus.value == "COMPLETION_REQUESTED";
+        return tradeStatus.value == "DONATION_REQUESTED" || tradeStatus.value == "DONATION_CONFIRMED";
       }
     }
 
@@ -91,15 +91,17 @@ class TradeButton extends HookConsumerWidget {
       // 현재 상태에 따라 버튼 텍스트 결정
       switch (tradeStatus.value) {
         case "NONE":
+          return "예약 요청";
         case "DONATION_REQUESTED":
-          return "기부 예약";
+          return "예약 확인";
         case "DONATION_CONFIRMED":
+          return "완료 요청";
         case "COMPLETION_REQUESTED":
           return "완료 확인";
         case "COMPLETION_CONFIRMED":
           return "거래 완료";
         default:
-          return "액션";
+          return "임시 버튼";
       }
     }
 

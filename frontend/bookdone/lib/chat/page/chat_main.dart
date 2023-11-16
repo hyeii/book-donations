@@ -16,8 +16,6 @@ class ChatMain extends HookConsumerWidget {
     final isChatRoomFetched = useState(false);
     final booksData = useState<Map<String, BookData>>({});
 
-
-
     fetchChatRooms() async {
       try {
         final chatRoomResponse = await restClient.chatRoomList();
@@ -31,7 +29,7 @@ class ChatMain extends HookConsumerWidget {
             .map((chatRoom) => chatRoom.isbn!)
             .toList();
 
-        // 책 정보 요청
+        // 모아서 한번에 요청
         BooksDto booksDto = await restClient.getBooksDetails(isbnList);
         booksData.value = booksDto.data;
 

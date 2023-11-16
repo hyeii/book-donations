@@ -138,13 +138,13 @@ class TradeButton extends HookConsumerWidget {
 
     // 취소 버튼 활성화 조건
     bool isCancelButtonEnabled() {
-      bool isTradeCancel = true;
+      bool isTradeCancel = false;
       if (tradeStatus.value == "COMPLETION_CONFIRMED") {
-        isTradeCancel = false;
+        isTradeCancel = true;
       }
 
       if (tradeStatus.value == "NONE") {
-        isTradeCancel = false;
+        isTradeCancel = true;
       }
       return isTradeCancel;
     }

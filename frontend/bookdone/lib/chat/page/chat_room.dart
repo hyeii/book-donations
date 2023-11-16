@@ -152,7 +152,6 @@ class ChatRoom extends HookConsumerWidget {
           senderNickname: userNickname.value,
         );
 
-        // JSON으로 변환
         String chatMessageWriteRequest =
             jsonEncode(chatMessageWriteRequestDto.toJson());
 
@@ -171,7 +170,6 @@ class ChatRoom extends HookConsumerWidget {
           children: [
             CircleAvatar(
               backgroundImage: NetworkImage(
-                // Null 체크와 함께 빈 문자열인지도 확인합니다.
                 bookData.value?.titleUrl != null && bookData.value!.titleUrl.isNotEmpty
                     ? bookData.value!.titleUrl
                     : 'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg',
@@ -216,7 +214,6 @@ class ChatRoom extends HookConsumerWidget {
             // 채팅 목록을 표시하는 부분
             Flexible(
               child: ListView.builder(
-                // 기존 reverse 제거
                 padding: EdgeInsets.only(bottom: 10),
                 controller: scrollController,
                 itemCount: chatMessages.value.length,

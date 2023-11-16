@@ -21,7 +21,9 @@ class ChatRoomCard extends HookWidget {
     ThemeData theme = Theme.of(context);
 
     // 이미지 URL 처리
-    var imageUrl = bookData?.titleUrl ?? "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg";
+    String imageUrl = (bookData?.titleUrl != null && bookData!.titleUrl.isNotEmpty)
+        ? bookData!.titleUrl
+        : "https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg";
 
     return InkWell(
       onTap: () {

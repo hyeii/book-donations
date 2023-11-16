@@ -144,22 +144,22 @@ abstract class RestClient {
 
   @PATCH(
       '/api/trades/donations/{donationId}/members/{memberId}/reservations/request')
-  Future<TradeStringResponseDto> reservationRequestTrade(
+  Future<TradeServerConfirm> reservationRequestTrade(
       @Path() int donationId, @Path() int memberId);
   @PATCH(
       '/api/trades/donations/{donationId}/members/{memberId}/reservations/confirm')
-  Future<TradeStringResponseDto> reservationConfirmTrade(
+  Future<TradeServerConfirm> reservationConfirmTrade(
       @Path() int donationId, @Path() int memberId);
   @PATCH(
       '/api/trades/donations/{donationId}/members/{memberId}/completion/request')
-  Future<TradeStringResponseDto> completionRequestTrade(
+  Future<TradeServerConfirm> completionRequestTrade(
       @Path() int donationId, @Path() int memberId);
   @PATCH(
       '/api/trades/donations/{donationId}/members/{memberId}/completion/confirm')
-  Future<TradeStringResponseDto> completionConfirmTrade(
+  Future<TradeServerConfirm> completionConfirmTrade(
       @Path() int donationId, @Path() int memberId);
   @DELETE('/api/trades/donations/{donationId}/members/{memberId}')
-  Future<TradeStringResponseDto> deleteTrade(
+  Future<TradeServerConfirm> deleteTrade(
       @Path() int donationId, @Path() int memberId);
   @GET('/api/trades/donations/{donationId}/members/{memberId}')
   Future<TradeStringResponseDto> getTrade(

@@ -16,7 +16,6 @@ class TradeButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final restClient = ref.read(restApiClientProvider);
     final userId = useState<int>(-1);
-
     final receiveUserId = useState<int>(-1);
     final donationId = useState<int>(-1);
     final tradeStatus = useState<String?>(null);
@@ -36,8 +35,8 @@ class TradeButton extends HookConsumerWidget {
           final tradeResponse =
               await restClient.getDonationIdByTradeId(tradeId);
           receiveUserId.value = tradeResponse.data.memberId;
-          tradeStatus.value = tradeResponse.data.tradeStatus;
           donationId.value = tradeResponse.data.donationId;
+          tradeStatus.value = tradeResponse.data.tradeStatus;
 
           print('tradeId: $tradeId');
           print('receiveUserId: ${receiveUserId.value}');
@@ -77,7 +76,11 @@ class TradeButton extends HookConsumerWidget {
           default:
             print("Invalid trade status");
         }
-        fetchTradeInfo(); // Refresh trade info after updating
+        await fetchTradeInfo();
+
+
+        print(tradeStatus.value);
+        print("!!============================================================================================");
       } catch (e) {
         print('Error in updating trade status: $e');
       }
@@ -163,3 +166,4 @@ class TradeButton extends HookConsumerWidget {
     );
   }
 }
+

@@ -1,0 +1,59 @@
+spring:
+  port: 8080
+
+  profiles:
+    active: local # local 프로파일 활성화 설정 (test feign client 용도)
+
+  application:
+    name: chat-service
+
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/chat
+      database: chat
+
+  redis:
+    port: 6379
+    host: localhost
+    password: null
+
+  cloud:
+    feign:
+      clients:
+        memberClient:
+          url: http://localhost:8080
+
+
+
+# 개발용
+##############################################################################################################
+
+
+# 서버용
+##############################################################################################################
+
+#spring:
+#  application:
+#    name: chat-service
+#
+#  port: 0
+#
+#  data:
+#    mongodb:
+#      uri: mongodb://root:root@localhost:27017/chat
+#      database: chat
+#
+#  redis:
+#    port: 6379
+#    host: localhost
+#    password: null
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://k9a308.p.ssafy.io:8761/eureka
+

@@ -1,4 +1,3 @@
-import 'package:bookdone/article/model/article_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -40,6 +39,10 @@ class TradeButton extends HookConsumerWidget {
         tradeStatus.value = tradeResponse.data.tradeStatus;
         donationId.value = tradeResponse.data.donationId;
 
+        print('tradeId: $tradeId');
+        print('receiveUserId: ${receiveUserId.value}');
+        print('tradeStatus: ${tradeStatus.value}');
+
       } catch (e) {
         print('Error fetching trade widget call info: $e');
       }
@@ -53,14 +56,17 @@ class TradeButton extends HookConsumerWidget {
     bool isLeftButtonEnabled() {
       return !isLeftButtonPressed.value &&
           userId.value != receiveUserId.value &&
-          (tradeStatus.value == "DONATION_REQUESTED" || tradeStatus.value == "COMPLETION_REQUESTED");
+          (tradeStatus.value == "DONATION_REQUESTED" || tradeStatus.value == "DONATION_CONFIRMED");
     }
 
     /// 오른쪽 버튼 활성화 조건
     bool isRightButtonEnabled() {
+      print(isRightButtonPressed.value);
+      print(tradeStatus.value);
+
       return !isRightButtonPressed.value &&
           userId.value == receiveUserId.value &&
-          (tradeStatus.value == "NONE" || tradeStatus.value == "DONATION_CONFIRMED");
+          (tradeStatus.value == "NONE" || tradeStatus.value == "COMPLETION_REQUESTED");
     }
 
     Future<void> updateTradeStatus() async {

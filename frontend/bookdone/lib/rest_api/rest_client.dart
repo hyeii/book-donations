@@ -138,9 +138,9 @@ abstract class RestClient {
   @GET('/api/chats/{tradeId}/messages')
   Future<ChatMessagesDto> chatMessageList(@Path() int tradeId);
 
-  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservation/request')
+  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservations/request')
   Future<TradeStringResponseDto> reservationRequestTrade(@Path() int donationId, @Path() int memberId);
-  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservation/confirm')
+  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservations/confirm')
   Future<TradeStringResponseDto> reservationConfirmTrade(@Path() int donationId, @Path() int memberId);
   @PATCH('/api/trades/donations/{donationId}/members/{memberId}/completion/request')
   Future<TradeStringResponseDto> completionRequestTrade(@Path() int donationId, @Path() int memberId);

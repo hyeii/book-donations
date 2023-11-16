@@ -19,6 +19,7 @@ class TradeButton extends HookConsumerWidget {
     final userId = useState<int>(-1);
 
     final receiveUserId = useState<int>(-1);
+    final donationId = useState<int>(-1);
     final tradeStatus = useState<String?>(null);
 
     final isLeftButtonPressed = useState<bool>(false);
@@ -34,12 +35,11 @@ class TradeButton extends HookConsumerWidget {
     fetchTradeInfo() async {
       try {
         await readUserInfo();
-        final donationId = await restClient.getDonationIdByTradeId(tradeId);
-        receiveUserId.value = donationId.data.memberId;
-        tradeStatus.value = donationId.data.tradeStatus;
+        final tradeResponse = await restClient.getDonationIdByTradeId(tradeId);
+        receiveUserId.value = tradeResponse.data.memberId;
+        tradeStatus.value = tradeResponse.data.tradeStatus;
+        donationId.value = tradeResponse.data.donationId;
 
-        print(receiveUserId.value);
-        print(tradeStatus.value);
       } catch (e) {
         print('Error fetching trade widget call info: $e');
       }
@@ -63,12 +63,38 @@ class TradeButton extends HookConsumerWidget {
           (tradeStatus.value == "NONE" || tradeStatus.value == "DONATION_CONFIRMED");
     }
 
+    Future<void> updateTradeStatus() async {
+      try {
+        switch (tradeStatus.value) {
+          case "NONE":
+            await restClient.reservationRequestTrade(donationId.value, receiveUserId.value);
+            break;
+          case "DONATION_REQUESTED":
+            await restClient.reservationConfirmTrade(donationId.value, receiveUserId.value);
+            break;
+          case "DONATION_CONFIRMED":
+            await restClient.completionRequestTrade(donationId.value, receiveUserId.value);
+            break;
+          case "COMPLETION_REQUESTED":
+            await restClient.completionConfirmTrade(donationId.value, receiveUserId.value);
+            break;
+          default:
+            print("Invalid trade status");
+        }
+        fetchTradeInfo(); // Refresh trade info after updating
+      } catch (e) {
+        print('Error in updating trade status: $e');
+      }
+    }
+
+
     /// 왼쪽 버튼 액션
     leftButtonAction() {
       if (isLeftButtonEnabled()) {
         isLeftButtonPressed.value = true; // 버튼이 눌렸음을 표시
         print("left 서버로 요청 보내기 dummy ------------------------------");
         // TODO: 서버에 요청 보내는 로직 추가
+        updateTradeStatus();
       }
     }
 
@@ -78,16 +104,25 @@ class TradeButton extends HookConsumerWidget {
         isRightButtonPressed.value = true; // 버튼이 눌렸음을 표시
         print("right 서버로 요청 보내기 dummy ------------------------------");
         // TODO: 서버에 요청 보내는 로직 추가
+        updateTradeStatus(); // Call the update function
       }
     }
 
-    // 버튼 텍스트 변경
+    /// 버튼 텍스트 변경
     String leftButtonText() {
       switch (tradeStatus.value) {
+        case "NONE":
+          return "기부 완료";
         case "DONATION_REQUESTED":
           return "완료 확인";
-        default:
+        case "DONATION_CONFIRMED":
           return "기부 완료";
+        case "COMPLETION_REQUESTED":
+          return "기부 완료";
+        case "COMPLETION_CONFIRMED":
+          return "거래 완료";
+        default:
+          return "";
       }
     }
 
@@ -95,8 +130,14 @@ class TradeButton extends HookConsumerWidget {
       switch (tradeStatus.value) {
         case "NONE":
           return "기부 예약";
+        case "DONATION_REQUESTED":
+          return "기부 예약";
         case "DONATION_CONFIRMED":
+          return "완료 확인";
+        case "COMPLETION_REQUESTED":
           return "예약 확인";
+        case "COMPLETION_CONFIRMED":
+          return "거래 완료";
         default:
           return "";
       }

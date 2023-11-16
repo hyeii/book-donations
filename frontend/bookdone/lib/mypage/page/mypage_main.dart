@@ -67,7 +67,7 @@ class MyPageMain extends HookConsumerWidget {
     var repository = ref.read(userDataRepositoryProvider);
     useEffect(() {
       void fetchData() async {
-        SetUserApi.updateMyInfo(ref);
+        await SetUserApi.updateMyInfo(ref);
         try {
           repository.restoreNickname().then((name) {
             nickname.value = name;

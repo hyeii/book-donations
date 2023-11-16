@@ -5,6 +5,7 @@ import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MyPageAddHistory extends HookConsumerWidget {
@@ -69,7 +70,24 @@ class MyPageAddHistory extends HookConsumerWidget {
                         height: 10,
                       ),
                       donationList.isEmpty
-                          ? Text('히스토리를 작성하지 않은 책이 없어요')
+                          ? Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 100,
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/images/undraw_notify.svg',
+                                    height: 150,
+                                  ),
+                                  SizedBox(
+                                    height: 50,
+                                  ),
+                                  Text('히스토리를 작성하지 않은 책이 없어요',
+                                      style: TextStyle(fontSize: 13)),
+                                ],
+                              ),
+                            )
                           : Text("히스토리를 아직 작성하지 않았어요"),
                       SizedBox(
                         height: 10,

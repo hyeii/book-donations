@@ -105,7 +105,17 @@ class TradeStringResponseDto with _$TradeStringResponseDto {
       _$TradeStringResponseDtoFromJson(json);
 }
 
+@freezed
+class TradeServerConfirm with _$TradeServerConfirm {
+  const factory TradeServerConfirm({
+    required bool success,
+    required String msg,
+    required String? data,
+  }) = _TradeServerConfirm;
 
+  factory TradeServerConfirm.fromJson(Map<String, dynamic> json) =>
+      _$TradeServerConfirmFromJson(json);
+}
 
 @freezed
 class TradeResponse with _$TradeResponse {

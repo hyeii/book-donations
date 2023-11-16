@@ -166,8 +166,12 @@ class ChatRoom extends HookConsumerWidget {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(bookData.value?.titleUrl ??
-                  'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg'),
+              backgroundImage: NetworkImage(
+                // Null 체크와 함께 빈 문자열인지도 확인합니다.
+                bookData.value?.titleUrl != null && bookData.value!.titleUrl.isNotEmpty
+                    ? bookData.value!.titleUrl
+                    : 'https://image.aladin.co.kr/product/29045/74/cover500/k192836746_2.jpg',
+              ),
               radius: 20,
             ),
             SizedBox(width: 8),

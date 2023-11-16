@@ -1611,6 +1611,179 @@ abstract class _TradeStringResponseDto implements TradeStringResponseDto {
       get copyWith => throw _privateConstructorUsedError;
 }
 
+TradeServerConfirm _$TradeServerConfirmFromJson(Map<String, dynamic> json) {
+  return _TradeServerConfirm.fromJson(json);
+}
+
+/// @nodoc
+mixin _$TradeServerConfirm {
+  bool get success => throw _privateConstructorUsedError;
+  String get msg => throw _privateConstructorUsedError;
+  String? get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TradeServerConfirmCopyWith<TradeServerConfirm> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TradeServerConfirmCopyWith<$Res> {
+  factory $TradeServerConfirmCopyWith(
+          TradeServerConfirm value, $Res Function(TradeServerConfirm) then) =
+      _$TradeServerConfirmCopyWithImpl<$Res, TradeServerConfirm>;
+  @useResult
+  $Res call({bool success, String msg, String? data});
+}
+
+/// @nodoc
+class _$TradeServerConfirmCopyWithImpl<$Res, $Val extends TradeServerConfirm>
+    implements $TradeServerConfirmCopyWith<$Res> {
+  _$TradeServerConfirmCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TradeServerConfirmImplCopyWith<$Res>
+    implements $TradeServerConfirmCopyWith<$Res> {
+  factory _$$TradeServerConfirmImplCopyWith(_$TradeServerConfirmImpl value,
+          $Res Function(_$TradeServerConfirmImpl) then) =
+      __$$TradeServerConfirmImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool success, String msg, String? data});
+}
+
+/// @nodoc
+class __$$TradeServerConfirmImplCopyWithImpl<$Res>
+    extends _$TradeServerConfirmCopyWithImpl<$Res, _$TradeServerConfirmImpl>
+    implements _$$TradeServerConfirmImplCopyWith<$Res> {
+  __$$TradeServerConfirmImplCopyWithImpl(_$TradeServerConfirmImpl _value,
+      $Res Function(_$TradeServerConfirmImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? msg = null,
+    Object? data = freezed,
+  }) {
+    return _then(_$TradeServerConfirmImpl(
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      msg: null == msg
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TradeServerConfirmImpl implements _TradeServerConfirm {
+  const _$TradeServerConfirmImpl(
+      {required this.success, required this.msg, required this.data});
+
+  factory _$TradeServerConfirmImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TradeServerConfirmImplFromJson(json);
+
+  @override
+  final bool success;
+  @override
+  final String msg;
+  @override
+  final String? data;
+
+  @override
+  String toString() {
+    return 'TradeServerConfirm(success: $success, msg: $msg, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TradeServerConfirmImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, msg, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TradeServerConfirmImplCopyWith<_$TradeServerConfirmImpl> get copyWith =>
+      __$$TradeServerConfirmImplCopyWithImpl<_$TradeServerConfirmImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TradeServerConfirmImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _TradeServerConfirm implements TradeServerConfirm {
+  const factory _TradeServerConfirm(
+      {required final bool success,
+      required final String msg,
+      required final String? data}) = _$TradeServerConfirmImpl;
+
+  factory _TradeServerConfirm.fromJson(Map<String, dynamic> json) =
+      _$TradeServerConfirmImpl.fromJson;
+
+  @override
+  bool get success;
+  @override
+  String get msg;
+  @override
+  String? get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$TradeServerConfirmImplCopyWith<_$TradeServerConfirmImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 TradeResponse _$TradeResponseFromJson(Map<String, dynamic> json) {
   return _TradeResponse.fromJson(json);
 }

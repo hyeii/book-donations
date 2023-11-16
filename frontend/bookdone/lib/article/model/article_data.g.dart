@@ -144,6 +144,22 @@ Map<String, dynamic> _$$TradeStringResponseDtoImplToJson(
       'data': instance.data,
     };
 
+_$TradeServerConfirmImpl _$$TradeServerConfirmImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TradeServerConfirmImpl(
+      success: json['success'] as bool,
+      msg: json['msg'] as String,
+      data: json['data'] as String?,
+    );
+
+Map<String, dynamic> _$$TradeServerConfirmImplToJson(
+        _$TradeServerConfirmImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
 _$TradeResponseImpl _$$TradeResponseImplFromJson(Map<String, dynamic> json) =>
     _$TradeResponseImpl(
       id: json['id'] as int,

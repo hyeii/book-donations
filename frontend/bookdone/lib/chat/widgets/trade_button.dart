@@ -10,8 +10,9 @@ import '../../router/app_routes.dart';
 
 class TradeButton extends HookConsumerWidget {
   final tradeId;
+  final int refreshTrigger; // 채팅 입력 시 렌더링
 
-  const TradeButton({super.key, required this.tradeId});
+  const TradeButton({super.key, required this.tradeId, required this.refreshTrigger});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,9 +43,6 @@ class TradeButton extends HookConsumerWidget {
           print('tradeId: $tradeId');
           print('receiveUserId: ${receiveUserId.value}');
           print('tradeStatus: ${tradeStatus.value}');
-        } else {
-          print(
-              "user Id 없음 ====================================================================");
         }
       } catch (e) {
         print('Error fetching trade widget call info: $e');
@@ -53,7 +51,8 @@ class TradeButton extends HookConsumerWidget {
 
     useEffect(() {
       fetchTradeInfo();
-    }, []);
+      print("refreshTrigger!! : $refreshTrigger");
+    }, [refreshTrigger]);
 
     Future<void> updateTradeStatus() async {
       try {
@@ -80,8 +79,6 @@ class TradeButton extends HookConsumerWidget {
         await fetchTradeInfo();
 
         print(tradeStatus.value);
-        print(
-            "!!============================================================================================");
       } catch (e) {
         print('Error in updating trade status: $e');
       }

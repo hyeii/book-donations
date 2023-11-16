@@ -40,6 +40,8 @@ class ChatRoom extends HookConsumerWidget {
     final stompClient = useState<StompClient?>(null);
     final bookData = useState<BookData?>(null);
 
+    final refreshTrigger = useState(0); // 채팅 입력 시 Button 변경 트리거
+
     final scrollController = ScrollController();
 
     useEffect(() {
@@ -133,6 +135,8 @@ class ChatRoom extends HookConsumerWidget {
             ));
       }
       // chatMessages의 길이가 변경될 때만 useEffect가 실행되도록 설정
+      // 채팅 입력 시 버튼 변경을 위해 refreshTrigger를 사용
+      refreshTrigger.value = chatMessages.value.length;
     }, [chatMessages.value.length]);
 
     // 메시지 전송 로직
@@ -208,7 +212,7 @@ class ChatRoom extends HookConsumerWidget {
         child: Column(
           children: [
             // 버튼 두개 부분
-            TradeButton(tradeId: tradeId),
+            TradeButton(tradeId: tradeId, refreshTrigger: refreshTrigger.value),
             // 채팅 목록을 표시하는 부분
             Flexible(
               child: ListView.builder(

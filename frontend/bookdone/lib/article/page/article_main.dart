@@ -29,6 +29,7 @@ class ArticleMain extends HookConsumerWidget {
 
     final userNickname = useState<String>("");
     final userId = useState<int>(0);
+    final userBookmark = useState(0);
 
     final tradeIdFromServer = useState<int>(0);
 
@@ -46,10 +47,11 @@ class ArticleMain extends HookConsumerWidget {
 
     useEffect(() {
       Future<void> init() async {
-        SetUserApi.updateMyInfo(ref);
+        await SetUserApi.updateMyInfo(ref);
         SharedPreferences pref = await SharedPreferences.getInstance();
-        userNickname.value = pref.getString('nickname')!;
-        userId.value = pref.getInt('userId')!;
+        userNickname.value = pref.getString('nickname') ?? '';
+        userId.value = pref.getInt('userId') ?? 0;
+        userBookmark.value = pref.getInt('bookmarkCnt') ?? 0;
       }
 
       init();
@@ -292,14 +294,21 @@ class ArticleMain extends HookConsumerWidget {
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
-                        content: const Text('나눔을 신청할까요?\n기부자와의 채팅이 시작됩니다'),
+                        content: userBookmark.value == 0
+                            ? Text('보유한 책갈피가 없습니다')
+                            : Text('나눔을 신청할까요?\n기부자와의 채팅이 시작됩니다'),
                         actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(dialogContext),
-                            child: const Text('취소'),
-                          ),
+                          if (userBookmark.value != 0)
+                            TextButton(
+                              onPressed: () => Navigator.pop(dialogContext),
+                              child: const Text('취소'),
+                            ),
                           TextButton(
                             onPressed: () {
+                              if (userBookmark.value == 0) {
+                                context.pop();
+                                return;
+                              }
                               Navigator.pop(dialogContext);
                               // 이 함수를 호출할 때 적절한 context를 전달합니다.
                               // 비동기 함수가 완료될 때까지 기다릴 필요가 없습니다.

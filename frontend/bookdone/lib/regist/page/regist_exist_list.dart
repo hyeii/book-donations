@@ -5,6 +5,7 @@ import 'package:bookdone/router/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -124,7 +125,23 @@ class ExistList extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var curId = useState(-1);
     return info.isEmpty
-        ? Text('해당하는 책을 보유하고 있지 않습니다')
+        ? Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 100,
+                ),
+                SvgPicture.asset(
+                  'assets/images/undraw_notify.svg',
+                  height: 150,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Text('해당하는 책을 보유하고 있지 않습니다', style: TextStyle(fontSize: 13)),
+              ],
+            ),
+          )
         : Expanded(
             child: ListView.builder(
               itemCount: info.length,

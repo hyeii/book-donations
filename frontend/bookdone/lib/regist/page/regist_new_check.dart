@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -55,7 +56,9 @@ class RegistNewCheck extends HookConsumerWidget {
                         imageUrl: bookDetail.titleUrl,
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) => Image(
+                            image: AssetImage(
+                                'assets/images/sample-bookdone.png')),
                       ),
                       SizedBox(
                         width: 20,
@@ -64,11 +67,23 @@ class RegistNewCheck extends HookConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(bookDetail.title),
+                            Text(
+                              bookDetail.title,
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(bookDetail.author),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(bookDetail.publisher),
-                            Text("2099-99-99"),
-                            Text(isbn)
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text('ISBN $isbn')
                             // TODO: 길이 조정
                           ],
                         ),
@@ -80,9 +95,20 @@ class RegistNewCheck extends HookConsumerWidget {
               SizedBox(
                 height: 10,
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("위의 책 정보가 맞는지 확인해주세요."),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 100,
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/undraw_check.svg',
+                    height: 150,
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Text('위의 책 정보가 맞는지 확인해주세요', style: TextStyle(fontSize: 13)),
+                ],
               ),
               SizedBox(
                 height: 10,

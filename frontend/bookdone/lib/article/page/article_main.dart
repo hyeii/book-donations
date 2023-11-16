@@ -122,9 +122,12 @@ class ArticleMain extends HookConsumerWidget {
                 CachedNetworkImage(
                   width: 200,
                   imageUrl:
-                      bookData.value != null ? bookData.value!.titleUrl : '',
+                      bookData.value != null && bookData.value!.titleUrl != ''
+                          ? bookData.value!.titleUrl
+                          : 'assets/images/sample-bookdone.png',
                   placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => Image(
+                      image: AssetImage('assets/images/sample-bookdone.png')),
                 ),
                 SizedBox(
                   height: 15,

@@ -140,9 +140,10 @@ class AddHitoryCard extends HookConsumerWidget {
                   height: 70,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
-                  imageUrl: info.titleUrl,
+                  imageUrl: info.titleUrl != '' ? info.titleUrl : '',
                   placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => Image(
+                      image: AssetImage('assets/images/sample-bookdone.png')),
                 ),
               ),
               SizedBox(

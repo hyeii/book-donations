@@ -119,7 +119,6 @@ class RegistData extends HookConsumerWidget {
     void register() async {
       var code = ref.watch(registerRegionCodeStateProvider);
       var input = ref.watch(registerInputProvider);
-      print('-------$code------$input-----$isbn-------${files.value}-----');
       var resp = await restClient.registArticle(
           isbn: isbn,
           address: code,
@@ -253,11 +252,23 @@ class RegistData extends HookConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(bookDetail.title),
+                              Text(
+                                bookDetail.title,
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(bookDetail.author),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Text(bookDetail.publisher),
-                              Text("2099-99-99"),
-                              Text(isbn)
-                              // TODO: 길이 조정
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text('ISBN $isbn')
                             ],
                           ),
                         )

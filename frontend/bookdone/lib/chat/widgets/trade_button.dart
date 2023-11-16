@@ -21,27 +21,31 @@ class TradeButton extends HookConsumerWidget {
     final donationId = useState<int>(-1);
     final tradeStatus = useState<String?>(null);
 
-    final isLeftButtonPressed = useState<bool>(false);
-    final isRightButtonPressed = useState<bool>(false);
-
     // 유저 정보 읽기
     Future<void> readUserInfo() async {
       SharedPreferences pref = await SharedPreferences.getInstance();
-      userId.value = pref.getInt('userId') ?? 0;
+      userId.value = pref.getInt('userId')!;
     }
 
     // 거래 정보 가져오기
     fetchTradeInfo() async {
       try {
         await readUserInfo();
-        final tradeResponse = await restClient.getDonationIdByTradeId(tradeId);
-        receiveUserId.value = tradeResponse.data.memberId;
-        tradeStatus.value = tradeResponse.data.tradeStatus;
-        donationId.value = tradeResponse.data.donationId;
 
-        print('tradeId: $tradeId');
-        print('receiveUserId: ${receiveUserId.value}');
-        print('tradeStatus: ${tradeStatus.value}');
+        if (userId.value != -1) {
+          final tradeResponse =
+              await restClient.getDonationIdByTradeId(tradeId);
+          receiveUserId.value = tradeResponse.data.memberId;
+          tradeStatus.value = tradeResponse.data.tradeStatus;
+          donationId.value = tradeResponse.data.donationId;
+
+          print('tradeId: $tradeId');
+          print('receiveUserId: ${receiveUserId.value}');
+          print('tradeStatus: ${tradeStatus.value}');
+        } else {
+          print(
+              "user Id 없음 ====================================================================");
+        }
       } catch (e) {
         print('Error fetching trade widget call info: $e');
       }
@@ -81,9 +85,11 @@ class TradeButton extends HookConsumerWidget {
 
     bool isButtonEnabled() {
       if (userId.value == receiveUserId.value) {
-        return tradeStatus.value == "NONE" || tradeStatus.value == "COMPLETION_REQUESTED";
+        return tradeStatus.value == "NONE" ||
+            tradeStatus.value == "COMPLETION_REQUESTED";
       } else {
-        return tradeStatus.value == "DONATION_REQUESTED" || tradeStatus.value == "DONATION_CONFIRMED";
+        return tradeStatus.value == "DONATION_REQUESTED" ||
+            tradeStatus.value == "DONATION_CONFIRMED";
       }
     }
 
@@ -101,7 +107,7 @@ class TradeButton extends HookConsumerWidget {
         case "COMPLETION_CONFIRMED":
           return "거래 완료";
         default:
-          return "임시 버튼";
+          return "서버 에러";
       }
     }
 
@@ -122,9 +128,15 @@ class TradeButton extends HookConsumerWidget {
 
     // 취소 버튼 활성화 조건
     bool isCancelButtonEnabled() {
-      // 취소 버튼이 활성화되는 조건을 여기에 정의
-      return tradeStatus.value !=
-          "COMPLETION_CONFIRMED"; // 예시: 완료 확인된 상태가 아닐 때 활성화
+      bool isTradeCancel = true;
+      if (tradeStatus.value != "COMPLETION_CONFIRMED") {
+        isTradeCancel = false;
+      }
+
+      if (tradeStatus.value != "NONE") {
+        isTradeCancel = false;
+      }
+      return isTradeCancel;
     }
 
     return Container(

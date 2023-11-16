@@ -167,4 +167,7 @@ public class ChatService {
 		return collect;
 	}
 
+	public void deleteChatRoom(Long tradeId) {
+		chatRoomRepository.deleteByTradeId(tradeId);
+	}
 }

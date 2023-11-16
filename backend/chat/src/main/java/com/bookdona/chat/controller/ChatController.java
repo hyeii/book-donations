@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,13 @@ public class ChatController {
 		log.info("채팅방 생성 요청: {}", chatRoomCreateRequest);
 		chatService.addChatRoom(chatRoomCreateRequest);
 		return BaseResponse.ok(HttpStatus.OK, "채팅방이 생성되었습니다.");
+	}
+
+	@DeleteMapping("/{tradeId}")
+	public ResponseEntity<?> chatRoomCreate(@PathVariable Long tradeId){
+		log.info("채팅방 삭제 요청 : tradeId {}, ", tradeId);
+		chatService.deleteChatRoom(tradeId);
+		return BaseResponse.ok(HttpStatus.OK, "채팅방이 삭제되었습니다.");
 	}
 
 	@GetMapping("")

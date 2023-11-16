@@ -22,4 +22,6 @@ public interface ChatRoomRepository extends MongoRepository<ChatRoom, ObjectId> 
 
 	@Query("{ 'tradeId': ?0, $or: [ { 'user1': ?1, 'user2': ?2 }, { 'user1': ?2, 'user2': ?1 } ] }")
 	Optional<ChatRoom> findByTradeIdAndUsersInAnyOrder(Long tradeId, String user1, String user2);
+
+	void deleteByTradeId(Long tradeId);
 }

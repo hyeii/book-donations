@@ -129,7 +129,11 @@ abstract class RestClient {
   Future<void> createChatRoom(@Body() Map<String, dynamic> map);
 
   @POST('/api/trades/donations/{donationId}/members/{memberId}')
-  Future<TradeResponseDto> createTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeResponseDto> createTrade(
+      @Path() int donationId, @Path() int memberId);
+
+  @PATCH('/api/donations/{donationId}/keeping')
+  Future<DefaultReps> cancelDonation(@Path() int donationId);
 
   // cky
 
@@ -138,23 +142,32 @@ abstract class RestClient {
   @GET('/api/chats/{tradeId}/messages')
   Future<ChatMessagesDto> chatMessageList(@Path() int tradeId);
 
-  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservations/request')
-  Future<TradeStringResponseDto> reservationRequestTrade(@Path() int donationId, @Path() int memberId);
-  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/reservations/confirm')
-  Future<TradeStringResponseDto> reservationConfirmTrade(@Path() int donationId, @Path() int memberId);
-  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/completion/request')
-  Future<TradeStringResponseDto> completionRequestTrade(@Path() int donationId, @Path() int memberId);
-  @PATCH('/api/trades/donations/{donationId}/members/{memberId}/completion/confirm')
-  Future<TradeStringResponseDto> completionConfirmTrade(@Path() int donationId, @Path() int memberId);
+  @PATCH(
+      '/api/trades/donations/{donationId}/members/{memberId}/reservations/request')
+  Future<TradeStringResponseDto> reservationRequestTrade(
+      @Path() int donationId, @Path() int memberId);
+  @PATCH(
+      '/api/trades/donations/{donationId}/members/{memberId}/reservations/confirm')
+  Future<TradeStringResponseDto> reservationConfirmTrade(
+      @Path() int donationId, @Path() int memberId);
+  @PATCH(
+      '/api/trades/donations/{donationId}/members/{memberId}/completion/request')
+  Future<TradeStringResponseDto> completionRequestTrade(
+      @Path() int donationId, @Path() int memberId);
+  @PATCH(
+      '/api/trades/donations/{donationId}/members/{memberId}/completion/confirm')
+  Future<TradeStringResponseDto> completionConfirmTrade(
+      @Path() int donationId, @Path() int memberId);
   @DELETE('/api/trades/donations/{donationId}/members/{memberId}')
-  Future<TradeStringResponseDto> deleteTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> deleteTrade(
+      @Path() int donationId, @Path() int memberId);
   @GET('/api/trades/donations/{donationId}/members/{memberId}')
-  Future<TradeStringResponseDto> getTrade(@Path() int donationId, @Path() int memberId);
+  Future<TradeStringResponseDto> getTrade(
+      @Path() int donationId, @Path() int memberId);
 
   @GET('/api/books/details')
   Future<BooksDto> getBooksDetails(@Query('isbns') List<String> isbns);
 
   @GET('/api/trades/donations/donationId/{tradeId}')
   Future<DonationIdResponseDto> getDonationIdByTradeId(@Path() int tradeId);
-
 }

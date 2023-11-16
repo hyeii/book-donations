@@ -11,7 +11,7 @@ class SearchMain extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // FocusNode textFocus = FocusNode();
+    final textFocus = useFocusNode();
     final searchController = useTextEditingController();
     final restClient = ref.read(restApiClientProvider);
     var viewAutoComplete = useState(false);
@@ -19,7 +19,11 @@ class SearchMain extends HookConsumerWidget {
     var searchedList = useState<List<BookData>>([]);
     var searchText = useState('');
     var autoValue = useState('');
-    print(restClient.searchBook('웨않도ㅙㄴ'));
+
+    useEffect(() {
+      textFocus.requestFocus();
+      return null;
+    }, []);
     return GestureDetector(
       onTap: () {
         viewAutoComplete.value = false;
@@ -41,7 +45,7 @@ class SearchMain extends HookConsumerWidget {
                         width: double.infinity,
                         child: TextField(
                           controller: searchController,
-                          // focusNode: textFocus,
+                          focusNode: textFocus,
                           style: TextStyle(
                             color: Colors.grey.shade700,
                             fontSize: 15,
@@ -74,10 +78,10 @@ class SearchMain extends HookConsumerWidget {
                             viewAutoComplete.value = true;
                             autoValue.value = searchController.text;
                           },
-                          onSubmitted: (value) {
-                            viewAutoComplete.value = false;
-                            searchText.value = searchController.text;
-                          },
+                          // onSubmitted: (value) {
+                          //   viewAutoComplete.value = false;
+                          //   searchText.value = searchController.text;
+                          // },
                         ),
                       ),
                       SizedBox(

@@ -67,7 +67,7 @@
 
 ## 🗂️ 시스템 아키텍처
 
-<img src="../../../Downloads/S09P12A404-master/img/architecture-diagram.png">
+<img src="img/architecture-diagram.png">
 
 <br />
 

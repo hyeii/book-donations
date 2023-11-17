@@ -1,6 +1,7 @@
 package com.bookdona.chat.service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -139,6 +140,8 @@ public class ChatService {
 				chatRoom.getUser2() : chatRoom.getUser1(), lastMessageContent, lastMessageCreatedAt, chatRoom.getIsbn());
 		}).collect(Collectors.toList());
 
+		responseList.sort(Comparator.comparing(ChatRoomResponse::getLastMessageTime).reversed());
+		
 		log.info("responseList: {}", responseList);
 		return responseList;
 	}

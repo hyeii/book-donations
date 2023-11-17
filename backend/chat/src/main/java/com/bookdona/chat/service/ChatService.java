@@ -140,8 +140,10 @@ public class ChatService {
 				chatRoom.getUser2() : chatRoom.getUser1(), lastMessageContent, lastMessageCreatedAt, chatRoom.getIsbn());
 		}).collect(Collectors.toList());
 
-		responseList.sort(Comparator.comparing(ChatRoomResponse::getLastMessageTime).reversed());
-		
+		responseList.sort(Comparator.comparing(
+			ChatRoomResponse::getLastMessageTime,
+			Comparator.nullsFirst(Comparator.reverseOrder())));
+
 		log.info("responseList: {}", responseList);
 		return responseList;
 	}

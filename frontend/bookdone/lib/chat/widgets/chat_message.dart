@@ -18,11 +18,11 @@ class ChatMessage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    String datePart = createdAt.substring(2, 10); // "YYYY-MM-DD"
+    //String datePart = createdAt.substring(2, 10); // "YYYY-MM-DD"
     String timePart = createdAt.substring(10, 16); // "HH:MM"
 
     // 최종적으로 표시할 문자열 조합
-    String formattedDateTime = '$datePart $timePart';
+    String formattedDateTime = '$timePart';
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),

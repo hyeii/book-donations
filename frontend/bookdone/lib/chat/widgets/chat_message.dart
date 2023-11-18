@@ -18,61 +18,90 @@ class ChatMessage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String datePart = createdAt.substring(2, 10); // "YYYY-MM-DD"
     String timePart = createdAt.substring(10, 16); // "HH:MM"
 
     // 최종적으로 표시할 문자열 조합
     String formattedDateTime = '$datePart $timePart';
 
-    return Row(
-      mainAxisAlignment: isMine ? MainAxisAlignment.start : MainAxisAlignment.end,
-      children: [
-        if (isMine) ...[
-          SizedBox(width: MediaQuery.of(context).size.width * 0.25),
-        ],
-        Flexible(
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            decoration: BoxDecoration(
-              color: isMine ? Colors.grey[300] : Colors.blue,
-              borderRadius: BorderRadius.circular(20),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Align(
+              alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
+              child: Text(
+                senderNickname,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 102, 102, 102),
+                ),
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  senderNickname,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: isMine ? Colors.black : Colors.white,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (isMine)
+                Flexible(
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: Text(
+                        formattedDateTime,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Color.fromARGB(255, 102, 102, 102),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                Text(
+              Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                ),
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                decoration: BoxDecoration(
+                  color: isMine
+                      ? Colors.grey[300]
+                      : Color.fromARGB(255, 140, 135, 130),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
                   message,
                   style: TextStyle(
                     color: isMine ? Colors.black : Colors.white,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Text(
-                    formattedDateTime,
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: isMine ? Colors.black : Colors.white,
+              ),
+              if (!isMine) ...[
+                Flexible(
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: Text(
+                        formattedDateTime,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Color.fromARGB(255, 102, 102, 102),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ],
-            ),
+            ],
           ),
-        ),
-        if (!isMine) ...[
-          SizedBox(width: MediaQuery.of(context).size.width * 0.25),
         ],
-      ],
+      ),
     );
   }
 }

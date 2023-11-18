@@ -12,7 +12,8 @@ class TradeButton extends HookConsumerWidget {
   final tradeId;
   final int refreshTrigger; // 채팅 입력 시 렌더링
 
-  const TradeButton({super.key, required this.tradeId, required this.refreshTrigger});
+  const TradeButton(
+      {super.key, required this.tradeId, required this.refreshTrigger});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +36,7 @@ class TradeButton extends HookConsumerWidget {
 
         if (userId.value != -1) {
           final tradeResponse =
-          await restClient.getDonationIdByTradeId(tradeId);
+              await restClient.getDonationIdByTradeId(tradeId);
           receiveUserId.value = tradeResponse.data.memberId;
           donationId.value = tradeResponse.data.donationId;
           tradeStatus.value = tradeResponse.data.tradeStatus;
@@ -129,8 +130,9 @@ class TradeButton extends HookConsumerWidget {
 
         print('거래 취소 요청 성공');
         Navigator.pop(context, 'refreshNeeded');
-        StartPageRoute().push(context).then((value) =>
-            ChatMainRoute().push(context));
+        StartPageRoute()
+            .push(context)
+            .then((value) => ChatMainRoute().push(context));
       } catch (e) {
         print('거래 취소 요청 실패: $e');
       }
@@ -185,6 +187,11 @@ class TradeButton extends HookConsumerWidget {
           Expanded(
             flex: 3,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  backgroundColor: Color.fromARGB(255, 179, 170, 164),
+                  foregroundColor: Colors.white),
               onPressed: isButtonEnabled() ? buttonAction : null,
               child: Text(buttonText()),
             ),
@@ -193,6 +200,11 @@ class TradeButton extends HookConsumerWidget {
           Expanded(
             flex: 3,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  backgroundColor: Color.fromARGB(255, 179, 170, 164),
+                  foregroundColor: Colors.white),
               onPressed: isCancelButtonEnabled() ? cancelTradeAction : null,
               // 여기에 cancelTradeAction 함수 연결
               child: Text("채팅 종료"),

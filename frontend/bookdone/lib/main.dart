@@ -26,10 +26,10 @@ void main() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   if (firebaseToken != null) {
     await pref.setString('curFcmToken', firebaseToken);
-    print('---------------------------------');
-    print(firebaseToken);
-    print(pref.getString('curFcmToken'));
-    print('---------------------------------');
+    // print('---------------------------------');
+    // print(firebaseToken);
+    // print(pref.getString('curFcmToken'));
+    // print('---------------------------------');
   }
   KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(
@@ -106,8 +106,8 @@ class MyHomePage extends HookConsumerWidget {
       void checkFcmToken() async {
         try {
           SharedPreferences pref = await SharedPreferences.getInstance();
-          print('기존꺼 : ${pref.getString('getFcmToken')}');
-          print('지금생긴거 : ${pref.getString('curFcmToken')}');
+          // print('기존꺼 : ${pref.getString('getFcmToken')}');
+          // print('지금생긴거 : ${pref.getString('curFcmToken')}');
           if (pref.getString('getFcmToken') != pref.getString('curFcmToken')) {
             if (pref.getString('curFcmToken') != null) {
               await pref.setString(
@@ -252,9 +252,6 @@ class MyHomePage extends HookConsumerWidget {
               ],
             ),
           ),
-          // bottomNavigationBar: TopNavigationBar(),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-          // floatingActionButton: FloatingRegisterBtn(),
         ),
       ),
     );

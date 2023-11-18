@@ -13,9 +13,10 @@ class RegisterRegionDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var regionName = useState('');
     var regionCode = useState('');
-    var secondRegionList = useState<List<SecondList>>([]);
     var selectedRegionIndex = useState(0);
     var firstRegionIndex = useState(0);
+    var secondRegionList = useState<List<SecondList>>(regionList[0].secondList);
+
     return Dialog(
       child: Container(
         width: double.infinity,

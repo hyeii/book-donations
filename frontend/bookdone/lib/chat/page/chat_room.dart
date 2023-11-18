@@ -92,6 +92,7 @@ class ChatRoom extends HookConsumerWidget {
           stompClient.value?.activate();
         }
       }
+
       init();
 
       // 기존 채팅 목록 가져오기
@@ -114,6 +115,7 @@ class ChatRoom extends HookConsumerWidget {
           print('Error fetching messages: $e');
         }
       }
+
       fetchBook();
 
       if (chatMessages.value.isEmpty) {
@@ -143,7 +145,6 @@ class ChatRoom extends HookConsumerWidget {
     void sendMessage() {
       String messageText = messageController.text;
       if (messageText.isNotEmpty) {
-
         // 보낼 데이터 생성
         ChatMessageWriteRequest chatMessageWriteRequestDto =
             ChatMessageWriteRequest(
@@ -216,7 +217,7 @@ class ChatRoom extends HookConsumerWidget {
             // 버튼 두개 부분
             TradeButton(tradeId: tradeId, refreshTrigger: refreshTrigger.value),
             // 채팅 목록을 표시하는 부분
-            Flexible(
+            Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.only(bottom: 10),
                 controller: scrollController,

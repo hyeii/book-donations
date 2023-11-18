@@ -24,6 +24,7 @@ class RegisterInputContent extends HookConsumerWidget {
     var content = useState('');
     return Form(
       child: TextFormField(
+        scrollPadding: EdgeInsets.only(bottom: 120),
         controller: contentController,
         decoration: const InputDecoration(
           fillColor: Colors.brown,

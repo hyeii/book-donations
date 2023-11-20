@@ -1,7 +1,9 @@
 # 책도네
+
 <img src="img/logo.png">
 
 ## 목차
+
 1. [**서비스 소개**](#1)
 2. [**프로젝트 일정**](#2)
 3. [**팀원 소개**](#3)
@@ -22,7 +24,7 @@
 
 <div id="2"></div>
 
-## 📆 프로젝트 기간
+## 📆 프로젝트 일정
 
 ### 23.10.10 ~ 23.11.17
 
@@ -57,10 +59,9 @@
 
 ## 🛠️ 기술 스택
 
-|                 Flutter                 |                 Dart                 |                 Riverpod                 |                 Firebase                 |           Spring Boot            |         Jenkins         | Docker  |                 Redis                 |                 Kafka                 |            MySQL            |             EC2             |                   Elastic Search                    |
-|:---------------------------------------:|:------------------------------------:|:----------------------------------------:|:----------------------------------------:|:--------------------------------:|:-----------------------:|:-------:|:-------------------------------------:|:-------------------------------------:|:---------------------------:|:---------------------------:|:---------------------------------------------------:|
-| <img src="img/flutter.png" width="110"> | <img src="img/dart.png" width="110"> | <img src="img/riverpod.png" width="110"> | <img src="img/firebase.png" width="110"> |<img src="img/springboot.png" width="110">|<img src="img/jenkins.png" width="110">|<img src="img/docker.png" width="110">|<img src="img/redis.png" width="110">| <img src="img/kafka.png" width="110"> |<img src="img/mysql.png" width="110">|<img src="img/ec2.png" width="110">| <img src="img/elastic-search.png" width="110"> |
-
+|                 Flutter                 |                 Dart                 |                 Riverpod                 |                 Firebase                 |                Spring Boot                 |                 Jenkins                 |                 Docker                 |                 Redis                 |                 Kafka                 |                 MySQL                 |                 EC2                 |                 Elastic Search                 |
+| :-------------------------------------: | :----------------------------------: | :--------------------------------------: | :--------------------------------------: | :----------------------------------------: | :-------------------------------------: | :------------------------------------: | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: | :---------------------------------: | :--------------------------------------------: |
+| <img src="img/flutter.png" width="110"> | <img src="img/dart.png" width="110"> | <img src="img/riverpod.png" width="110"> | <img src="img/firebase.png" width="110"> | <img src="img/springboot.png" width="110"> | <img src="img/jenkins.png" width="110"> | <img src="img/docker.png" width="110"> | <img src="img/redis.png" width="110"> | <img src="img/kafka.png" width="110"> | <img src="img/mysql.png" width="110"> | <img src="img/ec2.png" width="110"> | <img src="img/elastic-search.png" width="110"> |
 
 <br />
 
@@ -78,16 +79,18 @@
 
 ### 온보딩 & 카카오 로그인
 
-<img src="img/onboarding.png" style="width: 33%; margin-right: 15px">
-<img src="img/kakao.png" style="width: 33%; margin-right: 15px">
+<img src="img/intro.gif" style="width: 33%; margin-right: 15px">
 
 <br>
 
-### 메인 화면 및 도서 검색, 자동완성
+### 메인 화면 및 랭킹
+
+  <img src="img/main_ranking.gif" style="width: 33%; margin-right: 15px">
+
+### 도서 검색 및 자동완성
 
 <img src="img/main.png" style="width: 33%; margin-right: 15px">
-<img src="img/search.png" style="width: 33%; margin-right: 15px">
-<img src="img/auto-search.png" style="width: 33%; margin-right: 15px">
+<img src="img/auto_gif.gif" style="width: 33%; margin-right: 15px">
 
 <br>
 
@@ -100,19 +103,31 @@
 
 ### 도서 당 지역별 현재 기부 글 내역 및 보유중인 지역 안내
 
-<img src="img/donation.png" style="width: 33%; margin-right: 15px">
+<img src="img/region_select.gif" style="width: 33%; margin-right: 15px">
 <img src="img/keeping.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 나눔 신청 및 채팅 시작, 푸시 알림
 
-<img src="img/donation-detail.png" style="width: 33%; margin-right: 15px">
+- 나눔 신청
+  <br>
+
 <img src="img/donation-check.png" style="width: 33%; margin-right: 15px">
+
+<br>
+
+- 새로운 채팅 알림 및 채팅 확인
+
 <img src="img/push-notification.png" style="width: 33%; margin-right: 15px">
 <img src="img/chats.png" style="width: 33%; margin-right: 15px">
-<img src="img/chat.png" style="width: 33%; margin-right: 15px">
-<img src="img/chat-message.png" style="width: 33%; margin-right: 15px">
+
+<br>    
+  
+- 채팅 및 기부 상태 변경 알림  
+<br>
+
+<img src="img/chat_notification.gif" style="width: 33%; margin-right: 15px">
 <img src="img/push2.png" style="width: 33%; margin-right: 15px">
 
 <br>
@@ -120,28 +135,26 @@
 ### 거래 완료 후 보유중인 책 히스토리 작성
 
 <img src="img/write-history.png" style="width: 33%; margin-right: 15px">
-<img src="img/histories.png" style="width: 33%; margin-right: 15px">
+<img src="img/my_history.gif" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 거래 후 책갈피 변경(피기부자, 기부자)
 
+- 피기부자는 1 감소, 기부자는 1 증가
+
+<br>
 <img src="img/donate-person.png" style="width: 33%; margin-right: 15px">
 <img src="img/donated-person.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
-### 새로운 책 기부하기 및 기부 받은 책 기부하기
+### 새로운 책 기부하기 및 책도네로 기부 받은 책 기부하기
 
-<img src="img/main.png" style="width: 33%; margin-right: 15px">
-<img src="img/done.png" style="width: 33%; margin-right: 15px">
+- ISBN 바코드 조회 => 책 정보 자동 업로드 및 나눔 희망 지역, 내용, 사진 업로드
 
 <br>
+<img src="img/new_register.gif" style="width: 33%; margin-right: 15px">
+<img src="img/exist_register.gif" style="width: 33%; margin-right: 15px">
 
-### ISBN 바코드 조회 => 책 정보 자동 업로드 및 나눔 희망 지역, 내용 사진 업로드
-
-<img src="img/barcode-next.png" style="width: 33%; margin-right: 15px">
-<img src="img/select-area.png" style="width: 33%; margin-right: 15px">
-<img src="img/regist.png" style="width: 33%; margin-right: 15px">
-
-
+<br>

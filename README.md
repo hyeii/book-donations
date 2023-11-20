@@ -78,70 +78,70 @@
 
 ### 온보딩 & 카카오 로그인
 
-<img src="img/onboarding.png" style="height: 750px; margin-right: 15px">
-<img src="img/kakao.png" style="height: 750px; margin-right: 15px">
+<img src="img/onboarding.png" style="width: 33%; margin-right: 15px">
+<img src="img/kakao.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 메인 화면 및 도서 검색, 자동완성
 
-<img src="img/main.png" style="height: 750px; margin-right: 15px">
-<img src="img/search.png" style="height: 750px; margin-right: 15px">
-<img src="img/auto-search.png" style="height: 750px; margin-right: 15px">
+<img src="img/main.png" style="width: 33%; margin-right: 15px">
+<img src="img/search.png" style="width: 33%; margin-right: 15px">
+<img src="img/auto-search.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 책 정보 상세 및 관심도서 설정
 
-<img src="img/book-detail.png" style="height: 750px; margin-right: 15px">
-<img src="img/wish-book.png" style="height: 750px; margin-right: 15px">
+<img src="img/book-detail.png" style="width: 33%; margin-right: 15px">
+<img src="img/wish-book.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 도서 당 지역별 현재 기부 글 내역 및 보유중인 지역 안내
 
-<img src="img/donation.png" style="height: 750px; margin-right: 15px">
-<img src="img/keeping.png" style="height: 750px; margin-right: 15px">
+<img src="img/donation.png" style="width: 33%; margin-right: 15px">
+<img src="img/keeping.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 나눔 신청 및 채팅 시작, 푸시 알림
 
-<img src="img/donation-detail.png" style="height: 750px; margin-right: 15px">
-<img src="img/donation-check.png" style="height: 750px; margin-right: 15px">
-<img src="img/push-notification.png" style="height: 750px; margin-right: 15px">
-<img src="img/chats.png" style="height: 750px; margin-right: 15px">
-<img src="img/chat.png" style="height: 750px; margin-right: 15px">
-<img src="img/chat-message.png" style="height: 750px; margin-right: 15px">
-<img src="img/push2.png" style="height: 750px; margin-right: 15px">
+<img src="img/donation-detail.png" style="width: 33%; margin-right: 15px">
+<img src="img/donation-check.png" style="width: 33%; margin-right: 15px">
+<img src="img/push-notification.png" style="width: 33%; margin-right: 15px">
+<img src="img/chats.png" style="width: 33%; margin-right: 15px">
+<img src="img/chat.png" style="width: 33%; margin-right: 15px">
+<img src="img/chat-message.png" style="width: 33%; margin-right: 15px">
+<img src="img/push2.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 거래 완료 후 보유중인 책 히스토리 작성
 
-<img src="img/write-history.png" style="height: 750px; margin-right: 15px">
-<img src="img/histories.png" style="height: 750px; margin-right: 15px">
+<img src="img/write-history.png" style="width: 33%; margin-right: 15px">
+<img src="img/histories.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 거래 후 책갈피 변경(피기부자, 기부자)
 
-<img src="img/donate-person.png" style="height: 750px; margin-right: 15px">
-<img src="img/donated-person.png" style="height: 750px; margin-right: 15px">
+<img src="img/donate-person.png" style="width: 33%; margin-right: 15px">
+<img src="img/donated-person.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### 새로운 책 기부하기 및 기부 받은 책 기부하기
 
-<img src="img/main.png" style="height: 750px; margin-right: 15px">
-<img src="img/done.png" style="height: 750px; margin-right: 15px">
+<img src="img/main.png" style="width: 33%; margin-right: 15px">
+<img src="img/done.png" style="width: 33%; margin-right: 15px">
 
 <br>
 
 ### ISBN 바코드 조회 => 책 정보 자동 업로드 및 나눔 희망 지역, 내용 사진 업로드
 
-<img src="img/barcode-next.png" style="height: 750px; margin-right: 15px">
-<img src="img/select-area.png" style="height: 750px; margin-right: 15px">
-<img src="img/regist.png" style="height: 750px; margin-right: 15px">
+<img src="img/barcode-next.png" style="width: 33%; margin-right: 15px">
+<img src="img/select-area.png" style="width: 33%; margin-right: 15px">
+<img src="img/regist.png" style="width: 33%; margin-right: 15px">
 
 

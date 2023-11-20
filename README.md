@@ -76,7 +76,72 @@
 
 ## 💻 주요 기능
 
-### 메인 & About Us
+### 온보딩 & 카카오 로그인
 
+<img src="img/onboarding.png">
+<img src="img/kakao.png">
 
 <br>
+
+### 메인 화면 및 도서 검색, 자동완성
+
+<img src="img/main.png">
+<img src="img/search.png">
+<img src="img/auto-search.png">
+
+<br>
+
+### 책 정보 상세 및 관심도서 설정
+
+<img src="img/book-detail.png">
+<img src="img/wish-book.png">
+
+<br>
+
+### 도서 당 지역별 현재 기부 글 내역 및 보유중인 지역 안내
+
+<img src="img/donation.png">
+<img src="img/keeping.png">
+
+<br>
+
+### 나눔 신청 및 채팅 시작, 푸시 알림
+
+<img src="img/donation-detail.png">
+<img src="img/donation-check.png">
+<img src="img/push-notification.png">
+<img src="img/chats.png">
+<img src="img/chat.png">
+<img src="img/chat-message.png">
+<img src="img/push2.png">
+
+<br>
+
+### 거래 완료 후 보유중인 책 히스토리 작성
+
+<img src="img/write-history.png">
+<img src="img/histories.png">
+
+<br>
+
+### 거래 후 책갈피 변경(피기부자, 기부자)
+
+<img src="img/donate-person.png">
+<img src="img/donated-person.png">
+
+<br>
+
+### 새로운 책 기부하기 및 기부 받은 책 기부하기
+
+<img src="img/main.png">
+<img src="img/done.png">
+
+<br>
+
+### ISBN 바코드 조회 => 책 정보 자동 업로드 및 나눔 희망 지역, 내용 사진 업로드
+
+<img src="img/barcode-next.png">
+<img src="img/select-area.png">
+<img src="img/regist.png">
+
+

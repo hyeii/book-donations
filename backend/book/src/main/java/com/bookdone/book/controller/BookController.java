@@ -107,7 +107,7 @@ public class BookController {
 
 	/*
 	 TODO: 특정 지역 특정 책에 대한 나의 관심도서 여부 조회
-	 		개수는 여기서 작업할 내용이 아님, 
+	 		개수는 여기서 작업할 내용이 아님,
 	 		article 에 요청해서 조회해야 정확한 데이터 count
 	*/
 	@GetMapping("/likes")

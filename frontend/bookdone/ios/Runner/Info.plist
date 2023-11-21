@@ -30,7 +30,11 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao</string>
+<<<<<<< HEAD
 				<string>c37f0f840d255dc7083c398779445ac4</string>
+=======
+				<string>kakaoKey</string>
+>>>>>>> origin/front
 			</array>
 		</dict>
 	</array>

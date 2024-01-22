@@ -85,11 +85,10 @@
 
 ### 메인 화면 및 랭킹
 
-  <img src="img/main_ranking.gif" width = "300px"  style="margin-right: 15px">
+<img src="img/main-update.png" width = "300px"  style="margin-right: 15px">
 
 ### 도서 검색 및 자동완성
 
-<img src="img/main.png" width = "300px"  style="margin-right: 15px">
 <img src="img/auto_gif.gif" width = "300px"  style="margin-right: 15px">
 
 <br>
@@ -144,7 +143,7 @@
 - 피기부자는 1 감소, 기부자는 1 증가
 
 <br>
-<img src="img/donate-person.png" width = "300px"  style="margin-right: 15px">
+<img src="img/donate-person-update.png" width = "300px"  style="margin-right: 15px">
 <img src="img/donated-person.png" width = "300px"  style="margin-right: 15px">
 
 <br>
